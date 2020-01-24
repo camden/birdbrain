@@ -10,7 +10,8 @@
     "build-client": "yarn --cwd client && yarn --cwd client build",
     "build-ts": "tsc -p tsconfig.json",
     "build": "yarn build-client",
-    "dev": "ts-node-dev --respawn --transpileOnly ./server/app.ts",
+    "dev-server": "ts-node-dev --respawn --transpileOnly ./server/app.ts",
+    "dev-client": "yarn --cwd client start",
     "start": "node ./build/app.js",
     "postinstall": "yarn build-ts"
   },
