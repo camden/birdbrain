@@ -1,7 +1,6 @@
 import express from 'express';
 import path from 'path';
 
-// Create a new express application instance
 const app: express.Application = express();
 
 app.use(
@@ -47,6 +46,6 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
 });
 
-app.listen(3000, function() {
-  console.log('Example app listening on port 3000!');
+app.listen(process.env.PORT || 3000, function() {
+  console.log(`Example app listening on port ${process.env.PORT || 3000}!`);
 });
