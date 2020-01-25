@@ -1,8 +1,12 @@
 import express from 'express';
 import path from 'path';
+import http from 'http';
+import io from 'socket.io';
 
 const app: express.Application = express();
+const httpServer = http.createServer(app);
 
+// static stuff
 app.use(
   '/static',
   express.static(path.resolve(__dirname, '../client/build/static/'))
@@ -46,6 +50,12 @@ app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
 });
 
-app.listen(process.env.PORT || 3000, function() {
+const socketServer = io(httpServer);
+
+socketServer.on('connection', socket => {
+  console.log('a user connected!');
+});
+
+httpServer.listen(process.env.PORT || 3000, function() {
   console.log(`Example app listening on port ${process.env.PORT || 3000}!`);
 });
