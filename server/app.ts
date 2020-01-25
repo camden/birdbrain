@@ -1,61 +1,48 @@
-import express from 'express';
+import express, { Application } from 'express';
 import path from 'path';
 import http from 'http';
 import io from 'socket.io';
 
-const app: express.Application = express();
-const httpServer = http.createServer(app);
+import APIRoutes from './routes/api';
+import staticFilesMiddleware from './middleware/static-files';
 
-// static stuff
-app.use(
-  '/static',
-  express.static(path.resolve(__dirname, '../client/build/static/'))
-);
+class App {
+  public app: Application;
 
-app.use(
-  '/favicon.ico',
-  express.static(path.resolve(__dirname, '../client/build/favicon.ico'))
-);
+  private httpServer: http.Server;
 
-app.use(
-  '/favicon-32x32.png',
-  express.static(path.resolve(__dirname, '../client/build/favicon-32x32.png'))
-);
+  constructor() {
+    this.app = express();
 
-app.use(
-  '/favicon-64x64.png',
-  express.static(path.resolve(__dirname, '../client/build/favicon-64x64.png'))
-);
+    this.httpServer = http.createServer(this.app);
 
-app.use(
-  '/site.webmanifest',
-  express.static(path.resolve(__dirname, '../client/build/site.webmanifest'))
-);
+    this.initializeSocketIO();
+    this.initializeMiddleware();
+  }
 
-app.use(
-  '/apple-touch-icon.png',
-  express.static(
-    path.resolve(__dirname, '../client/build/apple-touch-icon.png')
-  )
-);
+  public listen() {
+    this.httpServer.listen(process.env.PORT || 3000, function() {
+      console.log(`Example app listening on port ${process.env.PORT || 3000}!`);
+    });
+  }
 
-app.use(
-  '/safari-pinned-tab.svg',
-  express.static(
-    path.resolve(__dirname, '../client/build/safari-pinned-tab.svg')
-  )
-);
+  private initializeSocketIO() {
+    const socketServer = io(this.httpServer);
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
-});
+    socketServer.on('connection', socket => {
+      console.log('a user connected!');
+    });
+  }
 
-const socketServer = io(httpServer);
+  private initializeMiddleware() {
+    this.app.use('/', staticFilesMiddleware);
 
-socketServer.on('connection', socket => {
-  console.log('a user connected!');
-});
+    this.app.use('/api', APIRoutes);
 
-httpServer.listen(process.env.PORT || 3000, function() {
-  console.log(`Example app listening on port ${process.env.PORT || 3000}!`);
-});
+    this.app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
+    });
+  }
+}
+
+export default App;
