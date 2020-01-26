@@ -3,11 +3,9 @@ import birdbrainLogo from '../../assets/images/birdbrain-logo.svg';
 import axios from 'axios';
 import './Home.css';
 import { Redirect } from 'react-router-dom';
-// import io from 'socket.io-client';
 
 const getRoomViaAPI = async (roomCode: string, name: string) => {
-  // const socket = io();
-  console.log(`joining room ${roomCode} as ${name}`);
+  console.log(`Attempting to join room '${roomCode}' as '${name}'.`);
 
   try {
     const res = await axios.get(`/api/room/${roomCode}`);
@@ -46,7 +44,7 @@ const Home: React.FC = () => {
   }, [name, roomCode]);
 
   if (isJoinSuccessful) {
-    return <Redirect to={`/room/${roomCode}`} />;
+    return <Redirect to={`/room/${roomCode}?name=${name}`} />;
   }
 
   return (
