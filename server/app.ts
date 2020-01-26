@@ -2,6 +2,7 @@ import express, { Application } from 'express';
 import path from 'path';
 import http from 'http';
 import io from 'socket.io';
+import Sentry from '@sentry/node';
 
 import APIRoutes from './routes/api';
 import staticFilesMiddleware from './middleware/static-files';
@@ -16,6 +17,7 @@ class App {
 
     this.httpServer = http.createServer(this.app);
 
+    this.initializeSentry();
     this.initializeSocketIO();
     this.initializeMiddleware();
   }
@@ -24,6 +26,13 @@ class App {
     this.httpServer.listen(process.env.PORT || 3000, function() {
       console.log(`Example app listening on port ${process.env.PORT || 3000}!`);
     });
+  }
+
+  private initializeSentry() {
+    Sentry.init({
+      dsn: 'https://e255af3258264012993bef70994eb2eb@sentry.io/1967305',
+    });
+    this.app.use(Sentry.Handlers.requestHandler);
   }
 
   private initializeSocketIO() {
