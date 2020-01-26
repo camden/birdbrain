@@ -38,7 +38,8 @@ class App {
     Sentry.init({
       dsn: 'https://e255af3258264012993bef70994eb2eb@sentry.io/1967305',
     });
-    this.app.use(Sentry.Handlers.requestHandler);
+    this.app.use(Sentry.Handlers.requestHandler());
+    this.app.use(Sentry.Handlers.errorHandler());
   }
 
   private initializeSocketIO() {
