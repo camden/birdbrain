@@ -17,18 +17,24 @@ class App {
 
     this.httpServer = http.createServer(this.app);
 
-    this.initializeSentry();
+    if (process.env.NODE_ENV === 'production') {
+      this.initializeSentry();
+    }
+
     this.initializeSocketIO();
     this.initializeMiddleware();
   }
 
   public listen() {
     this.httpServer.listen(process.env.PORT || 3000, function() {
-      console.log(`Example app listening on port ${process.env.PORT || 3000}!`);
+      console.log(
+        `Birdbrain Games is listening on port ${process.env.PORT || 3000}!`
+      );
     });
   }
 
   private initializeSentry() {
+    console.log('Initializing Sentry');
     Sentry.init({
       dsn: 'https://e255af3258264012993bef70994eb2eb@sentry.io/1967305',
     });
