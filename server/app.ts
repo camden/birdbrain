@@ -2,7 +2,7 @@ import express, { Application } from 'express';
 import path from 'path';
 import http from 'http';
 import io from 'socket.io';
-import Sentry from '@sentry/node';
+import * as Sentry from '@sentry/node';
 
 import APIRoutes from './routes/api';
 import staticFilesMiddleware from './middleware/static-files';
