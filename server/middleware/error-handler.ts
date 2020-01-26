@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import HttpException from '../exceptions/http-exception';
 
-const errorHandler = (
+const errorHandlerMiddleware = (
   error: HttpException,
   request: Request,
   response: Response,
@@ -13,4 +13,4 @@ const errorHandler = (
   response.status(status).send({ status, message });
 };
 
-export default errorHandler;
+export default errorHandlerMiddleware;

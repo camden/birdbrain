@@ -6,6 +6,7 @@ import * as Sentry from '@sentry/node';
 
 import APIRoutes from './routes/api';
 import staticFilesMiddleware from './middleware/static-files';
+import errorHandlerMiddleware from './middleware/error-handler';
 
 class App {
   public app: Application;
@@ -51,6 +52,8 @@ class App {
   }
 
   private initializeMiddleware() {
+    this.app.use(express.json());
+
     this.app.use('/', staticFilesMiddleware);
 
     this.app.use('/api', APIRoutes);
@@ -58,6 +61,8 @@ class App {
     this.app.get('*', (req, res) => {
       res.sendFile(path.resolve(__dirname, '../client/build/index.html'));
     });
+
+    this.app.use(errorHandlerMiddleware);
   }
 }
 
