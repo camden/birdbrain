@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import birdbrainLogo from '../../assets/images/birdbrain-logo.svg';
 import axios from 'axios';
 import './Home.css';
+import { Redirect } from 'react-router-dom';
 // import io from 'socket.io-client';
 
 const getRoomViaAPI = async (roomCode: string, name: string) => {
@@ -20,6 +21,7 @@ const Home: React.FC = () => {
   const [roomCode, setRoomCode] = useState('');
   const [name, setName] = useState('');
   const [isLoadingJoin, setIsLoadingJoin] = useState(false);
+  const [isJoinSuccessful, setIsJoinSuccessful] = useState(false);
 
   const joinRoomCallback = useCallback(async () => {
     if (isLoadingJoin) {
@@ -34,8 +36,18 @@ const Home: React.FC = () => {
 
     const room = await getRoomViaAPI(roomCode, name);
 
+    if (!room) {
+      setRoomCode('');
+    } else {
+      setIsJoinSuccessful(true);
+    }
+
     setIsLoadingJoin(false);
   }, [name, roomCode]);
+
+  if (isJoinSuccessful) {
+    return <Redirect to={`/room/${roomCode}`} />;
+  }
 
   return (
     <div className="home">
