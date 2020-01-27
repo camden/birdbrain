@@ -12,7 +12,7 @@
     "build": "yarn build-client && yarn build-server",
     "dev-server": "ts-node-dev --respawn --transpileOnly ./server/server.ts",
     "dev-client": "yarn --cwd client start",
-    "dev": "concurrently \"yarn dev-server\" \"sleep 2 && PORT=3001 yarn dev-client\"",
+    "dev": "concurrently \"yarn dev-server\" \"yarn dev-client\"",
     "start": "node ./build/server.js",
     "postinstall": "yarn build-server"
   },

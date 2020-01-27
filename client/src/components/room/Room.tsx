@@ -4,7 +4,10 @@ import io from 'socket.io-client';
 import QueryString from 'query-string';
 
 const connectToRoom = (roomCode: string, name: string) => {
-  const socket = io({ query: { roomId: roomCode, name } });
+  // TODO I'm pretty sure this won't work on prod
+  const socket = io.connect('http://localhost:8080', {
+    query: { roomId: roomCode, name },
+  });
 
   socket.on('joined', (data: any) => {
     console.log(data);
@@ -31,7 +34,7 @@ const Room: React.FC = () => {
     connectToRoom(id, name);
   }, [id]);
 
-  return <div>you're in a room called {id}!</div>;
+  return <div>You're in a room called {id}!</div>;
 };
 
 export default withRouter(Room);

@@ -33,9 +33,10 @@ class App {
   }
 
   public listen() {
-    this.httpServer.listen(process.env.PORT || 3000, function() {
+    this.httpServer.listen(process.env.PORT || 8080, function() {
       console.log(
-        `Birdbrain Games is listening on port ${process.env.PORT || 3000}!`
+        `Birdbrain Games server is listening on port ${process.env.PORT ||
+          8080}!`
       );
     });
   }
