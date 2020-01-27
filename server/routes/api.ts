@@ -2,8 +2,9 @@ import express, { Router } from 'express';
 import HttpException from '../exceptions/http-exception';
 import { getRoomById } from '../store/general/selectors';
 import App from '../app';
+import { Store } from '../store';
 
-const APIRouter = (app: App): Router => {
+const APIRouter = (store: Store): Router => {
   const router = express.Router();
 
   router
@@ -21,7 +22,8 @@ const APIRouter = (app: App): Router => {
     .route('/room/:id')
     .get((req, res, next) => {
       const roomId = req.params.id;
-      const room = getRoomById(roomId)(app.store.getState());
+      const room = store.select(getRoomById(roomId));
+      console.log('got room: ', room);
 
       if (room) {
         res.send(room);
