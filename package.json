@@ -11,7 +11,7 @@
     "build-server": "tsc -p tsconfig.json",
     "build": "yarn build-client && yarn build-server",
     "dev-server": "ts-node-dev --respawn --transpileOnly ./server/server.ts",
-    "dev-client": "yarn --cwd client start",
+    "dev-client": "REACT_APP_EXTERNAL_CLIENT=true yarn --cwd client start",
     "dev": "concurrently \"yarn dev-server\" \"yarn dev-client\"",
     "start": "node ./build/server.js",
     "postinstall": "yarn build-server"

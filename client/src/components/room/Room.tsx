@@ -8,8 +8,11 @@ const connectToRoom = (
   name: string,
   setUsersInRoom: (users: User[]) => void
 ) => {
-  // TODO I'm pretty sure this won't work on prod
-  const socket = io.connect('http://localhost:8080', {
+  const devUrl = 'http://localhost:8080';
+  const prodUrl = '/';
+  const url = process.env.REACT_APP_EXTERNAL_CLIENT ? devUrl : prodUrl;
+  console.log(process.env.REACT_APP_EXTERNAL_CLIENT);
+  const socket = io.connect(url, {
     query: { roomId: roomCode, name },
   });
 
