@@ -2,20 +2,25 @@ import express, { Application } from 'express';
 import path from 'path';
 import http from 'http';
 import io from 'socket.io';
+import { Store } from 'redux';
 import * as Sentry from '@sentry/node';
 
 import APIRoutes from './routes/api';
+import { initializeStore } from './store';
 import staticFilesMiddleware from './middleware/static-files';
 import errorHandlerMiddleware from './middleware/error-handler';
+import { GeneralState } from './store/general/types';
 import attachSocketListeners from './socket-listeners';
 
 class App {
   public app: Application;
+  public store: Store;
 
   private httpServer: http.Server;
 
   constructor() {
     this.app = express();
+    this.store = initializeStore();
 
     this.httpServer = http.createServer(this.app);
 
@@ -47,7 +52,7 @@ class App {
   private initializeSocketIO() {
     const socketServer = io(this.httpServer);
 
-    attachSocketListeners(socketServer);
+    attachSocketListeners(socketServer, this);
   }
 
   private initializeMiddleware() {
@@ -55,7 +60,7 @@ class App {
 
     this.app.use('/', staticFilesMiddleware);
 
-    this.app.use('/api', APIRoutes);
+    this.app.use('/api', APIRoutes(this));
 
     this.app.get('*', (req, res) => {
       res.sendFile(path.resolve(__dirname, '../client/build/index.html'));

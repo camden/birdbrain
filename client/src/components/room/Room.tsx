@@ -29,7 +29,7 @@ const Room: React.FC = () => {
     const name = obj.name as string;
 
     connectToRoom(id, name);
-  }, []);
+  }, [id]);
 
   return <div>you're in a room called {id}!</div>;
 };
