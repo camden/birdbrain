@@ -1,21 +1,36 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, withRouter } from 'react-router-dom';
 import io from 'socket.io-client';
 import QueryString from 'query-string';
 
-const connectToRoom = (roomCode: string, name: string) => {
+const connectToRoom = (
+  roomCode: string,
+  name: string,
+  setUsersInRoom: (users: User[]) => void
+) => {
   // TODO I'm pretty sure this won't work on prod
   const socket = io.connect('http://localhost:8080', {
     query: { roomId: roomCode, name },
   });
 
-  socket.on('joined', (data: any) => {
+  socket.on('join-or-leave-messages', (data: any) => {
     console.log(data);
+  });
+
+  socket.on('users-in-room', (data: any) => {
+    console.log('users: ', data);
+    setUsersInRoom(data);
   });
 };
 
+interface User {
+  id: string;
+  name: string;
+}
+
 const Room: React.FC = () => {
   const { id } = useParams();
+  const [usersInRoom, setUsersInRoom] = useState<User[]>([]);
 
   useEffect(() => {
     if (!id) {
@@ -31,10 +46,22 @@ const Room: React.FC = () => {
 
     const name = obj.name as string;
 
-    connectToRoom(id, name);
+    connectToRoom(id, name, setUsersInRoom);
   }, [id]);
 
-  return <div>You're in a room called {id}!</div>;
+  return (
+    <div>
+      You're in a room called {id}!
+      <div>
+        Users here:
+        <ul>
+          {usersInRoom.map(user => (
+            <li key={user.id}>{user.name}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
 };
 
 export default withRouter(Room);
