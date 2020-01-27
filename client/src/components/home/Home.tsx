@@ -41,7 +41,7 @@ const Home: React.FC = () => {
     }
 
     setIsLoadingJoin(false);
-  }, [name, roomCode]);
+  }, [name, roomCode, isLoadingJoin]);
 
   if (isJoinSuccessful) {
     return <Redirect to={`/room/${roomCode}?name=${name}`} />;

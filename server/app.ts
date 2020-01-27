@@ -7,7 +7,7 @@ import * as Sentry from '@sentry/node';
 import APIRoutes from './routes/api';
 import staticFilesMiddleware from './middleware/static-files';
 import errorHandlerMiddleware from './middleware/error-handler';
-import { getRoomInfo } from './model/room';
+import attachSocketListeners from './socket-listeners';
 
 class App {
   public app: Application;
@@ -47,16 +47,7 @@ class App {
   private initializeSocketIO() {
     const socketServer = io(this.httpServer);
 
-    socketServer.on('connection', socket => {
-      const roomId = socket.handshake.query.roomId;
-      const room = getRoomInfo(roomId);
-      if (!room) {
-        socket.disconnect();
-      } else {
-        socket.join(roomId);
-        socket.emit('joined', 'Cam joined the server!');
-      }
-    });
+    attachSocketListeners(socketServer);
   }
 
   private initializeMiddleware() {

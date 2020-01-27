@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams, RouteComponentProps, withRouter } from 'react-router-dom';
+import { useParams, withRouter } from 'react-router-dom';
 import io from 'socket.io-client';
 import QueryString from 'query-string';
 
@@ -7,7 +7,6 @@ const connectToRoom = (roomCode: string, name: string) => {
   const socket = io({ query: { roomId: roomCode, name } });
 
   socket.on('joined', (data: any) => {
-    alert('got data!');
     console.log(data);
   });
 };
