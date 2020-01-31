@@ -11,6 +11,7 @@ const initialState: GeneralState = {
     {
       id: 'nu',
       users: [],
+      leaderUserID: null,
     },
   ],
 };
@@ -26,9 +27,19 @@ export const generalReducer = (
           room => room.id === action.payload.room.id
         );
 
-        if (roomIndex > -1) {
-          draftState.rooms[roomIndex].users.push(action.payload.user);
+        const roomExists = roomIndex > -1;
+
+        if (!roomExists) {
+          return;
         }
+
+        const room = draftState.rooms[roomIndex];
+
+        if (room.users.length === 0) {
+          room.leaderUserID = action.payload.user.id;
+        }
+
+        room.users.push(action.payload.user);
       });
     case REMOVE_USER_FROM_ROOM:
       return produce(state, draftState => {

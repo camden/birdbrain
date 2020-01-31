@@ -3,15 +3,18 @@ import uuid from 'uuid/v1';
 export interface Room {
   id: string;
   users: User[];
+  leaderUserID: UserID | null;
 }
 
+export type UserID = string;
+
 export interface User {
-  id: string;
+  id: UserID;
   name: string;
 }
 
 export class User {
-  public id: string;
+  public id: UserID;
   public name: string;
 
   constructor(name: string) {

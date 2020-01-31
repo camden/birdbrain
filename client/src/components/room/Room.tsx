@@ -6,7 +6,7 @@ import QueryString from 'query-string';
 const connectToRoom = (
   roomCode: string,
   name: string,
-  setUsersInRoom: (users: User[]) => void
+  setRoomState: (data: any) => void
 ) => {
   const devUrl = 'http://localhost:8080';
   const prodUrl = '/';
@@ -20,9 +20,9 @@ const connectToRoom = (
     console.log(data);
   });
 
-  socket.on('users-in-room', (data: any) => {
-    console.log('users: ', data);
-    setUsersInRoom(data);
+  socket.on('room-state', (data: any) => {
+    console.log('room state: ', data);
+    setRoomState(data);
   });
 };
 
@@ -33,7 +33,7 @@ interface User {
 
 const Room: React.FC = () => {
   const { id } = useParams();
-  const [usersInRoom, setUsersInRoom] = useState<User[]>([]);
+  const [roomState, setRoomState] = useState(null);
 
   useEffect(() => {
     if (!id) {
@@ -49,8 +49,10 @@ const Room: React.FC = () => {
 
     const name = obj.name as string;
 
-    connectToRoom(id, name, setUsersInRoom);
+    connectToRoom(id, name, setRoomState);
   }, [id]);
+
+  console.log(roomState);
 
   return (
     <div>
@@ -58,9 +60,9 @@ const Room: React.FC = () => {
       <div>
         Users here:
         <ul>
-          {usersInRoom.map(user => (
+          {/* {usersInRoom.map(user => (
             <li key={user.id}>{user.name}</li>
-          ))}
+          ))} */}
         </ul>
       </div>
     </div>

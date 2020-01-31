@@ -34,7 +34,7 @@ const attachSocketListeners = (socketServer: io.Server, store: Store): void => {
 
       socketServer
         .to(getSocketRoomId(roomId))
-        .emit('users-in-room', store.select(getUsersInRoom(roomId)));
+        .emit('room-state', store.select(getRoomById(roomId)));
     }
 
     socket.on('disconnect', () => {
@@ -50,7 +50,7 @@ const attachSocketListeners = (socketServer: io.Server, store: Store): void => {
       // emit this kind of state update whenever anything important happens
       socketServer
         .to(getSocketRoomId(roomId))
-        .emit('users-in-room', store.select(getUsersInRoom(roomId)));
+        .emit('room-state', store.select(getRoomById(roomId)));
     });
   });
 };
