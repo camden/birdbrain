@@ -66,6 +66,9 @@ const Home: React.FC = () => {
             placeholder="Name"
             value={name}
             onChange={event => setName(event.target.value)}
+            onKeyPress={event =>
+              event.key === 'Enter' ? joinRoomCallback() : null
+            }
             className="home__join-room-input"
           />
           <button onClick={joinRoomCallback} className="button home__button">
