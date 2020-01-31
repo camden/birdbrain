@@ -5,11 +5,12 @@ import {
   Action,
 } from 'redux';
 import { generalReducer } from './general/reducers';
-import { GeneralState } from './general/types';
 import { SelectorFunction } from './general/selectors';
+import { gameReducer } from './games/reducers';
 
 const rootReducer = combineReducers({
   general: generalReducer,
+  game: gameReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
