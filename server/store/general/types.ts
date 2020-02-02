@@ -32,7 +32,7 @@ export interface GeneralState {
 export const ADD_USER_TO_ROOM = 'ADD_USER_TO_ROOM';
 export const REMOVE_USER_FROM_ROOM = 'REMOVE_USER_FROM_ROOM';
 
-interface AddUserToRoomAction {
+export interface AddUserToRoomAction {
   type: typeof ADD_USER_TO_ROOM;
   payload: {
     user: User;
@@ -40,7 +40,7 @@ interface AddUserToRoomAction {
   };
 }
 
-interface RemoveUserFromRoomAction {
+export interface RemoveUserFromRoomAction {
   type: typeof REMOVE_USER_FROM_ROOM;
   payload: {
     user: User;
