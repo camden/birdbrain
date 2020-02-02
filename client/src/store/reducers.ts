@@ -8,7 +8,6 @@ const initialState: ClientState = {
 export const reducer = (state = initialState, action: ActionTypes) => {
   switch (action.type) {
     case SET_USER:
-      console.log(action);
       return {
         ...state,
         user: action.payload.user,
