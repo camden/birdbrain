@@ -7,7 +7,7 @@ export interface Room {
   id: RoomID;
   users: User[];
   leaderUserID: UserID | null;
-  game: GameState;
+  game: GameState | null;
 }
 
 export type UserID = string;
@@ -31,7 +31,7 @@ export interface GeneralState {
   rooms: Room[];
 }
 
-export interface ClientState {
+export interface ClientStatePayload {
   room: Room | null; // should this be nullable?
 }
 

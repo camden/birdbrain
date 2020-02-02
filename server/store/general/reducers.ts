@@ -12,6 +12,7 @@ const initialState: GeneralState = {
       id: 'nu',
       users: [],
       leaderUserID: null,
+      game: null,
     },
   ],
 };

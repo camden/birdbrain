@@ -1,40 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useParams, withRouter } from 'react-router-dom';
-import io from 'socket.io-client';
 import QueryString from 'query-string';
-import { Room as RoomType } from '@server/store/general/types';
+import { useDispatch } from 'react-redux';
+import { connectToRoom } from 'store/websocket/actions';
+import useSelector from 'store/use-selector';
 
-const connectToRoom = (
-  roomCode: string,
-  name: string,
-  setRoomState: (room: RoomType) => void
-) => {
-  const devUrl = 'http://localhost:8080';
-  const prodUrl = '/';
-  const url = process.env.REACT_APP_EXTERNAL_CLIENT ? devUrl : prodUrl;
-  console.log(process.env.REACT_APP_EXTERNAL_CLIENT);
-  const socket = io.connect(url, {
-    query: { roomId: roomCode, name },
-  });
-
-  socket.on('join-or-leave-messages', (data: any) => {
-    console.log(data);
-  });
-
-  socket.on('room-state', (room: RoomType) => {
-    console.log('room state: ', room);
-    setRoomState(room);
-  });
-};
-
-interface User {
-  id: string;
-  name: string;
-}
-
+// TODO this FC is getting sorta big. split this out in the future?
 const Room: React.FC = () => {
   const { id } = useParams();
-  const [roomState, setRoomState] = useState<RoomType | null>(null);
+  const dispatch = useDispatch();
+  const room = useSelector(state => state.room);
 
   useEffect(() => {
     if (!id) {
@@ -50,19 +25,21 @@ const Room: React.FC = () => {
 
     const name = obj.name as string;
 
-    connectToRoom(id, name, setRoomState);
-  }, [id]);
+    dispatch(connectToRoom(id, name));
+  }, [id, dispatch]);
 
-  console.log(roomState);
+  if (!room) {
+    return <div>Room '{id}' does not exist.</div>;
+  }
 
   return (
     <div>
-      You're in a room called {id}!
+      You're in a room called "{room.id}"!
       <div>
         Users here:
         <ul>
-          {roomState?.users.map(user => (
-            <li>{user.name}</li>
+          {room.users.map(user => (
+            <li key={user.id}>{user.name}</li>
           ))}
         </ul>
       </div>
