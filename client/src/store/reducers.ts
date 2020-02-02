@@ -1,13 +1,19 @@
-import { ClientState, ActionTypes, SET_CLIENT_STATE } from './types';
+import { ClientState, ActionTypes, SET_CLIENT_STATE, SET_USER } from './types';
 
 const initialState: ClientState = {
   room: null,
+  user: null,
 };
 
 export const reducer = (state = initialState, action: ActionTypes) => {
   switch (action.type) {
+    case SET_USER:
+      console.log(action);
+      return {
+        ...state,
+        user: action.payload.user,
+      };
     case SET_CLIENT_STATE:
-      console.log(action.payload);
       return {
         ...state,
         room: action.payload.room,

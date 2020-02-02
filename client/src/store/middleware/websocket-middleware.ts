@@ -3,8 +3,8 @@ import io from 'socket.io-client';
 
 import { CONNECT_TO_ROOM } from 'store/websocket/types';
 import { ActionTypes } from 'store/types';
-import { setClientState } from 'store/actions';
-import { ClientStatePayload } from '@server/store/general/types';
+import { setClientState, setUser } from 'store/actions';
+import { ClientStatePayload, User } from '@server/store/general/types';
 
 const websocketMiddleware = () => {
   let socket: SocketIOClient.Socket;
@@ -17,6 +17,10 @@ const websocketMiddleware = () => {
     data: ClientStatePayload
   ) => {
     store.dispatch(setClientState(data));
+  };
+
+  const onClientUserInfo = (store: MiddlewareAPI) => (user: User) => {
+    store.dispatch(setUser(user));
   };
 
   return (store: MiddlewareAPI) => (next: Dispatch) => (
@@ -38,6 +42,8 @@ const websocketMiddleware = () => {
 
         socket.on('connect', onConnect(store, roomId));
         socket.on('client-state-update', onClientStateUpdate(store));
+        socket.on('client-user-info', onClientUserInfo(store));
+
         break;
       default:
         return next(action);

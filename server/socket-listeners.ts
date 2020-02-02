@@ -36,11 +36,11 @@ after resolving it, the server emits the new current state to all users in the a
 **/
 
 const attachSocketListeners = (socketServer: io.Server, store: Store): void => {
-  socketServer.on('connection', socket => {
+  socketServer.on('connection', connectedSocket => {
     const {
       roomId,
       name,
-    }: { roomId: string; name: string } = socket.handshake.query;
+    }: { roomId: string; name: string } = connectedSocket.handshake.query;
 
     console.log(`${name} connected`);
 
@@ -48,15 +48,18 @@ const attachSocketListeners = (socketServer: io.Server, store: Store): void => {
     const user = new User(name);
 
     if (!room) {
-      socket.disconnect();
+      connectedSocket.disconnect();
     } else {
-      socket.join(getSocketRoomId(roomId));
+      connectedSocket.join(getSocketRoomId(roomId));
 
       store.dispatch(addUserToRoom(room, user));
 
       socketServer
         .to(getSocketRoomId(roomId))
         .emit('join-or-leave-messages', `${name} joined the server!`);
+
+      // let this specific client know what its user info is
+      connectedSocket.emit('client-user-info', user);
 
       socketServer
         .to(getSocketRoomId(roomId))
@@ -66,7 +69,7 @@ const attachSocketListeners = (socketServer: io.Server, store: Store): void => {
         );
     }
 
-    socket.on('disconnect', () => {
+    connectedSocket.on('disconnect', () => {
       console.log(`${name} disconnected`);
 
       socketServer

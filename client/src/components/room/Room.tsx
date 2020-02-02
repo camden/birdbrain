@@ -10,6 +10,7 @@ const Room: React.FC = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const room = useSelector(state => state.room);
+  const user = useSelector(state => state.user);
 
   useEffect(() => {
     if (!id) {
@@ -32,6 +33,9 @@ const Room: React.FC = () => {
     return <div>Room '{id}' does not exist.</div>;
   }
 
+  const isRoomLeader = user?.id === room.leaderUserID;
+  const roomLeader = room.users.find(user => user.id === room.leaderUserID);
+
   return (
     <div>
       You're in a room called "{room.id}"!
@@ -42,6 +46,9 @@ const Room: React.FC = () => {
             <li key={user.id}>{user.name}</li>
           ))}
         </ul>
+        <div>
+          {isRoomLeader ? 'You are' : `${roomLeader?.name} is`} the room leader!
+        </div>
       </div>
     </div>
   );
