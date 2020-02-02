@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useParams, withRouter } from 'react-router-dom';
 import io from 'socket.io-client';
 import QueryString from 'query-string';
+import { Room as RoomType } from '@server/store/general/types';
 
 const connectToRoom = (
   roomCode: string,
   name: string,
-  setRoomState: (data: any) => void
+  setRoomState: (room: RoomType) => void
 ) => {
   const devUrl = 'http://localhost:8080';
   const prodUrl = '/';
@@ -20,9 +21,9 @@ const connectToRoom = (
     console.log(data);
   });
 
-  socket.on('room-state', (data: any) => {
-    console.log('room state: ', data);
-    setRoomState(data);
+  socket.on('room-state', (room: RoomType) => {
+    console.log('room state: ', room);
+    setRoomState(room);
   });
 };
 
@@ -33,7 +34,7 @@ interface User {
 
 const Room: React.FC = () => {
   const { id } = useParams();
-  const [roomState, setRoomState] = useState(null);
+  const [roomState, setRoomState] = useState<RoomType | null>(null);
 
   useEffect(() => {
     if (!id) {
@@ -60,9 +61,9 @@ const Room: React.FC = () => {
       <div>
         Users here:
         <ul>
-          {/* {usersInRoom.map(user => (
-            <li key={user.id}>{user.name}</li>
-          ))} */}
+          {roomState?.users.map(user => (
+            <li>{user.name}</li>
+          ))}
         </ul>
       </div>
     </div>

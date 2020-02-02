@@ -1,9 +1,13 @@
 import uuid from 'uuid/v1';
+import { GameState } from '../games/types';
+
+export type RoomID = string;
 
 export interface Room {
-  id: string;
+  id: RoomID;
   users: User[];
   leaderUserID: UserID | null;
+  game: GameState;
 }
 
 export type UserID = string;
@@ -25,6 +29,10 @@ export class User {
 
 export interface GeneralState {
   rooms: Room[];
+}
+
+export interface ClientState {
+  room: Room | null; // should this be nullable?
 }
 
 // ---| ACTIONS |-----------------

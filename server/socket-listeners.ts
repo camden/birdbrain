@@ -2,12 +2,38 @@ import io from 'socket.io';
 import App from './app';
 import { addUserToRoom, removeUserFromRoom } from './store/general/actions';
 import { User } from './store/general/types';
-import { getRoomById, getUsersInRoom } from './store/general/selectors';
+import {
+  getRoomById,
+  getUsersInRoom,
+  getClientStateByRoomId,
+} from './store/general/selectors';
 import { Store } from './store';
 
 const getSocketRoomId = (roomId: string) => {
   return `room:${roomId}`;
 };
+
+class SocketManager {
+  public socketServer: io.Server;
+
+  constructor(sockerServer: io.Server) {
+    this.socketServer = sockerServer;
+  }
+}
+
+/** 
+
+example sequence might be:
+
+client sends websocket message to server saying "in my current room, i just took
+the following action with the following data"
+
+with that message, the server resolves it against its entire state. this could include
+changing the current game state (most likely) or changing the room state (like renaming the user)
+
+after resolving it, the server emits the new current state to all users in the affected room
+
+**/
 
 const attachSocketListeners = (socketServer: io.Server, store: Store): void => {
   socketServer.on('connection', socket => {
