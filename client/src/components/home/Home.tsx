@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import birdbrainLogo from '../../assets/images/birdbrain-logo.svg';
+import birdbrainLogo from 'assets/images/birdbrain-logo.svg';
 import axios from 'axios';
 import './Home.css';
 import { Redirect } from 'react-router-dom';
