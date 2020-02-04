@@ -3,6 +3,7 @@ import birdbrainLogo from 'assets/images/birdbrain-logo.svg';
 import axios from 'axios';
 import styles from './Home.module.css';
 import { Redirect } from 'react-router-dom';
+import Button from 'components/shared/button/Button';
 
 const getRoomViaAPI = async (roomCode: string, name: string) => {
   console.log(`Attempting to join room '${roomCode}' as '${name}'.`);
@@ -49,17 +50,17 @@ const Home: React.FC = () => {
 
   return (
     <div className={styles.home}>
-      <header className={styles.home__header}>
+      <header className={styles.header}>
         <img src={birdbrainLogo} className={styles.birdbrain_logo} alt="logo" />
       </header>
-      <section className={styles.home__body}>
-        <section className={styles.home__input_section}>
+      <section className={styles.body}>
+        <section className={styles.input_section}>
           <input
             type="text"
             placeholder="Room Code"
             value={roomCode}
             onChange={event => setRoomCode(event.target.value)}
-            className={styles.home__join_room_input}
+            className={styles.join_room_input}
           />
           <input
             type="text"
@@ -69,22 +70,22 @@ const Home: React.FC = () => {
             onKeyPress={event =>
               event.key === 'Enter' ? joinRoomCallback() : null
             }
-            className={styles.home__join_room_input}
+            className={styles.join_room_input}
           />
-          <button onClick={joinRoomCallback} className={styles.button}>
+          <Button onClick={joinRoomCallback} className={styles.button}>
             {isLoadingJoin ? <div>loading...</div> : 'Join Room'}
-          </button>
+          </Button>
         </section>
-        <div className={styles.home__input_section_divider}>OR</div>
-        <section className={styles.home__input_section}>
-          <button
+        <div className={styles.input_section_divider}>OR</div>
+        <section className={styles.input_section}>
+          <Button
             onClick={() => {
               alert('not implemented');
             }}
             className={styles.button}
           >
             Create Room
-          </button>
+          </Button>
         </section>
       </section>
     </div>

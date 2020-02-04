@@ -28,7 +28,7 @@
   }
 }
 
-.home__header {
+.header {
   padding: 20px;
   margin-bottom: 15px;
 
@@ -41,52 +41,30 @@
   color: white;
 }
 
-.home__body {
+.body {
   width: 100%;
   padding: 0 1.5rem;
 }
 
 @media (min-width: 600px) {
-  .home__body {
+  .body {
     /** TODO: consolidate units **/
     padding: 0 3rem;
     max-width: 460px;
   }
 }
 
-.home__input_section {
+.input_section {
   display: flex;
   flex-direction: column;
 }
 
-.button {
-  border: 0;
-  border-radius: 16px;
-  font-size: 1rem;
-  padding: 16px 4px;
-  box-shadow: 4px 4px 0px rgba(0, 0, 0, 1);
-  background-color: rgb(218, 167, 255);
-  text-transform: uppercase;
-  font-weight: bold;
-
-  transition: 200ms ease-out all;
-}
-
-.button:hover {
-  background-color: rgba(247, 194, 255);
-}
-
-.button:active {
-  background-color: rgba(247, 194, 255);
-  box-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.7);
-}
-
-.home__input_section_divider {
+.input_section_divider {
   text-align: center;
   margin: 40px 0;
 }
 
-.home__join_room_input {
+.join_room_input {
   margin-bottom: 16px;
 
   font-size: 1rem;
