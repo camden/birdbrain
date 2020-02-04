@@ -6,7 +6,7 @@ import { connectToRoom } from 'store/websocket/actions';
 import useSelector from 'store/use-selector';
 import styles from './Room.module.css';
 import Button from 'components/shared/button/Button';
-import { sendStartGame } from 'messages/messages';
+import { sendStartGame } from 'messages/general-messages';
 
 // TODO this FC is getting sorta big. split this out in the future?
 const Room: React.FC = () => {

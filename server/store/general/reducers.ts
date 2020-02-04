@@ -3,7 +3,6 @@ import {
   GeneralActionTypes,
   ADD_USER_TO_ROOM,
   REMOVE_USER_FROM_ROOM,
-  RECEIVED_CLIENT_MESSAGE,
 } from './types';
 import { produce } from 'immer';
 import { START_GAME_MESSAGE } from '../client/types';
