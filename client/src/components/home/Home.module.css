@@ -1,11 +1,4 @@
 .home {
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
-
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: column;
 }
 
 .birdbrain_logo {
@@ -39,19 +32,6 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
-
-.body {
-  width: 100%;
-  padding: 0 1.5rem;
-}
-
-@media (min-width: 600px) {
-  .body {
-    /** TODO: consolidate units **/
-    padding: 0 3rem;
-    max-width: 460px;
-  }
 }
 
 .input_section {

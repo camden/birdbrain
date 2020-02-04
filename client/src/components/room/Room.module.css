@@ -1,6 +1,4 @@
 .room {
-  margin: 20px;
-
   display: flex;
   flex-direction: column;
 }

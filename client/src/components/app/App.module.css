@@ -1,0 +1,23 @@
+.app {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+
+.app_inner {
+  width: 100%;
+  padding: 0 1.5rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 600px) {
+  .app_inner {
+    /** TODO: consolidate units **/
+    padding: 0 3rem;
+    max-width: 460px;
+  }
+}

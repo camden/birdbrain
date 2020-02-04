@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { connectToRoom } from 'store/websocket/actions';
 import useSelector from 'store/use-selector';
 import styles from './Room.module.css';
+import Button from 'components/shared/button/Button';
 
 // TODO this FC is getting sorta big. split this out in the future?
 const Room: React.FC = () => {
@@ -48,9 +49,8 @@ const Room: React.FC = () => {
           ))}
         </ul>
       </div>
-      <div>
-        {isRoomLeader ? 'You are' : `${roomLeader?.name} is`} the room leader!
-      </div>
+      {!isRoomLeader && <div>{roomLeader?.name} is the room leader!</div>}
+      {isRoomLeader && <Button>Start game</Button>}
     </div>
   );
 };
