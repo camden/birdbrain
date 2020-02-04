@@ -4,6 +4,7 @@ import QueryString from 'query-string';
 import { useDispatch } from 'react-redux';
 import { connectToRoom } from 'store/websocket/actions';
 import useSelector from 'store/use-selector';
+import styles from './Room.module.css';
 
 // TODO this FC is getting sorta big. split this out in the future?
 const Room: React.FC = () => {
@@ -37,18 +38,18 @@ const Room: React.FC = () => {
   const roomLeader = room.users.find(user => user.id === room.leaderUserID);
 
   return (
-    <div>
+    <div className={styles.room}>
       You're in a room called "{room.id}"!
-      <div>
+      <div className="room__users">
         Users here:
         <ul>
           {room.users.map(user => (
             <li key={user.id}>{user.name}</li>
           ))}
         </ul>
-        <div>
-          {isRoomLeader ? 'You are' : `${roomLeader?.name} is`} the room leader!
-        </div>
+      </div>
+      <div>
+        {isRoomLeader ? 'You are' : `${roomLeader?.name} is`} the room leader!
       </div>
     </div>
   );

@@ -8,13 +8,13 @@
   flex-direction: column;
 }
 
-.birdbrain-logo {
+.birdbrain_logo {
   height: 10vmin;
   pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .birdbrain-logo {
+  .birdbrain_logo {
     animation: birdbrain-logo-spin infinite alternate-reverse 2s ease-in-out;
   }
 }
@@ -54,7 +54,7 @@
   }
 }
 
-.home__input-section {
+.home__input_section {
   display: flex;
   flex-direction: column;
 }
@@ -81,12 +81,12 @@
   box-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.7);
 }
 
-.home__input-section-divider {
+.home__input_section_divider {
   text-align: center;
   margin: 40px 0;
 }
 
-.home__join-room-input {
+.home__join_room_input {
   margin-bottom: 16px;
 
   font-size: 1rem;
