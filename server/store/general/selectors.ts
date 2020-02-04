@@ -1,6 +1,6 @@
 import { RootState } from '..';
 import { createSelector } from 'reselect';
-import { ClientStatePayload } from './types';
+import { ServerStatePayload } from './types';
 
 export interface SelectorFunction {
   (state: RootState): any;
@@ -25,7 +25,7 @@ export const getUsersInRoom = (roomId: string) =>
 export const getClientStateByRoomId = (roomId: string) =>
   createSelector(
     getRoomById(roomId),
-    (room): ClientStatePayload => ({
+    (room): ServerStatePayload => ({
       room,
     })
   );

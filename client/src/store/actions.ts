@@ -1,7 +1,7 @@
 import { SetClientState, SET_CLIENT_STATE, SetUser, SET_USER } from './types';
-import { ClientStatePayload, User } from '@server/store/general/types';
+import { ServerStatePayload, User } from '@server/store/general/types';
 
-export const setClientState = (state: ClientStatePayload): SetClientState => {
+export const setClientState = (state: ServerStatePayload): SetClientState => {
   return {
     type: SET_CLIENT_STATE,
     payload: state,

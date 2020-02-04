@@ -1,4 +1,7 @@
+import { ClientStateMessage } from '@server/store/general/types';
+
 export const CONNECT_TO_ROOM = 'CONNECT_TO_ROOM';
+export const SEND_MESSAGE = 'SEND_MESSAGE';
 
 export interface ConnectToRoom {
   type: typeof CONNECT_TO_ROOM;
@@ -8,4 +11,9 @@ export interface ConnectToRoom {
   };
 }
 
-export type WebsocketActionTypes = ConnectToRoom;
+export interface SendMessage {
+  type: typeof SEND_MESSAGE;
+  payload: ClientStateMessage;
+}
+
+export type WebsocketActionTypes = ConnectToRoom | SendMessage;

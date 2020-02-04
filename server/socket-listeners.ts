@@ -1,7 +1,11 @@
 import io from 'socket.io';
 import App from './app';
-import { addUserToRoom, removeUserFromRoom } from './store/general/actions';
-import { User } from './store/general/types';
+import {
+  addUserToRoom,
+  removeUserFromRoom,
+  receivedClientMessage,
+} from './store/general/actions';
+import { User, ClientStateMessage } from './store/general/types';
 import {
   getRoomById,
   getUsersInRoom,
@@ -42,8 +46,6 @@ const attachSocketListeners = (socketServer: io.Server, store: Store): void => {
       name,
     }: { roomId: string; name: string } = connectedSocket.handshake.query;
 
-    console.log(`${name} connected`);
-
     const room = store.select(getRoomById(roomId));
     const user = new User(name);
 
@@ -68,6 +70,10 @@ const attachSocketListeners = (socketServer: io.Server, store: Store): void => {
           store.select(getClientStateByRoomId(roomId))
         );
     }
+
+    connectedSocket.on('client-message', (data: ClientStateMessage) => {
+      store.dispatch(receivedClientMessage(data));
+    });
 
     connectedSocket.on('disconnect', () => {
       console.log(`${name} disconnected`);

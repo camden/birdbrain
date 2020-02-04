@@ -3,6 +3,7 @@ import {
   GeneralActionTypes,
   ADD_USER_TO_ROOM,
   REMOVE_USER_FROM_ROOM,
+  RECEIVED_CLIENT_MESSAGE,
 } from './types';
 import { produce } from 'immer';
 
@@ -22,6 +23,10 @@ export const generalReducer = (
   action: GeneralActionTypes
 ) => {
   switch (action.type) {
+    case RECEIVED_CLIENT_MESSAGE:
+      console.log(action);
+      return state;
+      break;
     case ADD_USER_TO_ROOM:
       return produce(state, draftState => {
         const roomIndex = draftState.rooms.findIndex(

@@ -6,6 +6,7 @@ import { connectToRoom } from 'store/websocket/actions';
 import useSelector from 'store/use-selector';
 import styles from './Room.module.css';
 import Button from 'components/shared/button/Button';
+import { sendStartGame } from 'messages/general-messages';
 
 // TODO this FC is getting sorta big. split this out in the future?
 const Room: React.FC = () => {
@@ -50,7 +51,9 @@ const Room: React.FC = () => {
         </ul>
       </div>
       {!isRoomLeader && <div>{roomLeader?.name} is the room leader!</div>}
-      {isRoomLeader && <Button>Start game</Button>}
+      {isRoomLeader && (
+        <Button onClick={() => dispatch(sendStartGame())}>Start game</Button>
+      )}
     </div>
   );
 };

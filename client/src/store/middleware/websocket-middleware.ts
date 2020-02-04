@@ -1,10 +1,10 @@
 import { MiddlewareAPI, Dispatch } from 'redux';
 import io from 'socket.io-client';
 
-import { CONNECT_TO_ROOM } from 'store/websocket/types';
+import { CONNECT_TO_ROOM, SEND_MESSAGE } from 'store/websocket/types';
 import { ActionTypes } from 'store/types';
 import { setClientState, setUser } from 'store/actions';
-import { ClientStatePayload, User } from '@server/store/general/types';
+import { ServerStatePayload, User } from '@server/store/general/types';
 
 const websocketMiddleware = () => {
   let socket: SocketIOClient.Socket;
@@ -14,7 +14,7 @@ const websocketMiddleware = () => {
   };
 
   const onClientStateUpdate = (store: MiddlewareAPI) => (
-    data: ClientStatePayload
+    data: ServerStatePayload
   ) => {
     store.dispatch(setClientState(data));
   };
@@ -44,6 +44,9 @@ const websocketMiddleware = () => {
         socket.on('client-state-update', onClientStateUpdate(store));
         socket.on('client-user-info', onClientUserInfo(store));
 
+        break;
+      case SEND_MESSAGE:
+        socket.emit('client-message', action.payload);
         break;
       default:
         return next(action);

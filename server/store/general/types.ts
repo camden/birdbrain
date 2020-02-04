@@ -31,14 +31,19 @@ export interface GeneralState {
   rooms: Room[];
 }
 
-export interface ClientStatePayload {
+export interface ServerStatePayload {
   room: Room | null; // should this be nullable?
+}
+
+export interface ClientStateMessage {
+  type: string; // should be a union of possible types
 }
 
 // ---| ACTIONS |-----------------
 
 export const ADD_USER_TO_ROOM = 'ADD_USER_TO_ROOM';
 export const REMOVE_USER_FROM_ROOM = 'REMOVE_USER_FROM_ROOM';
+export const RECEIVED_CLIENT_MESSAGE = 'RECEIVED_CLIENT_MESSAGE';
 
 export interface AddUserToRoomAction {
   type: typeof ADD_USER_TO_ROOM;
@@ -56,4 +61,12 @@ export interface RemoveUserFromRoomAction {
   };
 }
 
-export type GeneralActionTypes = AddUserToRoomAction | RemoveUserFromRoomAction;
+export interface ReceivedClientMessage {
+  type: typeof RECEIVED_CLIENT_MESSAGE;
+  payload: ClientStateMessage;
+}
+
+export type GeneralActionTypes =
+  | AddUserToRoomAction
+  | RemoveUserFromRoomAction
+  | ReceivedClientMessage;

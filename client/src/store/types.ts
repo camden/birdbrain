@@ -1,5 +1,5 @@
 import { WebsocketActionTypes } from './websocket/types';
-import { Room, ClientStatePayload, User } from '@server/store/general/types';
+import { Room, ServerStatePayload, User } from '@server/store/general/types';
 
 export interface ClientState {
   room: Room | null;
@@ -13,7 +13,7 @@ export const SET_USER = 'SET_USER';
 
 export interface SetClientState {
   type: typeof SET_CLIENT_STATE;
-  payload: ClientStatePayload;
+  payload: ServerStatePayload;
 }
 
 export interface SetUser {
