@@ -4,9 +4,8 @@ import {
   GeneralActionTypes,
   ADD_USER_TO_ROOM,
   REMOVE_USER_FROM_ROOM,
-  RECEIVED_CLIENT_MESSAGE,
-  ClientStateMessage,
 } from './types';
+import { ClientStateMessage } from '../client/types';
 
 export const addUserToRoom = (room: Room, user: User): GeneralActionTypes => {
   return {
@@ -35,7 +34,7 @@ export const receivedClientMessage = (
   message: ClientStateMessage
 ): GeneralActionTypes => {
   return {
-    type: RECEIVED_CLIENT_MESSAGE,
-    payload: message,
+    type: message.type,
+    payload: message.payload,
   };
 };

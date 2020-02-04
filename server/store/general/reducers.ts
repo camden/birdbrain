@@ -6,6 +6,7 @@ import {
   RECEIVED_CLIENT_MESSAGE,
 } from './types';
 import { produce } from 'immer';
+import { START_GAME_MESSAGE } from '../client/types';
 
 const initialState: GeneralState = {
   rooms: [
@@ -23,7 +24,7 @@ export const generalReducer = (
   action: GeneralActionTypes
 ) => {
   switch (action.type) {
-    case RECEIVED_CLIENT_MESSAGE:
+    case START_GAME_MESSAGE:
       console.log(action);
       return state;
       break;

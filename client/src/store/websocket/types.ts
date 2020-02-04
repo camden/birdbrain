@@ -1,4 +1,4 @@
-import { ClientStateMessage } from '@server/store/general/types';
+import { ClientStateMessage } from '@server/store/client/types';
 
 export const CONNECT_TO_ROOM = 'CONNECT_TO_ROOM';
 export const SEND_MESSAGE = 'SEND_MESSAGE';

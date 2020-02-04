@@ -1,5 +1,6 @@
 import uuid from 'uuid/v1';
 import { GameState } from '../games/types';
+import { ClientStateMessage, ClientMessageActionTypes } from '../client/types';
 
 export type RoomID = string;
 
@@ -35,10 +36,6 @@ export interface ServerStatePayload {
   room: Room | null; // should this be nullable?
 }
 
-export interface ClientStateMessage {
-  type: string; // should be a union of possible types
-}
-
 // ---| ACTIONS |-----------------
 
 export const ADD_USER_TO_ROOM = 'ADD_USER_TO_ROOM';
@@ -67,6 +64,7 @@ export interface ReceivedClientMessage {
 }
 
 export type GeneralActionTypes =
+  | ClientMessageActionTypes
   | AddUserToRoomAction
   | RemoveUserFromRoomAction
   | ReceivedClientMessage;

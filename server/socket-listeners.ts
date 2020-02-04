@@ -5,12 +5,9 @@ import {
   removeUserFromRoom,
   receivedClientMessage,
 } from './store/general/actions';
-import { User, ClientStateMessage } from './store/general/types';
-import {
-  getRoomById,
-  getUsersInRoom,
-  getClientStateByRoomId,
-} from './store/general/selectors';
+import { User } from './store/general/types';
+import { ClientStateMessage } from './store/client/types';
+import { getRoomById, getClientStateByRoomId } from './store/general/selectors';
 import { Store } from './store';
 
 const getSocketRoomId = (roomId: string) => {
@@ -76,8 +73,6 @@ const attachSocketListeners = (socketServer: io.Server, store: Store): void => {
     });
 
     connectedSocket.on('disconnect', () => {
-      console.log(`${name} disconnected`);
-
       socketServer
         .to(getSocketRoomId(roomId))
         .emit('join-or-leave-messages', `${name} left the server!`);

@@ -4,7 +4,7 @@ import {
   SendMessage,
   SEND_MESSAGE,
 } from './types';
-import { ClientStateMessage } from '@server/store/general/types';
+import { ClientStateMessage } from '@server/store/client/types';
 
 export const connectToRoom = (roomId: string, name: string): ConnectToRoom => {
   return {
