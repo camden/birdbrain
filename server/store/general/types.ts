@@ -26,20 +26,15 @@ export class User {
   }
 }
 
+export interface NormalizedObjects<T> {
+  byId: { [id: string]: T };
+  allIds: string[];
+}
+
 export interface GeneralState {
   entities: {
-    rooms: {
-      byId: {
-        [key: string]: Room;
-      };
-      allIds: string[];
-    };
-    users: {
-      byId: {
-        [key: string]: User;
-      };
-      allIds: string[];
-    };
+    rooms: NormalizedObjects<Room>;
+    users: NormalizedObjects<User>;
   };
 }
 
