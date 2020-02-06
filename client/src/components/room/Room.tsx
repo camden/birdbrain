@@ -37,7 +37,7 @@ const Room: React.FC = () => {
   }
 
   const isRoomLeader = user?.id === room.leaderUserID;
-  const roomLeader = room.users.find(user => user.id === room.leaderUserID);
+  const roomLeader = room.users.find(userId => userId === room.leaderUserID);
 
   return (
     <div className={styles.room}>
@@ -45,12 +45,12 @@ const Room: React.FC = () => {
       <div className="room__users">
         Users here:
         <ul>
-          {room.users.map(user => (
-            <li key={user.id}>{user.name}</li>
+          {room.users.map(userId => (
+            <li key={userId}>{userId}</li>
           ))}
         </ul>
       </div>
-      {!isRoomLeader && <div>{roomLeader?.name} is the room leader!</div>}
+      {!isRoomLeader && <div>{roomLeader} is the room leader!</div>}
       {isRoomLeader && (
         <Button onClick={() => dispatch(sendStartGame())}>Start game</Button>
       )}

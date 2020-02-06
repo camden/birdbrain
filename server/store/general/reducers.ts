@@ -8,14 +8,23 @@ import { produce } from 'immer';
 import { START_GAME_MESSAGE } from '../client/types';
 
 const initialState: GeneralState = {
-  rooms: [
-    {
-      id: 'nu',
-      users: [],
-      leaderUserID: null,
-      game: null,
+  entities: {
+    rooms: {
+      byId: {
+        nu: {
+          id: 'nu',
+          users: [],
+          leaderUserID: null,
+          game: null,
+        },
+      },
+      allIds: ['nu'],
     },
-  ],
+    users: {
+      byId: {},
+      allIds: [],
+    },
+  },
 };
 
 export const generalReducer = (
@@ -29,37 +38,37 @@ export const generalReducer = (
       break;
     case ADD_USER_TO_ROOM:
       return produce(state, draftState => {
-        const roomIndex = draftState.rooms.findIndex(
-          room => room.id === action.payload.room.id
-        );
+        const room = draftState.entities.rooms.byId[action.payload.room.id];
+        const newUser = action.payload.user;
 
-        const roomExists = roomIndex > -1;
-
-        if (!roomExists) {
+        if (!room) {
           return;
         }
 
-        const room = draftState.rooms[roomIndex];
-
         if (room.users.length === 0) {
-          room.leaderUserID = action.payload.user.id;
+          room.leaderUserID = newUser.id;
         }
 
-        room.users.push(action.payload.user);
+        room.users.push(newUser.id);
+        draftState.entities.users.allIds.push(newUser.id);
+        draftState.entities.users.byId[newUser.id] = newUser;
       });
     case REMOVE_USER_FROM_ROOM:
       return produce(state, draftState => {
-        const roomIndex = draftState.rooms.findIndex(
-          room => room.id === action.payload.room.id
+        const room = draftState.entities.rooms.byId[action.payload.room.id];
+        const userToRemove = action.payload.user;
+
+        if (!room) {
+          return;
+        }
+
+        room.users = room.users.filter(id => id !== userToRemove.id);
+
+        draftState.entities.users.allIds = draftState.entities.users.allIds.filter(
+          id => id !== userToRemove.id
         );
 
-        if (roomIndex > -1) {
-          const userIndex = draftState.rooms[roomIndex].users.findIndex(
-            user => user.id === action.payload.user.id
-          );
-
-          draftState.rooms[roomIndex].users.splice(userIndex, 1);
-        }
+        delete draftState.entities.users.byId[userToRemove.id];
       });
     default:
       return state;

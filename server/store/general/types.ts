@@ -2,11 +2,9 @@ import uuid from 'uuid/v1';
 import { GameState } from '../games/types';
 import { ClientStateMessage, ClientMessageActionTypes } from '../client/types';
 
-export type RoomID = string;
-
 export interface Room {
-  id: RoomID;
-  users: User[];
+  id: string;
+  users: string[];
   leaderUserID: UserID | null;
   game: GameState | null;
 }
@@ -29,7 +27,20 @@ export class User {
 }
 
 export interface GeneralState {
-  rooms: Room[];
+  entities: {
+    rooms: {
+      byId: {
+        [key: string]: Room;
+      };
+      allIds: string[];
+    };
+    users: {
+      byId: {
+        [key: string]: User;
+      };
+      allIds: string[];
+    };
+  };
 }
 
 export interface ServerStatePayload {

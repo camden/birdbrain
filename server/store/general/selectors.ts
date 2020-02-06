@@ -1,15 +1,15 @@
 import { RootState } from '..';
 import { createSelector } from 'reselect';
-import { ServerStatePayload } from './types';
+import { ServerStatePayload, Room } from './types';
 
 export interface SelectorFunction {
   (state: RootState): any;
 }
 
-export const getAllRooms = (state: RootState) => state.general.rooms;
-
-export const getRoomById = (roomId: string) => (state: RootState) => {
-  const room = state.general.rooms.find(room => room.id === roomId);
+export const getRoomById = (roomId: string) => (
+  state: RootState
+): Room | null => {
+  const room = state.general.entities.rooms.byId[roomId];
   if (!room) {
     return null;
   }
