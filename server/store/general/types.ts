@@ -40,6 +40,7 @@ export interface GeneralState {
 
 export interface ServerStatePayload {
   room: Room | null; // should this be nullable?
+  usersInRoom: User[];
 }
 
 // ---| ACTIONS |-----------------

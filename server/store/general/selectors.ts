@@ -17,15 +17,23 @@ export const getRoomById = (roomId: string) => (
   return room;
 };
 
-export const getUsersInRoom = (roomId: string) =>
-  createSelector(getRoomById(roomId), room => {
-    return room?.users;
-  });
+// TODO memoize
+export const getUsersInRoom = (roomId: string) => (state: RootState) => {
+  const room = getRoomById(roomId)(state);
+
+  if (!room) {
+    return [];
+  }
+
+  return room.users.map(userId => state.general.entities.users.byId[userId]);
+};
 
 export const getClientStateByRoomId = (roomId: string) =>
   createSelector(
     getRoomById(roomId),
-    (room): ServerStatePayload => ({
+    getUsersInRoom(roomId),
+    (room, usersInRoom): ServerStatePayload => ({
       room,
+      usersInRoom,
     })
   );

@@ -4,6 +4,7 @@ import { Room, ServerStatePayload, User } from '@server/store/general/types';
 export interface ClientState {
   room: Room | null;
   user: User | null;
+  usersInRoom: User[];
 }
 
 // ACTIONS

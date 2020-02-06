@@ -3,6 +3,7 @@ import { ClientState, ActionTypes, SET_CLIENT_STATE, SET_USER } from './types';
 const initialState: ClientState = {
   room: null,
   user: null,
+  usersInRoom: [],
 };
 
 export const reducer = (state = initialState, action: ActionTypes) => {
@@ -16,6 +17,7 @@ export const reducer = (state = initialState, action: ActionTypes) => {
       return {
         ...state,
         room: action.payload.room,
+        usersInRoom: action.payload.usersInRoom,
       };
     default:
       return state;
