@@ -6,7 +6,7 @@ export interface Room {
   id: string;
   users: string[];
   leaderUserID: UserID | null;
-  game: GameState | null;
+  game: string | null;
 }
 
 export type UserID = string;
@@ -35,6 +35,7 @@ export interface GeneralState {
   entities: {
     rooms: NormalizedObjects<Room>;
     users: NormalizedObjects<User>;
+    games: NormalizedObjects<GameState>;
   };
 }
 

@@ -6,6 +6,7 @@ import {
 } from './types';
 import { produce } from 'immer';
 import { START_GAME_MESSAGE } from '../client/types';
+import { GameID } from '../games/types';
 
 const initialState: GeneralState = {
   entities: {
@@ -23,6 +24,14 @@ const initialState: GeneralState = {
     users: {
       byId: {},
       allIds: [],
+    },
+    games: {
+      byId: {
+        '101234-resistance': {
+          type: GameID.THE_RESISTANCE,
+        },
+      },
+      allIds: ['101234-resistance'],
     },
   },
 };
