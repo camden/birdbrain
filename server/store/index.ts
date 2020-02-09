@@ -3,9 +3,11 @@ import {
   combineReducers,
   Store as ReduxStore,
   Action,
+  applyMiddleware,
 } from 'redux';
 import { generalReducer } from './general/reducers';
 import { SelectorFunction } from './general/selectors';
+import serverSocketMiddleware from './middleware/server-socket-middleware';
 
 const rootReducer = combineReducers({
   general: generalReducer,
@@ -16,8 +18,11 @@ export type RootState = ReturnType<typeof rootReducer>;
 export class Store {
   private instance: ReduxStore;
 
-  constructor() {
-    this.instance = createStore(rootReducer);
+  constructor(socketServer: SocketIO.Server) {
+    this.instance = createStore(
+      rootReducer,
+      applyMiddleware(serverSocketMiddleware(socketServer))
+    );
   }
 
   public dispatch(action: Action) {

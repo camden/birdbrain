@@ -20,7 +20,6 @@ class App {
 
   constructor() {
     this.app = express();
-    this.store = new Store();
 
     this.httpServer = http.createServer(this.app);
 
@@ -28,8 +27,11 @@ class App {
       this.initializeSentry();
     }
 
-    this.initializeSocketIO();
     this.initializeMiddleware();
+
+    const socketServer = io(this.httpServer);
+    this.store = new Store(socketServer);
+    attachSocketListeners(socketServer, this.store);
   }
 
   public listen() {
@@ -48,12 +50,6 @@ class App {
     });
     this.app.use(Sentry.Handlers.requestHandler());
     this.app.use(Sentry.Handlers.errorHandler());
-  }
-
-  private initializeSocketIO() {
-    const socketServer = io(this.httpServer);
-
-    attachSocketListeners(socketServer, this.store);
   }
 
   private initializeMiddleware() {
