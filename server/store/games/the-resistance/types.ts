@@ -1,7 +1,7 @@
-import { GameID, GameState } from '../types';
+import { GameType, Game } from '../types';
 import { UserID } from '../../general/types';
 
-export interface ResistanceGameState extends GameState {
-  type: GameID.THE_RESISTANCE;
+export interface ResistanceGameState extends Game {
+  type: GameType.THE_RESISTANCE;
   missionLeader: UserID;
 }

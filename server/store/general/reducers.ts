@@ -6,7 +6,8 @@ import {
 } from './types';
 import { produce } from 'immer';
 import { START_GAME_MESSAGE } from '../client/types';
-import { GameID } from '../games/types';
+import { GameType } from '../games/types';
+import { createNewGame } from '../games';
 
 const initialState: GeneralState = {
   entities: {
@@ -28,7 +29,8 @@ const initialState: GeneralState = {
     games: {
       byId: {
         '101234-resistance': {
-          type: GameID.THE_RESISTANCE,
+          id: '101234-resistance',
+          type: GameType.THE_RESISTANCE,
         },
       },
       allIds: ['101234-resistance'],
@@ -42,8 +44,17 @@ export const generalReducer = (
 ) => {
   switch (action.type) {
     case START_GAME_MESSAGE:
-      console.log(action);
-      return state;
+      const newGame = createNewGame(action.payload.gameType);
+
+      return produce(state, draftState => {
+        const roomId = action.meta.roomId;
+        const room = draftState.entities.rooms.byId[roomId];
+
+        room.game = newGame.id;
+
+        draftState.entities.games.allIds.push(newGame.id);
+        draftState.entities.games.byId[newGame.id] = newGame;
+      });
       break;
     case ADD_USER_TO_ROOM:
       return produce(state, draftState => {

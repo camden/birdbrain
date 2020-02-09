@@ -4,6 +4,7 @@ const initialState: ClientState = {
   room: null,
   user: null,
   usersInRoom: [],
+  game: null,
 };
 
 export const reducer = (state = initialState, action: ActionTypes) => {
@@ -14,10 +15,12 @@ export const reducer = (state = initialState, action: ActionTypes) => {
         user: action.payload.user,
       };
     case SET_CLIENT_STATE:
+      console.log('Got Client State: ', action);
       return {
         ...state,
         room: action.payload.room,
         usersInRoom: action.payload.usersInRoom,
+        game: action.payload.game,
       };
     default:
       return state;

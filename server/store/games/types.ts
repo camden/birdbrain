@@ -1,7 +1,10 @@
-export enum GameID {
+export enum GameType {
   THE_RESISTANCE = 'THE_RESISTANCE',
 }
 
-export interface GameState {
-  type: GameID;
+export type GameID = string;
+
+export interface Game {
+  id: GameID;
+  type: GameType;
 }

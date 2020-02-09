@@ -1,5 +1,5 @@
 import uuid from 'uuid/v1';
-import { GameState } from '../games/types';
+import { Game, GameID } from '../games/types';
 import { ClientMessage, ClientMessageActionTypes } from '../client/types';
 
 export type RoomID = string;
@@ -8,7 +8,7 @@ export interface Room {
   id: RoomID;
   users: string[];
   leaderUserID: UserID | null;
-  game: string | null;
+  game: GameID | null;
 }
 
 export type UserID = string;
@@ -37,12 +37,13 @@ export interface GeneralState {
   entities: {
     rooms: NormalizedObjects<Room>;
     users: NormalizedObjects<User>;
-    games: NormalizedObjects<GameState>;
+    games: NormalizedObjects<Game>;
   };
 }
 
 export interface ServerStatePayload {
   room: Room | null; // should this be nullable?
+  game: Game | null;
   usersInRoom: User[];
 }
 

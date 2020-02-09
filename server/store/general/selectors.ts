@@ -1,6 +1,7 @@
 import { RootState } from '..';
 import { createSelector } from 'reselect';
 import { ServerStatePayload, Room } from './types';
+import { Game } from '../games/types';
 
 export interface SelectorFunction {
   (state: RootState): any;
@@ -28,12 +29,28 @@ export const getUsersInRoom = (roomId: string) => (state: RootState) => {
   return room.users.map(userId => state.general.entities.users.byId[userId]);
 };
 
+export const getGame = (roomId: string) =>
+  createSelector(
+    (state: RootState) => state.general.entities.games.byId,
+    (state: RootState) => state.general.entities.rooms.byId,
+    (gamesById, roomsById): Game | null => {
+      const gameId = roomsById[roomId].game;
+      if (!gameId) {
+        return null;
+      }
+
+      return gamesById[gameId];
+    }
+  );
+
 export const getClientStateByRoomId = (roomId: string) =>
   createSelector(
     getRoomById(roomId),
     getUsersInRoom(roomId),
-    (room, usersInRoom): ServerStatePayload => ({
+    getGame(roomId),
+    (room, usersInRoom, game): ServerStatePayload => ({
       room,
       usersInRoom,
+      game,
     })
   );

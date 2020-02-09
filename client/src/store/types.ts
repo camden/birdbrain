@@ -1,10 +1,12 @@
 import { WebsocketActionTypes } from './websocket/types';
 import { Room, ServerStatePayload, User } from '@server/store/general/types';
+import { Game } from '@server/store/games/types';
 
 export interface ClientState {
   room: Room | null;
   user: User | null;
   usersInRoom: User[];
+  game: Game | null;
 }
 
 // ACTIONS
