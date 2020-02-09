@@ -1,12 +1,6 @@
 import { MiddlewareAPI, Dispatch } from 'redux';
-import {
-  GeneralActionTypes,
-  RoomID,
-  ADD_USER_TO_ROOM,
-  REMOVE_USER_FROM_ROOM,
-} from '../general/types';
+import { GeneralActionTypes, RoomID } from '../general/types';
 import { RootState } from '..';
-import { START_GAME_MESSAGE } from '../client/types';
 import { getClientStateByRoomId } from '../general/selectors';
 
 const getSocketRoomId = (roomId: string) => {

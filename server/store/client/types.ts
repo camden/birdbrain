@@ -1,9 +1,9 @@
 import { GameType } from '../games/types';
-import { RoomID } from '../general/types';
+import { RoomID, BaseAction } from '../general/types';
 
 export const START_GAME_MESSAGE = 'START_GAME_MESSAGE';
 
-export interface StartGameMessage {
+export interface StartGameMessage extends BaseAction {
   type: typeof START_GAME_MESSAGE;
   payload: {
     gameType: GameType;
