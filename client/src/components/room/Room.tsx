@@ -6,11 +6,13 @@ import { connectToRoom } from 'store/websocket/actions';
 import useSelector from 'store/use-selector';
 import styles from './Room.module.css';
 import Button from 'components/shared/button/Button';
+import Game from 'components/games/Game';
 import { sendStartGame } from 'messages/general-messages';
 import {
   getIsRoomLeader,
   getUsersInRoom,
   getRoomLeader,
+  getGame,
 } from 'store/selectors';
 
 // TODO this FC is getting sorta big. split this out in the future?
@@ -21,6 +23,7 @@ const Room: React.FC = () => {
   const isRoomLeader = useSelector(getIsRoomLeader());
   const usersInRoom = useSelector(getUsersInRoom());
   const roomLeader = useSelector(getRoomLeader());
+  const game = useSelector(getGame());
 
   useEffect(() => {
     if (!id) {
@@ -41,6 +44,10 @@ const Room: React.FC = () => {
 
   if (!room) {
     return <div>Room '{id}' does not exist.</div>;
+  }
+
+  if (game) {
+    return <Game />;
   }
 
   return (
