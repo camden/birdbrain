@@ -27,11 +27,11 @@ class App {
       this.initializeSentry();
     }
 
-    this.initializeMiddleware();
-
     const socketServer = io(this.httpServer);
     this.store = new Store(socketServer);
     attachSocketListeners(socketServer, this.store);
+
+    this.initializeMiddleware();
   }
 
   public listen() {

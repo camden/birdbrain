@@ -50,3 +50,9 @@ export const getUsersInRoom = () =>
     (state: ClientState) => state.usersInRoom,
     usersInRoom => usersInRoom
   );
+
+export const getGame = () =>
+  createSelector(
+    (state: ClientState) => state.game,
+    game => game
+  );
