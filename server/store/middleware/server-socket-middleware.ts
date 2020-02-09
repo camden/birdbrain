@@ -30,14 +30,8 @@ const socketMiddleware = () => (socketServer: SocketIO.Server) => {
   ) => {
     next(action);
 
-    if (
-      action.type === START_GAME_MESSAGE ||
-      action.type === ADD_USER_TO_ROOM ||
-      action.type === REMOVE_USER_FROM_ROOM
-    ) {
-      if (action.meta.sendClientUpdate) {
-        sendClientUpdate(action.meta.roomId, store);
-      }
+    if (action.meta && action.meta.sendClientUpdate) {
+      sendClientUpdate(action.meta.roomId, store);
     }
   };
 };
