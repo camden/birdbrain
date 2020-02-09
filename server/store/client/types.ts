@@ -15,6 +15,7 @@ export type ClientMessage = StartGameMessage;
 export interface ClientMessageMeta {
   meta: {
     roomId: RoomID;
+    sendClientUpdate: boolean;
   };
 }
 

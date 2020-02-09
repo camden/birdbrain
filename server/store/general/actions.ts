@@ -4,15 +4,21 @@ import {
   GeneralActionTypes,
   ADD_USER_TO_ROOM,
   REMOVE_USER_FROM_ROOM,
+  AddUserToRoomAction,
+  RemoveUserFromRoomAction,
 } from './types';
 import { ClientMessageWithMeta } from '../client/types';
 
-export const addUserToRoom = (room: Room, user: User): GeneralActionTypes => {
+export const addUserToRoom = (room: Room, user: User): AddUserToRoomAction => {
   return {
     type: ADD_USER_TO_ROOM,
     payload: {
       room,
       user,
+    },
+    meta: {
+      roomId: room.id,
+      sendClientUpdate: true,
     },
   };
 };
@@ -20,12 +26,16 @@ export const addUserToRoom = (room: Room, user: User): GeneralActionTypes => {
 export const removeUserFromRoom = (
   room: Room,
   user: User
-): GeneralActionTypes => {
+): RemoveUserFromRoomAction => {
   return {
     type: REMOVE_USER_FROM_ROOM,
     payload: {
       room,
       user,
+    },
+    meta: {
+      roomId: room.id,
+      sendClientUpdate: true,
     },
   };
 };
@@ -38,6 +48,7 @@ export const receivedClientMessage = (
     payload: message.payload,
     meta: {
       roomId: message.meta.roomId,
+      sendClientUpdate: message.meta.sendClientUpdate ?? true,
     },
   };
 };

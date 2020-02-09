@@ -1,5 +1,10 @@
 import { MiddlewareAPI, Dispatch } from 'redux';
-import { GeneralActionTypes, RoomID } from '../general/types';
+import {
+  GeneralActionTypes,
+  RoomID,
+  ADD_USER_TO_ROOM,
+  REMOVE_USER_FROM_ROOM,
+} from '../general/types';
 import { RootState } from '..';
 import { START_GAME_MESSAGE } from '../client/types';
 import { getClientStateByRoomId } from '../general/selectors';
@@ -25,8 +30,14 @@ const socketMiddleware = () => (socketServer: SocketIO.Server) => {
   ) => {
     next(action);
 
-    if (action.type === START_GAME_MESSAGE) {
-      sendClientUpdate(action.meta.roomId, store);
+    if (
+      action.type === START_GAME_MESSAGE ||
+      action.type === ADD_USER_TO_ROOM ||
+      action.type === REMOVE_USER_FROM_ROOM
+    ) {
+      if (action.meta.sendClientUpdate) {
+        sendClientUpdate(action.meta.roomId, store);
+      }
     }
   };
 };

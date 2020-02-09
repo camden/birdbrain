@@ -13,28 +13,6 @@ const getSocketRoomId = (roomId: string) => {
   return `room:${roomId}`;
 };
 
-class SocketManager {
-  public socketServer: io.Server;
-
-  constructor(sockerServer: io.Server) {
-    this.socketServer = sockerServer;
-  }
-}
-
-/** 
-
-example sequence might be:
-
-client sends websocket message to server saying "in my current room, i just took
-the following action with the following data"
-
-with that message, the server resolves it against its entire state. this could include
-changing the current game state (most likely) or changing the room state (like renaming the user)
-
-after resolving it, the server emits the new current state to all users in the affected room
-
-**/
-
 const attachSocketListeners = (socketServer: io.Server, store: Store): void => {
   socketServer.on('connection', connectedSocket => {
     const {
@@ -58,13 +36,6 @@ const attachSocketListeners = (socketServer: io.Server, store: Store): void => {
 
       // let this specific client know what its user info is
       connectedSocket.emit('client-user-info', user);
-
-      socketServer
-        .to(getSocketRoomId(roomId))
-        .emit(
-          'client-state-update',
-          store.select(getClientStateByRoomId(roomId))
-        );
     }
 
     connectedSocket.on('client-message', (data: ClientMessageWithMeta) => {
@@ -77,15 +48,6 @@ const attachSocketListeners = (socketServer: io.Server, store: Store): void => {
         .emit('join-or-leave-messages', `${name} left the server!`);
 
       store.dispatch(removeUserFromRoom(room, user));
-
-      // TODO find some way to "hook" into this event so that we can
-      // emit this kind of state update whenever anything important happens
-      socketServer
-        .to(getSocketRoomId(roomId))
-        .emit(
-          'client-state-update',
-          store.select(getClientStateByRoomId(roomId))
-        );
     });
   });
 };

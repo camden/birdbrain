@@ -59,6 +59,10 @@ export interface AddUserToRoomAction {
     user: User;
     room: Room;
   };
+  meta: {
+    roomId: RoomID;
+    sendClientUpdate: boolean;
+  };
 }
 
 export interface RemoveUserFromRoomAction {
@@ -66,6 +70,10 @@ export interface RemoveUserFromRoomAction {
   payload: {
     user: User;
     room: Room;
+  };
+  meta: {
+    roomId: RoomID;
+    sendClientUpdate: boolean;
   };
 }
 
