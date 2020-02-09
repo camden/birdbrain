@@ -1,12 +1,11 @@
 import io from 'socket.io';
-import App from './app';
 import {
   addUserToRoom,
   removeUserFromRoom,
   receivedClientMessage,
 } from './store/general/actions';
 import { User } from './store/general/types';
-import { ClientStateMessage } from './store/client/types';
+import { ClientMessageWithMeta } from './store/client/types';
 import { getRoomById, getClientStateByRoomId } from './store/general/selectors';
 import { Store } from './store';
 
@@ -68,7 +67,7 @@ const attachSocketListeners = (socketServer: io.Server, store: Store): void => {
         );
     }
 
-    connectedSocket.on('client-message', (data: ClientStateMessage) => {
+    connectedSocket.on('client-message', (data: ClientMessageWithMeta) => {
       store.dispatch(receivedClientMessage(data));
     });
 

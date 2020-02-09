@@ -3,5 +3,5 @@ export enum GameID {
 }
 
 export interface GameState {
-  type: GameID; // e.g. The Resistance, fishbowl, etc
+  type: GameID;
 }

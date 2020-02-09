@@ -2,7 +2,7 @@ import { MiddlewareAPI, Dispatch } from 'redux';
 import io from 'socket.io-client';
 
 import { CONNECT_TO_ROOM, SEND_MESSAGE } from 'store/websocket/types';
-import { ActionTypes } from 'store/types';
+import { ActionTypes, ClientState } from 'store/types';
 import { setClientState, setUser } from 'store/actions';
 import { ServerStatePayload, User } from '@server/store/general/types';
 
@@ -23,11 +23,11 @@ const websocketMiddleware = () => {
     store.dispatch(setUser(user));
   };
 
-  return (store: MiddlewareAPI) => (next: Dispatch) => (
+  return (store: MiddlewareAPI<Dispatch, ClientState>) => (next: Dispatch) => (
     action: ActionTypes
   ) => {
     switch (action.type) {
-      case CONNECT_TO_ROOM:
+      case CONNECT_TO_ROOM: {
         const { roomId, name } = action.payload;
 
         const devUrl = 'http://localhost:8080';
@@ -45,9 +45,18 @@ const websocketMiddleware = () => {
         socket.on('client-user-info', onClientUserInfo(store));
 
         break;
-      case SEND_MESSAGE:
-        socket.emit('client-message', action.payload);
+      }
+      case SEND_MESSAGE: {
+        const roomId = store.getState().room?.id;
+
+        socket.emit('client-message', {
+          ...action.payload,
+          meta: {
+            roomId,
+          },
+        });
         break;
+      }
       default:
         return next(action);
     }

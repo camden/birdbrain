@@ -5,7 +5,7 @@ import {
   ADD_USER_TO_ROOM,
   REMOVE_USER_FROM_ROOM,
 } from './types';
-import { ClientStateMessage } from '../client/types';
+import { ClientMessageWithMeta } from '../client/types';
 
 export const addUserToRoom = (room: Room, user: User): GeneralActionTypes => {
   return {
@@ -31,10 +31,13 @@ export const removeUserFromRoom = (
 };
 
 export const receivedClientMessage = (
-  message: ClientStateMessage
+  message: ClientMessageWithMeta
 ): GeneralActionTypes => {
   return {
     type: message.type,
     payload: message.payload,
+    meta: {
+      roomId: message.meta.roomId,
+    },
   };
 };

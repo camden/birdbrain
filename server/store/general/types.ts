@@ -1,9 +1,11 @@
 import uuid from 'uuid/v1';
 import { GameState } from '../games/types';
-import { ClientStateMessage, ClientMessageActionTypes } from '../client/types';
+import { ClientMessage, ClientMessageActionTypes } from '../client/types';
+
+export type RoomID = string;
 
 export interface Room {
-  id: string;
+  id: RoomID;
   users: string[];
   leaderUserID: UserID | null;
   game: string | null;
@@ -68,7 +70,7 @@ export interface RemoveUserFromRoomAction {
 
 export interface ReceivedClientMessage {
   type: typeof RECEIVED_CLIENT_MESSAGE;
-  payload: ClientStateMessage;
+  payload: ClientMessage;
 }
 
 export type GeneralActionTypes =
