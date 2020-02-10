@@ -10,7 +10,10 @@ export interface StartGameMessage extends BaseAction {
   };
 }
 
-export type ClientMessage = StartGameMessage;
+export interface ClientMessage {
+  type: string;
+  payload: any;
+}
 
 export interface ClientMessageMeta {
   meta: {

@@ -3,11 +3,16 @@ import {
   GeneralActionTypes,
   ADD_USER_TO_ROOM,
   REMOVE_USER_FROM_ROOM,
+  RoomID,
+  Room,
 } from './types';
 import { produce } from 'immer';
 import { START_GAME_MESSAGE } from '../client/types';
 import { GameType } from '../games/types';
 import { createNewGame } from '../games';
+import { resistanceReducer } from '../games/the-resistance/reducers';
+import { ResistanceGameState } from '../games/the-resistance/types';
+import { ResistanceActionTypes } from '../games/the-resistance/actions';
 
 const initialState: GeneralState = {
   entities: {
@@ -38,16 +43,55 @@ const initialState: GeneralState = {
   },
 };
 
+const getRoomById = (roomId: RoomID, state: GeneralState): Room | null => {
+  return state.entities.rooms.byId[roomId] || null;
+};
+
 export const generalReducer = (
   state = initialState,
   action: GeneralActionTypes
 ) => {
+  if (action.type.startsWith('RST_')) {
+    const roomId = action.meta?.roomId;
+    if (!roomId) {
+      return state;
+    }
+
+    const room = getRoomById(roomId, state);
+    const gameId = room?.game;
+    if (!gameId) {
+      return state;
+    }
+    return produce(state, draftState => {
+      const game = draftState.entities.games.byId[gameId];
+      if (!game) {
+        return;
+      }
+
+      const updatedGame = resistanceReducer(
+        game as ResistanceGameState,
+        action as ResistanceActionTypes
+      );
+
+      draftState.entities.games.byId[gameId] = updatedGame;
+    });
+  }
+
   switch (action.type) {
     case START_GAME_MESSAGE:
-      const newGame = createNewGame(action.payload.gameType);
+      const roomId = action.meta?.roomId;
+
+      if (!roomId) {
+        return state;
+      }
+
+      const room = state.entities.rooms.byId[roomId];
+      const usersInRoom = room.users.map(
+        userId => state.entities.users.byId[userId]
+      );
+      const newGame = createNewGame(action.payload.gameType, usersInRoom);
 
       return produce(state, draftState => {
-        const roomId = action.meta.roomId;
         const room = draftState.entities.rooms.byId[roomId];
 
         room.game = newGame.id;
@@ -55,7 +99,6 @@ export const generalReducer = (
         draftState.entities.games.allIds.push(newGame.id);
         draftState.entities.games.byId[newGame.id] = newGame;
       });
-      break;
     case ADD_USER_TO_ROOM:
       return produce(state, draftState => {
         const room = draftState.entities.rooms.byId[action.payload.room.id];
