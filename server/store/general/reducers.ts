@@ -19,14 +19,14 @@ const initialState: GeneralState = {
   entities: {
     rooms: {
       byId: {
-        nu: {
-          id: 'nu',
+        NU: {
+          id: 'NU',
           users: [],
           leaderUserID: null,
           game: null,
         },
       },
-      allIds: ['nu'],
+      allIds: ['NU'],
     },
     users: {
       byId: {},
