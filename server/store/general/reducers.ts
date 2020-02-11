@@ -13,7 +13,7 @@ import { createNewGame } from '../games';
 import { resistanceReducer } from '../games/the-resistance/reducers';
 import { ResistanceGameState } from '../games/the-resistance/types';
 import { ResistanceActionTypes } from '../games/the-resistance/actions';
-import { pickRandomNumber } from '../../utils/rng';
+import { pickRandomNumber } from 'utils/rng';
 
 const initialState: GeneralState = {
   entities: {

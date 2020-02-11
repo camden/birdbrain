@@ -6,8 +6,8 @@ import {
 } from './types';
 import { GameType, GameID } from '../types';
 import { User } from 'store/general/types';
-import { pickRandomNumber } from '../../../utils/rng';
-import shuffleArray from '../../../utils/shuffle-array';
+import { pickRandomNumber } from 'utils/rng';
+import shuffleArray from 'utils/shuffle-array';
 
 const createPlayerFromUser = (
   user: User,

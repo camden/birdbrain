@@ -1,5 +1,5 @@
 import { GameType, Game } from '../types';
-import { UserID } from '../../general/types';
+import { UserID } from 'store/general/types';
 
 export enum ResistancePhase {
   PICK_TEAM = 'PICK_TEAM',
