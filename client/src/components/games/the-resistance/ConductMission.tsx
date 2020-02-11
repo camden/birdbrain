@@ -69,7 +69,7 @@ const TheResistanceConductMission: React.FC<ResistanceProps> = ({ game }) => {
           <li key={player.userId}>{player.name}</li>
         ))}
       </ul>
-      {!voted && voteButtons}
+      {!voted && currentUserIsOnTeam && voteButtons}
     </div>
   );
 };

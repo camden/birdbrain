@@ -3,6 +3,8 @@ import {
   ResistancePhase,
   ResistanceTeamVote,
   ResistanceMissionVote,
+  ResistanceMissionResults,
+  ResistancePlayer,
 } from './types';
 import {
   ResistanceActionTypes,
@@ -13,6 +15,15 @@ import {
   RST_ACK_MISSION_VOTE_RESULTS,
 } from './actions';
 import produce from 'immer';
+
+const getNextMissionLeader = (game: ResistanceGameState): ResistancePlayer => {
+  const indexOfOldMissionLeader = game.players
+    .map(p => p.userId)
+    .indexOf(game.missionLeader.userId);
+  const indexOfNewMissionLeader =
+    (indexOfOldMissionLeader + 1) % game.players.length;
+  return game.players[indexOfNewMissionLeader];
+};
 
 export const resistanceReducer = (
   game: ResistanceGameState,
@@ -62,13 +73,7 @@ export const resistanceReducer = (
           } else {
             draftState.phase = ResistancePhase.PICK_TEAM;
 
-            // pick new leader
-            const indexOfOldMissionLeader = game.players
-              .map(p => p.userId)
-              .indexOf(game.missionLeader.userId);
-            const indexOfNewMissionLeader =
-              (indexOfOldMissionLeader + 1) % game.players.length;
-            draftState.missionLeader = game.players[indexOfNewMissionLeader];
+            draftState.missionLeader = getNextMissionLeader(game);
 
             // reset votes
             draftState.teamApprovalVotes = [];
@@ -85,10 +90,10 @@ export const resistanceReducer = (
           draftState.missionFailVotes.push(userId);
         }
 
-        const everyoneVoted = game.players.every(
-          player =>
-            draftState.missionSuccessVotes.includes(player.userId) ||
-            draftState.missionFailVotes.includes(player.userId)
+        const everyoneVoted = game.missionTeam.every(
+          userId =>
+            draftState.missionSuccessVotes.includes(userId) ||
+            draftState.missionFailVotes.includes(userId)
         );
 
         if (everyoneVoted) {
@@ -106,8 +111,38 @@ export const resistanceReducer = (
         if (everyoneAcknowledged) {
           draftState.acknowledged = [];
 
-          // bump score, etc
-          // also check for victory
+          const missionSucceeded = draftState.missionFailVotes.length === 0;
+
+          const nextMissionResults: ResistanceMissionResults = {
+            missionNumber: game.mission,
+            succeeded: missionSucceeded,
+          };
+
+          draftState.missionHistory.push(nextMissionResults);
+
+          const resistanceScore = draftState.missionHistory.reduce(
+            (sum, results) => (results.succeeded ? sum + 1 : sum),
+            0
+          );
+
+          const spyScore = draftState.missionHistory.reduce(
+            (sum, results) => (results.succeeded ? sum : sum + 1),
+            0
+          );
+
+          const gameIsOver = resistanceScore === 3 || spyScore === 3;
+          if (gameIsOver) {
+            draftState.phase = ResistancePhase.SHOW_FINAL_RESULTS;
+          } else {
+            draftState.phase = ResistancePhase.PICK_TEAM;
+            draftState.missionLeader = getNextMissionLeader(game);
+            draftState.mission += 1;
+            draftState.missionTeam = [];
+            draftState.missionSuccessVotes = [];
+            draftState.missionFailVotes = [];
+            draftState.teamApprovalVotes = [];
+            draftState.teamRejectVotes = [];
+          }
         }
       });
     default:

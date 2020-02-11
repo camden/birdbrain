@@ -36,12 +36,19 @@ const TheResistancePickTeam: React.FC<ResistanceProps> = ({ game }) => {
   };
 
   if (user?.id !== game.missionLeader.userId) {
-    return <div>waiting for leader to pick team.</div>;
+    return (
+      <div>
+        Waiting for {game.missionLeader.name} to pick a team for Mission{' '}
+        {game.mission}.
+      </div>
+    );
   }
 
   return (
     <div>
-      <h2>you are the leader. pick a team!</h2>
+      <h2>
+        {game.missionLeader.name}, pick a team for Mission {game.mission}.
+      </h2>
       <ul>
         {game.players.map(player => (
           <li key={player.userId}>
@@ -62,7 +69,7 @@ const TheResistancePickTeam: React.FC<ResistanceProps> = ({ game }) => {
           dispatch(sendMessage(rstPickMissionTeam(selectedPlayerIds)))
         }
       >
-        Confirm
+        Confirm Team
       </Button>
     </div>
   );

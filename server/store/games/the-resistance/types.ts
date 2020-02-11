@@ -7,6 +7,7 @@ export enum ResistancePhase {
   SHOW_TEAM_VOTING_RESULTS = 'SHOW_TEAM_VOTING_RESULTS',
   CONDUCT_MISSION = 'CONDUCT_MISSION',
   SHOW_MISSION_RESULTS = 'SHOW_MISSION_RESULTS',
+  SHOW_FINAL_RESULTS = 'SHOW_FINAL_RESULTS',
 }
 
 export interface ResistanceGameState extends Game {
@@ -14,13 +15,19 @@ export interface ResistanceGameState extends Game {
   missionLeader: ResistancePlayer;
   phase: ResistancePhase;
   mission: number;
-  missionTeam: UserID[] | null;
+  missionTeam: UserID[];
   teamApprovalVotes: UserID[];
   teamRejectVotes: UserID[];
   missionSuccessVotes: UserID[];
   missionFailVotes: UserID[];
   acknowledged: UserID[];
   players: ResistancePlayer[];
+  missionHistory: ResistanceMissionResults[];
+}
+
+export interface ResistanceMissionResults {
+  missionNumber: number;
+  succeeded: boolean;
 }
 
 export enum ResistanceRole {

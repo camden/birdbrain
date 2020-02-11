@@ -26,13 +26,14 @@ export const createNewGameOfTheResistance = (
     type: GameType.THE_RESISTANCE,
     missionLeader,
     mission: 1,
-    missionTeam: null,
+    missionTeam: [],
     teamApprovalVotes: [],
     teamRejectVotes: [],
     missionSuccessVotes: [],
     missionFailVotes: [],
     acknowledged: [],
     phase: ResistancePhase.PICK_TEAM,
+    missionHistory: [],
     players,
   };
 };
