@@ -2,7 +2,7 @@ import React from 'react';
 import useSelector from 'store/use-selector';
 import { getGame } from 'store/selectors';
 import { GameType } from '@server/store/games/types';
-import TheResistanceMain from './the-resistance/TheResistanceMain';
+import TheResistanceMain from './the-resistance/Main';
 import { ResistanceGameState } from '@server/store/games/the-resistance/types';
 
 const Game = () => {

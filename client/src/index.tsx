@@ -6,9 +6,19 @@ import * as serviceWorker from './serviceWorker';
 import App from './components/app/App';
 import { reducer } from './store/reducers';
 import websocketMiddleware from './store/middleware/websocket-middleware';
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 
-const store = createStore(reducer, applyMiddleware(websocketMiddleware));
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(
+  reducer,
+  composeEnhancers(applyMiddleware(websocketMiddleware))
+);
 
 ReactDOM.render(
   <Provider store={store}>
