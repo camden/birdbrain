@@ -8,6 +8,7 @@ import VoteForTeam from './VoteForTeam';
 import ShowTeamVotingResults from './ShowTeamVotingResults';
 import ConductMission from './ConductMission';
 import ShowMissionVotingResults from './ShowMissionVotingResults';
+import ShowFinalResults from './ShowFinalResults';
 
 export interface ResistanceProps {
   game: ResistanceGameState;
@@ -25,6 +26,8 @@ const TheResistanceMain: React.FC<ResistanceProps> = ({ game }) => {
       return <ConductMission game={game} />;
     case ResistancePhase.SHOW_MISSION_RESULTS:
       return <ShowMissionVotingResults game={game} />;
+    case ResistancePhase.SHOW_FINAL_RESULTS:
+      return <ShowFinalResults game={game} />;
     default:
       return <div>error</div>;
   }
