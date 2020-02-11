@@ -3,6 +3,7 @@ import {
   ResistanceTeamVote,
   ResistanceMissionVote,
 } from './types';
+import { UserID } from 'store/general/types';
 
 /**
  * actions needed:
@@ -26,7 +27,7 @@ export interface RstPickMissionTeamAction {
   };
 }
 
-export const rstPickMissionTeam = (teamMembers: ResistancePlayer[]) => {
+export const rstPickMissionTeam = (teamMembers: UserID[]) => {
   return {
     type: RST_PICK_MISSION_TEAM,
     payload: {

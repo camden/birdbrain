@@ -2,7 +2,7 @@ import { MiddlewareAPI, Dispatch } from 'redux';
 import io from 'socket.io-client';
 
 import { CONNECT_TO_ROOM, SEND_MESSAGE } from 'store/websocket/types';
-import { ActionTypes, ClientState } from 'store/types';
+import { ActionTypes, ClientState, SET_USER } from 'store/types';
 import { setClientState, setUser } from 'store/actions';
 import { ServerStatePayload, User } from '@server/store/general/types';
 
@@ -29,6 +29,11 @@ const websocketMiddleware = () => {
     action: ActionTypes
   ) => {
     switch (action.type) {
+      case SET_USER: {
+        localStorage.setItem(LOCAL_STORAGE_USER_ID_KEY, action.payload.user.id);
+        next(action);
+        break;
+      }
       case CONNECT_TO_ROOM: {
         const { roomId, name } = action.payload;
 
@@ -40,9 +45,12 @@ const websocketMiddleware = () => {
 
         const existingUserId = localStorage.getItem(LOCAL_STORAGE_USER_ID_KEY);
 
-        socket = io.connect(url, {
-          query: { roomId, name, userId: existingUserId },
-        });
+        const query: { [key: string]: string } = { roomId, name };
+        if (existingUserId) {
+          query.userId = existingUserId;
+        }
+
+        socket = io.connect(url, { query });
 
         socket.on('connect', onConnect(store, roomId));
         socket.on('client-state-update', onClientStateUpdate(store));
