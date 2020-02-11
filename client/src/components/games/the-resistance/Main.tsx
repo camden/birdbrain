@@ -13,6 +13,8 @@ const TheResistanceMain: React.FC<ResistanceProps> = ({ game }) => {
   switch (game.phase) {
     case ResistancePhase.PICK_TEAM:
       return <PickTeam game={game} />;
+    case ResistancePhase.VOTE_FOR_TEAM:
+      return <div>voting for team</div>;
     case ResistancePhase.SHOW_TEAM_VOTING_RESULTS:
       return <div>showing team results</div>;
     case ResistancePhase.CONDUCT_MISSION:

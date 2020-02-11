@@ -23,7 +23,7 @@ export const RST_ACK_MISSION_VOTE_RESULTS = 'RST_ACK_MISSION_VOTE_RESULTS';
 export interface RstPickMissionTeamAction {
   type: typeof RST_PICK_MISSION_TEAM;
   payload: {
-    teamMembers: ResistancePlayer[];
+    teamMembers: UserID[];
   };
 }
 

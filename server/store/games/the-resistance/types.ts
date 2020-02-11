@@ -3,6 +3,7 @@ import { UserID } from '../../general/types';
 
 export enum ResistancePhase {
   PICK_TEAM = 'PICK_TEAM',
+  VOTE_FOR_TEAM = 'VOTE_FOR_TEAM',
   SHOW_TEAM_VOTING_RESULTS = 'SHOW_TEAM_VOTING_RESULTS',
   CONDUCT_MISSION = 'CONDUCT_MISSION',
   SHOW_MISSION_RESULTS = 'SHOW_MISSION_RESULTS',
@@ -13,6 +14,7 @@ export interface ResistanceGameState extends Game {
   missionLeader: ResistancePlayer;
   phase: ResistancePhase;
   mission: number;
+  missionTeam: UserID[] | null;
   players: ResistancePlayer[];
 }
 
