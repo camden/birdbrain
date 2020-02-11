@@ -37,10 +37,10 @@ const TheResistancePickTeam: React.FC<ResistanceProps> = ({ game }) => {
 
   if (user?.id !== game.missionLeader.userId) {
     return (
-      <div>
+      <h2>
         Waiting for {game.missionLeader.name} to pick a team for Mission{' '}
         {game.mission}.
-      </div>
+      </h2>
     );
   }
 

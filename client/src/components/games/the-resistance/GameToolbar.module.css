@@ -1,6 +1,5 @@
 .toolbar {
   display: flex;
-  background-color: pink;
   height: 100%;
   padding-bottom: 10px;
 }
