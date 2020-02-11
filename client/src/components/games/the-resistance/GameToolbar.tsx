@@ -25,6 +25,7 @@ const TheResistanceGameToolbar: React.FC<ResistanceToolbarProps> = ({
               number={mission.number}
               requiredPlayers={mission.requiredPlayers}
               status={mission.status}
+              isCurrentMission={mission.number === game.mission}
             />
           ))}
         </div>

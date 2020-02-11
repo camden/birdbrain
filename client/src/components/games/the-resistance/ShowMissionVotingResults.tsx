@@ -20,6 +20,11 @@ const TheResistanceShowMissionVotingResults: React.FC<ResistanceProps> = ({
     setAcknowledged(true);
   };
 
+  const currentMission = game.allMissions[game.mission - 1];
+  const missionSucceeded = currentMission.requiresTwoFails
+    ? game.missionFailVotes.length < 2
+    : game.missionFailVotes.length === 0;
+
   return (
     <div>
       <h2>The results are in!</h2>
@@ -29,6 +34,11 @@ const TheResistanceShowMissionVotingResults: React.FC<ResistanceProps> = ({
       {game.missionFailVotes.map(vote => (
         <div>Fail</div>
       ))}
+      <h2>
+        {missionSucceeded
+          ? 'This mission has succeeded!'
+          : 'This mission has failed!'}
+      </h2>
       {!acknowledged && <Button onClick={onContinueClick}>Continue</Button>}
     </div>
   );

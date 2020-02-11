@@ -59,14 +59,16 @@ const TheResistancePickTeam: React.FC<ResistanceProps> = ({ game }) => {
               <input
                 type="checkbox"
                 checked={selectedPlayerIds.includes(player.userId)}
+                id={`pick-team-checkbox__${player.userId}`}
                 disabled={
                   selectedPlayerIds.length >= currentMission.requiredPlayers &&
                   !selectedPlayerIds.includes(player.userId)
                 }
                 onChange={onCheckboxChange(player)}
               />
-
-              {player.name}
+              <label htmlFor={`pick-team-checkbox__${player.userId}`}>
+                {player.name}
+              </label>
             </div>
           </li>
         ))}
