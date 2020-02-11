@@ -22,8 +22,8 @@ export class User {
   public id: UserID;
   public name: string;
 
-  constructor(name: string) {
-    this.id = uuid();
+  constructor(name: string, id?: UserID) {
+    this.id = id || uuid();
     this.name = name;
   }
 }

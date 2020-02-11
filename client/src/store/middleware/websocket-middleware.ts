@@ -6,6 +6,8 @@ import { ActionTypes, ClientState } from 'store/types';
 import { setClientState, setUser } from 'store/actions';
 import { ServerStatePayload, User } from '@server/store/general/types';
 
+const LOCAL_STORAGE_USER_ID_KEY = 'birdbrain__user_id';
+
 const websocketMiddleware = () => {
   let socket: SocketIOClient.Socket;
 
@@ -36,8 +38,10 @@ const websocketMiddleware = () => {
 
         console.log(`Connecting to room ${roomId} at url ${url}...`);
 
+        const existingUserId = localStorage.getItem(LOCAL_STORAGE_USER_ID_KEY);
+
         socket = io.connect(url, {
-          query: { roomId, name },
+          query: { roomId, name, userId: existingUserId },
         });
 
         socket.on('connect', onConnect(store, roomId));

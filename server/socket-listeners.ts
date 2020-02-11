@@ -6,7 +6,7 @@ import {
 } from './store/general/actions';
 import { User } from './store/general/types';
 import { ClientMessageWithMeta } from './store/client/types';
-import { getRoomById, getClientStateByRoomId } from './store/general/selectors';
+import { getRoomById } from './store/general/selectors';
 import { Store } from './store';
 
 const getSocketRoomId = (roomId: string) => {
@@ -18,10 +18,15 @@ const attachSocketListeners = (socketServer: io.Server, store: Store): void => {
     const {
       roomId,
       name,
-    }: { roomId: string; name: string } = connectedSocket.handshake.query;
+      userId,
+    }: {
+      roomId: string;
+      name: string;
+      userId?: string;
+    } = connectedSocket.handshake.query;
 
     const room = store.select(getRoomById(roomId));
-    const user = new User(name);
+    const user = new User(name, userId);
 
     if (!room) {
       connectedSocket.disconnect();
