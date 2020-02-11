@@ -44,10 +44,13 @@ const TheResistancePickTeam: React.FC<ResistanceProps> = ({ game }) => {
     );
   }
 
+  const currentMission = game.allMissions[game.mission - 1];
+
   return (
     <div>
       <h2>
         {game.missionLeader.name}, pick a team for Mission {game.mission}.
+        Choose {currentMission.requiredPlayers} players.
       </h2>
       <ul>
         {game.players.map(player => (
@@ -56,6 +59,10 @@ const TheResistancePickTeam: React.FC<ResistanceProps> = ({ game }) => {
               <input
                 type="checkbox"
                 checked={selectedPlayerIds.includes(player.userId)}
+                disabled={
+                  selectedPlayerIds.length >= currentMission.requiredPlayers &&
+                  !selectedPlayerIds.includes(player.userId)
+                }
                 onChange={onCheckboxChange(player)}
               />
 

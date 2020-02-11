@@ -1,0 +1,18 @@
+.toolbar {
+  display: flex;
+  background-color: pink;
+  height: 100%;
+}
+
+.mission_info {
+  flex: 2;
+}
+
+.role_button_wrapper {
+  flex: 1;
+}
+
+.missions {
+  display: flex;
+  flex-direction: row;
+}

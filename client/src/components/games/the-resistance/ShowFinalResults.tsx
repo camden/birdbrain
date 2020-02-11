@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { ResistanceGameState } from '@server/store/games/the-resistance/types';
+import {
+  ResistanceGameState,
+  ResistanceMissionStatus,
+} from '@server/store/games/the-resistance/types';
 import Button from 'components/shared/button/Button';
 import { useDispatch } from 'react-redux';
 
@@ -16,9 +19,11 @@ const TheResistanceShowFinalResults: React.FC<ResistanceProps> = ({ game }) => {
   };
 
   const resistanceWonTheGame =
-    game.missionHistory.reduce(
+    game.allMissions.reduce(
       (resistanceScore, missionResult) =>
-        missionResult.succeeded ? resistanceScore + 1 : resistanceScore,
+        missionResult.status === ResistanceMissionStatus.SUCCEEDED
+          ? resistanceScore + 1
+          : resistanceScore,
       0
     ) === 3;
 

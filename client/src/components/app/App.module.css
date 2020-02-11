@@ -1,4 +1,5 @@
 .app {
+  height: 100vh;
   min-height: 100vh;
   min-height: -webkit-fill-available;
 
@@ -9,9 +10,9 @@
 }
 
 .app_inner {
+  height: 100%;
   width: 100%;
   padding: 0 1.5rem;
-  margin-top: 2rem;
 }
 
 @media (min-width: 600px) {

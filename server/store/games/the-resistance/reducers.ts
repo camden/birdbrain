@@ -3,8 +3,9 @@ import {
   ResistancePhase,
   ResistanceTeamVote,
   ResistanceMissionVote,
-  ResistanceMissionResults,
+  ResistanceMission,
   ResistancePlayer,
+  ResistanceMissionStatus,
 } from './types';
 import {
   ResistanceActionTypes,
@@ -113,20 +114,21 @@ export const resistanceReducer = (
 
           const missionSucceeded = draftState.missionFailVotes.length === 0;
 
-          const nextMissionResults: ResistanceMissionResults = {
-            missionNumber: game.mission,
-            succeeded: missionSucceeded,
-          };
+          draftState.allMissions[game.mission - 1].status = missionSucceeded
+            ? ResistanceMissionStatus.SUCCEEDED
+            : ResistanceMissionStatus.FAILED;
 
-          draftState.missionHistory.push(nextMissionResults);
-
-          const resistanceScore = draftState.missionHistory.reduce(
-            (sum, results) => (results.succeeded ? sum + 1 : sum),
+          const resistanceScore = draftState.allMissions.reduce(
+            (sum, results) =>
+              results.status === ResistanceMissionStatus.SUCCEEDED
+                ? sum + 1
+                : sum,
             0
           );
 
-          const spyScore = draftState.missionHistory.reduce(
-            (sum, results) => (results.succeeded ? sum : sum + 1),
+          const spyScore = draftState.allMissions.reduce(
+            (sum, results) =>
+              results.status === ResistanceMissionStatus.FAILED ? sum : sum + 1,
             0
           );
 
@@ -137,6 +139,8 @@ export const resistanceReducer = (
             draftState.phase = ResistancePhase.PICK_TEAM;
             draftState.missionLeader = getNextMissionLeader(game);
             draftState.mission += 1;
+            draftState.allMissions[draftState.mission].status =
+              ResistanceMissionStatus.IN_PROGRESS;
             draftState.missionTeam = [];
             draftState.missionSuccessVotes = [];
             draftState.missionFailVotes = [];

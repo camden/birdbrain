@@ -14,7 +14,7 @@ export interface ResistanceGameState extends Game {
   type: GameType.THE_RESISTANCE;
   missionLeader: ResistancePlayer;
   phase: ResistancePhase;
-  mission: number;
+  mission: 1 | 2 | 3 | 4 | 5;
   missionTeam: UserID[];
   teamApprovalVotes: UserID[];
   teamRejectVotes: UserID[];
@@ -22,12 +22,27 @@ export interface ResistanceGameState extends Game {
   missionFailVotes: UserID[];
   acknowledged: UserID[];
   players: ResistancePlayer[];
-  missionHistory: ResistanceMissionResults[];
+  allMissions: [
+    ResistanceMission,
+    ResistanceMission,
+    ResistanceMission,
+    ResistanceMission,
+    ResistanceMission
+  ];
 }
 
-export interface ResistanceMissionResults {
-  missionNumber: number;
-  succeeded: boolean;
+export interface ResistanceMission {
+  number: number;
+  status: ResistanceMissionStatus;
+  requiredPlayers: number;
+  requiresTwoFails: boolean;
+}
+
+export enum ResistanceMissionStatus {
+  IN_PROGRESS = 'IN_PROGRESS',
+  SUCCEEDED = 'SUCCEEDED',
+  FAILED = 'FAILED',
+  NOT_STARTED = 'NOT_STARTED',
 }
 
 export enum ResistanceRole {

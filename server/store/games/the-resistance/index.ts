@@ -3,6 +3,8 @@ import {
   ResistancePhase,
   ResistancePlayer,
   ResistanceRole,
+  ResistanceMissionStatus,
+  ResistanceMission,
 } from './types';
 import { GameType, GameID } from '../types';
 import { User } from 'store/general/types';
@@ -41,6 +43,32 @@ const getNumberOfSpiesByPlayerCount = (playerCount: number): number => {
   return counts[playerCount];
 };
 
+const getTeamSize = (missionNumber: number, playerCount: number): number => {
+  const teamSizeMap: { [playerCount: number]: number[] } = {
+    5: [2, 3, 2, 3, 3],
+    6: [2, 3, 4, 3, 4],
+    7: [2, 3, 3, 4, 4],
+    8: [3, 4, 4, 5, 5],
+    9: [3, 4, 4, 5, 5],
+    10: [3, 4, 4, 5, 5],
+  };
+
+  const teamSizeArr = teamSizeMap[playerCount];
+  if (!teamSizeArr) {
+    // just so it works for other counts for testing
+    return 2;
+  }
+
+  return teamSizeArr[missionNumber - 1];
+};
+
+const getRequiresTwoFails = (
+  missionNumber: number,
+  playerCount: number
+): boolean => {
+  return missionNumber === 4 && playerCount >= 7 && playerCount <= 10;
+};
+
 export const createNewGameOfTheResistance = (
   id: GameID,
   usersInRoom: User[]
@@ -62,6 +90,18 @@ export const createNewGameOfTheResistance = (
 
   const missionLeader = players[pickRandomNumber(0, players.length - 1)];
 
+  let missionHistory: ResistanceMission[] = [
+    { number: 1, status: ResistanceMissionStatus.IN_PROGRESS },
+    { number: 2, status: ResistanceMissionStatus.NOT_STARTED },
+    { number: 3, status: ResistanceMissionStatus.NOT_STARTED },
+    { number: 4, status: ResistanceMissionStatus.NOT_STARTED },
+    { number: 5, status: ResistanceMissionStatus.NOT_STARTED },
+  ].map(mission => ({
+    ...mission,
+    requiredPlayers: getTeamSize(mission.number, players.length),
+    requiresTwoFails: getRequiresTwoFails(mission.number, players.length),
+  }));
+
   return {
     id,
     type: GameType.THE_RESISTANCE,
@@ -74,7 +114,13 @@ export const createNewGameOfTheResistance = (
     missionFailVotes: [],
     acknowledged: [],
     phase: ResistancePhase.PICK_TEAM,
-    missionHistory: [],
+    allMissions: missionHistory as [
+      ResistanceMission,
+      ResistanceMission,
+      ResistanceMission,
+      ResistanceMission,
+      ResistanceMission
+    ],
     players,
   };
 };
