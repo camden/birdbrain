@@ -13,7 +13,7 @@
     "dev-server": "NODE_PATH=server ts-node-dev --respawn --transpileOnly ./server/server.ts",
     "dev-client": "REACT_APP_EXTERNAL_CLIENT=true yarn --cwd client start",
     "dev": "concurrently \"yarn dev-server\" \"yarn dev-client\"",
-    "start": "node ./build/server.js",
+    "start": "NODE_PATH=server node ./build/server.js",
     "postinstall": "yarn build-server"
   },
   "dependencies": {
