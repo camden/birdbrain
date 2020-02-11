@@ -13,6 +13,7 @@ import { createNewGame } from '../games';
 import { resistanceReducer } from '../games/the-resistance/reducers';
 import { ResistanceGameState } from '../games/the-resistance/types';
 import { ResistanceActionTypes } from '../games/the-resistance/actions';
+import { pickRandomNumber } from '../../utils/rng';
 
 const initialState: GeneralState = {
   entities: {
@@ -108,7 +109,11 @@ export const generalReducer = (
           return;
         }
 
-        if (room.users.length === 0) {
+        const roomLeaderIsNotInRoom = room.users.every(
+          userId => room.leaderUserID !== userId
+        );
+
+        if (room.users.length === 0 || roomLeaderIsNotInRoom) {
           room.leaderUserID = newUser.id;
         }
 
@@ -132,6 +137,12 @@ export const generalReducer = (
         );
 
         delete draftState.entities.users.byId[userToRemove.id];
+
+        // if user was leader, set a different user as the leader
+        if (room.users.length > 0 && room.leaderUserID === userToRemove.id) {
+          room.leaderUserID =
+            room.users[pickRandomNumber(0, room.users.length)];
+        }
       });
     default:
       return state;

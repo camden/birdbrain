@@ -1,11 +1,9 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { rstPickMissionTeam } from '@server/store/games/the-resistance/actions';
 import {
   ResistanceGameState,
   ResistancePhase,
 } from '@server/store/games/the-resistance/types';
-import { sendMessage } from 'store/websocket/actions';
+import PickTeam from './PickTeam';
 
 export interface ResistanceProps {
   game: ResistanceGameState;
@@ -14,7 +12,7 @@ export interface ResistanceProps {
 const TheResistanceMain: React.FC<ResistanceProps> = ({ game }) => {
   switch (game.phase) {
     case ResistancePhase.PICK_TEAM:
-      return <div>picking team</div>;
+      return <PickTeam game={game} />;
     case ResistancePhase.SHOW_TEAM_VOTING_RESULTS:
       return <div>showing team results</div>;
     case ResistancePhase.CONDUCT_MISSION:

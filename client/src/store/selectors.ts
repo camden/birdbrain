@@ -2,6 +2,12 @@ import { ClientState } from './types';
 import { createSelector } from 'reselect';
 import { User } from '@server/store/general/types';
 
+export const getCurrentUser = () =>
+  createSelector(
+    (state: ClientState) => state.user,
+    user => user
+  );
+
 export const getUserById = (userId: string) =>
   createSelector(
     (state: ClientState) => state.usersInRoom,

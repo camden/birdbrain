@@ -2,14 +2,12 @@ import express, { Application } from 'express';
 import path from 'path';
 import http from 'http';
 import io from 'socket.io';
-import { Store as ReduxStore } from 'redux';
 import * as Sentry from '@sentry/node';
 
 import APIRoutes from './routes/api';
 import { Store } from './store';
 import staticFilesMiddleware from './middleware/static-files';
 import errorHandlerMiddleware from './middleware/error-handler';
-import { GeneralState } from './store/general/types';
 import attachSocketListeners from './socket-listeners';
 
 class App {
