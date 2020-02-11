@@ -2,12 +2,15 @@ import {
   ResistanceGameState,
   ResistancePhase,
   ResistanceTeamVote,
+  ResistanceMissionVote,
 } from './types';
 import {
   ResistanceActionTypes,
   RST_PICK_MISSION_TEAM,
   RST_CAST_TEAM_VOTE,
   RST_ACK_TEAM_VOTE_RESULTS,
+  RST_CAST_MISSION_VOTE,
+  RST_ACK_MISSION_VOTE_RESULTS,
 } from './actions';
 import produce from 'immer';
 
@@ -71,6 +74,40 @@ export const resistanceReducer = (
             draftState.teamApprovalVotes = [];
             draftState.teamRejectVotes = [];
           }
+        }
+      });
+    case RST_CAST_MISSION_VOTE:
+      return produce(game, draftState => {
+        const userId = action.meta.userId;
+        if (action.payload.vote === ResistanceMissionVote.SUCCESS) {
+          draftState.missionSuccessVotes.push(userId);
+        } else if (action.payload.vote === ResistanceMissionVote.FAIL) {
+          draftState.missionFailVotes.push(userId);
+        }
+
+        const everyoneVoted = game.players.every(
+          player =>
+            draftState.missionSuccessVotes.includes(player.userId) ||
+            draftState.missionFailVotes.includes(player.userId)
+        );
+
+        if (everyoneVoted) {
+          draftState.phase = ResistancePhase.SHOW_MISSION_RESULTS;
+        }
+      });
+    case RST_ACK_MISSION_VOTE_RESULTS:
+      return produce(game, draftState => {
+        draftState.acknowledged.push(action.meta.userId);
+
+        const everyoneAcknowledged = game.players.every(player =>
+          draftState.acknowledged.includes(player.userId)
+        );
+
+        if (everyoneAcknowledged) {
+          draftState.acknowledged = [];
+
+          // bump score, etc
+          // also check for victory
         }
       });
     default:

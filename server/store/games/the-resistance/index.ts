@@ -29,6 +29,8 @@ export const createNewGameOfTheResistance = (
     missionTeam: null,
     teamApprovalVotes: [],
     teamRejectVotes: [],
+    missionSuccessVotes: [],
+    missionFailVotes: [],
     acknowledged: [],
     phase: ResistancePhase.PICK_TEAM,
     players,
