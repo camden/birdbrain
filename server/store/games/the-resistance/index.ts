@@ -13,16 +13,21 @@ const createPlayerFromUser = (user: User): ResistancePlayer => ({
   name: user.name,
 });
 
+const pickRandomNumber = (min: number, max: number) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
 export const createNewGameOfTheResistance = (
   id: GameID,
   usersInRoom: User[]
 ): ResistanceGameState => {
   const players: ResistancePlayer[] = usersInRoom.map(createPlayerFromUser);
+  const missionLeader = players[pickRandomNumber(0, players.length - 1)];
 
   return {
     id,
     type: GameType.THE_RESISTANCE,
-    missionLeader: '',
+    missionLeader,
     mission: 1,
     phase: ResistancePhase.PICK_TEAM,
     players,

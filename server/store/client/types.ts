@@ -1,5 +1,5 @@
 import { GameType } from '../games/types';
-import { RoomID, BaseAction } from '../general/types';
+import { RoomID, BaseAction, UserID } from '../general/types';
 
 export const START_GAME_MESSAGE = 'START_GAME_MESSAGE';
 
@@ -18,6 +18,7 @@ export interface ClientMessage {
 export interface ClientMessageMeta {
   meta: {
     roomId: RoomID;
+    userId: UserID;
     sendClientUpdate: boolean;
   };
 }

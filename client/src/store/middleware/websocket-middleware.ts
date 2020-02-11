@@ -48,11 +48,13 @@ const websocketMiddleware = () => {
       }
       case SEND_MESSAGE: {
         const roomId = store.getState().room?.id;
+        const userId = store.getState().user?.id;
 
         socket.emit('client-message', {
           ...action.payload,
           meta: {
             roomId,
+            userId,
           },
         });
         break;

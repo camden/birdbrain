@@ -56,6 +56,7 @@ export const RECEIVED_CLIENT_MESSAGE = 'RECEIVED_CLIENT_MESSAGE';
 export interface BaseAction {
   meta?: {
     roomId: RoomID;
+    userId: UserID;
     sendClientUpdate: boolean;
   };
 }
