@@ -15,6 +15,9 @@ export interface ResistanceGameState extends Game {
   phase: ResistancePhase;
   mission: number;
   missionTeam: UserID[] | null;
+  teamApprovalVotes: UserID[];
+  teamRejectVotes: UserID[];
+  acknowledged: UserID[];
   players: ResistancePlayer[];
 }
 

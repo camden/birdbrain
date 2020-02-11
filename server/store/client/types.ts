@@ -12,7 +12,7 @@ export interface StartGameMessage extends BaseAction {
 
 export interface ClientMessage {
   type: string;
-  payload: any;
+  payload?: any;
 }
 
 export interface ClientMessageMeta {

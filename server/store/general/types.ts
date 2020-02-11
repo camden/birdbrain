@@ -54,7 +54,7 @@ export const REMOVE_USER_FROM_ROOM = 'REMOVE_USER_FROM_ROOM';
 export const RECEIVED_CLIENT_MESSAGE = 'RECEIVED_CLIENT_MESSAGE';
 
 export interface BaseAction {
-  meta?: {
+  meta: {
     roomId: RoomID;
     userId: UserID;
     sendClientUpdate: boolean;
