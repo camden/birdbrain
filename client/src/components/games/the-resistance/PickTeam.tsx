@@ -74,6 +74,7 @@ const TheResistancePickTeam: React.FC<ResistanceProps> = ({ game }) => {
         ))}
       </ul>
       <Button
+        disabled={selectedPlayerIds.length < currentMission.requiredPlayers}
         onClick={() =>
           dispatch(sendMessage(rstPickMissionTeam(selectedPlayerIds)))
         }

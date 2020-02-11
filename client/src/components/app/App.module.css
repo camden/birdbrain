@@ -7,6 +7,8 @@
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
+
+  touch-action: manipulation;
 }
 
 .app_inner {

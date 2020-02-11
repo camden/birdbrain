@@ -12,6 +12,10 @@
   flex: 1;
 }
 
+.role_button_wrapper button {
+  user-select: none;
+}
+
 .missions {
   display: flex;
   flex-direction: row;

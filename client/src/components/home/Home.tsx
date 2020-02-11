@@ -57,20 +57,24 @@ const Home: React.FC = () => {
         <section className={styles.input_section}>
           <input
             type="text"
+            name="called-search-to-disable-autocomplete1"
             placeholder="Room Code"
             value={roomCode}
             onChange={event => setRoomCode(event.target.value)}
             className={styles.join_room_input}
+            autoComplete="off"
           />
           <input
             type="text"
             placeholder="Name"
+            name="called-search-to-disable-autocomplete2"
             value={name}
             onChange={event => setName(event.target.value)}
             onKeyPress={event =>
               event.key === 'Enter' ? joinRoomCallback() : null
             }
             className={styles.join_room_input}
+            autoComplete="off"
           />
           <Button onClick={joinRoomCallback} className={styles.button}>
             {isLoadingJoin ? <div>loading...</div> : 'Join Room'}
