@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ResistanceGameState,
   ResistancePlayer,
@@ -17,6 +17,7 @@ export interface ResistanceProps {
 
 const TheResistanceVoteForTeam: React.FC<ResistanceProps> = ({ game }) => {
   const dispatch = useDispatch();
+  const [voted, setVoted] = useState(false);
 
   if (!game.missionTeam) {
     return null;
@@ -26,6 +27,22 @@ const TheResistanceVoteForTeam: React.FC<ResistanceProps> = ({ game }) => {
     game.players.find(player => player.userId === id)
   ) as ResistancePlayer[];
 
+  const sendVote = (vote: ResistanceTeamVote) => {
+    dispatch(sendMessage(rstCastTeamVote(vote)));
+    setVoted(true);
+  };
+
+  const voteButtons = (
+    <div>
+      <Button onClick={() => sendVote(ResistanceTeamVote.APPROVE)}>
+        Approve
+      </Button>
+      <Button onClick={() => sendVote(ResistanceTeamVote.REJECT)}>
+        Reject
+      </Button>
+    </div>
+  );
+
   return (
     <div>
       <h2>cast your vote for this team:</h2>
@@ -34,20 +51,7 @@ const TheResistanceVoteForTeam: React.FC<ResistanceProps> = ({ game }) => {
           <li key={player.userId}>{player.name}</li>
         ))}
       </ul>
-      <Button
-        onClick={() =>
-          dispatch(sendMessage(rstCastTeamVote(ResistanceTeamVote.APPROVE)))
-        }
-      >
-        Approve
-      </Button>
-      <Button
-        onClick={() =>
-          dispatch(sendMessage(rstCastTeamVote(ResistanceTeamVote.REJECT)))
-        }
-      >
-        Reject
-      </Button>
+      {!voted && voteButtons}
     </div>
   );
 };

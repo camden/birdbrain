@@ -20,8 +20,6 @@ const TheResistancePickTeam: React.FC<ResistanceProps> = ({ game }) => {
 
   const [selectedPlayerIds, setSelectedPlayerIds] = useState<string[]>([]);
 
-  console.log(selectedPlayerIds);
-
   const onCheckboxChange = (player: ResistancePlayer) => (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {

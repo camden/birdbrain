@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ResistanceGameState } from '@server/store/games/the-resistance/types';
 import Button from 'components/shared/button/Button';
 import { useDispatch } from 'react-redux';
@@ -16,23 +16,29 @@ const TheResistanceShowTeamVotingResults: React.FC<ResistanceProps> = ({
   game,
 }) => {
   const dispatch = useDispatch();
+  const [acknowledged, setAcknowledged] = useState(false);
 
   const missionWasApproved =
     game.teamApprovalVotes.length > game.teamRejectVotes.length;
 
-  const onContinueClick = () => dispatch(sendMessage(rstAckTeamVoteResults()));
+  const onContinueClick = () => {
+    dispatch(sendMessage(rstAckTeamVoteResults()));
+    setAcknowledged(true);
+  };
 
   const missionApprovedRender = (
     <div>
       <h2>The mission was approved!</h2>
-      <Button onClick={onContinueClick}>Continue to Mission</Button>
+      {!acknowledged && (
+        <Button onClick={onContinueClick}>Continue to Mission</Button>
+      )}
     </div>
   );
 
   const missionRejectedRender = (
     <div>
       <h2>The mission was rejected!</h2>
-      <Button onClick={onContinueClick}>Continue</Button>
+      {!acknowledged && <Button onClick={onContinueClick}>Continue</Button>}
     </div>
   );
 
