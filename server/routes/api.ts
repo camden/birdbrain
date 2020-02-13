@@ -15,7 +15,6 @@ const APIRouter = (store: Store): Router => {
     .get((req, res, next) => {
       const roomId = req.params.id;
       const room = store.select(getRoomById(roomId));
-      console.log('got room: ', room);
 
       if (room) {
         res.send(room);

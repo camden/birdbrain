@@ -3,10 +3,11 @@ import Home from '../home/Home';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Room from '../room/Room';
 import styles from './App.module.css';
+import Div100vh from 'react-div-100vh';
 
 const App: React.FC = () => {
   return (
-    <div className={styles.app}>
+    <Div100vh className={styles.app}>
       <div className={styles.app_inner}>
         <Router>
           <Switch>
@@ -19,7 +20,7 @@ const App: React.FC = () => {
           </Switch>
         </Router>
       </div>
-    </div>
+    </Div100vh>
   );
 };
 

@@ -11,7 +11,6 @@ export const getRoomById = (roomId: string) => (
   state: RootState
 ): Room | null => {
   const room = state.general.entities.rooms.byId[roomId];
-  console.log(state.general.entities.rooms);
   if (!room) {
     return null;
   }

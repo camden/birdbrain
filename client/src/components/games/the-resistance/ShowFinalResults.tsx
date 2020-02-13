@@ -4,14 +4,12 @@ import {
   ResistanceMissionStatus,
 } from '@server/store/games/the-resistance/types';
 import Button from 'components/shared/button/Button';
-import { useDispatch } from 'react-redux';
 
 export interface ResistanceProps {
   game: ResistanceGameState;
 }
 
 const TheResistanceShowFinalResults: React.FC<ResistanceProps> = ({ game }) => {
-  const dispatch = useDispatch();
   const [acknowledged, setAcknowledged] = useState(false);
 
   const onContinueClick = () => {

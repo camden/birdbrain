@@ -3,10 +3,7 @@ import { ResistanceGameState } from '@server/store/games/the-resistance/types';
 import Button from 'components/shared/button/Button';
 import { useDispatch } from 'react-redux';
 import { sendMessage } from 'store/websocket/actions';
-import {
-  RST_ACK_TEAM_VOTE_RESULTS,
-  rstAckTeamVoteResults,
-} from '@server/store/games/the-resistance/actions';
+import { rstAckTeamVoteResults } from '@server/store/games/the-resistance/actions';
 
 export interface ResistanceProps {
   game: ResistanceGameState;

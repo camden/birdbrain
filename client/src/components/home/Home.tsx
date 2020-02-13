@@ -6,8 +6,6 @@ import { Redirect } from 'react-router-dom';
 import Button from 'components/shared/button/Button';
 
 const getRoomViaAPI = async (roomCode: string, name: string) => {
-  console.log(`Attempting to join room '${roomCode}' as '${name}'.`);
-
   try {
     const res = await axios.get(`/api/room/${roomCode}`);
     return res.data;

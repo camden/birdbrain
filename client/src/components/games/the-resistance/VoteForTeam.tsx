@@ -4,8 +4,6 @@ import {
   ResistancePlayer,
   ResistanceTeamVote,
 } from '@server/store/games/the-resistance/types';
-import useSelector from 'store/use-selector';
-import { getCurrentUser } from 'store/selectors';
 import Button from 'components/shared/button/Button';
 import { useDispatch } from 'react-redux';
 import { sendMessage } from 'store/websocket/actions';
