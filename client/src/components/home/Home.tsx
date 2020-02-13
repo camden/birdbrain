@@ -14,11 +14,43 @@ const getRoomViaAPI = async (roomCode: string, name: string) => {
   }
 };
 
+const createRoomViaAPI = async (): Promise<{ roomId: string } | null> => {
+  try {
+    const res = await axios.post(`/api/room/`);
+    return res.data;
+  } catch {
+    return null;
+  }
+};
+
 const Home: React.FC = () => {
   const [roomCode, setRoomCode] = useState('');
   const [name, setName] = useState('');
   const [isLoadingJoin, setIsLoadingJoin] = useState(false);
   const [isJoinSuccessful, setIsJoinSuccessful] = useState(false);
+
+  const createRoomCallback = useCallback(async () => {
+    if (isLoadingJoin) {
+      return;
+    }
+
+    if (!name) {
+      alert("What's your name?");
+      return;
+    }
+
+    setIsLoadingJoin(true);
+    const response = await createRoomViaAPI();
+    setIsLoadingJoin(false);
+
+    if (!response) {
+      return;
+    }
+
+    const roomId = response.roomId;
+    setRoomCode(roomId);
+    setIsJoinSuccessful(true);
+  }, [name, roomCode, isLoadingJoin]);
 
   const joinRoomCallback = useCallback(async () => {
     if (isLoadingJoin) {
@@ -43,7 +75,7 @@ const Home: React.FC = () => {
   }, [name, roomCode, isLoadingJoin]);
 
   if (isJoinSuccessful) {
-    return <Redirect to={`/room/${roomCode}?name=${name}`} />;
+    return <Redirect push to={`/room/${roomCode}?name=${name}`} />;
   }
 
   return (
@@ -53,17 +85,12 @@ const Home: React.FC = () => {
       </header>
       <section className={styles.body}>
         <section className={styles.input_section}>
+          <label htmlFor="user-name" className={styles.label}>
+            Name
+          </label>
           <input
             type="text"
-            name="called-search-to-disable-autocomplete1"
-            placeholder="Room Code"
-            value={roomCode}
-            onChange={event => setRoomCode(event.target.value.toUpperCase())}
-            className={styles.join_room_input}
-            autoComplete="off"
-          />
-          <input
-            type="text"
+            id="user-name"
             placeholder="Name"
             name="called-search-to-disable-autocomplete2"
             value={name}
@@ -74,19 +101,36 @@ const Home: React.FC = () => {
             className={styles.join_room_input}
             autoComplete="off"
           />
-          <Button onClick={joinRoomCallback} className={styles.button}>
+          <br />
+          <label htmlFor="room-code" className={styles.label}>
+            Room Code
+          </label>
+          <input
+            type="text"
+            id="room-code"
+            name="called-search-to-disable-autocomplete1"
+            placeholder="Room Code"
+            value={roomCode}
+            onChange={event => setRoomCode(event.target.value.toUpperCase())}
+            className={styles.join_room_input}
+            autoComplete="off"
+          />
+          <Button
+            onClick={joinRoomCallback}
+            className={styles.button}
+            disabled={isLoadingJoin}
+          >
             {isLoadingJoin ? <div>loading...</div> : 'Join Room'}
           </Button>
         </section>
         <div className={styles.input_section_divider}>OR</div>
         <section className={styles.input_section}>
           <Button
-            onClick={() => {
-              alert('not implemented');
-            }}
+            onClick={createRoomCallback}
             className={styles.button}
+            disabled={isLoadingJoin}
           >
-            Create Room
+            {isLoadingJoin ? <div>loading...</div> : 'Create Room'}
           </Button>
         </section>
       </section>

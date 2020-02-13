@@ -1,11 +1,12 @@
 import {
   Room,
   User,
-  GeneralActionTypes,
   ADD_USER_TO_ROOM,
+  CREATE_NEW_ROOM,
   REMOVE_USER_FROM_ROOM,
   AddUserToRoomAction,
   RemoveUserFromRoomAction,
+  CreateNewRoomAction,
 } from './types';
 import { ClientMessageWithMeta } from '../client/types';
 
@@ -50,6 +51,15 @@ export const receivedClientMessage = (message: ClientMessageWithMeta) => {
       roomId: message.meta.roomId,
       userId: message.meta.userId,
       sendClientUpdate: message.meta.sendClientUpdate ?? true,
+    },
+  };
+};
+
+export const createNewRoom = (roomId: string): CreateNewRoomAction => {
+  return {
+    type: CREATE_NEW_ROOM,
+    payload: {
+      roomId,
     },
   };
 };

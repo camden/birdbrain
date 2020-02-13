@@ -44,6 +44,10 @@
   margin: 40px 0;
 }
 
+.label {
+  margin-bottom: 8px;
+}
+
 .join_room_input {
   margin-bottom: 16px;
 

@@ -5,6 +5,7 @@ import {
   REMOVE_USER_FROM_ROOM,
   RoomID,
   Room,
+  CREATE_NEW_ROOM,
 } from './types';
 import { produce } from 'immer';
 import { START_GAME_MESSAGE } from '../client/types';
@@ -100,6 +101,18 @@ export const generalReducer = (
 
         draftState.entities.games.allIds.push(newGame.id);
         draftState.entities.games.byId[newGame.id] = newGame;
+      });
+    case CREATE_NEW_ROOM:
+      return produce(state, draftState => {
+        const newRoomId = action.payload.roomId;
+        draftState.entities.rooms.allIds.push(newRoomId);
+
+        draftState.entities.rooms.byId[newRoomId] = {
+          id: newRoomId,
+          game: null,
+          leaderUserID: null,
+          users: [],
+        };
       });
     case ADD_USER_TO_ROOM:
       return produce(state, draftState => {

@@ -57,6 +57,7 @@ export interface ServerStatePayload {
 export const ADD_USER_TO_ROOM = 'ADD_USER_TO_ROOM';
 export const REMOVE_USER_FROM_ROOM = 'REMOVE_USER_FROM_ROOM';
 export const RECEIVED_CLIENT_MESSAGE = 'RECEIVED_CLIENT_MESSAGE';
+export const CREATE_NEW_ROOM = 'CREATE_NEW_ROOM';
 
 export interface BaseAction {
   meta: {
@@ -87,9 +88,17 @@ export interface ReceivedClientMessage extends BaseAction {
   payload: ClientMessage;
 }
 
+export interface CreateNewRoomAction {
+  type: typeof CREATE_NEW_ROOM;
+  payload: {
+    roomId: string;
+  };
+}
+
 export type GeneralActionTypes =
   | ResistanceActionTypes
   | StartGameMessage
   | AddUserToRoomAction
+  | CreateNewRoomAction
   | RemoveUserFromRoomAction
   | ReceivedClientMessage;
