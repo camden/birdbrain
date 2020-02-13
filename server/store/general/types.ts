@@ -59,33 +59,34 @@ export const REMOVE_USER_FROM_ROOM = 'REMOVE_USER_FROM_ROOM';
 export const RECEIVED_CLIENT_MESSAGE = 'RECEIVED_CLIENT_MESSAGE';
 export const CREATE_NEW_ROOM = 'CREATE_NEW_ROOM';
 
-export interface BaseAction {
-  meta: {
-    roomId: RoomID;
-    userId: UserID;
-    sendClientUpdate: boolean;
-  };
+export interface ActionMeta {
+  roomId: RoomID;
+  userId: UserID;
+  sendClientUpdate: boolean;
 }
 
-export interface AddUserToRoomAction extends BaseAction {
+export interface AddUserToRoomAction {
   type: typeof ADD_USER_TO_ROOM;
   payload: {
     user: User;
     room: Room;
   };
+  meta: ActionMeta;
 }
 
-export interface RemoveUserFromRoomAction extends BaseAction {
+export interface RemoveUserFromRoomAction {
   type: typeof REMOVE_USER_FROM_ROOM;
   payload: {
     user: User;
     room: Room;
   };
+  meta: ActionMeta;
 }
 
-export interface ReceivedClientMessage extends BaseAction {
+export interface ReceivedClientMessage {
   type: typeof RECEIVED_CLIENT_MESSAGE;
   payload: ClientMessage;
+  meta: ActionMeta;
 }
 
 export interface CreateNewRoomAction {

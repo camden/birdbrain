@@ -24,7 +24,11 @@ const socketMiddleware = () => (socketServer: SocketIO.Server) => {
   ) => {
     next(action);
 
-    if (action.meta && action.meta.sendClientUpdate) {
+    if (!('meta' in action)) {
+      return;
+    }
+
+    if (action.meta.sendClientUpdate) {
       sendClientUpdate(action.meta.roomId, store);
     }
   };
