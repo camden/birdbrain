@@ -53,7 +53,8 @@ export const generalReducer = (
   action: GeneralActionTypes
 ) => {
   if (action.type.startsWith('RST_')) {
-    const roomId = action.meta?.roomId;
+    const resistanceAction = action as ResistanceActionTypes;
+    const roomId = resistanceAction.meta?.roomId;
     if (!roomId) {
       return state;
     }
@@ -71,7 +72,7 @@ export const generalReducer = (
 
       const updatedGame = resistanceReducer(
         game as ResistanceGameState,
-        action as ResistanceActionTypes
+        resistanceAction
       );
 
       draftState.entities.games.byId[gameId] = updatedGame;
@@ -80,7 +81,7 @@ export const generalReducer = (
 
   switch (action.type) {
     case START_GAME_MESSAGE:
-      const roomId = action.meta?.roomId;
+      const roomId = action.meta.roomId;
 
       if (!roomId) {
         return state;

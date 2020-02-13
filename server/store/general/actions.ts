@@ -42,9 +42,7 @@ export const removeUserFromRoom = (
   };
 };
 
-export const receivedClientMessage = (
-  message: ClientMessageWithMeta
-): GeneralActionTypes => {
+export const receivedClientMessage = (message: ClientMessageWithMeta) => {
   return {
     type: message.type,
     payload: message.payload,

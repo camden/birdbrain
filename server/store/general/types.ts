@@ -1,6 +1,11 @@
 import uuid from 'uuid/v1';
 import { Game, GameID } from '../games/types';
-import { ClientMessage, ClientMessageActionTypes } from '../client/types';
+import {
+  ClientMessage,
+  ClientMessageActionTypes,
+  StartGameMessage,
+} from '../client/types';
+import { ResistanceActionTypes } from 'store/games/the-resistance/actions';
 
 export type RoomID = string;
 
@@ -83,7 +88,8 @@ export interface ReceivedClientMessage extends BaseAction {
 }
 
 export type GeneralActionTypes =
-  | ClientMessageActionTypes
+  | ResistanceActionTypes
+  | StartGameMessage
   | AddUserToRoomAction
   | RemoveUserFromRoomAction
   | ReceivedClientMessage;
