@@ -8,6 +8,7 @@ import { getCurrentUser } from 'store/selectors';
 import { useDispatch } from 'react-redux';
 import { rstPickMissionTeam } from '@server/store/games/the-resistance/actions';
 import Button from 'components/shared/button/Button';
+import User from 'components/shared/user/User';
 import { sendMessage } from 'store/websocket/actions';
 
 export interface ResistanceProps {
@@ -20,11 +21,10 @@ const TheResistancePickTeam: React.FC<ResistanceProps> = ({ game }) => {
 
   const [selectedPlayerIds, setSelectedPlayerIds] = useState<string[]>([]);
 
-  const onCheckboxChange = (player: ResistancePlayer) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const onUserSelect = (player: ResistancePlayer) => () => {
     let newSelectedPlayerIds;
-    if (event.target.checked) {
+    const playerWasNotSelected = !selectedPlayerIds.includes(player.userId);
+    if (playerWasNotSelected) {
       newSelectedPlayerIds = [...selectedPlayerIds, player.userId];
     } else {
       newSelectedPlayerIds = selectedPlayerIds.filter(
@@ -52,27 +52,20 @@ const TheResistancePickTeam: React.FC<ResistanceProps> = ({ game }) => {
         {game.missionLeader.name}, pick a team for Mission {game.mission}.
         Choose {currentMission.requiredPlayers} players.
       </h2>
-      <ul>
+      <section>
         {game.players.map(player => (
-          <li key={player.userId}>
-            <div>
-              <input
-                type="checkbox"
-                checked={selectedPlayerIds.includes(player.userId)}
-                id={`pick-team-checkbox__${player.userId}`}
-                disabled={
-                  selectedPlayerIds.length >= currentMission.requiredPlayers &&
-                  !selectedPlayerIds.includes(player.userId)
-                }
-                onChange={onCheckboxChange(player)}
-              />
-              <label htmlFor={`pick-team-checkbox__${player.userId}`}>
-                {player.name}
-              </label>
-            </div>
-          </li>
+          <User
+            key={player.userId}
+            user={{ id: player.userId, name: player.name }}
+            isSelected={selectedPlayerIds.includes(player.userId)}
+            onSelect={onUserSelect(player)}
+            disabled={
+              selectedPlayerIds.length >= currentMission.requiredPlayers &&
+              !selectedPlayerIds.includes(player.userId)
+            }
+          />
         ))}
-      </ul>
+      </section>
       <Button
         disabled={selectedPlayerIds.length < currentMission.requiredPlayers}
         onClick={() =>

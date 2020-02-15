@@ -8,6 +8,13 @@
   border-radius: 8px;
   font-weight: bold;
   position: relative;
+
+  user-select: none;
+  border: 3px solid transparent;
+}
+
+.bordered {
+  border: 3px solid;
 }
 
 .icon {
