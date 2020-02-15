@@ -15,6 +15,7 @@ import {
   getRoomLeader,
   getGame,
 } from 'store/selectors';
+import TopBar from 'components/shared/top-bar/TopBar';
 
 // TODO this FC is getting sorta big. split this out in the future?
 const Room: React.FC = () => {
@@ -53,19 +54,24 @@ const Room: React.FC = () => {
 
   return (
     <div className={styles.room}>
-      You're in a room called "{room.id}"!
-      <div className="room__users">
-        Users here:
-        <div>
+      <TopBar room={room} />
+      <main className={styles.room_body}>
+        <div className={styles.user_list}>
           {usersInRoom.map(user => (
-            <User key={user.id} user={user} />
+            <User
+              key={user.id}
+              user={user}
+              isLeader={roomLeader?.id === user.id}
+            />
           ))}
         </div>
-      </div>
-      {!isRoomLeader && <div>{roomLeader?.name} is the room leader!</div>}
-      {isRoomLeader && (
-        <Button onClick={() => dispatch(sendStartGame())}>Start game</Button>
-      )}
+        {!isRoomLeader && (
+          <div>Waiting for {roomLeader?.name} to start the game.</div>
+        )}
+        {isRoomLeader && (
+          <Button onClick={() => dispatch(sendStartGame())}>Start game</Button>
+        )}
+      </main>
     </div>
   );
 };

@@ -1,0 +1,17 @@
+.top_bar {
+  background-color: rgb(186, 186, 186);
+  padding: 8px 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+
+.spacing {
+  height: calc(1rem + 16px);
+}
+
+.room_code {
+  margin-left: 8px;
+}
