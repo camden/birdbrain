@@ -7,8 +7,16 @@
 .game_screen_section {
   flex: 1;
   overflow: auto;
+  position: relative;
 }
 
 .game_toolbar_section {
   flex-basis: 20%;
+}
+
+.role_screen {
+  position: absolute;
+  z-index: 100;
+  height: 100%;
+  background: white;
 }

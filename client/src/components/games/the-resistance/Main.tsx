@@ -15,7 +15,12 @@ const TheResistanceMain: React.FC<ResistanceProps> = ({ game }) => {
   return (
     <div className={styles.main}>
       <section className={styles.game_screen_section}>
-        {showRole ? <Role game={game} /> : <GameScreen game={game} />}
+        {showRole && (
+          <div className={styles.role_screen}>
+            <Role game={game} />
+          </div>
+        )}
+        <GameScreen game={game} />
       </section>
       <section className={styles.game_toolbar_section}>
         <GameToolbar
