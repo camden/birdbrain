@@ -12,8 +12,6 @@ export interface ResistanceProps {
 const TheResistanceMain: React.FC<ResistanceProps> = ({ game }) => {
   const [showRole, setShowRole] = useState(false);
 
-  console.log('all missions', game.allMissions);
-
   return (
     <div className={styles.main}>
       <section className={styles.game_screen_section}>
