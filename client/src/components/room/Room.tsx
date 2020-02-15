@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { useParams, withRouter } from 'react-router-dom';
+import { useParams, withRouter, Redirect } from 'react-router-dom';
 import QueryString from 'query-string';
 import { useDispatch } from 'react-redux';
 import { connectToRoom } from 'store/websocket/actions';
 import useSelector from 'store/use-selector';
 import styles from './Room.module.css';
 import Button from 'components/shared/button/Button';
+import User from 'components/shared/user/User';
 import Game from 'components/games/Game';
 import { sendStartGame } from 'messages/general-messages';
 import {
@@ -55,11 +56,11 @@ const Room: React.FC = () => {
       You're in a room called "{room.id}"!
       <div className="room__users">
         Users here:
-        <ul>
+        <div>
           {usersInRoom.map(user => (
-            <li key={user.id}>{user.name}</li>
+            <User key={user.id} user={user} />
           ))}
-        </ul>
+        </div>
       </div>
       {!isRoomLeader && <div>{roomLeader?.name} is the room leader!</div>}
       {isRoomLeader && (
