@@ -10,6 +10,7 @@ import { rstPickMissionTeam } from '@server/store/games/the-resistance/actions';
 import Button from 'components/shared/button/Button';
 import User from 'components/shared/user/User';
 import { sendMessage } from 'store/websocket/actions';
+import styles from './PickTeam.module.css';
 
 export interface ResistanceProps {
   game: ResistanceGameState;
@@ -48,11 +49,9 @@ const TheResistancePickTeam: React.FC<ResistanceProps> = ({ game }) => {
 
   return (
     <div>
-      <h2>
-        {game.missionLeader.name}, pick a team for Mission {game.mission}.
-        Choose {currentMission.requiredPlayers} players.
-      </h2>
-      <section>
+      <h2>Pick a team for Mission {game.mission}.</h2>
+      <h3>Choose {currentMission.requiredPlayers} players:</h3>
+      <section className={styles.user_list}>
         {game.players.map(player => (
           <User
             key={player.userId}

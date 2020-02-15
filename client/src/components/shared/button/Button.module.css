@@ -8,6 +8,7 @@
   text-transform: uppercase;
   font-weight: bold;
 
+  cursor: pointer;
   user-select: none;
 
   transition: 200ms ease-out all;

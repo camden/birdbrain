@@ -3,6 +3,18 @@
   flex-direction: row;
   align-items: center;
   margin: 8px 0;
+  padding: 8px;
+  border-radius: 8px;
+
+  transition: background 150ms ease;
+}
+
+.user:hover {
+  background-color: rgb(225, 225, 225);
+}
+
+.selected {
+  background-color: rgb(240, 240, 240);
 }
 
 .selectable {

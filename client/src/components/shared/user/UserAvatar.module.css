@@ -5,9 +5,13 @@
   height: 2rem;
   text-align: center;
   color: white;
-  border-radius: 8px;
+  border-radius: 100px;
   font-weight: bold;
   position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   user-select: none;
   border: 3px solid transparent;
@@ -19,6 +23,6 @@
 
 .icon {
   position: absolute;
-  top: -6px;
-  right: -6px;
+  top: -8px;
+  right: -8px;
 }
