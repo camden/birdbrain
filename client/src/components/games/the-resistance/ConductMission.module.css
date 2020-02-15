@@ -1,0 +1,8 @@
+.vote_buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.vote_buttons button {
+  margin-bottom: 16px;
+}

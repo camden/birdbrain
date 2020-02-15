@@ -1,19 +1,17 @@
-import React, { ComponentProps, useState } from 'react';
+import React from 'react';
 import styles from './User.module.css';
 import { User as UserType } from '@server/store/general/types';
 import UserAvatar from './UserAvatar';
-import {
-  faStar,
-  faCheck,
-  faCheckCircle,
-  faCircle,
-} from '@fortawesome/pro-solid-svg-icons';
+import { faStar, IconDefinition } from '@fortawesome/pro-solid-svg-icons';
 import cx from 'classnames';
 
+// TODO these props could be better
 export interface UserProps {
   user: UserType;
   isLeader?: boolean;
   isSelected?: boolean;
+  icon?: IconDefinition;
+  iconColor?: string;
   onSelect?: () => void;
   disabled?: boolean;
 }
@@ -23,8 +21,12 @@ const User: React.FC<UserProps> = ({
   isLeader,
   isSelected,
   onSelect,
+  icon: iconFromProps,
+  iconColor: iconColorFromProps,
 }) => {
-  let icon, iconColor;
+  let icon = iconFromProps;
+  let iconColor = iconColorFromProps;
+
   if (isSelected) {
     icon = faStar;
     iconColor = '#00ce00';

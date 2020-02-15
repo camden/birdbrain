@@ -4,6 +4,8 @@ import Button from 'components/shared/button/Button';
 import { useDispatch } from 'react-redux';
 import { sendMessage } from 'store/websocket/actions';
 import { rstAckTeamVoteResults } from '@server/store/games/the-resistance/actions';
+import User from 'components/shared/user/User';
+import { faThumbsUp, faThumbsDown } from '@fortawesome/pro-solid-svg-icons';
 
 export interface ResistanceProps {
   game: ResistanceGameState;
@@ -43,14 +45,18 @@ const TheResistanceShowTeamVotingResults: React.FC<ResistanceProps> = ({
     <div>
       <h2>The votes are in!</h2>
       {game.players.map(player => (
-        <li key={player.userId}>
-          {player.name} voted{' '}
-          <strong>
-            {game.teamApprovalVotes.includes(player.userId)
-              ? 'approve'
-              : 'reject'}
-          </strong>
-        </li>
+        <User
+          user={{ id: player.userId, name: player.name }}
+          key={player.userId}
+          icon={
+            game.teamApprovalVotes.includes(player.userId)
+              ? faThumbsUp
+              : faThumbsDown
+          }
+          iconColor={
+            game.teamApprovalVotes.includes(player.userId) ? '#00ce00' : 'red'
+          }
+        />
       ))}
       {missionWasApproved ? missionApprovedRender : missionRejectedRender}
     </div>

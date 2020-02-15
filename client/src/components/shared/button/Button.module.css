@@ -7,11 +7,16 @@
   background-color: rgb(218, 167, 255);
   text-transform: uppercase;
   font-weight: bold;
+  margin-right: 4px;
 
   cursor: pointer;
   user-select: none;
 
   transition: 200ms ease-out all;
+}
+
+.button:disabled {
+  cursor: not-allowed;
 }
 
 .button:hover {

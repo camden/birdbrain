@@ -9,7 +9,7 @@
   transition: background 150ms ease;
 }
 
-.user:hover {
+.selectable:hover {
   background-color: rgb(225, 225, 225);
 }
 

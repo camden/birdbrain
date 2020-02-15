@@ -49,8 +49,8 @@ const TheResistancePickTeam: React.FC<ResistanceProps> = ({ game }) => {
 
   return (
     <div>
-      <h2>Pick a team for Mission {game.mission}.</h2>
-      <h3>Choose {currentMission.requiredPlayers} players:</h3>
+      <h1>Pick a team for Mission {game.mission}.</h1>
+      <h2>Choose {currentMission.requiredPlayers} players:</h2>
       <section className={styles.user_list}>
         {game.players.map(player => (
           <User

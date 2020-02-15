@@ -11,6 +11,8 @@ import Button from 'components/shared/button/Button';
 import { useDispatch } from 'react-redux';
 import { sendMessage } from 'store/websocket/actions';
 import { rstCastMissionVote } from '@server/store/games/the-resistance/actions';
+import styles from './ConductMission.module.css';
+import User from 'components/shared/user/User';
 
 export interface ResistanceProps {
   game: ResistanceGameState;
@@ -55,7 +57,7 @@ const TheResistanceConductMission: React.FC<ResistanceProps> = ({ game }) => {
   );
 
   const voteButtons = (
-    <div>
+    <div className={styles.vote_buttons}>
       {successButton}
       {failButton}
     </div>
@@ -63,12 +65,16 @@ const TheResistanceConductMission: React.FC<ResistanceProps> = ({ game }) => {
 
   return (
     <div>
-      <h2>The mission team is now conducting Mission {game.mission}.</h2>
-      <ul>
+      <h1>The mission team is now conducting Mission {game.mission}.</h1>
+      <section>
         {missionTeam.map(player => (
-          <li key={player.userId}>{player.name}</li>
+          <User
+            key={player.userId}
+            user={{ id: player.userId, name: player.name }}
+          />
         ))}
-      </ul>
+      </section>
+      {currentUserIsOnTeam && <h2>Vote on the mission outcome:</h2>}
       {!voted && currentUserIsOnTeam && voteButtons}
     </div>
   );
