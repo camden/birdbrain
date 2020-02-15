@@ -17,13 +17,9 @@ const TheResistanceShowFinalResults: React.FC<ResistanceProps> = ({ game }) => {
   };
 
   const resistanceWonTheGame =
-    game.allMissions.reduce(
-      (resistanceScore, missionResult) =>
-        missionResult.status === ResistanceMissionStatus.SUCCEEDED
-          ? resistanceScore + 1
-          : resistanceScore,
-      0
-    ) === 3;
+    game.allMissions.filter(
+      mission => mission.status === ResistanceMissionStatus.SUCCEEDED
+    ).length === 3;
 
   return (
     <div>
