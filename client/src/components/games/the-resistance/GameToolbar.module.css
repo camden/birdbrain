@@ -15,6 +15,7 @@
 .missions {
   display: flex;
   flex-direction: row;
+  user-select: none;
 }
 
 .title {
