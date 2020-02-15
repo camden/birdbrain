@@ -99,6 +99,12 @@ export const resistanceReducer = (
 
         if (everyoneVoted) {
           draftState.phase = ResistancePhase.SHOW_MISSION_RESULTS;
+
+          const missionSucceeded = draftState.missionFailVotes.length === 0;
+
+          draftState.allMissions[game.mission - 1].status = missionSucceeded
+            ? ResistanceMissionStatus.SUCCEEDED
+            : ResistanceMissionStatus.FAILED;
         }
       });
     case RST_ACK_MISSION_VOTE_RESULTS:
@@ -112,34 +118,23 @@ export const resistanceReducer = (
         if (everyoneAcknowledged) {
           draftState.acknowledged = [];
 
-          const missionSucceeded = draftState.missionFailVotes.length === 0;
+          const resistanceScore = draftState.allMissions.filter(
+            mission => mission.status === ResistanceMissionStatus.SUCCEEDED
+          ).length;
 
-          draftState.allMissions[game.mission - 1].status = missionSucceeded
-            ? ResistanceMissionStatus.SUCCEEDED
-            : ResistanceMissionStatus.FAILED;
-
-          const resistanceScore = draftState.allMissions.reduce(
-            (sum, results) =>
-              results.status === ResistanceMissionStatus.SUCCEEDED
-                ? sum + 1
-                : sum,
-            0
-          );
-
-          const spyScore = draftState.allMissions.reduce(
-            (sum, results) =>
-              results.status === ResistanceMissionStatus.FAILED ? sum : sum + 1,
-            0
-          );
+          const spyScore = draftState.allMissions.filter(
+            mission => mission.status === ResistanceMissionStatus.FAILED
+          ).length;
 
           const gameIsOver = resistanceScore === 3 || spyScore === 3;
+
           if (gameIsOver) {
             draftState.phase = ResistancePhase.SHOW_FINAL_RESULTS;
           } else {
             draftState.phase = ResistancePhase.PICK_TEAM;
             draftState.missionLeader = getNextMissionLeader(game);
             draftState.mission += 1;
-            draftState.allMissions[draftState.mission].status =
+            draftState.allMissions[draftState.mission - 1].status =
               ResistanceMissionStatus.IN_PROGRESS;
             draftState.missionTeam = [];
             draftState.missionSuccessVotes = [];

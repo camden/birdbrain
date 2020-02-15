@@ -1,8 +1,8 @@
 Arguments: 
-  /Users/camden/.nvm/versions/node/v12.14.1/bin/node /Users/camden/.yarn/bin/yarn.js add --dev @types/immer
+  /Users/camden/.nvm/versions/node/v12.14.1/bin/node /Users/camden/.yarn/bin/yarn.js dev
 
 PATH: 
-  /Users/camden/.yarn/bin:/Users/camden/.config/yarn/global/node_modules/.bin:/Users/camden/.nvm/versions/node/v12.14.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/usr/local/share/dotnet:/opt/X11/bin:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/camden/.yarn/bin:/Users/camden/.config/yarn/global/node_modules/.bin:/Users/camden/.nvm/versions/node/v6.16.0/bin:/Users/camden/.fzf/bin:/Users/camden/.local/bin:/Users/camden/.local/bin
+  /Users/camden/.yarn/bin:/Users/camden/.config/yarn/global/node_modules/.bin:/Users/camden/.nvm/versions/node/v12.14.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/usr/local/share/dotnet:/opt/X11/bin:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/camden/.yarn/bin:/Users/camden/.config/yarn/global/node_modules/.bin:/Users/camden/.nvm/versions/node/v12.14.1/bin:/Users/camden/.fzf/bin:/Users/camden/.local/bin:/Users/camden/.local/bin
 
 Yarn version: 
   1.21.1
@@ -14,17 +14,15 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2fimmer: Not found
-      at Request.params.callback [as _callback] (/Users/camden/.yarn/lib/cli.js:66947:18)
-      at Request.self.callback (/Users/camden/.yarn/lib/cli.js:140665:22)
-      at Request.emit (events.js:223:5)
-      at Request.<anonymous> (/Users/camden/.yarn/lib/cli.js:141637:10)
-      at Request.emit (events.js:223:5)
-      at IncomingMessage.<anonymous> (/Users/camden/.yarn/lib/cli.js:141559:12)
-      at Object.onceWrapper (events.js:312:28)
-      at IncomingMessage.emit (events.js:228:7)
-      at endReadableNT (_stream_readable.js:1185:12)
-      at processTicksAndRejections (internal/process/task_queues.js:81:21)
+  Error: Failed to replace env in config: ${FONTAWESOME_NPM_AUTH_TOKEN}
+      at /Users/camden/.yarn/lib/cli.js:98790:13
+      at String.replace (<anonymous>)
+      at envReplace (/Users/camden/.yarn/lib/cli.js:98785:16)
+      at Function.normalizeConfig (/Users/camden/.yarn/lib/cli.js:31887:69)
+      at NpmRegistry.<anonymous> (/Users/camden/.yarn/lib/cli.js:31917:34)
+      at Generator.next (<anonymous>)
+      at step (/Users/camden/.yarn/lib/cli.js:310:30)
+      at /Users/camden/.yarn/lib/cli.js:321:13
 
 npm manifest: 
   {
@@ -39,10 +37,10 @@ npm manifest:
       "build-client": "yarn --cwd client && yarn --cwd client build",
       "build-server": "tsc -p tsconfig.json",
       "build": "yarn build-client && yarn build-server",
-      "dev-server": "ts-node-dev --respawn --transpileOnly ./server/server.ts",
-      "dev-client": "yarn --cwd client start",
-      "dev": "concurrently \"yarn dev-server\" \"PORT=3001 yarn dev-client\"",
-      "start": "node ./build/server.js",
+      "dev-server": "NODE_PATH=server ts-node-dev --respawn --transpileOnly ./server/server.ts",
+      "dev-client": "REACT_APP_EXTERNAL_CLIENT=true yarn --cwd client start",
+      "dev": "concurrently \"yarn dev-server\" \"yarn dev-client\"",
+      "start": "NODE_PATH=build/ node ./build/server.js",
       "postinstall": "yarn build-server"
     },
     "dependencies": {

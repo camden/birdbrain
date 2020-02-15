@@ -18,7 +18,7 @@ const TheResistanceGameToolbar: React.FC<ResistanceToolbarProps> = ({
   return (
     <div className={styles.toolbar}>
       <section className={styles.mission_info}>
-        <h3>Missions</h3>
+        <h3 className={styles.title}>Missions</h3>
         <div className={styles.missions}>
           {game.allMissions.map(mission => (
             <MissionInfo
