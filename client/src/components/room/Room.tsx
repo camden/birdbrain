@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
-import { useParams, withRouter, Redirect } from 'react-router-dom';
+import { useParams, withRouter, Redirect, Link } from 'react-router-dom';
 import QueryString from 'query-string';
 import { useDispatch } from 'react-redux';
 import { connectToRoom } from 'store/websocket/actions';
 import useSelector from 'store/use-selector';
 import styles from './Room.module.css';
 import Button from 'components/shared/button/Button';
+import LinkButton from 'components/shared/button/LinkButton';
 import User from 'components/shared/user/User';
 import Game from 'components/games/Game';
 import { sendStartGame } from 'messages/general-messages';
@@ -45,7 +46,12 @@ const Room: React.FC = () => {
   }, [id, dispatch]);
 
   if (!room) {
-    return <div>Room '{id}' does not exist.</div>;
+    return (
+      <div className={styles.room_body}>
+        <h1>Room '{id}' does not exist.</h1>
+        <LinkButton to={'/'}>Go Home</LinkButton>
+      </div>
+    );
   }
 
   if (game) {
