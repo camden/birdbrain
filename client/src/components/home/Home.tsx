@@ -4,6 +4,7 @@ import axios from 'axios';
 import styles from './Home.module.css';
 import { Redirect } from 'react-router-dom';
 import Button from 'components/shared/button/Button';
+import QueryString from 'query-string';
 
 const getRoomViaAPI = async (roomCode: string, name: string) => {
   try {
@@ -12,6 +13,11 @@ const getRoomViaAPI = async (roomCode: string, name: string) => {
   } catch {
     return null;
   }
+};
+
+const getQueryStringValue = (key: string) => {
+  const values = QueryString.parse(window.location.search);
+  return values[key] as string;
 };
 
 const createRoomViaAPI = async (): Promise<{ roomId: string } | null> => {
@@ -24,7 +30,7 @@ const createRoomViaAPI = async (): Promise<{ roomId: string } | null> => {
 };
 
 const Home: React.FC = () => {
-  const [roomCode, setRoomCode] = useState('');
+  const [roomCode, setRoomCode] = useState(getQueryStringValue('room') || '');
   const [name, setName] = useState('');
   const [isLoadingJoin, setIsLoadingJoin] = useState(false);
   const [isJoinSuccessful, setIsJoinSuccessful] = useState(false);
@@ -101,7 +107,6 @@ const Home: React.FC = () => {
             className={styles.join_room_input}
             autoComplete="off"
           />
-          <br />
           <label htmlFor="room-code" className={styles.label}>
             Room Code
           </label>
