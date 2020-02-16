@@ -49,7 +49,7 @@ const Room: React.FC = () => {
   }
 
   if (game) {
-    return <Game />;
+    return <Game room={room} />;
   }
 
   return (
