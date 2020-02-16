@@ -13,7 +13,7 @@ export interface UserProps {
   icon?: IconDefinition;
   iconColor?: string;
   onSelect?: () => void;
-  disabled?: boolean;
+  selectionDisabled?: boolean;
 }
 
 const User: React.FC<UserProps> = ({
@@ -23,6 +23,7 @@ const User: React.FC<UserProps> = ({
   onSelect,
   icon: iconFromProps,
   iconColor: iconColorFromProps,
+  selectionDisabled,
 }) => {
   let icon = iconFromProps;
   let iconColor = iconColorFromProps;
@@ -50,7 +51,7 @@ const User: React.FC<UserProps> = ({
         iconColor={iconColor}
         isBordered={false}
         borderColor={iconColor}
-        onClick={onSelect}
+        onClick={selectionDisabled ? undefined : onSelect}
       />
       <div className={styles.name}>{user.name}</div>
     </div>
