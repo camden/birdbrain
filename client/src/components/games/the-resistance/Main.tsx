@@ -4,7 +4,6 @@ import GameScreen from './GameScreen';
 import GameToolbar from './GameToolbar';
 import Role from './Role';
 import styles from './Main.module.css';
-import TopBar from 'components/shared/top-bar/TopBar';
 import { Room } from '@server/store/general/types';
 
 export interface ResistanceProps {
@@ -17,7 +16,6 @@ const TheResistanceMain: React.FC<ResistanceProps> = ({ game, room }) => {
 
   return (
     <div className={styles.main}>
-      <TopBar room={room} />
       <section className={styles.game_screen_section}>
         {showRole && (
           <div className={styles.role_screen}>
