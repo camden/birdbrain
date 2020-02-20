@@ -32,10 +32,12 @@ const TheResistanceGameToolbar: React.FC<ResistanceToolbarProps> = ({
       </section>
       <section className={styles.role_button_wrapper}>
         <Button
+          secondary
           onTouchStart={onViewRoleMouseDown}
           onTouchEnd={onViewRoleMouseUp}
           onMouseDown={onViewRoleMouseDown}
           onMouseUp={onViewRoleMouseUp}
+          onMouseLeave={onViewRoleMouseUp}
         >
           Hold to View Role
         </Button>

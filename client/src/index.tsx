@@ -7,6 +7,7 @@ import App from './components/app/App';
 import { reducer } from './store/reducers';
 import websocketMiddleware from './store/middleware/websocket-middleware';
 import { createStore, applyMiddleware, compose } from 'redux';
+import 'typeface-rubik';
 
 declare global {
   interface Window {

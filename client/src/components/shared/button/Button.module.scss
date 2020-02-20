@@ -1,0 +1,54 @@
+$color-primary: #daa7ff;
+
+@mixin button-shadow($color) {
+  box-shadow: 4px 4px 0px $color;
+}
+
+.button {
+  border: 0;
+  border-radius: 16px;
+  font-size: 1rem;
+  padding: 16px 16px;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-right: 4px;
+  outline: none;
+
+  cursor: pointer;
+  user-select: none;
+
+  transition: 200ms ease-out all;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.primary {
+  background-color: $color-primary;
+  @include button-shadow(darken($color-primary, 20%));
+}
+
+.primary:hover {
+  background-color: #f7c2ff;
+}
+
+.primary:active {
+  background-color: rgb(247, 194, 255);
+  box-shadow: inset 2px 2px 0px darken($color-primary, 20%);
+}
+
+.secondary {
+  background-color: white;
+  border: 2px solid black;
+  @include button-shadow(black);
+}
+
+.secondary:hover {
+  background-color: #e9e9e9;
+}
+
+.secondary:active {
+  box-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.7);
+}
