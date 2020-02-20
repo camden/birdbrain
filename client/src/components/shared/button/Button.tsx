@@ -13,7 +13,6 @@ const Button: React.FC<ButtonProps> = props => {
   return (
     <button
       {...props}
-      onTouchEnd={() => null}
       className={cx(styles.button, props.className, {
         [styles.primary]: !props.secondary,
         [styles.secondary]: props.secondary,
