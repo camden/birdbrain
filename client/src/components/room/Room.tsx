@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useParams, withRouter, Redirect, Link } from 'react-router-dom';
+import { useParams, withRouter } from 'react-router-dom';
 import QueryString from 'query-string';
 import { useDispatch } from 'react-redux';
 import { connectToRoom } from 'store/websocket/actions';

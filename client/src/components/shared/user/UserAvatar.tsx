@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react';
+import React from 'react';
 import styles from './UserAvatar.module.css';
 import { User as UserType } from '@server/store/general/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

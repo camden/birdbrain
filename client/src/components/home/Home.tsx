@@ -56,7 +56,7 @@ const Home: React.FC = () => {
     const roomId = response.roomId;
     setRoomCode(roomId);
     setIsJoinSuccessful(true);
-  }, [name, roomCode, isLoadingJoin]);
+  }, [name, isLoadingJoin]);
 
   const joinRoomCallback = useCallback(async () => {
     if (isLoadingJoin) {

@@ -1,8 +1,8 @@
-import React, { ComponentProps, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './TopBar.module.css';
 import { Room } from '@server/store/general/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faKey, faQrcode } from '@fortawesome/pro-solid-svg-icons';
+import { faQrcode } from '@fortawesome/pro-solid-svg-icons';
 import RoomQRCode from './RoomQRCode';
 
 export interface TopBarProps {

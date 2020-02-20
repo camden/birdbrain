@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { ResistanceMissionStatus } from '@server/store/games/the-resistance/types';
 import styles from './MissionInfo.module.css';
 import cx from 'classnames';
