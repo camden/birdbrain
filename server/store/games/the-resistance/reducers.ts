@@ -99,12 +99,6 @@ export const resistanceReducer = (
 
         if (everyoneVoted) {
           draftState.phase = ResistancePhase.SHOW_MISSION_RESULTS;
-
-          const missionSucceeded = draftState.missionFailVotes.length === 0;
-
-          draftState.allMissions[game.mission - 1].status = missionSucceeded
-            ? ResistanceMissionStatus.SUCCEEDED
-            : ResistanceMissionStatus.FAILED;
         }
       });
     case RST_ACK_MISSION_VOTE_RESULTS:
@@ -117,6 +111,11 @@ export const resistanceReducer = (
 
         if (everyoneAcknowledged) {
           draftState.acknowledged = [];
+
+          const missionSucceeded = draftState.missionFailVotes.length === 0;
+          draftState.allMissions[game.mission - 1].status = missionSucceeded
+            ? ResistanceMissionStatus.SUCCEEDED
+            : ResistanceMissionStatus.FAILED;
 
           const resistanceScore = draftState.allMissions.filter(
             mission => mission.status === ResistanceMissionStatus.SUCCEEDED
