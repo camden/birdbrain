@@ -9,10 +9,11 @@
   flex: 1;
   overflow: auto;
   position: relative;
+  padding-bottom: 24px;
 }
 
 .game_toolbar_section {
-  flex-basis: 20%;
+  flex-basis: 15%;
 }
 
 .role_screen {

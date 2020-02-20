@@ -8,8 +8,9 @@ import Button from 'components/shared/button/Button';
 import { useDispatch } from 'react-redux';
 import { sendMessage } from 'store/websocket/actions';
 import { rstCastTeamVote } from '@server/store/games/the-resistance/actions';
-import style from './VoteForTeam.module.css';
+import styles from './VoteForTeam.module.css';
 import User from 'components/shared/user/User';
+import WaitingMessage from './WaitingMessage';
 
 export interface ResistanceProps {
   game: ResistanceGameState;
@@ -33,7 +34,7 @@ const TheResistanceVoteForTeam: React.FC<ResistanceProps> = ({ game }) => {
   };
 
   const voteButtons = (
-    <div className={style.vote_buttons}>
+    <div className={styles.vote_buttons}>
       <Button onClick={() => sendVote(ResistanceTeamVote.APPROVE)}>
         Approve
       </Button>
@@ -44,7 +45,7 @@ const TheResistanceVoteForTeam: React.FC<ResistanceProps> = ({ game }) => {
   );
 
   const allUsersWhoVoted = game.teamApprovalVotes.concat(game.teamRejectVotes);
-  const usersWhoStillNeedToVote = game.players.filter(
+  const playersWhoStillNeedToVote = game.players.filter(
     player => !allUsersWhoVoted.includes(player.userId)
   );
 
@@ -52,7 +53,7 @@ const TheResistanceVoteForTeam: React.FC<ResistanceProps> = ({ game }) => {
     <div>
       <h1>Cast your vote for this team:</h1>
       <h3>This team was chosen by {game.missionLeader.name}.</h3>
-      <section>
+      <section className={styles.players}>
         {missionTeam.map(player => (
           <User
             key={player.userId}
@@ -61,12 +62,10 @@ const TheResistanceVoteForTeam: React.FC<ResistanceProps> = ({ game }) => {
         ))}
       </section>
       {!voted && voteButtons}
-      {usersWhoStillNeedToVote.map(player => (
-        <User
-          key={player.userId}
-          user={{ id: player.userId, name: player.name }}
-        />
-      ))}
+      <WaitingMessage
+        playersThatNeedToAct={playersWhoStillNeedToVote}
+        verb={'vote'}
+      />
     </div>
   );
 };

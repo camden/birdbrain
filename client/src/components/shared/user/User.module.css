@@ -9,6 +9,15 @@
   transition: background 150ms ease;
 }
 
+.selection_disabled:hover {
+  background: none;
+}
+
+.selection_disabled {
+  cursor: not-allowed;
+  background: none;
+}
+
 .selectable:hover {
   background-color: rgb(225, 225, 225);
 }

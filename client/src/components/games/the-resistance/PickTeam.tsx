@@ -58,7 +58,7 @@ const TheResistancePickTeam: React.FC<ResistanceProps> = ({ game }) => {
             user={{ id: player.userId, name: player.name }}
             isSelected={selectedPlayerIds.includes(player.userId)}
             onSelect={onUserSelect(player)}
-            selectionDisabled={
+            isSelectionDisabled={
               selectedPlayerIds.length >= currentMission.requiredPlayers &&
               !selectedPlayerIds.includes(player.userId)
             }

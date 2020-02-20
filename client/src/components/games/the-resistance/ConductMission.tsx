@@ -14,6 +14,7 @@ import { rstCastMissionVote } from '@server/store/games/the-resistance/actions';
 import styles from './ConductMission.module.css';
 import User from 'components/shared/user/User';
 import { faClock, faCheck } from '@fortawesome/pro-solid-svg-icons';
+import WaitingMessage from './WaitingMessage';
 
 export interface ResistanceProps {
   game: ResistanceGameState;
@@ -67,11 +68,9 @@ const TheResistanceConductMission: React.FC<ResistanceProps> = ({ game }) => {
   const allUsersWhoVoted = game.missionFailVotes.concat(
     game.missionSuccessVotes
   );
-  const usersWhoStillNeedToVote = game.players.filter(
+  const playersWhoStillNeedToVote = missionTeam.filter(
     player => !allUsersWhoVoted.includes(player.userId)
   );
-
-  console.log(usersWhoStillNeedToVote, allUsersWhoVoted, missionTeam);
 
   return (
     <div>
@@ -82,7 +81,9 @@ const TheResistanceConductMission: React.FC<ResistanceProps> = ({ game }) => {
             key={player.userId}
             user={{ id: player.userId, name: player.name }}
             icon={
-              usersWhoStillNeedToVote.map(p => p.userId).includes(player.userId)
+              playersWhoStillNeedToVote
+                .map(p => p.userId)
+                .includes(player.userId)
                 ? faClock
                 : faCheck
             }
@@ -91,6 +92,10 @@ const TheResistanceConductMission: React.FC<ResistanceProps> = ({ game }) => {
       </section>
       {currentUserIsOnTeam && <h2>Vote on the mission outcome:</h2>}
       {currentUserIsOnTeam && !voted && voteButtons}
+      <WaitingMessage
+        playersThatNeedToAct={playersWhoStillNeedToVote}
+        verb={'vote'}
+      />
     </div>
   );
 };

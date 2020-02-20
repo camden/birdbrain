@@ -13,7 +13,7 @@ export interface UserProps {
   icon?: IconDefinition;
   iconColor?: string;
   onSelect?: () => void;
-  selectionDisabled?: boolean;
+  isSelectionDisabled?: boolean;
 }
 
 const User: React.FC<UserProps> = ({
@@ -23,7 +23,7 @@ const User: React.FC<UserProps> = ({
   onSelect,
   icon: iconFromProps,
   iconColor: iconColorFromProps,
-  selectionDisabled,
+  isSelectionDisabled,
 }) => {
   let icon = iconFromProps;
   let iconColor = iconColorFromProps;
@@ -40,10 +40,11 @@ const User: React.FC<UserProps> = ({
   return (
     <div
       className={cx(styles.user, {
-        [styles.selectable]: !!onSelect,
+        [styles.selectable]: !isSelectionDisabled && !!onSelect,
         [styles.selected]: isSelected,
+        [styles.selection_disabled]: isSelectionDisabled,
       })}
-      onClick={onSelect}
+      onClick={isSelectionDisabled ? undefined : onSelect}
     >
       <UserAvatar
         user={user}
@@ -51,7 +52,7 @@ const User: React.FC<UserProps> = ({
         iconColor={iconColor}
         isBordered={false}
         borderColor={iconColor}
-        onClick={selectionDisabled ? undefined : onSelect}
+        onClick={isSelectionDisabled ? undefined : onSelect}
       />
       <div className={styles.name}>{user.name}</div>
     </div>

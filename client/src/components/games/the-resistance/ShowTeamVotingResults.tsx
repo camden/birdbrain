@@ -6,6 +6,7 @@ import { sendMessage } from 'store/websocket/actions';
 import { rstAckTeamVoteResults } from '@server/store/games/the-resistance/actions';
 import User from 'components/shared/user/User';
 import { faThumbsUp, faThumbsDown } from '@fortawesome/pro-solid-svg-icons';
+import WaitingMessage from './WaitingMessage';
 
 export interface ResistanceProps {
   game: ResistanceGameState;
@@ -41,6 +42,11 @@ const TheResistanceShowTeamVotingResults: React.FC<ResistanceProps> = ({
     </div>
   );
 
+  const allUsersWhoAcked = game.acknowledged;
+  const playersWhoStillNeedToAck = game.players.filter(
+    player => !allUsersWhoAcked.includes(player.userId)
+  );
+
   return (
     <div>
       <h2>The votes are in!</h2>
@@ -59,6 +65,10 @@ const TheResistanceShowTeamVotingResults: React.FC<ResistanceProps> = ({
         />
       ))}
       {missionWasApproved ? missionApprovedRender : missionRejectedRender}
+      <WaitingMessage
+        playersThatNeedToAct={playersWhoStillNeedToAck}
+        verb={'move on'}
+      />
     </div>
   );
 };
