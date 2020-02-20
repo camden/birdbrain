@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import birdbrainLogo from 'assets/images/birdbrain-logo.svg';
 import axios from 'axios';
 import styles from './Home.module.css';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import Button from 'components/shared/button/Button';
 import QueryString from 'query-string';
 
@@ -85,11 +85,24 @@ const Home: React.FC = () => {
   }
 
   const showCreateRoomOption = !getQueryStringValue('room');
+  console.log(getQueryStringValue('CODE'));
 
   return (
     <div className={styles.home}>
       <header className={styles.header}>
-        <img src={birdbrainLogo} className={styles.birdbrain_logo} alt="logo" />
+        <Link
+          to="/"
+          onClick={() => {
+            window.history.replaceState(null, '', window.location.pathname);
+            window.location.reload();
+          }}
+        >
+          <img
+            src={birdbrainLogo}
+            className={styles.birdbrain_logo}
+            alt="logo"
+          />
+        </Link>
       </header>
       <section className={styles.body}>
         <section className={styles.input_section}>
