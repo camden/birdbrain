@@ -15,6 +15,12 @@ const TheResistanceGameToolbar: React.FC<ResistanceToolbarProps> = ({
   onViewRoleMouseDown,
   onViewRoleMouseUp,
 }) => {
+  const indexOfCurrentLeader = game.players
+    .map(p => p.userId)
+    .indexOf(game.missionLeader.userId);
+  const indexOfNextLeader = (indexOfCurrentLeader + 1) % game.players.length;
+  const nextLeader = game.players[indexOfNextLeader];
+
   return (
     <div className={styles.toolbar}>
       <section className={styles.mission_info}>
@@ -29,6 +35,7 @@ const TheResistanceGameToolbar: React.FC<ResistanceToolbarProps> = ({
             />
           ))}
         </div>
+        <div className={styles.next_leader}>Next Leader: {nextLeader.name}</div>
       </section>
       <section className={styles.role_button_wrapper}>
         <Button
