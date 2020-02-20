@@ -1,0 +1,57 @@
+.vote_results {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin card-shadow($color) {
+  box-shadow: 0 4px 0 $color;
+}
+
+@keyframes card-reveal {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.summary {
+  opacity: 0;
+
+  animation-name: card-reveal;
+  animation-duration: 1s;
+  animation-delay: var(--appear-delay);
+  animation-fill-mode: forwards;
+}
+
+.vote_result_card {
+  background: rgb(230, 230, 230);
+  padding: 32px 24px;
+  width: 80px;
+  font-size: 24px;
+  border-radius: 6px;
+  margin-right: 16px;
+  text-align: center;
+  opacity: 0;
+
+  animation-name: card-reveal;
+  animation-duration: 1s;
+  animation-delay: var(--appear-delay);
+  animation-fill-mode: forwards;
+}
+
+.vote_result_card_success {
+  $color: #a3ff73;
+  background: $color;
+  @include card-shadow(darken($color, 30%));
+}
+
+.vote_result_card_fail {
+  $color: #ff7373;
+  background: $color;
+  @include card-shadow(darken($color, 30%));
+}

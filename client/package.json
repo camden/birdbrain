@@ -25,6 +25,7 @@
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "customize-cra": "^0.9.1",
+    "node-sass": "^4.13.1",
     "patch-package": "^6.2.0",
     "postinstall-postinstall": "^2.0.0",
     "qrcode.react": "^1.0.0",
