@@ -84,6 +84,8 @@ const Home: React.FC = () => {
     return <Redirect push to={`/room/${roomCode}?name=${name}`} />;
   }
 
+  const showCreateRoomOption = !getQueryStringValue('room');
+
   return (
     <div className={styles.home}>
       <header className={styles.header}>
@@ -91,22 +93,6 @@ const Home: React.FC = () => {
       </header>
       <section className={styles.body}>
         <section className={styles.input_section}>
-          <label htmlFor="user-name" className={styles.label}>
-            Name
-          </label>
-          <input
-            type="text"
-            id="user-name"
-            placeholder="Name"
-            name="called-search-to-disable-autocomplete2"
-            value={name}
-            onChange={event => setName(event.target.value)}
-            onKeyPress={event =>
-              event.key === 'Enter' ? joinRoomCallback() : null
-            }
-            className={styles.join_room_input}
-            autoComplete="off"
-          />
           <label htmlFor="room-code" className={styles.label}>
             Room Code
           </label>
@@ -123,6 +109,22 @@ const Home: React.FC = () => {
             className={styles.join_room_input}
             autoComplete="off"
           />
+          <label htmlFor="user-name" className={styles.label}>
+            Name
+          </label>
+          <input
+            type="text"
+            id="user-name"
+            placeholder="Name"
+            name="called-search-to-disable-autocomplete2"
+            value={name}
+            onChange={event => setName(event.target.value)}
+            onKeyPress={event =>
+              event.key === 'Enter' ? joinRoomCallback() : null
+            }
+            className={styles.join_room_input}
+            autoComplete="off"
+          />
           <Button
             onClick={joinRoomCallback}
             className={styles.button}
@@ -131,16 +133,20 @@ const Home: React.FC = () => {
             {isLoadingJoin ? <div>loading...</div> : 'Join Room'}
           </Button>
         </section>
-        <div className={styles.input_section_divider}>OR</div>
-        <section className={styles.input_section}>
-          <Button
-            onClick={createRoomCallback}
-            className={styles.button}
-            disabled={isLoadingJoin}
-          >
-            {isLoadingJoin ? <div>loading...</div> : 'Create Room'}
-          </Button>
-        </section>
+        {showCreateRoomOption && (
+          <>
+            <div className={styles.input_section_divider}>OR</div>
+            <section className={styles.input_section}>
+              <Button
+                onClick={createRoomCallback}
+                className={styles.button}
+                disabled={isLoadingJoin}
+              >
+                {isLoadingJoin ? <div>loading...</div> : 'Create Room'}
+              </Button>
+            </section>
+          </>
+        )}
       </section>
     </div>
   );
