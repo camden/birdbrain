@@ -13,6 +13,7 @@ import { sendMessage } from 'store/websocket/actions';
 import { rstCastMissionVote } from '@server/store/games/the-resistance/actions';
 import styles from './ConductMission.module.css';
 import User from 'components/shared/user/User';
+import { faClock, faCheck } from '@fortawesome/pro-solid-svg-icons';
 
 export interface ResistanceProps {
   game: ResistanceGameState;
@@ -63,6 +64,15 @@ const TheResistanceConductMission: React.FC<ResistanceProps> = ({ game }) => {
     </div>
   );
 
+  const allUsersWhoVoted = game.missionFailVotes.concat(
+    game.missionSuccessVotes
+  );
+  const usersWhoStillNeedToVote = game.players.filter(
+    player => !allUsersWhoVoted.includes(player.userId)
+  );
+
+  console.log(usersWhoStillNeedToVote, allUsersWhoVoted, missionTeam);
+
   return (
     <div>
       <h1>The mission team is now conducting Mission {game.mission}.</h1>
@@ -71,11 +81,16 @@ const TheResistanceConductMission: React.FC<ResistanceProps> = ({ game }) => {
           <User
             key={player.userId}
             user={{ id: player.userId, name: player.name }}
+            icon={
+              usersWhoStillNeedToVote.map(p => p.userId).includes(player.userId)
+                ? faClock
+                : faCheck
+            }
           />
         ))}
       </section>
       {currentUserIsOnTeam && <h2>Vote on the mission outcome:</h2>}
-      {!voted && currentUserIsOnTeam && voteButtons}
+      {currentUserIsOnTeam && !voted && voteButtons}
     </div>
   );
 };

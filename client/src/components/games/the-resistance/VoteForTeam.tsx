@@ -43,6 +43,11 @@ const TheResistanceVoteForTeam: React.FC<ResistanceProps> = ({ game }) => {
     </div>
   );
 
+  const allUsersWhoVoted = game.teamApprovalVotes.concat(game.teamRejectVotes);
+  const usersWhoStillNeedToVote = game.players.filter(
+    player => !allUsersWhoVoted.includes(player.userId)
+  );
+
   return (
     <div>
       <h1>Cast your vote for this team:</h1>
@@ -56,6 +61,12 @@ const TheResistanceVoteForTeam: React.FC<ResistanceProps> = ({ game }) => {
         ))}
       </section>
       {!voted && voteButtons}
+      {usersWhoStillNeedToVote.map(player => (
+        <User
+          key={player.userId}
+          user={{ id: player.userId, name: player.name }}
+        />
+      ))}
     </div>
   );
 };
