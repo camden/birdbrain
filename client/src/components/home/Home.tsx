@@ -85,7 +85,6 @@ const Home: React.FC = () => {
   }
 
   const showCreateRoomOption = !getQueryStringValue('room');
-  console.log(getQueryStringValue('CODE'));
 
   return (
     <div className={styles.home}>
