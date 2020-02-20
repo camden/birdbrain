@@ -11,6 +11,11 @@ router.use(
 );
 
 router.use(
+  '/manifest.json',
+  express.static(path.join(pathToClientBuildDir, '/manifest.json'))
+);
+
+router.use(
   '/favicon.ico',
   express.static(path.join(pathToClientBuildDir, '/favicon.ico'))
 );
@@ -38,6 +43,21 @@ router.use(
 router.use(
   '/safari-pinned-tab.svg',
   express.static(path.join(pathToClientBuildDir, '/safari-pinned-tab.svg'))
+);
+
+router.use(
+  '/robots.txt',
+  express.static(path.join(pathToClientBuildDir, '/robots.txt'))
+);
+
+router.use(
+  '/android-chrome-192x192.png',
+  express.static(path.join(pathToClientBuildDir, '/android-chrome-192x192.png'))
+);
+
+router.use(
+  '/android-chrome-512x512.png',
+  express.static(path.join(pathToClientBuildDir, '/android-chrome-512x512.png'))
 );
 
 export default router;
