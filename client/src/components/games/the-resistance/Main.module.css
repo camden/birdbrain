@@ -2,7 +2,6 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0 16px;
 }
 
 .game_screen_section {
@@ -10,10 +9,16 @@
   overflow: auto;
   position: relative;
   padding-bottom: 24px;
+  padding: 0 16px;
 }
 
 .game_toolbar_section {
   flex-basis: 15%;
+  padding: 0 8px;
+  margin: 0 8px 16px;
+  border-radius: 6px;
+  box-shadow: 0 4px 0 #9e99ff;
+  background: #ecebff;
 }
 
 .role_screen {

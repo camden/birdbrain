@@ -28,6 +28,7 @@ const TheResistanceGameToolbar: React.FC<ResistanceToolbarProps> = ({
         <div className={styles.missions}>
           {game.allMissions.map(mission => (
             <MissionInfo
+              key={mission.number}
               number={mission.number}
               requiredPlayers={mission.requiredPlayers}
               status={mission.status}

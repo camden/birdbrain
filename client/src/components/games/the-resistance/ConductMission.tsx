@@ -50,12 +50,17 @@ const TheResistanceConductMission: React.FC<ResistanceProps> = ({ game }) => {
   );
 
   const failButton = (
-    <Button
-      onClick={() => onVoteClick(ResistanceMissionVote.FAIL)}
-      disabled={currentPlayer.role === ResistanceRole.Resistance}
-    >
-      Fail
-    </Button>
+    <>
+      <Button
+        onClick={() => onVoteClick(ResistanceMissionVote.FAIL)}
+        disabled={currentPlayer.role === ResistanceRole.Resistance}
+      >
+        Fail
+      </Button>
+      {currentPlayer.role === ResistanceRole.Resistance && (
+        <small>Resistance players cannot fail missions.</small>
+      )}
+    </>
   );
 
   const voteButtons = (
