@@ -1,0 +1,45 @@
+.card {
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 16px;
+  padding: 24px 16px;
+  box-shadow: 4px 4px 0px black;
+  transition: ease-out all 150ms;
+}
+
+.selectable {
+  cursor: pointer;
+}
+
+.selectable:hover {
+  background-color: #f0f0f0;
+  transform: translate(-4px, -4px);
+}
+
+.selectable:active {
+  box-shadow: inset 3px 3px 0px black;
+  transform: translate(0, 0);
+}
+
+.title {
+  margin: 0;
+  margin-bottom: 8px;
+}
+
+.description {
+  margin: 0;
+  margin-bottom: 24px;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+}
+
+.info_group {
+  margin-right: 24px;
+}
+
+.info_group_icon {
+  margin-right: 6px;
+}

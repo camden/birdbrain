@@ -1,4 +1,4 @@
-$color-primary: #daa7ff;
+$color-primary: #f7c2ff;
 
 @mixin button-shadow($color) {
   box-shadow: 4px 4px 0px $color;
@@ -10,6 +10,7 @@ $color-primary: #daa7ff;
   font-size: 1rem;
   padding: 16px 16px;
   text-transform: uppercase;
+  letter-spacing: 1.5px;
   font-weight: bold;
   margin-right: 4px;
   outline: none;
@@ -31,7 +32,7 @@ $color-primary: #daa7ff;
 }
 
 .primary:hover {
-  background-color: #f7c2ff;
+  background-color: #daa7ff;
 }
 
 .primary:active {
@@ -46,7 +47,7 @@ $color-primary: #daa7ff;
 }
 
 .secondary:hover {
-  background-color: #e9e9e9;
+  background-color: #f0f0f0;
 }
 
 .secondary:active {

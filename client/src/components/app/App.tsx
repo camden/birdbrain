@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Room from '../room/Room';
 import styles from './App.module.css';
 import Div100vh from 'react-div-100vh';
+import Demo from 'components/demo/Demo';
 
 const App: React.FC = () => {
   return (
@@ -11,6 +12,9 @@ const App: React.FC = () => {
       <div className={styles.app_inner}>
         <Router>
           <Switch>
+            <Route path="/demo">
+              <Demo />
+            </Route>
             <Route path="/room/:id">
               <Room />
             </Route>
