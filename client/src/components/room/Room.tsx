@@ -17,6 +17,7 @@ import {
   getGame,
 } from 'store/selectors';
 import TopBar from 'components/shared/top-bar/TopBar';
+import GameCard from 'components/shared/game-card/GameCard';
 
 // TODO this FC is getting sorta big. split this out in the future?
 const Room: React.FC = () => {
@@ -62,20 +63,34 @@ const Room: React.FC = () => {
     <div className={styles.room}>
       <TopBar room={room} />
       <main className={styles.room_body}>
-        <div className={styles.user_list}>
-          {usersInRoom.map(user => (
-            <User
-              key={user.id}
-              user={user}
-              isLeader={roomLeader?.id === user.id}
-            />
-          ))}
-        </div>
+        <section className={styles.users_section}>
+          <h2 className={styles.subtitle}>Who's Here</h2>
+          <div className={styles.user_list}>
+            {usersInRoom.map(user => (
+              <User
+                key={user.id}
+                user={user}
+                isLeader={roomLeader?.id === user.id}
+              />
+            ))}
+          </div>
+        </section>
+        <section className={styles.game_section}>
+          <h2 className={styles.subtitle}>Next Up</h2>
+          <GameCard
+            title="The Resistance"
+            playerCount="5-10"
+            time="30 min"
+            description={'A classic party game of social deduction.'}
+          />
+        </section>
         {!isRoomLeader && (
           <div>Waiting for {roomLeader?.name} to start the game.</div>
         )}
         {isRoomLeader && (
-          <Button onClick={() => dispatch(sendStartGame())}>Start game</Button>
+          <Button fullWidth onClick={() => dispatch(sendStartGame())}>
+            Start game
+          </Button>
         )}
       </main>
     </div>

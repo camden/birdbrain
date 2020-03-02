@@ -1,4 +1,4 @@
-$color-primary: #daa7ff;
+$color-primary: #fda9ff;
 
 @mixin button-shadow($color) {
   box-shadow: 4px 4px 0px $color;
@@ -52,4 +52,8 @@ $color-primary: #daa7ff;
 
 .secondary:active {
   box-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.7);
+}
+
+.full_width {
+  width: 100%;
 }

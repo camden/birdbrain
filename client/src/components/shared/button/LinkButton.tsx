@@ -1,12 +1,13 @@
 import React, { ComponentProps } from 'react';
-import Button from './Button';
+import Button, { CustomButtonProps } from './Button';
 import { withRouter, RouteComponentProps } from 'react-router';
 
-export interface CustomButtonProps {
+export interface CustomLinkButtonProps {
   to: string;
 }
 
 export type ButtonProps = ComponentProps<'button'> &
+  CustomLinkButtonProps &
   CustomButtonProps &
   RouteComponentProps;
 

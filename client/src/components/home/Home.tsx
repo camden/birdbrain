@@ -109,6 +109,7 @@ const Home: React.FC = () => {
                 to={'/create-room'}
                 className={styles.button}
                 disabled={isLoadingJoin}
+                secondary
               >
                 {isLoadingJoin ? <div>loading...</div> : 'Create New Room'}
               </LinkButton>
