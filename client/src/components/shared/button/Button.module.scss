@@ -1,4 +1,4 @@
-$color-primary: #f7c2ff;
+$color-primary: #daa7ff;
 
 @mixin button-shadow($color) {
   box-shadow: 4px 4px 0px $color;
@@ -32,7 +32,7 @@ $color-primary: #f7c2ff;
 }
 
 .primary:hover {
-  background-color: #daa7ff;
+  background-color: #f7c2ff;
 }
 
 .primary:active {

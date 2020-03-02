@@ -5,6 +5,7 @@ import Room from '../room/Room';
 import styles from './App.module.css';
 import Div100vh from 'react-div-100vh';
 import Demo from 'components/demo/Demo';
+import CreateRoom from 'components/home/CreateRoom';
 
 const App: React.FC = () => {
   return (
@@ -12,6 +13,9 @@ const App: React.FC = () => {
       <div className={styles.app_inner}>
         <Router>
           <Switch>
+            <Route path="/create-room">
+              <CreateRoom />
+            </Route>
             <Route path="/demo">
               <Demo />
             </Route>

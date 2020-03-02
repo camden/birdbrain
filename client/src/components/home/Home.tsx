@@ -5,6 +5,8 @@ import styles from './Home.module.css';
 import { Redirect, Link } from 'react-router-dom';
 import Button from 'components/shared/button/Button';
 import QueryString from 'query-string';
+import LinkButton from 'components/shared/button/LinkButton';
+import TextInput from 'components/shared/input/TextInput';
 
 const getRoomViaAPI = async (roomCode: string, name: string) => {
   try {
@@ -108,8 +110,7 @@ const Home: React.FC = () => {
           <label htmlFor="room-code" className={styles.label}>
             Room Code
           </label>
-          <input
-            type="text"
+          <TextInput
             id="room-code"
             name="called-search-to-disable-autocomplete1"
             placeholder="Room Code"
@@ -124,8 +125,7 @@ const Home: React.FC = () => {
           <label htmlFor="user-name" className={styles.label}>
             Name
           </label>
-          <input
-            type="text"
+          <TextInput
             id="user-name"
             placeholder="Name"
             name="called-search-to-disable-autocomplete2"
@@ -149,13 +149,13 @@ const Home: React.FC = () => {
           <>
             <div className={styles.input_section_divider}>OR</div>
             <section className={styles.input_section}>
-              <Button
-                onClick={createRoomCallback}
+              <LinkButton
+                to={'/create-room'}
                 className={styles.button}
                 disabled={isLoadingJoin}
               >
                 {isLoadingJoin ? <div>loading...</div> : 'Create Room'}
-              </Button>
+              </LinkButton>
             </section>
           </>
         )}
