@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import styles from './TopBar.module.css';
-import { Room } from '@server/store/general/types';
+import { Room, User } from '@server/store/general/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQrcode } from '@fortawesome/pro-solid-svg-icons';
 import RoomQRCode from './RoomQRCode';
+import { useSelector } from 'react-redux';
+import { getRoomLeader } from 'store/selectors';
 
 export interface TopBarProps {
   room: Room;
@@ -11,6 +13,7 @@ export interface TopBarProps {
 
 const TopBar: React.FC<TopBarProps> = ({ room }) => {
   const [showQrCode, setShowQrCode] = useState(false);
+  const roomLeader = useSelector(getRoomLeader());
 
   if (showQrCode) {
     return (
@@ -18,12 +21,18 @@ const TopBar: React.FC<TopBarProps> = ({ room }) => {
     );
   }
 
+  const roomName = roomLeader ? `${roomLeader?.name}'s Room` : 'New Room';
+
   return (
     <div>
       <div className={styles.top_bar}>
-        <div onClick={() => setShowQrCode(true)}>
+        <div className={styles.room_name}>{roomName}</div>
+        <div
+          className={styles.clickable_code}
+          onClick={() => setShowQrCode(true)}
+        >
           <FontAwesomeIcon icon={faQrcode} />
-          <span className={styles.room_code}>{room.id}</span>
+          <div className={styles.room_code}>{room.id}</div>
         </div>
       </div>
       <div className={styles.spacing}></div>
