@@ -7,6 +7,7 @@ import { rstAckTeamVoteResults } from '@server/store/games/the-resistance/action
 import User from 'components/shared/user/User';
 import { faThumbsUp, faThumbsDown } from '@fortawesome/pro-solid-svg-icons';
 import WaitingMessage from './WaitingMessage';
+import styles from './ShowTeamVotingResults.module.css';
 
 export interface ResistanceProps {
   game: ResistanceGameState;
@@ -48,22 +49,24 @@ const TheResistanceShowTeamVotingResults: React.FC<ResistanceProps> = ({
   );
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <h2>The votes are in!</h2>
-      {game.players.map(player => (
-        <User
-          user={{ id: player.userId, name: player.name }}
-          key={player.userId}
-          icon={
-            game.teamApprovalVotes.includes(player.userId)
-              ? faThumbsUp
-              : faThumbsDown
-          }
-          iconColor={
-            game.teamApprovalVotes.includes(player.userId) ? '#00ce00' : 'red'
-          }
-        />
-      ))}
+      <section className={styles.user_list}>
+        {game.players.map(player => (
+          <User
+            user={{ id: player.userId, name: player.name }}
+            key={player.userId}
+            icon={
+              game.teamApprovalVotes.includes(player.userId)
+                ? faThumbsUp
+                : faThumbsDown
+            }
+            iconColor={
+              game.teamApprovalVotes.includes(player.userId) ? '#00ce00' : 'red'
+            }
+          />
+        ))}
+      </section>
       {missionWasApproved ? missionApprovedRender : missionRejectedRender}
       <WaitingMessage
         playersThatNeedToAct={playersWhoStillNeedToAck}

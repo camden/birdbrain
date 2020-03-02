@@ -10,6 +10,12 @@
   position: relative;
   padding-bottom: 24px;
   padding: 0 16px;
+  display: flex;
+}
+
+.game_wrapper {
+  display: flex;
+  flex: 1;
 }
 
 .game_toolbar_section {

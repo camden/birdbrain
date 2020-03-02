@@ -23,7 +23,7 @@ const TheResistanceMain: React.FC<ResistanceProps> = ({ game, room }) => {
             <Role game={game} />
           </div>
         )}
-        <div className={cx({ [styles.hidden]: showRole })}>
+        <div className={cx(styles.game_wrapper, { [styles.hidden]: showRole })}>
           <GameScreen game={game} />
         </div>
       </section>
