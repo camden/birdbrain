@@ -1,27 +1,20 @@
-.home {
+.create_room {
   padding: 1.5rem;
-}
 
-.input_section {
   display: flex;
   flex-direction: column;
 }
 
-.input_section_divider {
-  text-align: center;
-  margin: 40px 0;
-}
-
 .label {
+  margin-bottom: 4px;
   margin-left: 12px;
   text-transform: uppercase;
-  margin-bottom: 4px;
 }
 
-.label_icon {
+.icon {
   margin-right: 8px;
 }
 
-.join_room_input {
+.name_input {
   margin-bottom: 24px;
 }

@@ -11,8 +11,10 @@ export type ButtonProps = ComponentProps<'button'> &
   RouteComponentProps;
 
 const LinkButton: React.FC<ButtonProps> = props => {
+  const { staticContext, ...rest } = props;
+
   return (
-    <Button {...props} onClick={() => props.history.push(props.to)}></Button>
+    <Button {...rest} onClick={() => props.history.push(props.to)}></Button>
   );
 };
 

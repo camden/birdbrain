@@ -1,12 +1,14 @@
 import React, { useState, useCallback } from 'react';
-import birdbrainLogo from 'assets/images/birdbrain-logo.svg';
 import axios from 'axios';
 import styles from './Home.module.css';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Button from 'components/shared/button/Button';
 import QueryString from 'query-string';
 import LinkButton from 'components/shared/button/LinkButton';
-import TextInput from 'components/shared/input/TextInput';
+import TextInput from 'components/shared/form/TextInput';
+import LogoHeader from 'components/shared/logo-header/LogoHeader';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faKey } from '@fortawesome/pro-solid-svg-icons';
 
 const getRoomViaAPI = async (roomCode: string, name: string) => {
   try {
@@ -22,43 +24,11 @@ const getQueryStringValue = (key: string) => {
   return values[key] as string;
 };
 
-const createRoomViaAPI = async (): Promise<{ roomId: string } | null> => {
-  try {
-    const res = await axios.post(`/api/room/`);
-    return res.data;
-  } catch {
-    return null;
-  }
-};
-
 const Home: React.FC = () => {
   const [roomCode, setRoomCode] = useState(getQueryStringValue('room') || '');
   const [name, setName] = useState('');
   const [isLoadingJoin, setIsLoadingJoin] = useState(false);
   const [isJoinSuccessful, setIsJoinSuccessful] = useState(false);
-
-  const createRoomCallback = useCallback(async () => {
-    if (isLoadingJoin) {
-      return;
-    }
-
-    if (!name) {
-      alert("What's your name?");
-      return;
-    }
-
-    setIsLoadingJoin(true);
-    const response = await createRoomViaAPI();
-    setIsLoadingJoin(false);
-
-    if (!response) {
-      return;
-    }
-
-    const roomId = response.roomId;
-    setRoomCode(roomId);
-    setIsJoinSuccessful(true);
-  }, [name, isLoadingJoin]);
 
   const joinRoomCallback = useCallback(async () => {
     if (isLoadingJoin) {
@@ -90,30 +60,16 @@ const Home: React.FC = () => {
 
   return (
     <div className={styles.home}>
-      <header className={styles.header}>
-        <Link
-          to="/"
-          onClick={() => {
-            window.history.replaceState(null, '', window.location.pathname);
-            window.location.reload();
-          }}
-        >
-          <img
-            src={birdbrainLogo}
-            className={styles.birdbrain_logo}
-            alt="logo"
-          />
-        </Link>
-      </header>
+      <LogoHeader />
       <section className={styles.body}>
         <section className={styles.input_section}>
           <label htmlFor="room-code" className={styles.label}>
+            <FontAwesomeIcon icon={faKey} className={styles.label_icon} />
             Room Code
           </label>
           <TextInput
             id="room-code"
             name="called-search-to-disable-autocomplete1"
-            placeholder="Room Code"
             value={roomCode}
             onKeyPress={event =>
               event.key === 'Enter' ? joinRoomCallback() : null
@@ -123,11 +79,11 @@ const Home: React.FC = () => {
             autoComplete="off"
           />
           <label htmlFor="user-name" className={styles.label}>
-            Name
+            <FontAwesomeIcon icon={faUser} className={styles.label_icon} />
+            Your Name
           </label>
           <TextInput
             id="user-name"
-            placeholder="Name"
             name="called-search-to-disable-autocomplete2"
             value={name}
             onChange={event => setName(event.target.value)}
@@ -154,7 +110,7 @@ const Home: React.FC = () => {
                 className={styles.button}
                 disabled={isLoadingJoin}
               >
-                {isLoadingJoin ? <div>loading...</div> : 'Create Room'}
+                {isLoadingJoin ? <div>loading...</div> : 'Create New Room'}
               </LinkButton>
             </section>
           </>

@@ -1,9 +1,7 @@
 .input {
-  background: lightcoral;
-
   font-size: 1rem;
-  border: 0;
+  border: 2px solid black;
   border-radius: 16px;
-  padding: 16px;
+  padding: 12px;
   background-color: #f7f7f7;
 }
