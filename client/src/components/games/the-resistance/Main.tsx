@@ -5,6 +5,7 @@ import GameToolbar from './GameToolbar';
 import Role from './Role';
 import styles from './Main.module.css';
 import { Room } from '@server/store/general/types';
+import cx from 'classnames';
 
 export interface ResistanceProps {
   game: ResistanceGameState;
@@ -22,7 +23,9 @@ const TheResistanceMain: React.FC<ResistanceProps> = ({ game, room }) => {
             <Role game={game} />
           </div>
         )}
-        <GameScreen game={game} />
+        <div className={cx({ [styles.hidden]: showRole })}>
+          <GameScreen game={game} />
+        </div>
       </section>
       <section className={styles.game_toolbar_section}>
         <GameToolbar
