@@ -61,6 +61,9 @@ const CreateRoom = () => {
         id="user-name"
         value={name}
         onChange={event => setName(event.target.value)}
+        onKeyPress={event =>
+          event.key === 'Enter' ? createRoomCallback() : null
+        }
         className={styles.name_input}
       />
       <Button onClick={createRoomCallback}>Create Room</Button>

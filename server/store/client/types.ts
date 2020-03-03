@@ -2,9 +2,18 @@ import { GameType } from '../games/types';
 import { RoomID, UserID, ActionMeta } from '../general/types';
 
 export const START_GAME_MESSAGE = 'START_GAME_MESSAGE';
+export const PICK_GAME_TYPE_MESSAGE = 'PICK_GAME_TYPE_MESSAGE';
 
 export interface StartGameMessage {
   type: typeof START_GAME_MESSAGE;
+  payload: {
+    gameType: GameType;
+  };
+  meta: ActionMeta;
+}
+
+export interface PickGameTypeMessage {
+  type: typeof PICK_GAME_TYPE_MESSAGE;
   payload: {
     gameType: GameType;
   };

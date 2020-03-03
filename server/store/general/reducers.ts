@@ -8,7 +8,7 @@ import {
   CREATE_NEW_ROOM,
 } from './types';
 import { produce } from 'immer';
-import { START_GAME_MESSAGE } from '../client/types';
+import { START_GAME_MESSAGE, PICK_GAME_TYPE_MESSAGE } from '../client/types';
 import { GameType } from '../games/types';
 import { createNewGame } from '../games';
 import { resistanceReducer } from '../games/the-resistance/reducers';
@@ -25,6 +25,7 @@ const initialState: GeneralState = {
           users: [],
           leaderUserID: null,
           game: null,
+          selectedGameType: null,
         },
       },
       allIds: ['NU'],
@@ -81,7 +82,18 @@ export const generalReducer = (
   }
 
   switch (action.type) {
-    case START_GAME_MESSAGE:
+    case PICK_GAME_TYPE_MESSAGE:
+      const roomId = action.meta.roomId;
+
+      if (!roomId) {
+        return state;
+      }
+
+      return produce(state, draftState => {
+        const room = draftState.entities.rooms.byId[roomId];
+        room.selectedGameType = action.payload.gameType;
+      });
+    case START_GAME_MESSAGE: {
       const roomId = action.meta.roomId;
 
       if (!roomId) {
@@ -102,6 +114,7 @@ export const generalReducer = (
         draftState.entities.games.allIds.push(newGame.id);
         draftState.entities.games.byId[newGame.id] = newGame;
       });
+    }
     case CREATE_NEW_ROOM:
       return produce(state, draftState => {
         const newRoomId = action.payload.roomId;
@@ -112,6 +125,7 @@ export const generalReducer = (
           game: null,
           leaderUserID: null,
           users: [],
+          selectedGameType: null,
         };
       });
     case ADD_USER_TO_ROOM:

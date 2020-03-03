@@ -34,20 +34,38 @@ const RoomBody: React.FC<RoomBodyProps> = props => {
         </section>
         <section className={styles.game_section}>
           <h2 className={styles.subtitle}>Next Up</h2>
-          <GameCard
-            gameType={GameType.THE_RESISTANCE}
-            onClick={
-              props.isCurrentUserRoomLeader
-                ? props.onChangeGameClick
-                : undefined
-            }
-          />
+          {props.room.selectedGameType && (
+            <GameCard
+              gameType={props.room.selectedGameType}
+              onClick={
+                props.isCurrentUserRoomLeader
+                  ? props.onChangeGameClick
+                  : undefined
+              }
+            />
+          )}
+          {!props.room.selectedGameType && (
+            <Button
+              secondary
+              onClick={
+                props.isCurrentUserRoomLeader
+                  ? props.onChangeGameClick
+                  : undefined
+              }
+            >
+              Choose Game
+            </Button>
+          )}
         </section>
         {!props.isCurrentUserRoomLeader && (
           <div>Waiting for {props.roomLeader.name} to start the game.</div>
         )}
         {props.isCurrentUserRoomLeader && (
-          <Button fullWidth onClick={props.onStartGameClick}>
+          <Button
+            fullWidth
+            onClick={props.onStartGameClick}
+            disabled={!props.room.selectedGameType}
+          >
             Start game
           </Button>
         )}

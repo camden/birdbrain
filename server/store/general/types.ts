@@ -1,6 +1,10 @@
 import uuid from 'uuid/v1';
-import { Game, GameID } from '../games/types';
-import { ClientMessage, StartGameMessage } from '../client/types';
+import { Game, GameID, GameType } from '../games/types';
+import {
+  ClientMessage,
+  StartGameMessage,
+  PickGameTypeMessage,
+} from '../client/types';
 import { ResistanceActionTypes } from 'store/games/the-resistance/actions';
 
 export type RoomID = string;
@@ -10,6 +14,7 @@ export interface Room {
   users: string[];
   leaderUserID: UserID | null;
   game: GameID | null;
+  selectedGameType: GameType | null;
 }
 
 export type UserID = string;
@@ -94,6 +99,7 @@ export interface CreateNewRoomAction {
 
 export type GeneralActionTypes =
   | ResistanceActionTypes
+  | PickGameTypeMessage
   | StartGameMessage
   | AddUserToRoomAction
   | CreateNewRoomAction

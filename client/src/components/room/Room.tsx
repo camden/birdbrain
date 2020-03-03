@@ -7,7 +7,7 @@ import useSelector from 'store/use-selector';
 import styles from './Room.module.css';
 import LinkButton from 'components/shared/button/LinkButton';
 import Game from 'components/games/Game';
-import { sendStartGame } from 'messages/general-messages';
+import { sendStartGame, sendPickGame } from 'messages/general-messages';
 import {
   getIsRoomLeader,
   getUsersInRoom,
@@ -68,7 +68,10 @@ const Room: React.FC = () => {
       <PickGame
         room={room}
         onCancel={() => setIsPickingGame(false)}
-        onPickGame={(game: GameType) => setIsPickingGame(false)}
+        onPickGame={(game: GameType) => {
+          setIsPickingGame(false);
+          dispatch(sendPickGame(game));
+        }}
       />
     );
   }
