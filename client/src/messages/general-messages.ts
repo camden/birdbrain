@@ -8,9 +8,6 @@ import {
 export const sendStartGame = () =>
   sendMessage({
     type: START_GAME_MESSAGE,
-    payload: {
-      gameType: GameType.THE_RESISTANCE,
-    },
   });
 
 export const sendPickGame = (gameType: GameType) =>

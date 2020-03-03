@@ -101,10 +101,15 @@ export const generalReducer = (
       }
 
       const room = state.entities.rooms.byId[roomId];
+
+      if (!room.selectedGameType) {
+        return state;
+      }
+
       const usersInRoom = room.users.map(
         userId => state.entities.users.byId[userId]
       );
-      const newGame = createNewGame(action.payload.gameType, usersInRoom);
+      const newGame = createNewGame(room.selectedGameType, usersInRoom);
 
       return produce(state, draftState => {
         const room = draftState.entities.rooms.byId[roomId];

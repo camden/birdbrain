@@ -6,9 +6,6 @@ export const PICK_GAME_TYPE_MESSAGE = 'PICK_GAME_TYPE_MESSAGE';
 
 export interface StartGameMessage {
   type: typeof START_GAME_MESSAGE;
-  payload: {
-    gameType: GameType;
-  };
   meta: ActionMeta;
 }
 
