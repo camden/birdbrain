@@ -7,7 +7,10 @@ import App from './components/app/App';
 import { reducer } from './store/reducers';
 import websocketMiddleware from './store/middleware/websocket-middleware';
 import { createStore, applyMiddleware, compose } from 'redux';
+import initReactFastclick from 'react-fastclick';
 import 'typeface-rubik';
+
+initReactFastclick();
 
 declare global {
   interface Window {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from './TopBar.module.css';
-import { Room, User } from '@server/store/general/types';
+import { Room } from '@server/store/general/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQrcode } from '@fortawesome/pro-solid-svg-icons';
 import RoomQRCode from './RoomQRCode';
