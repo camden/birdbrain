@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import QueryString from 'query-string';
 import { useDispatch } from 'react-redux';
@@ -15,6 +15,8 @@ import {
   getGame,
 } from 'store/selectors';
 import RoomBody from './RoomBody';
+import PickGame from './PickGame';
+import { GameType } from '@server/store/games/types';
 
 const Room: React.FC = () => {
   const { id } = useParams();
@@ -24,6 +26,8 @@ const Room: React.FC = () => {
   const usersInRoom = useSelector(getUsersInRoom());
   const roomLeader = useSelector(getRoomLeader());
   const game = useSelector(getGame());
+
+  const [isPickingGame, setIsPickingGame] = useState(false);
 
   useEffect(() => {
     if (!id) {
@@ -59,11 +63,22 @@ const Room: React.FC = () => {
     return <div>No game leader found for room "{room.id}".</div>;
   }
 
+  if (isPickingGame) {
+    return (
+      <PickGame
+        room={room}
+        onCancel={() => setIsPickingGame(false)}
+        onPickGame={(game: GameType) => setIsPickingGame(false)}
+      />
+    );
+  }
+
   return (
     <RoomBody
       room={room}
       isCurrentUserRoomLeader={isRoomLeader}
       onStartGameClick={() => dispatch(sendStartGame())}
+      onChangeGameClick={() => setIsPickingGame(true)}
       roomLeader={roomLeader}
       usersInRoom={usersInRoom}
     />

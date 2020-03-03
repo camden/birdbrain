@@ -23,9 +23,6 @@ const App: React.FC = () => {
             <Route path="/room/:id">
               <Room />
             </Route>
-            <Route path="/room/:id/pick-game">
-              <PickGame />
-            </Route>
             <Route path="/">
               <Home />
             </Route>

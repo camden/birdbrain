@@ -8,3 +8,10 @@ export interface Game {
   id: GameID;
   type: GameType;
 }
+
+export interface GameMetadata {
+  title: string;
+  description: string;
+  playerCount: string;
+  time: string;
+}
