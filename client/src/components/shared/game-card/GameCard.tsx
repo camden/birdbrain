@@ -5,12 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserFriends, faClock } from '@fortawesome/pro-solid-svg-icons';
 import cx from 'classnames';
 
-interface GameCardProps {
+export interface GameCardProps {
   title: string;
   description: string;
   playerCount: string;
   time: string;
   onClick?: () => void;
+  linkTo?: string;
 }
 
 const GameCard: React.FC<GameCardProps> = props => {

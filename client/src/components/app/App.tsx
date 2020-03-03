@@ -6,6 +6,7 @@ import styles from './App.module.css';
 import Div100vh from 'react-div-100vh';
 import Demo from 'components/demo/Demo';
 import CreateRoom from 'components/home/CreateRoom';
+import PickGame from 'components/room/PickGame';
 
 const App: React.FC = () => {
   return (
@@ -21,6 +22,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/room/:id">
               <Room />
+            </Route>
+            <Route path="/room/:id/pick-game">
+              <PickGame />
             </Route>
             <Route path="/">
               <Home />

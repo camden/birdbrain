@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
-import { useParams, withRouter } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import QueryString from 'query-string';
 import { useDispatch } from 'react-redux';
 import { connectToRoom } from 'store/websocket/actions';
 import useSelector from 'store/use-selector';
 import styles from './Room.module.css';
-import Button from 'components/shared/button/Button';
 import LinkButton from 'components/shared/button/LinkButton';
-import User from 'components/shared/user/User';
 import Game from 'components/games/Game';
 import { sendStartGame } from 'messages/general-messages';
 import {
@@ -16,10 +14,8 @@ import {
   getRoomLeader,
   getGame,
 } from 'store/selectors';
-import TopBar from 'components/shared/top-bar/TopBar';
-import GameCard from 'components/shared/game-card/GameCard';
+import RoomBody from './RoomBody';
 
-// TODO this FC is getting sorta big. split this out in the future?
 const Room: React.FC = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -59,42 +55,19 @@ const Room: React.FC = () => {
     return <Game room={room} />;
   }
 
+  if (!roomLeader) {
+    return <div>No game leader found for room "{room.id}".</div>;
+  }
+
   return (
-    <div className={styles.room}>
-      <TopBar room={room} />
-      <main className={styles.room_body}>
-        <section className={styles.users_section}>
-          <h2 className={styles.subtitle}>Who's Here</h2>
-          <div className={styles.user_list}>
-            {usersInRoom.map(user => (
-              <User
-                key={user.id}
-                user={user}
-                isLeader={roomLeader?.id === user.id}
-              />
-            ))}
-          </div>
-        </section>
-        <section className={styles.game_section}>
-          <h2 className={styles.subtitle}>Next Up</h2>
-          <GameCard
-            title="The Resistance"
-            playerCount="5-10"
-            time="30 min"
-            description={'A classic party game of social deduction.'}
-          />
-        </section>
-        {!isRoomLeader && (
-          <div>Waiting for {roomLeader?.name} to start the game.</div>
-        )}
-        {isRoomLeader && (
-          <Button fullWidth onClick={() => dispatch(sendStartGame())}>
-            Start game
-          </Button>
-        )}
-      </main>
-    </div>
+    <RoomBody
+      room={room}
+      isCurrentUserRoomLeader={isRoomLeader}
+      onStartGameClick={() => dispatch(sendStartGame())}
+      roomLeader={roomLeader}
+      usersInRoom={usersInRoom}
+    />
   );
 };
 
-export default withRouter(Room);
+export default Room;
