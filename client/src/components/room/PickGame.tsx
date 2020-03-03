@@ -18,7 +18,7 @@ const PickGame: React.FC<PickGameProps> = props => {
   return (
     <RoomWrapper room={props.room}>
       <div>
-        <Button secondary onClick={props.onCancel}>
+        <Button secondary small onClick={props.onCancel}>
           <FontAwesomeIcon
             icon={faAngleLeft}
             size="lg"
@@ -27,7 +27,7 @@ const PickGame: React.FC<PickGameProps> = props => {
           Back
         </Button>
       </div>
-      <h2>Pick a Game</h2>
+      <h1 className={styles.title}>Pick a Game</h1>
       <GameCard
         gameType={GameType.THE_RESISTANCE}
         onClick={() => props.onPickGame(GameType.THE_RESISTANCE)}

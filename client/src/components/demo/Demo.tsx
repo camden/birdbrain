@@ -1,5 +1,4 @@
 import React from 'react';
-import GameCard from 'components/shared/game-card/GameCard';
 import Button from 'components/shared/button/Button';
 import CustomGameCard from 'components/shared/game-card/CustomGameCard';
 

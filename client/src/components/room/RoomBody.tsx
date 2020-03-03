@@ -5,7 +5,6 @@ import User from 'components/shared/user/User';
 import styles from './Room.module.css';
 import Button from 'components/shared/button/Button';
 import RoomWrapper from './RoomWrapper';
-import { GameType } from '@server/store/games/types';
 
 export interface RoomBodyProps {
   room: Room;

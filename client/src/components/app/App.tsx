@@ -6,7 +6,6 @@ import styles from './App.module.css';
 import Div100vh from 'react-div-100vh';
 import Demo from 'components/demo/Demo';
 import CreateRoom from 'components/home/CreateRoom';
-import PickGame from 'components/room/PickGame';
 
 const App: React.FC = () => {
   return (
