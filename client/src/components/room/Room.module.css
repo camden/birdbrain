@@ -2,11 +2,11 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  padding: 32px;
+  padding-top: 0;
 }
 
 .room_body {
-  padding: 32px;
-  padding-top: 0;
   flex: 1;
   display: flex;
   flex-direction: column;

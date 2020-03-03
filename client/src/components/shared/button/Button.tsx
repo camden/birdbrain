@@ -12,7 +12,7 @@ export interface CustomButtonProps {
 export type ButtonProps = ComponentProps<'button'> & CustomButtonProps;
 
 const Button: React.FC<ButtonProps> = props => {
-  const { secondary, fullWidth, ...rest } = props;
+  const { secondary, fullWidth, small, ...rest } = props;
 
   return (
     <button
