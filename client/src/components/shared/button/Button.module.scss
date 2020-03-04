@@ -1,5 +1,3 @@
-$color-primary: #fec6ff;
-
 @mixin button-shadow($color) {
   box-shadow: 4px 4px 0px $color;
 }
@@ -26,9 +24,9 @@ $color-primary: #fec6ff;
 }
 
 .primary {
-  background-color: $color-primary;
-  border: 2px solid darken($color-primary, 20%);
-  @include button-shadow(darken($color-primary, 20%));
+  background-color: #fec6ff;
+  border: 2px solid #fc60ff;
+  @include button-shadow(#fc60ff);
 }
 
 .primary:hover {
@@ -37,7 +35,7 @@ $color-primary: #fec6ff;
 
 .primary:active {
   background-color: rgb(247, 194, 255);
-  box-shadow: inset 2px 2px 0px darken($color-primary, 20%);
+  box-shadow: inset 2px 2px 0px #fc60ff;
 }
 
 .secondary {

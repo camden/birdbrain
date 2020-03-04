@@ -35,6 +35,7 @@ const RoomBody: React.FC<RoomBodyProps> = props => {
           <h2 className={styles.subtitle}>Next Up</h2>
           {props.room.selectedGameType && (
             <GameCard
+              key={props.room.selectedGameType}
               gameType={props.room.selectedGameType}
               onClick={
                 props.isCurrentUserRoomLeader

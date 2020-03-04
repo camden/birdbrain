@@ -26,6 +26,13 @@ const getGameMetadata = (gameType: GameType): GameMetadata => {
         time: '15-45 min',
         description: 'A tense bluffing game with no luck involved.',
       };
+    case GameType.CHAT:
+      return {
+        title: 'Chat',
+        playerCount: '1-100',
+        time: '-',
+        description: 'A simple chat room.',
+      };
   }
 };
 

@@ -11,7 +11,7 @@ export type RoomID = string;
 
 export interface Room {
   id: RoomID;
-  users: string[];
+  users: UserID[];
   leaderUserID: UserID | null;
   game: GameID | null;
   selectedGameType: GameType | null;

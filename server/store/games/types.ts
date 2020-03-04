@@ -1,6 +1,7 @@
 export enum GameType {
   THE_RESISTANCE = 'THE_RESISTANCE',
-  SKULL = 'SKULL'
+  SKULL = 'SKULL',
+  CHAT = 'CHAT',
 }
 
 export type GameID = string;

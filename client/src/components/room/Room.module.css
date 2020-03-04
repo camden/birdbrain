@@ -2,14 +2,14 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 32px;
-  padding-top: 0;
 }
 
 .room_body {
   flex: 1;
   display: flex;
   flex-direction: column;
+  padding: 32px;
+  padding-top: 0;
 }
 
 .users_section {
@@ -29,15 +29,6 @@
   margin-bottom: 16px;
 }
 
-.title,
 .subtitle {
   margin-bottom: 8px;
-}
-
-.button_icon {
-  margin-right: 8px;
-}
-
-.game_card {
-  margin-bottom: 16px;
 }
