@@ -9,6 +9,8 @@
 
 .messages_list {
   flex: 1;
+  overflow-y: auto;
+  margin-bottom: 16px;
 }
 
 .input_label {
@@ -22,7 +24,7 @@
 }
 
 .input {
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 }
 
 .compose_area {

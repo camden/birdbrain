@@ -4,8 +4,8 @@ import { Room } from '@server/store/general/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faQrcode } from '@fortawesome/pro-solid-svg-icons';
 import RoomQRCode from './RoomQRCode';
-import { useSelector } from 'react-redux';
 import { getRoomLeader } from 'store/selectors';
+import useSelector from 'store/use-selector';
 
 export interface TopBarProps {
   room: Room;

@@ -3,7 +3,6 @@ import {
   ResistancePhase,
   ResistanceTeamVote,
   ResistanceMissionVote,
-  ResistanceMission,
   ResistancePlayer,
   ResistanceMissionStatus,
 } from './types';

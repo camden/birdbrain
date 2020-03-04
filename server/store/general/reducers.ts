@@ -14,6 +14,9 @@ import { createNewGame } from '../games';
 import { resistanceReducer } from '../games/the-resistance/reducers';
 import { ResistanceGameState } from '../games/the-resistance/types';
 import { ResistanceActionTypes } from '../games/the-resistance/actions';
+import { ChatActionTypes } from 'store/games/chat/actions';
+import { chatReducer } from 'store/games/chat/reducers';
+import { ChatGameState } from 'store/games/chat/types';
 import { pickRandomNumber } from 'utils/rng';
 
 const initialState: GeneralState = {
@@ -54,6 +57,31 @@ export const generalReducer = (
   state = initialState,
   action: GeneralActionTypes
 ) => {
+  // TODO generalize game handling code
+  if (action.type.startsWith('CHAT_')) {
+    const chatAction = action as ChatActionTypes;
+    const roomId = chatAction.meta?.roomId;
+    if (!roomId) {
+      return state;
+    }
+
+    const room = getRoomById(roomId, state);
+    const gameId = room?.game;
+    if (!gameId) {
+      return state;
+    }
+    return produce(state, draftState => {
+      const game = draftState.entities.games.byId[gameId];
+      if (!game) {
+        return;
+      }
+
+      const updatedGame = chatReducer(game as ChatGameState, chatAction);
+
+      draftState.entities.games.byId[gameId] = updatedGame;
+    });
+  }
+
   if (action.type.startsWith('RST_')) {
     const resistanceAction = action as ResistanceActionTypes;
     const roomId = resistanceAction.meta?.roomId;

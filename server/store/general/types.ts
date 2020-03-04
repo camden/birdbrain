@@ -6,6 +6,7 @@ import {
   PickGameTypeMessage,
 } from '../client/types';
 import { ResistanceActionTypes } from 'store/games/the-resistance/actions';
+import { ChatActionTypes } from 'store/games/chat/actions';
 
 export type RoomID = string;
 
@@ -98,6 +99,7 @@ export interface CreateNewRoomAction {
 }
 
 export type GeneralActionTypes =
+  | ChatActionTypes
   | ResistanceActionTypes
   | PickGameTypeMessage
   | StartGameMessage
