@@ -6,6 +6,7 @@ import CustomGameCard from './CustomGameCard';
 export interface GameCardProps {
   gameType: GameType;
   onClick?: () => void;
+  className?: string;
 }
 
 const getGameMetadata = (gameType: GameType): GameMetadata => {
@@ -33,6 +34,7 @@ const GameCard: React.FC<GameCardProps> = props => {
 
   return (
     <CustomGameCard
+      className={props.className}
       title={metadata.title}
       playerCount={metadata.playerCount}
       time={metadata.time}

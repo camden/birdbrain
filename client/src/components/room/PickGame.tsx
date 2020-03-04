@@ -29,10 +29,12 @@ const PickGame: React.FC<PickGameProps> = props => {
       </div>
       <h1 className={styles.title}>Pick a Game</h1>
       <GameCard
+        className={styles.game_card}
         gameType={GameType.THE_RESISTANCE}
         onClick={() => props.onPickGame(GameType.THE_RESISTANCE)}
       />
       <GameCard
+        className={styles.game_card}
         gameType={GameType.SKULL}
         onClick={() => props.onPickGame(GameType.SKULL)}
       />

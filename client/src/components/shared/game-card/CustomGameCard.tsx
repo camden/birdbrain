@@ -10,13 +10,14 @@ export interface CustomGameCardProps {
   description: string;
   playerCount: string;
   time: string;
+  className?: string;
   onClick?: () => void;
 }
 
 const CustomGameCard: React.FC<CustomGameCardProps> = props => {
   return (
     <div
-      className={cx(styles.card, {
+      className={cx(props.className, styles.card, {
         [styles.selectable]: !!props.onClick,
       })}
       onClick={props.onClick}
