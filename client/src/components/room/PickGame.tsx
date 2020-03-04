@@ -32,6 +32,10 @@ const PickGame: React.FC<PickGameProps> = props => {
         gameType={GameType.THE_RESISTANCE}
         onClick={() => props.onPickGame(GameType.THE_RESISTANCE)}
       />
+      <GameCard
+        gameType={GameType.SKULL}
+        onClick={() => props.onPickGame(GameType.SKULL)}
+      />
     </RoomWrapper>
   );
 };
