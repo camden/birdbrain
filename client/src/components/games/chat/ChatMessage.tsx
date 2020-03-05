@@ -8,14 +8,16 @@ export interface ChatMessageProps {
   text: string;
   author: User;
   className?: string;
-  rightAligned?: boolean;
+  fromCurrentUser?: boolean;
+  hideAvatar?: boolean;
 }
 
 const ChatMessage: React.FC<ChatMessageProps> = props => {
   return (
     <div
       className={cx(styles.message, props.className, {
-        [styles.right_aligned]: props.rightAligned,
+        [styles.from_current_user]: props.fromCurrentUser,
+        [styles.hide_avatar]: props.hideAvatar,
       })}
     >
       <div className={styles.avatar}>

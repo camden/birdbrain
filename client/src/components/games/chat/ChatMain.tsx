@@ -13,6 +13,8 @@ import { getCurrentUser, getUsersInRoom } from 'store/selectors';
 import ChatMessage from './ChatMessage';
 import TopBar from 'components/shared/top-bar/TopBar';
 import { Room } from '@server/store/general/types';
+import { groupWith } from 'ramda';
+import cx from 'classnames';
 
 export interface ChatProps {
   game: ChatGameState;
@@ -55,20 +57,31 @@ const ChatMain: React.FC<ChatProps> = ({ game, room }) => {
     id: '',
   };
 
+  const groupedMessages = groupWith(
+    (a, b) => a.author === b.author,
+    game.messages
+  );
+
   return (
     <div className={styles.chat}>
       <TopBar room={room} />
       <section className={styles.messages_list} ref={messagesListEl}>
-        {game.messages.map(msg => (
-          <ChatMessage
-            className={styles.message}
-            key={msg.id}
-            text={msg.text}
-            rightAligned={msg.author === currentUser?.id}
-            author={
-              usersInRoom.find(user => msg.author === user.id) || defaultUser
-            }
-          />
+        {groupedMessages.map(messageGroup => (
+          <div className={styles.message_group} key={messageGroup[0].id}>
+            {messageGroup.map((msg, index, group) => (
+              <ChatMessage
+                className={styles.message}
+                key={msg.id}
+                text={msg.text}
+                hideAvatar={index !== group.length - 1}
+                fromCurrentUser={msg.author === currentUser?.id}
+                author={
+                  usersInRoom.find(user => msg.author === user.id) ||
+                  defaultUser
+                }
+              />
+            ))}
+          </div>
         ))}
       </section>
       <section className={styles.compose_area}>

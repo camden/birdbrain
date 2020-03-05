@@ -16,7 +16,11 @@
 }
 
 .message {
-  margin-bottom: 4px;
+  margin-bottom: 3px;
+}
+
+.message_group {
+  margin-bottom: 16px;
 }
 
 .input_label {

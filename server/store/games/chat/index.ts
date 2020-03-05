@@ -50,6 +50,16 @@ export const createNewGameOfChat = (
         text: 'Hello world',
         author: players[0].userId,
       },
+      {
+        id: '7',
+        text: 'Hello world',
+        author: players[0].userId,
+      },
+      {
+        id: '8',
+        text: 'Hello world',
+        author: players[0].userId,
+      },
     ],
   };
 };

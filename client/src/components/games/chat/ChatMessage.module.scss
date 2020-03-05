@@ -1,3 +1,5 @@
+$message_border_radius: 16px;
+
 .message {
   display: flex;
   flex-direction: row;
@@ -7,19 +9,46 @@
 
 .message_text {
   margin-left: 8px;
-  padding: 8px 12px;
-  border-radius: 16px;
+  padding: 8px 16px;
+  border-radius: 4px;
   background: white;
 }
 
-.message.right_aligned {
+.message.hide_avatar .avatar {
+  visibility: hidden;
+}
+
+.message:not(.from_current_user):first-of-type .message_text {
+  border-top-left-radius: $message_border_radius;
+}
+
+.message:not(.from_current_user):last-of-type .message_text {
+  border-bottom-left-radius: $message_border_radius;
+}
+
+.message:not(.from_current_user) .message_text {
+  border-top-right-radius: $message_border_radius;
+  border-bottom-right-radius: $message_border_radius;
+}
+
+.message.from_current_user:first-of-type .message_text {
+  border-top-right-radius: $message_border_radius;
+}
+
+.message.from_current_user:last-of-type .message_text {
+  border-bottom-right-radius: $message_border_radius;
+}
+
+.message.from_current_user {
   justify-content: flex-end;
 
   .avatar {
-    display: none;
+    visibility: hidden;
   }
 
   .message_text {
     text-align: right;
+    border-top-left-radius: $message_border_radius;
+    border-bottom-left-radius: $message_border_radius;
   }
 }
