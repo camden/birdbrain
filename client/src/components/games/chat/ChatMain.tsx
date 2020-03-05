@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 
 import styles from './ChatMain.module.css';
 import { ChatGameState } from '@server/store/games/chat/types';
@@ -21,6 +21,7 @@ const ChatMain: React.FC<SkullProps> = ({ game }) => {
   const currentUser = useSelector(getCurrentUser());
   const usersInRoom = useSelector(getUsersInRoom());
   const dispatch = useDispatch();
+  const messagesListEl = useRef<HTMLDivElement>(null);
 
   const sendMessage = useCallback(() => {
     if (!currentUser) {
@@ -31,6 +32,21 @@ const ChatMain: React.FC<SkullProps> = ({ game }) => {
     setMessageText('');
   }, [messageText, dispatch, currentUser]);
 
+  useEffect(() => {
+    if (!messagesListEl.current) {
+      return;
+    }
+
+    const el = messagesListEl.current;
+    const tolerance = 200;
+    const isScrolledToBottom =
+      Math.abs(el.scrollHeight - el.scrollTop - el.clientHeight) <= tolerance;
+
+    if (isScrolledToBottom) {
+      el.scrollTo(0, el.scrollHeight);
+    }
+  }, [game.messages]);
+
   const defaultUser = {
     name: '',
     id: '',
@@ -39,7 +55,7 @@ const ChatMain: React.FC<SkullProps> = ({ game }) => {
   return (
     <div className={styles.chat}>
       <h1>Birdbrain Chat</h1>
-      <section className={styles.messages_list}>
+      <section className={styles.messages_list} ref={messagesListEl}>
         {game.messages.map(msg => (
           <ChatMessage
             className={styles.message}
