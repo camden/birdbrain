@@ -9,6 +9,7 @@ import websocketMiddleware from './store/middleware/websocket-middleware';
 import { createStore, applyMiddleware, compose } from 'redux';
 import initReactFastclick from 'react-fastclick';
 import 'typeface-rubik';
+import 'normalize.css';
 
 initReactFastclick();
 
