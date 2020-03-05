@@ -25,7 +25,7 @@ const Game: React.FC<GameProps> = ({ room }) => {
     case GameType.SKULL:
       return <SkullMain game={game as SkullGameState} room={room} />;
     case GameType.CHAT:
-      return <ChatMain game={game as ChatGameState} />;
+      return <ChatMain game={game as ChatGameState} room={room} />;
   }
 
   return <div>game</div>;

@@ -21,7 +21,32 @@ export const createNewGameOfChat = (
     players,
     messages: [
       {
-        id: 'asdf1235',
+        id: '1',
+        text: 'Hello world',
+        author: players[0].userId,
+      },
+      {
+        id: '2',
+        text: 'Hello world',
+        author: 'asdf',
+      },
+      {
+        id: '3',
+        text: 'Hello world',
+        author: 'asdf',
+      },
+      {
+        id: '4',
+        text: 'Hello world',
+        author: 'asdf',
+      },
+      {
+        id: '5',
+        text: 'Hello world',
+        author: 'asdf',
+      },
+      {
+        id: '6',
         text: 'Hello world',
         author: players[0].userId,
       },

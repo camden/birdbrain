@@ -14,20 +14,22 @@ const RoomQRCode: React.FC<TopBarProps> = ({ roomCode, onDoneClick }) => {
   return (
     <div className={styles.wrapper}>
       <section className={styles.inner}>
-        <h2 className={styles.url}>birdbrain.games</h2>
-        <div className={styles.qr_code_wrapper}>
-          <QRCode value={url} className={styles.qr_code} size={200} />
+        <div className={styles.info}>
+          <h2 className={styles.url}>birdbrain.games</h2>
+          <div className={styles.qr_code_wrapper}>
+            <QRCode value={url} className={styles.qr_code} size={200} />
+          </div>
+          <h2 className={styles.room_code}>{roomCode}</h2>
         </div>
-        <h2 className={styles.room_code}>{roomCode}</h2>
+        <Button
+          fullWidth
+          secondary
+          className={styles.button}
+          onClick={onDoneClick}
+        >
+          Done
+        </Button>
       </section>
-      <Button
-        fullWidth
-        secondary
-        className={styles.button}
-        onClick={onDoneClick}
-      >
-        Done
-      </Button>
     </div>
   );
 };

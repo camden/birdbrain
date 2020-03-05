@@ -11,12 +11,15 @@ import { useDispatch } from 'react-redux';
 import useSelector from 'store/use-selector';
 import { getCurrentUser, getUsersInRoom } from 'store/selectors';
 import ChatMessage from './ChatMessage';
+import TopBar from 'components/shared/top-bar/TopBar';
+import { Room } from '@server/store/general/types';
 
-export interface SkullProps {
+export interface ChatProps {
   game: ChatGameState;
+  room: Room;
 }
 
-const ChatMain: React.FC<SkullProps> = ({ game }) => {
+const ChatMain: React.FC<ChatProps> = ({ game, room }) => {
   const [messageText, setMessageText] = useState('');
   const currentUser = useSelector(getCurrentUser());
   const usersInRoom = useSelector(getUsersInRoom());
@@ -54,7 +57,7 @@ const ChatMain: React.FC<SkullProps> = ({ game }) => {
 
   return (
     <div className={styles.chat}>
-      <h1>Birdbrain Chat</h1>
+      <TopBar room={room} />
       <section className={styles.messages_list} ref={messagesListEl}>
         {game.messages.map(msg => (
           <ChatMessage
