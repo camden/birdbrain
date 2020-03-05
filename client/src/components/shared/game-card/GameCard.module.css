@@ -13,12 +13,10 @@
 
 .selectable:hover {
   background-color: #f0f0f0;
-  transform: translate(-4px, -4px);
 }
 
 .selectable:active {
   box-shadow: inset 3px 3px 0px black;
-  transform: translate(0, 0);
 }
 
 .title {
