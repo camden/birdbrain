@@ -9,7 +9,8 @@ import { faComment } from '@fortawesome/pro-solid-svg-icons';
 import { sendChatMessage } from 'messages/chat-messages';
 import { useDispatch } from 'react-redux';
 import useSelector from 'store/use-selector';
-import { getCurrentUser } from 'store/selectors';
+import { getCurrentUser, getUsersInRoom } from 'store/selectors';
+import ChatMessage from './ChatMessage';
 
 export interface SkullProps {
   game: ChatGameState;
@@ -18,6 +19,7 @@ export interface SkullProps {
 const ChatMain: React.FC<SkullProps> = ({ game }) => {
   const [messageText, setMessageText] = useState('');
   const currentUser = useSelector(getCurrentUser());
+  const usersInRoom = useSelector(getUsersInRoom());
   const dispatch = useDispatch();
 
   const sendMessage = useCallback(() => {
@@ -29,12 +31,25 @@ const ChatMain: React.FC<SkullProps> = ({ game }) => {
     setMessageText('');
   }, [messageText, dispatch, currentUser]);
 
+  const defaultUser = {
+    name: '',
+    id: '',
+  };
+
   return (
     <div className={styles.chat}>
       <h1>Birdbrain Chat</h1>
       <section className={styles.messages_list}>
         {game.messages.map(msg => (
-          <div key={msg.id}>{msg.text}</div>
+          <ChatMessage
+            className={styles.message}
+            key={msg.id}
+            text={msg.text}
+            rightAligned={msg.author === currentUser?.id}
+            author={
+              usersInRoom.find(user => msg.author === user.id) || defaultUser
+            }
+          />
         ))}
       </section>
       <section className={styles.compose_area}>

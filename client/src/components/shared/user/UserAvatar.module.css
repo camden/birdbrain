@@ -17,6 +17,12 @@
   border: 3px solid transparent;
 }
 
+.avatar.small {
+  width: 1rem;
+  height: 1rem;
+  font-size: 12px;
+}
+
 .bordered {
   border: 3px solid;
 }
