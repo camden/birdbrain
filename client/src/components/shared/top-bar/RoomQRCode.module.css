@@ -31,6 +31,7 @@
 
 .qr_code_wrapper {
   display: flex;
+  height: 236px;
   margin-top: 32px;
   padding: 16px;
   border-radius: 6px;
@@ -53,6 +54,5 @@
 }
 
 .button {
-  margin-top: 64px;
   width: 100%;
 }
