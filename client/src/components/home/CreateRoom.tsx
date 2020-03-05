@@ -28,11 +28,6 @@ const CreateRoom = () => {
       return;
     }
 
-    if (!name) {
-      alert("What's your name?");
-      return;
-    }
-
     setIsLoading(true);
     const response = await createRoomViaAPI();
     setIsLoading(false);
