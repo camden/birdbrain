@@ -7,6 +7,42 @@ $message_border_radius: 16px;
   align-items: center;
 }
 
+.message.from_current_user {
+  animation-name: message_from_current_user_appear;
+  animation-duration: 300ms;
+  animation-timing-function: ease-out;
+}
+
+.message:not(.from_current_user) {
+  animation-name: message_not_from_current_user_appear;
+  animation-duration: 300ms;
+  animation-timing-function: ease-out;
+}
+
+@keyframes message_from_current_user_appear {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes message_not_from_current_user_appear {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .message_text {
   margin-left: 8px;
   padding: 8px 16px;
