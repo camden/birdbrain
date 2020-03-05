@@ -17,6 +17,10 @@ import {
 import RoomBody from './RoomBody';
 import PickGame from './PickGame';
 import { GameType } from '@server/store/games/types';
+import { faSpinnerThird } from '@fortawesome/pro-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+const LOADING_TIMEOUT_MS = 1000;
 
 const Room: React.FC = () => {
   const { id } = useParams();
@@ -27,6 +31,7 @@ const Room: React.FC = () => {
   const roomLeader = useSelector(getRoomLeader());
   const game = useSelector(getGame());
 
+  const [isLoading, setIsLoading] = useState(true);
   const [isPickingGame, setIsPickingGame] = useState(false);
 
   useEffect(() => {
@@ -44,7 +49,21 @@ const Room: React.FC = () => {
     const name = obj.name as string;
 
     dispatch(connectToRoom(id, name));
+
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, LOADING_TIMEOUT_MS);
+
+    return () => clearTimeout(timer);
   }, [id, dispatch]);
+
+  if (isLoading) {
+    return (
+      <div className={styles.loading}>
+        <FontAwesomeIcon icon={faSpinnerThird} size="5x" spin />
+      </div>
+    );
+  }
 
   if (!room) {
     return (

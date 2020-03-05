@@ -32,3 +32,13 @@
 .subtitle {
   margin-bottom: 8px;
 }
+
+.loading {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading_icon {
+}

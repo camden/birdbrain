@@ -39,7 +39,7 @@ const CreateRoom = () => {
     const roomId = response.roomId;
     setRoomCode(roomId);
     setIsJoinSuccessful(true);
-  }, [name, isLoading]);
+  }, [isLoading]);
 
   if (isJoinSuccessful) {
     return <Redirect push to={`/room/${roomCode}?name=${name}`} />;
@@ -61,7 +61,9 @@ const CreateRoom = () => {
         }
         className={styles.name_input}
       />
-      <Button onClick={createRoomCallback}>Create Room</Button>
+      <Button onClick={createRoomCallback} disabled={isLoading}>
+        {isLoading ? 'Loading...' : 'Create Room'}
+      </Button>
     </div>
   );
 };
