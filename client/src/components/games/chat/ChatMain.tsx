@@ -14,7 +14,6 @@ import ChatMessage from './ChatMessage';
 import TopBar from 'components/shared/top-bar/TopBar';
 import { Room } from '@server/store/general/types';
 import { groupWith } from 'ramda';
-import cx from 'classnames';
 
 export interface ChatProps {
   game: ChatGameState;
