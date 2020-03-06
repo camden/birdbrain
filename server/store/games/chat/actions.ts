@@ -7,16 +7,21 @@ export interface ChatBaseAction {
 
 export const CHAT_SEND_MESSAGE = 'CHAT_SEND_MESSAGE';
 
-export interface ChatSendMessageAction extends ChatBaseAction {
+export interface ChatSendMessageAction {
   type: typeof CHAT_SEND_MESSAGE;
   payload: {
     id: string;
     text: string;
-    author: UserID;
+    authorId: UserID;
+    authorName: string;
   };
 }
 
-export const chatSendMessage = (text: string, author: UserID) => {
+export const chatSendMessage = (
+  text: string,
+  authorId: UserID,
+  authorName: string
+): ChatSendMessageAction => {
   const id = uuid();
 
   return {
@@ -24,7 +29,8 @@ export const chatSendMessage = (text: string, author: UserID) => {
     payload: {
       id,
       text,
-      author,
+      authorId,
+      authorName,
     },
   };
 };

@@ -32,7 +32,7 @@ const ChatMain: React.FC<ChatProps> = ({ game, room }) => {
       return;
     }
 
-    dispatch(sendChatMessage(messageText, currentUser.id));
+    dispatch(sendChatMessage(messageText, currentUser));
     setMessageText('');
   }, [messageText, dispatch, currentUser]);
 
@@ -57,7 +57,7 @@ const ChatMain: React.FC<ChatProps> = ({ game, room }) => {
   };
 
   const groupedMessages = groupWith(
-    (a, b) => a.author === b.author,
+    (a, b) => a.authorId === b.authorId,
     game.messages
   );
 
@@ -67,15 +67,9 @@ const ChatMain: React.FC<ChatProps> = ({ game, room }) => {
       <section className={styles.messages_list} ref={messagesListEl}>
         {groupedMessages.map(messageGroup => (
           <div className={styles.message_group} key={messageGroup[0].id}>
-            {messageGroup[0].author !== currentUser?.id && (
+            {messageGroup[0].authorId !== currentUser?.id && (
               <label className={styles.message_author}>
-                {
-                  (
-                    usersInRoom.find(
-                      user => messageGroup[0].author === user.id
-                    ) || defaultUser
-                  ).name
-                }
+                {messageGroup[0].authorName}
               </label>
             )}
             {messageGroup.map((msg, index, group) => (
@@ -84,9 +78,9 @@ const ChatMain: React.FC<ChatProps> = ({ game, room }) => {
                 key={msg.id}
                 text={msg.text}
                 hideAvatar={index !== group.length - 1}
-                fromCurrentUser={msg.author === currentUser?.id}
+                fromCurrentUser={msg.authorId === currentUser?.id}
                 author={
-                  usersInRoom.find(user => msg.author === user.id) ||
+                  usersInRoom.find(user => msg.authorId === user.id) ||
                   defaultUser
                 }
               />

@@ -44,7 +44,10 @@ const RoomBody: React.FC<RoomBodyProps> = props => {
               }
             />
           )}
-          {!props.room.selectedGameType && (
+          {!props.room.selectedGameType && !props.isCurrentUserRoomLeader && (
+            <div>Waiting for {props.roomLeader.name} to choose a game.</div>
+          )}
+          {!props.room.selectedGameType && props.isCurrentUserRoomLeader && (
             <Button
               secondary
               onClick={

@@ -10,7 +10,8 @@ export interface ChatGameState extends Game {
 export interface ChatMessage {
   id: string;
   text: string;
-  author: UserID;
+  authorId: UserID;
+  authorName: string;
 }
 
 export interface ChatPlayer {
