@@ -23,6 +23,29 @@
   margin-bottom: 16px;
 }
 
+.message_author {
+  display: block;
+  color: #444;
+  margin-left: 44px;
+  margin-bottom: 8px;
+
+  animation-name: message_author_appear;
+  animation-duration: 300ms;
+  animation-timing-function: ease-out;
+}
+
+@keyframes message_author_appear {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .input_label {
   margin-left: 12px;
   margin-bottom: 4px;

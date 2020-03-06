@@ -68,6 +68,17 @@ const ChatMain: React.FC<ChatProps> = ({ game, room }) => {
       <section className={styles.messages_list} ref={messagesListEl}>
         {groupedMessages.map(messageGroup => (
           <div className={styles.message_group} key={messageGroup[0].id}>
+            {messageGroup[0].author !== currentUser?.id && (
+              <label className={styles.message_author}>
+                {
+                  (
+                    usersInRoom.find(
+                      user => messageGroup[0].author === user.id
+                    ) || defaultUser
+                  ).name
+                }
+              </label>
+            )}
             {messageGroup.map((msg, index, group) => (
               <ChatMessage
                 className={styles.message}

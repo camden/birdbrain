@@ -7,6 +7,14 @@ $message_border_radius: 16px;
   align-items: center;
 }
 
+.message_text {
+  margin-left: 8px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  background: white;
+  max-width: 80%;
+}
+
 .message.from_current_user {
   animation-name: message_from_current_user_appear;
   animation-duration: 300ms;
@@ -43,13 +51,6 @@ $message_border_radius: 16px;
   }
 }
 
-.message_text {
-  margin-left: 8px;
-  padding: 8px 16px;
-  border-radius: 4px;
-  background: white;
-}
-
 .message.hide_avatar .avatar {
   visibility: hidden;
 }
@@ -83,7 +84,6 @@ $message_border_radius: 16px;
   }
 
   .message_text {
-    text-align: right;
     border-top-left-radius: $message_border_radius;
     border-bottom-left-radius: $message_border_radius;
   }

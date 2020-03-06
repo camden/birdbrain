@@ -14,8 +14,6 @@
 
 @media (min-width: 600px) {
   .app_inner {
-    /** TODO: consolidate units **/
-    padding: 0 3rem;
     max-width: 460px;
   }
 }
