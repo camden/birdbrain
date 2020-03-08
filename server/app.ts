@@ -2,6 +2,7 @@ import express, { Application } from 'express';
 import path from 'path';
 import http from 'http';
 import io from 'socket.io';
+import compression from 'compression';
 import * as Sentry from '@sentry/node';
 
 import { log } from './utils/log';
@@ -52,6 +53,7 @@ class App {
   }
 
   private initializeMiddleware() {
+    this.app.use(compression());
     this.app.use(express.json());
 
     if (process.env.NODE_ENV === 'production') {
