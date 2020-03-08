@@ -28,7 +28,7 @@ const ChatMain: React.FC<ChatProps> = ({ game, room }) => {
   const messagesListEl = useRef<HTMLDivElement>(null);
 
   const sendMessage = useCallback(() => {
-    if (!currentUser) {
+    if (!currentUser || messageText.length === 0) {
       return;
     }
 
