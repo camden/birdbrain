@@ -25,7 +25,10 @@ const Meta: React.FC<MetaProps> = () => {
         property="og:description"
         content="Play free local-multiplayer games with your friends!"
       />
-      <meta property="og:image" content="" />
+      <meta
+        property="og:image"
+        content={`${PUBLIC_URL}meta-tile-1200x628.png`}
+      />
 
       <meta property="twitter:card" content="summary_large_image" />
       <meta property="twitter:url" content={PUBLIC_URL} />
