@@ -4,6 +4,7 @@ import http from 'http';
 import io from 'socket.io';
 import * as Sentry from '@sentry/node';
 
+import { log } from './utils/log';
 import APIRoutes from './routes/api';
 import { Store } from './store';
 import staticFilesMiddleware from './middleware/static-files';
@@ -35,7 +36,7 @@ class App {
 
   public listen() {
     this.httpServer.listen(process.env.PORT || 8080, function() {
-      console.log(
+      log(
         `Birdbrain Games server is listening on port ${process.env.PORT ||
           8080}!`
       );
@@ -43,7 +44,7 @@ class App {
   }
 
   private initializeSentry() {
-    console.log('Initializing Sentry');
+    log('Initializing Sentry');
     Sentry.init({
       dsn: 'https://e255af3258264012993bef70994eb2eb@sentry.io/1967305',
     });
