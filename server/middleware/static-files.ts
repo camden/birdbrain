@@ -60,4 +60,9 @@ router.use(
   express.static(path.join(pathToClientBuildDir, '/android-chrome-512x512.png'))
 );
 
+router.use(
+  '/meta-tile-1200x628.png',
+  express.static(path.join(pathToClientBuildDir, '/meta-tile-1200x628.png'))
+);
+
 export default router;

@@ -8,6 +8,7 @@ import { reducer } from './store/reducers';
 import websocketMiddleware from './store/middleware/websocket-middleware';
 import { createStore, applyMiddleware, compose } from 'redux';
 import initReactFastclick from 'react-fastclick';
+import { HelmetProvider } from 'react-helmet-async';
 import 'typeface-rubik';
 import 'normalize.css';
 
@@ -26,9 +27,11 @@ const store = createStore(
 );
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <HelmetProvider>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </HelmetProvider>,
   document.getElementById('root')
 );
 
