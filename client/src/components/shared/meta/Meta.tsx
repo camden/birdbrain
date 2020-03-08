@@ -6,8 +6,6 @@ export interface MetaProps {
   description?: string;
 }
 
-const PUBLIC_URL = 'https://birdbrain.games/';
-
 const Meta: React.FC<MetaProps> = () => {
   return (
     <Helmet>
