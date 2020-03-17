@@ -6,18 +6,22 @@ import {
   RoomID,
   Room,
   CREATE_NEW_ROOM,
+  GameActionTypes,
 } from './types';
 import { produce } from 'immer';
 import { START_GAME_MESSAGE, PICK_GAME_TYPE_MESSAGE } from '../client/types';
-import { GameType } from '../games/types';
+import { GameType, Game } from '../games/types';
 import { createNewGame } from '../games';
 import { resistanceReducer } from '../games/the-resistance/reducers';
 import { ResistanceGameState } from '../games/the-resistance/types';
 import { ResistanceActionTypes } from '../games/the-resistance/actions';
+import { FishbowlActionTypes } from '../games/fishbowl/actions';
 import { ChatActionTypes } from 'store/games/chat/actions';
 import { chatReducer } from 'store/games/chat/reducers';
+import { fishbowlReducer } from 'store/games/fishbowl/reducer';
 import { ChatGameState } from 'store/games/chat/types';
 import { pickRandomNumber } from 'utils/rng';
+import { FishbowlGameState } from 'store/games/fishbowl/types';
 
 const initialState: GeneralState = {
   entities: {
@@ -53,60 +57,64 @@ const getRoomById = (roomId: RoomID, state: GeneralState): Room | null => {
   return state.entities.rooms.byId[roomId] || null;
 };
 
+function customGameReducer<
+  ActionTypes extends GameActionTypes,
+  GameState extends Game
+>(
+  gameReducer: (game: GameState, action: ActionTypes) => GameState,
+  state: GeneralState,
+  action: GeneralActionTypes
+) {
+  const gameAction = action as ActionTypes;
+  const roomId = gameAction.meta?.roomId;
+  if (!roomId) {
+    return state;
+  }
+
+  const room = getRoomById(roomId, state);
+  const gameId = room?.game;
+  if (!gameId) {
+    return state;
+  }
+  return produce(state, draftState => {
+    const game = draftState.entities.games.byId[gameId];
+    if (!game) {
+      return;
+    }
+
+    const updatedGame = gameReducer(game as GameState, gameAction);
+
+    draftState.entities.games.byId[gameId] = updatedGame;
+  });
+}
+
 export const generalReducer = (
   state = initialState,
   action: GeneralActionTypes
 ) => {
   // TODO generalize game handling code
+  if (action.type.startsWith('FSH_')) {
+    return customGameReducer<FishbowlActionTypes, FishbowlGameState>(
+      fishbowlReducer,
+      state,
+      action
+    );
+  }
+
   if (action.type.startsWith('CHAT_')) {
-    const chatAction = action as ChatActionTypes;
-    const roomId = chatAction.meta?.roomId;
-    if (!roomId) {
-      return state;
-    }
-
-    const room = getRoomById(roomId, state);
-    const gameId = room?.game;
-    if (!gameId) {
-      return state;
-    }
-    return produce(state, draftState => {
-      const game = draftState.entities.games.byId[gameId];
-      if (!game) {
-        return;
-      }
-
-      const updatedGame = chatReducer(game as ChatGameState, chatAction);
-
-      draftState.entities.games.byId[gameId] = updatedGame;
-    });
+    return customGameReducer<ChatActionTypes, ChatGameState>(
+      chatReducer,
+      state,
+      action
+    );
   }
 
   if (action.type.startsWith('RST_')) {
-    const resistanceAction = action as ResistanceActionTypes;
-    const roomId = resistanceAction.meta?.roomId;
-    if (!roomId) {
-      return state;
-    }
-
-    const room = getRoomById(roomId, state);
-    const gameId = room?.game;
-    if (!gameId) {
-      return state;
-    }
-    return produce(state, draftState => {
-      const game = draftState.entities.games.byId[gameId];
-      if (!game) {
-        return;
-      }
-
-      const updatedGame = resistanceReducer(
-        game as ResistanceGameState,
-        resistanceAction
-      );
-
-      draftState.entities.games.byId[gameId] = updatedGame;
-    });
+    return customGameReducer<ResistanceActionTypes, ResistanceGameState>(
+      resistanceReducer,
+      state,
+      action
+    );
   }
 
   switch (action.type) {

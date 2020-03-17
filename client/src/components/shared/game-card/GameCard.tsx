@@ -33,6 +33,14 @@ const getGameMetadata = (gameType: GameType): GameMetadata => {
         time: '-',
         description: 'A simple chat room.',
       };
+    case GameType.FISHBOWL:
+      return {
+        title: 'Fishbowl',
+        playerCount: '3+',
+        time: '20 min',
+        description:
+          'A fun party game that combines Password, Taboo, and Charades.',
+      };
   }
 };
 

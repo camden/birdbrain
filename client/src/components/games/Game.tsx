@@ -9,6 +9,8 @@ import SkullMain from './skull/SkullMain';
 import { SkullGameState } from '@server/store/games/skull/types';
 import ChatMain from './chat/ChatMain';
 import { ChatGameState } from '@server/store/games/chat/types';
+import FishbowlMain from './fishbowl/FishbowlMain';
+import { FishbowlGameState } from '@server/store/games/fishbowl/types';
 
 export interface GameProps {
   room: Room;
@@ -26,6 +28,8 @@ const Game: React.FC<GameProps> = ({ room }) => {
       return <SkullMain game={game as SkullGameState} room={room} />;
     case GameType.CHAT:
       return <ChatMain game={game as ChatGameState} room={room} />;
+    case GameType.FISHBOWL:
+      return <FishbowlMain game={game as FishbowlGameState} room={room} />;
   }
 
   return <div>game</div>;

@@ -25,6 +25,7 @@
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "customize-cra": "^0.9.1",
+    "date-fns": "^2.11.0",
     "node-sass": "^4.13.1",
     "normalize.css": "^8.0.1",
     "patch-package": "^6.2.0",
@@ -43,7 +44,8 @@
     "redux": "^4.0.5",
     "socket.io-client": "^2.3.0",
     "typeface-rubik": "^0.0.72",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "use-interval": "^1.2.1"
   },
   "scripts": {
     "start": "react-app-rewired start",

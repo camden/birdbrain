@@ -7,6 +7,7 @@ import {
 } from '../client/types';
 import { ResistanceActionTypes } from 'store/games/the-resistance/actions';
 import { ChatActionTypes } from 'store/games/chat/actions';
+import { FishbowlActionTypes } from 'store/games/fishbowl/actions';
 
 export type RoomID = string;
 
@@ -98,9 +99,13 @@ export interface CreateNewRoomAction {
   };
 }
 
-export type GeneralActionTypes =
+export type GameActionTypes =
+  | FishbowlActionTypes
   | ChatActionTypes
-  | ResistanceActionTypes
+  | ResistanceActionTypes;
+
+export type GeneralActionTypes =
+  | GameActionTypes
   | PickGameTypeMessage
   | StartGameMessage
   | AddUserToRoomAction

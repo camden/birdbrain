@@ -1,5 +1,6 @@
 export enum GameType {
   THE_RESISTANCE = 'THE_RESISTANCE',
+  FISHBOWL = 'FISHBOWL',
   SKULL = 'SKULL',
   CHAT = 'CHAT',
 }
