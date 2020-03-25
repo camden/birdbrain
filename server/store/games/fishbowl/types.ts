@@ -7,6 +7,7 @@ export interface FishbowlGameState extends Game {
   type: GameType.FISHBOWL;
   roundEndTime: Timestamp | null;
   players: FishbowlPlayer[];
+  lastActivePlayer: FishbowlPlayer | null;
   activePlayer: FishbowlPlayer;
   phase: FishbowlPhase;
   allAnswers: FishbowlAnswer[];

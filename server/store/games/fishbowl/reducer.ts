@@ -12,7 +12,28 @@ import { ROUND_DURATION_MS } from '.';
 import { getCurrentAnswer } from './selectors';
 
 const getNextActivePlayer = (game: FishbowlGameState): FishbowlPlayer => {
-  return game.activePlayer;
+  const lastActivePlayer = game.lastActivePlayer;
+  const activePlayer = game.activePlayer;
+
+  if (!lastActivePlayer) {
+    // return first player on opposite team of current player
+    const oppositeTeamPlayers = game.players.filter(
+      p => p.team !== activePlayer.team
+    );
+    return oppositeTeamPlayers[0];
+  } else {
+    // return next player on opposite team of current player
+    // based on the index of the last active player
+    const oppositeTeamPlayers = game.players.filter(
+      p => p.team !== activePlayer.team
+    );
+    const indexOfLastActivePlayer = oppositeTeamPlayers.findIndex(
+      player => player.userId === lastActivePlayer.userId
+    );
+    const indexOfNextActivePlayer =
+      (indexOfLastActivePlayer + 1) % oppositeTeamPlayers.length;
+    return oppositeTeamPlayers[indexOfNextActivePlayer];
+  }
 };
 
 export const fishbowlReducer = (
@@ -99,6 +120,7 @@ export const fishbowlReducer = (
         if (allUsersAcked) {
           draftState.acknowledged = [];
           draftState.phase = FishbowlPhase.PRE_ROUND;
+          draftState.lastActivePlayer = game.activePlayer;
           draftState.activePlayer = getNextActivePlayer(game);
           draftState.answersGot = [];
           draftState.answersSkipped = [];

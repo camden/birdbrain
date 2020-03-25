@@ -42,8 +42,10 @@ export const createNewGameOfFishbowl = (
     }
   }
   const teamsArray = shuffleArray(unshuffledTeamArray);
-  const players = usersInRoom.map((user, index) =>
-    createPlayerFromUser(user, teamsArray[index])
+  const players = shuffleArray(
+    usersInRoom.map((user, index) =>
+      createPlayerFromUser(user, teamsArray[index])
+    )
   );
 
   const allAnswers: FishbowlAnswer[] = [];
@@ -75,6 +77,7 @@ export const createNewGameOfFishbowl = (
     type: GameType.FISHBOWL,
     roundEndTime: null,
     players,
+    lastActivePlayer: null,
     activePlayer: players[0],
     phase: FishbowlPhase.PRE_ROUND,
     allAnswers,
