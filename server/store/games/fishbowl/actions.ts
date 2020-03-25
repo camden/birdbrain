@@ -62,7 +62,9 @@ export interface FshAckResultsAction extends FshBaseAction {
 }
 
 export const fshAckResults = () => {
-  type: FSH_ACK_RESULTS;
+  return {
+    type: FSH_ACK_RESULTS,
+  };
 };
 
 export type FishbowlActionTypes =
