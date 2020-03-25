@@ -9,6 +9,7 @@ import {
 } from './actions';
 import produce from 'immer';
 import { ROUND_DURATION_MS } from '.';
+import { getCurrentAnswer } from './selectors';
 
 const getNextActivePlayer = (game: FishbowlGameState): FishbowlPlayer => {
   return game.activePlayer;
@@ -30,7 +31,6 @@ export const fishbowlReducer = (
 
       return produce(game, draftState => {
         draftState.roundEndTime = action.payload.startTime + ROUND_DURATION_MS;
-        draftState.currentAnswer = action.payload.nextAnswer;
         draftState.phase = FishbowlPhase.GUESSING;
       });
     }
@@ -38,7 +38,6 @@ export const fishbowlReducer = (
       return produce(game, draftState => {
         draftState.roundEndTime = null;
         draftState.phase = FishbowlPhase.RESULTS;
-        draftState.currentAnswer = null;
       });
     }
     case FSH_GOT_ANSWER: {
@@ -51,14 +50,16 @@ export const fishbowlReducer = (
       }
 
       return produce(game, draftState => {
-        if (!game.currentAnswer) {
-          return;
+        draftState.answersGot.push(getCurrentAnswer(game));
+        draftState.indexOfCurrentAnswer++;
+
+        if (
+          draftState.indexOfCurrentAnswer >=
+          game.answersForCurrentGameType.length
+        ) {
+          draftState.roundEndTime = null;
+          draftState.phase = FishbowlPhase.RESULTS;
         }
-
-        draftState.answersAlreadySeen.push(game.currentAnswer);
-        draftState.answersGot.push(game.currentAnswer);
-
-        draftState.currentAnswer = action.payload.nextAnswer;
       });
     }
     case FSH_SKIP_ANSWER: {
@@ -71,14 +72,16 @@ export const fishbowlReducer = (
       }
 
       return produce(game, draftState => {
-        if (!game.currentAnswer) {
-          return;
+        draftState.answersSkipped.push(getCurrentAnswer(game));
+        draftState.indexOfCurrentAnswer++;
+
+        if (
+          draftState.indexOfCurrentAnswer >=
+          game.answersForCurrentGameType.length
+        ) {
+          draftState.roundEndTime = null;
+          draftState.phase = FishbowlPhase.RESULTS;
         }
-
-        draftState.answersAlreadySeen.push(game.currentAnswer);
-        draftState.answersSkipped.push(game.currentAnswer);
-
-        draftState.currentAnswer = action.payload.nextAnswer;
       });
     }
     case FSH_ACK_RESULTS: {

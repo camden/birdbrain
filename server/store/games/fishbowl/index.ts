@@ -66,6 +66,10 @@ export const createNewGameOfFishbowl = (
     }
   }
 
+  const answersForCurrentGameType: FishbowlAnswer[] = shuffleArray([
+    ...allAnswers,
+  ]);
+
   return {
     id,
     type: GameType.FISHBOWL,
@@ -74,8 +78,8 @@ export const createNewGameOfFishbowl = (
     activePlayer: players[0],
     phase: FishbowlPhase.PRE_ROUND,
     allAnswers,
-    currentAnswer: null,
-    answersAlreadySeen: [],
+    answersForCurrentGameType,
+    indexOfCurrentAnswer: 0,
     answersGot: [],
     answersSkipped: [],
     acknowledged: [],

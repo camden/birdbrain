@@ -5,4 +5,5 @@ import {
 import { ClientState } from './types';
 
 const useSelector: TypedUseSelectorHook<ClientState> = useReduxSelector;
+
 export default useSelector;

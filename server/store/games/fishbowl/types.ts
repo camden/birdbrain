@@ -10,8 +10,8 @@ export interface FishbowlGameState extends Game {
   activePlayer: FishbowlPlayer;
   phase: FishbowlPhase;
   allAnswers: FishbowlAnswer[];
-  currentAnswer: FishbowlAnswer | null;
-  answersAlreadySeen: FishbowlAnswer[];
+  answersForCurrentGameType: FishbowlAnswer[];
+  indexOfCurrentAnswer: number;
   answersGot: FishbowlAnswer[];
   answersSkipped: FishbowlAnswer[];
   acknowledged: UserID[];

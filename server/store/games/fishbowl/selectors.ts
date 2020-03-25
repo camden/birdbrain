@@ -1,12 +1,5 @@
-import { FishbowlGameState, Timestamp } from './types';
-import { ROUND_DURATION_MS } from '.';
+import { FishbowlGameState, Timestamp, FishbowlAnswer } from './types';
 
-export const getRoundEndTime = () => (
-  game: FishbowlGameState
-): Timestamp | null => {
-  if (!game.roundStartTime) {
-    return null;
-  }
-
-  return game.roundStartTime + ROUND_DURATION_MS;
+export const getCurrentAnswer = (game: FishbowlGameState): FishbowlAnswer => {
+  return game.answersForCurrentGameType[game.indexOfCurrentAnswer];
 };

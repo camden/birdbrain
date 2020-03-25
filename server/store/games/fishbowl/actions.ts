@@ -1,6 +1,5 @@
 import { ActionMeta } from 'store/general/types';
 import { Timestamp, FishbowlAnswer, FishbowlPhase } from './types';
-import pickNextAnswer from './pick-next-answer';
 
 export const FSH_START_ROUND = 'FSH_START_ROUND';
 export const FSH_REPORT_END_ROUND = 'FSH_REPORT_END_ROUND';
@@ -16,21 +15,14 @@ export interface FshStartRoundAction extends FshBaseAction {
   type: typeof FSH_START_ROUND;
   payload: {
     startTime: Timestamp;
-    nextAnswer: FishbowlAnswer;
   };
 }
 
-export const fshStartRound = (
-  startTime: Timestamp,
-  alreadySeen: FishbowlAnswer[]
-) => {
-  const nextAnswer = pickNextAnswer(alreadySeen);
-
+export const fshStartRound = (startTime: Timestamp) => {
   return {
     type: FSH_START_ROUND,
     payload: {
       startTime,
-      nextAnswer,
     },
   };
 };
@@ -47,37 +39,21 @@ export const fshReportEndOfRound = () => {
 
 export interface FshGotAnswerAction extends FshBaseAction {
   type: typeof FSH_GOT_ANSWER;
-  payload: {
-    nextAnswer: FishbowlAnswer;
-  };
 }
 
-export const fshGotAnswer = (alreadySeen: FishbowlAnswer[]) => {
-  const nextAnswer = pickNextAnswer(alreadySeen);
-
+export const fshGotAnswer = () => {
   return {
     type: FSH_GOT_ANSWER,
-    payload: {
-      nextAnswer,
-    },
   };
 };
 
 export interface FshSkipAnswerAction extends FshBaseAction {
   type: typeof FSH_SKIP_ANSWER;
-  payload: {
-    nextAnswer: FishbowlAnswer;
-  };
 }
 
-export const fshSkipAnswer = (alreadySeen: FishbowlAnswer[]) => {
-  const nextAnswer = pickNextAnswer(alreadySeen);
-
+export const fshSkipAnswer = () => {
   return {
     type: FSH_SKIP_ANSWER,
-    payload: {
-      nextAnswer,
-    },
   };
 };
 

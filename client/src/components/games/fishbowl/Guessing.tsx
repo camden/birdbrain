@@ -9,6 +9,7 @@ import {
   fshSkipAnswer,
 } from '@server/store/games/fishbowl/actions';
 import Button from 'components/shared/button/Button';
+import { getCurrentAnswer } from '@server/store/games/fishbowl/selectors';
 
 export interface GuessingProps {
   game: FishbowlGameState;
@@ -17,6 +18,7 @@ export interface GuessingProps {
 const Guessing: React.FC<GuessingProps> = ({ game }) => {
   const [timeLeft, setTimeLeft] = useState(30);
   const dispatch = useDispatch();
+  const currentAnswer = getCurrentAnswer(game);
 
   useInterval(() => {
     if (!game.roundEndTime) {
@@ -36,20 +38,11 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
   return (
     <div>
       <h2>{game.activePlayer.name} is guessing!</h2>
-      <div>clue: {game.currentAnswer}</div>
-      <Button
-        onClick={() =>
-          dispatch(sendMessage(fshGotAnswer(game.answersAlreadySeen)))
-        }
-      >
+      <div>clue: {currentAnswer}</div>
+      <Button onClick={() => dispatch(sendMessage(fshGotAnswer()))}>
         Got it!
       </Button>
-      <Button
-        secondary
-        onClick={() =>
-          dispatch(sendMessage(fshSkipAnswer(game.answersAlreadySeen)))
-        }
-      >
+      <Button secondary onClick={() => dispatch(sendMessage(fshSkipAnswer()))}>
         Skip it!
       </Button>
       <div>time left: {timeLeft}s</div>
