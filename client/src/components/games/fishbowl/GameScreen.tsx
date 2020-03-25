@@ -19,6 +19,8 @@ const GameScreen: React.FC<GameScreenProps> = ({ game }) => {
       return <Guessing game={game} />;
     case FishbowlPhase.RESULTS:
       return <Results game={game} />;
+    case FishbowlPhase.END_GAME_RESULTS:
+      return <div>the game is over</div>;
   }
 };
 

@@ -4,6 +4,7 @@ import {
   FishbowlTeam,
   FishbowlPhase,
   FishbowlAnswer,
+  FishbowlGameType,
 } from './types';
 import { GameID, GameType } from '../types';
 import { User } from 'store/general/types';
@@ -80,6 +81,7 @@ export const createNewGameOfFishbowl = (
     lastActivePlayer: null,
     activePlayer: players[0],
     phase: FishbowlPhase.PRE_ROUND,
+    currentGameType: FishbowlGameType.TABOO,
     allAnswers,
     answersForCurrentGameType,
     indexOfCurrentAnswer: 0,

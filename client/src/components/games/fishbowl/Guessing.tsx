@@ -42,6 +42,7 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
   return (
     <div>
       <h2>{game.activePlayer.name} is guessing!</h2>
+      <div>The current game is {game.currentGameType}.</div>
       {isActivePlayer && (
         <>
           <div>clue: {currentAnswer}</div>

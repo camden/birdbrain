@@ -24,6 +24,7 @@ const PreRound: React.FC<PreRoundProps> = ({ game }) => {
   return (
     <div>
       <h2>{game.activePlayer.name} is up.</h2>
+      <div>The current game is {game.currentGameType}.</div>
       {isActivePlayer && (
         <Button onClick={onStartRoundClick}>Start round</Button>
       )}

@@ -10,6 +10,7 @@ export interface FishbowlGameState extends Game {
   lastActivePlayer: FishbowlPlayer | null;
   activePlayer: FishbowlPlayer;
   phase: FishbowlPhase;
+  currentGameType: FishbowlGameType;
   allAnswers: FishbowlAnswer[];
   answersForCurrentGameType: FishbowlAnswer[];
   indexOfCurrentAnswer: number;
@@ -22,6 +23,13 @@ export enum FishbowlPhase {
   PRE_ROUND = 'PRE_ROUND',
   GUESSING = 'GUESSING',
   RESULTS = 'RESULTS',
+  END_GAME_RESULTS = 'END_GAME_RESULTS',
+}
+
+export enum FishbowlGameType {
+  TABOO = 'TABOO',
+  CHARADES = 'CHARADES',
+  PASSWORD = 'PASSWORD',
 }
 
 export enum FishbowlTeam {

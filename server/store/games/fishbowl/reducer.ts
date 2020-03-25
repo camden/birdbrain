@@ -1,4 +1,9 @@
-import { FishbowlGameState, FishbowlPhase, FishbowlPlayer } from './types';
+import {
+  FishbowlGameState,
+  FishbowlPhase,
+  FishbowlPlayer,
+  FishbowlGameType,
+} from './types';
 import {
   FishbowlActionTypes,
   FSH_START_ROUND,
@@ -10,6 +15,7 @@ import {
 import produce from 'immer';
 import { ROUND_DURATION_MS } from '.';
 import { getCurrentAnswer } from './selectors';
+import shuffleArray from 'utils/shuffle-array';
 
 const getNextActivePlayer = (game: FishbowlGameState): FishbowlPlayer => {
   const lastActivePlayer = game.lastActivePlayer;
@@ -34,6 +40,20 @@ const getNextActivePlayer = (game: FishbowlGameState): FishbowlPlayer => {
       (indexOfLastActivePlayer + 1) % oppositeTeamPlayers.length;
     return oppositeTeamPlayers[indexOfNextActivePlayer];
   }
+};
+
+const getNextGameType = (game: FishbowlGameState): FishbowlGameType => {
+  const curType = game.currentGameType;
+  if (curType === FishbowlGameType.TABOO) {
+    return FishbowlGameType.CHARADES;
+  }
+
+  if (curType === FishbowlGameType.CHARADES) {
+    return FishbowlGameType.PASSWORD;
+  }
+
+  // we shouldn't really ever get here
+  return FishbowlGameType.TABOO;
 };
 
 export const fishbowlReducer = (
@@ -124,6 +144,21 @@ export const fishbowlReducer = (
           draftState.activePlayer = getNextActivePlayer(game);
           draftState.answersGot = [];
           draftState.answersSkipped = [];
+
+          if (
+            game.indexOfCurrentAnswer >= game.answersForCurrentGameType.length
+          ) {
+            if (game.currentGameType === FishbowlGameType.PASSWORD) {
+              draftState.phase = FishbowlPhase.END_GAME_RESULTS;
+            } else {
+              draftState.currentGameType = getNextGameType(game);
+              draftState.indexOfCurrentAnswer = 0;
+              // TODO don't use rng here...
+              draftState.answersForCurrentGameType = shuffleArray([
+                ...game.allAnswers,
+              ]);
+            }
+          }
         }
       });
     }
