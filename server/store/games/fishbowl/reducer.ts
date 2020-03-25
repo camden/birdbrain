@@ -18,6 +18,10 @@ import { getCurrentAnswer } from './selectors';
 import shuffleArray from 'utils/shuffle-array';
 
 const getNextActivePlayer = (game: FishbowlGameState): FishbowlPlayer => {
+  if (game.players.length === 1) {
+    return game.activePlayer;
+  }
+
   const lastActivePlayer = game.lastActivePlayer;
   const activePlayer = game.activePlayer;
 

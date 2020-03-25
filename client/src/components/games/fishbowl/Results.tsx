@@ -26,10 +26,7 @@ const Results: React.FC<ResultsProps> = ({ game }) => {
       {game.answersGot.map(answer => (
         <div key={answer}>{answer}</div>
       ))}
-      <h3>Skipped:</h3>
-      {game.answersSkipped.map(answer => (
-        <div key={answer}>{answer}</div>
-      ))}
+      <h3>Skipped {game.answersSkipped.length}.</h3>
       {!acked && (
         <Button secondary onClick={onContinueClick}>
           Continue

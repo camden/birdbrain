@@ -11,6 +11,7 @@ import {
 import Button from 'components/shared/button/Button';
 import { getCurrentAnswer } from '@server/store/games/fishbowl/selectors';
 import { getCurrentUser } from 'store/selectors';
+import styles from './Guessing.module.css';
 
 export interface GuessingProps {
   game: FishbowlGameState;
@@ -43,9 +44,11 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
     <div>
       <h2>{game.activePlayer.name} is guessing!</h2>
       <div>The current game is {game.currentGameType}.</div>
+      <br />
       {isActivePlayer && (
         <>
-          <div>clue: {currentAnswer}</div>
+          <div>clue:</div>
+          <div className={styles.answer}>{currentAnswer}</div>
           <Button onClick={() => dispatch(sendMessage(fshGotAnswer()))}>
             Got it!
           </Button>
