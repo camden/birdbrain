@@ -1,4 +1,4 @@
-import { ActionMeta } from '@server/store/general/types';
+import { ActionMeta } from 'store/general/types';
 import { Timestamp } from './types';
 
 export const FSH_START_ROUND = 'FSH_START_ROUND';

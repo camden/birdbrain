@@ -27,28 +27,23 @@ const initialState: GeneralState = {
   entities: {
     rooms: {
       byId: {
-        NU: {
-          id: 'NU',
+        DEBUG: {
+          id: 'DEBUG',
           users: [],
           leaderUserID: null,
           game: null,
-          selectedGameType: null,
+          selectedGameType: GameType.FISHBOWL,
         },
       },
-      allIds: ['NU'],
+      allIds: ['DEBUG'],
     },
     users: {
       byId: {},
       allIds: [],
     },
     games: {
-      byId: {
-        '101234-resistance': {
-          id: '101234-resistance',
-          type: GameType.THE_RESISTANCE,
-        },
-      },
-      allIds: ['101234-resistance'],
+      byId: {},
+      allIds: [],
     },
   },
 };

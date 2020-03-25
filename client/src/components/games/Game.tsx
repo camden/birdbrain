@@ -9,7 +9,7 @@ import SkullMain from './skull/SkullMain';
 import { SkullGameState } from '@server/store/games/skull/types';
 import ChatMain from './chat/ChatMain';
 import { ChatGameState } from '@server/store/games/chat/types';
-import FishbowlMain from './fishbowl/FishbowlMain';
+import FishbowlMain from './fishbowl/Main';
 import { FishbowlGameState } from '@server/store/games/fishbowl/types';
 
 export interface GameProps {
