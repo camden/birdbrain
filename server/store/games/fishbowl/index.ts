@@ -3,15 +3,19 @@ import {
   FishbowlPlayer,
   FishbowlTeam,
   FishbowlPhase,
+  FishbowlAnswer,
 } from './types';
 import { GameID, GameType } from '../types';
 import { User } from 'store/general/types';
 import shuffleArray from 'utils/shuffle-array';
+import answers from './answers';
+import { pickRandomNumber } from 'utils/rng';
 
 export const DEFAULT_DURATION = 30500;
 export const QUICK_DEBUG_DURATION = 10500;
 
 export const ROUND_DURATION_MS = QUICK_DEBUG_DURATION;
+export const ANSWERS_PER_PLAYER = 3;
 
 const createPlayerFromUser = (
   user: User,
@@ -42,6 +46,26 @@ export const createNewGameOfFishbowl = (
     createPlayerFromUser(user, teamsArray[index])
   );
 
+  const allAnswers: FishbowlAnswer[] = [];
+  const numberOfAnswers = ANSWERS_PER_PLAYER * players.length;
+
+  let tries = 0;
+  while (allAnswers.length < numberOfAnswers) {
+    ++tries;
+    if (tries > 1000) {
+      throw new Error('Infinite loop detected in answer generation.');
+    }
+
+    const idx = pickRandomNumber(0, answers.length - 1);
+    const nextAnswerToAdd = answers[idx];
+
+    if (allAnswers.includes(nextAnswerToAdd)) {
+      continue;
+    } else {
+      allAnswers.push(nextAnswerToAdd);
+    }
+  }
+
   return {
     id,
     type: GameType.FISHBOWL,
@@ -49,6 +73,7 @@ export const createNewGameOfFishbowl = (
     players,
     activePlayer: players[0],
     phase: FishbowlPhase.PRE_ROUND,
+    allAnswers,
     currentAnswer: null,
     answersAlreadySeen: [],
     answersGot: [],

@@ -9,6 +9,7 @@ export interface FishbowlGameState extends Game {
   players: FishbowlPlayer[];
   activePlayer: FishbowlPlayer;
   phase: FishbowlPhase;
+  allAnswers: FishbowlAnswer[];
   currentAnswer: FishbowlAnswer | null;
   answersAlreadySeen: FishbowlAnswer[];
   answersGot: FishbowlAnswer[];
