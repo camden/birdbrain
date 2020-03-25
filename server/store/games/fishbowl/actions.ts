@@ -2,6 +2,7 @@ import { ActionMeta } from 'store/general/types';
 import { Timestamp } from './types';
 
 export const FSH_START_ROUND = 'FSH_START_ROUND';
+export const FSH_REPORT_END_ROUND = 'FSH_REPORT_END_ROUND';
 
 export interface FshBaseAction {
   meta: ActionMeta;
@@ -23,4 +24,16 @@ export const fshStartRound = (startTime: Timestamp) => {
   };
 };
 
-export type FishbowlActionTypes = FshStartRoundAction;
+export interface FshReportEndOfRoundAction extends FshBaseAction {
+  type: typeof FSH_REPORT_END_ROUND;
+}
+
+export const fshReportEndOfRound = () => {
+  return {
+    type: FSH_REPORT_END_ROUND,
+  };
+};
+
+export type FishbowlActionTypes =
+  | FshStartRoundAction
+  | FshReportEndOfRoundAction;

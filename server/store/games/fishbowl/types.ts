@@ -5,7 +5,7 @@ export type Timestamp = number;
 
 export interface FishbowlGameState extends Game {
   type: GameType.FISHBOWL;
-  roundStartTime: Timestamp | null;
+  roundEndTime: Timestamp | null;
   players: FishbowlPlayer[];
   activePlayer: FishbowlPlayer;
   phase: FishbowlPhase;

@@ -1,6 +1,11 @@
 import { FishbowlGameState, FishbowlPhase } from './types';
-import { FishbowlActionTypes, FSH_START_ROUND } from './actions';
+import {
+  FishbowlActionTypes,
+  FSH_START_ROUND,
+  FSH_REPORT_END_ROUND,
+} from './actions';
 import produce from 'immer';
+import { ROUND_DURATION_MS } from '.';
 
 export const fishbowlReducer = (
   game: FishbowlGameState,
@@ -17,8 +22,14 @@ export const fishbowlReducer = (
       }
 
       return produce(game, draftState => {
-        draftState.roundStartTime = action.payload.startTime;
+        draftState.roundEndTime = action.payload.startTime + ROUND_DURATION_MS;
         draftState.phase = FishbowlPhase.GUESSING;
+      });
+    }
+    case FSH_REPORT_END_ROUND: {
+      return produce(game, draftState => {
+        draftState.roundEndTime = null;
+        draftState.phase = FishbowlPhase.RESULTS;
       });
     }
   }

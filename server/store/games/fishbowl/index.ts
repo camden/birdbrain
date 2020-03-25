@@ -7,7 +7,7 @@ import {
 import { GameID, GameType } from '../types';
 import { User } from 'store/general/types';
 
-export const ROUND_DURATION_MS = 30000;
+export const ROUND_DURATION_MS = 30500;
 
 const createPlayerFromUser = (user: User): FishbowlPlayer => {
   return {
@@ -26,7 +26,7 @@ export const createNewGameOfFishbowl = (
   return {
     id,
     type: GameType.FISHBOWL,
-    roundStartTime: null,
+    roundEndTime: null,
     players,
     activePlayer: players[0],
     phase: FishbowlPhase.PRE_ROUND,
