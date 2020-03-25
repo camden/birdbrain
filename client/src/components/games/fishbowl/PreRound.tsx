@@ -16,7 +16,7 @@ const PreRound: React.FC<PreRoundProps> = ({ game }) => {
   const dispatch = useDispatch();
 
   const onStartRoundClick = useCallback(() => {
-    dispatch(sendMessage(fshStartRound(Date.now())));
+    dispatch(sendMessage(fshStartRound(Date.now(), game.answersAlreadySeen)));
   }, [dispatch]);
 
   const isActivePlayer = currentUser?.id === game.activePlayer.userId;

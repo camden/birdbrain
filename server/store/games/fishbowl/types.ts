@@ -9,6 +9,11 @@ export interface FishbowlGameState extends Game {
   players: FishbowlPlayer[];
   activePlayer: FishbowlPlayer;
   phase: FishbowlPhase;
+  currentAnswer: FishbowlAnswer | null;
+  answersAlreadySeen: FishbowlAnswer[];
+  answersGot: FishbowlAnswer[];
+  answersSkipped: FishbowlAnswer[];
+  acknowledged: UserID[];
 }
 
 export enum FishbowlPhase {
@@ -27,3 +32,5 @@ export interface FishbowlPlayer {
   userId: UserID;
   team: FishbowlTeam;
 }
+
+export type FishbowlAnswer = string;

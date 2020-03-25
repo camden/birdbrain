@@ -7,7 +7,10 @@ import {
 import { GameID, GameType } from '../types';
 import { User } from 'store/general/types';
 
-export const ROUND_DURATION_MS = 30500;
+export const DEFAULT_DURATION = 30500;
+export const QUICK_DEBUG_DURATION = 10500;
+
+export const ROUND_DURATION_MS = QUICK_DEBUG_DURATION;
 
 const createPlayerFromUser = (user: User): FishbowlPlayer => {
   return {
@@ -30,5 +33,10 @@ export const createNewGameOfFishbowl = (
     players,
     activePlayer: players[0],
     phase: FishbowlPhase.PRE_ROUND,
+    currentAnswer: null,
+    answersAlreadySeen: [],
+    answersGot: [],
+    answersSkipped: [],
+    acknowledged: [],
   };
 };
