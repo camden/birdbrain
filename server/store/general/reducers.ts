@@ -87,7 +87,6 @@ export const generalReducer = (
   state = initialState,
   action: GeneralActionTypes
 ) => {
-  // TODO generalize game handling code
   if (action.type.startsWith('FSH_')) {
     return customGameReducer<FishbowlActionTypes, FishbowlGameState>(
       fishbowlReducer,
