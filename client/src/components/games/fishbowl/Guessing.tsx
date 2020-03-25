@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { FishbowlGameState } from '@server/store/games/fishbowl/types';
 import useInterval from 'use-interval';
 import { useDispatch, useSelector } from 'react-redux';

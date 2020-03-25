@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FishbowlGameState } from '@server/store/games/fishbowl/types';
 import { Room } from '@server/store/general/types';
 import styles from './Main.module.css';

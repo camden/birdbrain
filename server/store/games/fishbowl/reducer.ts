@@ -143,10 +143,14 @@ export const fishbowlReducer = (
           draftState.lastActivePlayer = game.activePlayer;
           draftState.activePlayer = getNextActivePlayer(game);
           draftState.answersGot = [];
+          draftState.answersForCurrentGameType = game.answersForCurrentGameType.concat(
+            game.answersSkipped
+          );
           draftState.answersSkipped = [];
 
           if (
-            game.indexOfCurrentAnswer >= game.answersForCurrentGameType.length
+            game.indexOfCurrentAnswer >=
+            draftState.answersForCurrentGameType.length
           ) {
             if (game.currentGameType === FishbowlGameType.PASSWORD) {
               draftState.phase = FishbowlPhase.END_GAME_RESULTS;

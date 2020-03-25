@@ -16,7 +16,7 @@ const Results: React.FC<ResultsProps> = ({ game }) => {
   const onContinueClick = useCallback(() => {
     dispatch(sendMessage(fshAckResults()));
     setAcked(true);
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
