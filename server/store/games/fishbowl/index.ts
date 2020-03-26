@@ -16,8 +16,8 @@ export const DEFAULT_DURATION = 30500;
 export const QUICK_DEBUG_DURATION = 10500;
 export const LONG_DEBUG_DURATION = 60500;
 
-export const ROUND_DURATION_MS = LONG_DEBUG_DURATION;
-export const ANSWERS_PER_PLAYER = 3;
+export const ROUND_DURATION_MS = DEFAULT_DURATION;
+export const ANSWERS_PER_PLAYER = 4;
 export const POINTS_FOR_GOT = 2;
 export const POINTS_FOR_SKIPPED = -1;
 
