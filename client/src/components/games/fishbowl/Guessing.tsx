@@ -12,6 +12,7 @@ import Button from 'components/shared/button/Button';
 import { getCurrentAnswer } from '@server/store/games/fishbowl/selectors';
 import { getCurrentUser } from 'store/selectors';
 import styles from './Guessing.module.css';
+import { Textfit } from 'react-textfit';
 
 export interface GuessingProps {
   game: FishbowlGameState;
@@ -40,27 +41,60 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
     }
   }, 1000);
 
+  const currentPlayer = game.players.find(p => p.userId === currentUser?.id);
+  if (!currentPlayer) {
+    throw new Error('Could not find player.');
+  }
+
+  const isOnSameTeamAsActivePlayer =
+    currentPlayer.team === game.activePlayer.team;
+
   return (
-    <div>
+    <div className={styles.wrapper}>
       <h2>{game.activePlayer.name} is guessing!</h2>
       <div>The current game is {game.currentGameType}.</div>
-      <br />
       {isActivePlayer && (
         <>
-          <div>clue:</div>
-          <div className={styles.answer}>{currentAnswer}</div>
-          <Button onClick={() => dispatch(sendMessage(fshGotAnswer()))}>
-            Got it!
-          </Button>
-          <Button
-            secondary
-            onClick={() => dispatch(sendMessage(fshSkipAnswer()))}
-          >
-            Skip it!
-          </Button>
+          <div className={styles.answer}>
+            <Textfit mode="single">{currentAnswer}</Textfit>
+          </div>
+          <section className={styles.buttons}>
+            <Button
+              className={styles.button}
+              onClick={() => dispatch(sendMessage(fshGotAnswer()))}
+            >
+              Got it!
+            </Button>
+            <Button
+              className={styles.button}
+              secondary
+              onClick={() => dispatch(sendMessage(fshSkipAnswer()))}
+            >
+              Skip it!
+            </Button>
+          </section>
         </>
       )}
-      <div>time left: {timeLeft}s</div>
+      {!isActivePlayer && isOnSameTeamAsActivePlayer && (
+        <div className={styles.info}>
+          <div className={styles.team_info}>
+            <strong>{game.activePlayer.name}</strong> is on your team.
+          </div>
+          <div>Start guessing!</div>
+        </div>
+      )}
+      {!isActivePlayer && !isOnSameTeamAsActivePlayer && (
+        <div className={styles.info}>
+          <div className={styles.teamInfo}>
+            <strong>{game.activePlayer.name}</strong> is not on your team.
+          </div>
+          <div>Hang tight, it'll be your team's turn soon!</div>
+        </div>
+      )}
+      <div className={styles.timeDisplay}>
+        <div className={styles.time}>{timeLeft}</div>
+        <div>seconds left</div>
+      </div>
     </div>
   );
 };

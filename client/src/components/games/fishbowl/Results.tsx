@@ -20,15 +20,15 @@ const Results: React.FC<ResultsProps> = ({ game }) => {
 
   return (
     <div>
-      <h2>Results</h2>
-      {game.activePlayer.name} was giving the clues.
+      <h2>Round Results</h2>
+      <strong>{game.activePlayer.name}</strong> was giving the clues.
       <h3>Got:</h3>
       {game.answersGot.map(answer => (
         <div key={answer}>{answer}</div>
       ))}
       <h3>Skipped {game.answersSkipped.length}.</h3>
       {!acked && (
-        <Button secondary onClick={onContinueClick}>
+        <Button secondary onClick={onContinueClick} fullWidth>
           Continue
         </Button>
       )}

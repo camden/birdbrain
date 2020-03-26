@@ -41,6 +41,7 @@ export interface FishbowlPlayer {
   name: string;
   userId: UserID;
   team: FishbowlTeam;
+  teamDisplayName: string;
 }
 
 export type FishbowlAnswer = string;

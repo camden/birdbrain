@@ -14,8 +14,9 @@ import { pickRandomNumber } from 'utils/rng';
 
 export const DEFAULT_DURATION = 30500;
 export const QUICK_DEBUG_DURATION = 10500;
+export const LONG_DEBUG_DURATION = 60500;
 
-export const ROUND_DURATION_MS = DEFAULT_DURATION;
+export const ROUND_DURATION_MS = LONG_DEBUG_DURATION;
 export const ANSWERS_PER_PLAYER = 3;
 
 const createPlayerFromUser = (
@@ -26,6 +27,8 @@ const createPlayerFromUser = (
     name: user.name,
     userId: user.id,
     team,
+    teamDisplayName:
+      team === FishbowlTeam.TEAM_A ? 'Team Finch' : 'Team Sparrow',
   };
 };
 

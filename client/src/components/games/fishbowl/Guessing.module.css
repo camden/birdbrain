@@ -1,3 +1,47 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .answer {
-  font-size: 40px;
+  height: 100px;
+  margin-top: 32px;
+  margin-bottom: 32px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.button {
+  flex: 1;
+  margin-bottom: 32px;
+  height: 72px;
+}
+
+.info {
+  margin: 32px 0 32px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.teamInfo {
+  margin-bottom: 16px;
+}
+
+.timeDisplay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.time {
+  font-weight: bold;
+  font-size: 64px;
 }
