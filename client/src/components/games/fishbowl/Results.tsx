@@ -13,6 +13,7 @@ import {
 } from '@server/store/games/fishbowl';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowRight, faCheck } from '@fortawesome/pro-solid-svg-icons';
+import TeamScore from './TeamScore';
 
 export interface ResultsProps {
   game: FishbowlGameState;
@@ -68,21 +69,6 @@ const Results: React.FC<ResultsProps> = ({ game }) => {
           Continue
         </Button>
       )}
-    </div>
-  );
-};
-
-export interface TeamScoreProps {
-  teamName: string;
-  score: number;
-}
-
-const TeamScore: React.FC<TeamScoreProps> = ({ teamName, score }) => {
-  return (
-    <div className={styles.teamScoreWrapper}>
-      <div>{teamName}</div>
-      <div className={styles.teamPoints}>{score}</div>
-      <div>points</div>
     </div>
   );
 };

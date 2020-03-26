@@ -1,0 +1,11 @@
+.teamScoreWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.teamPoints {
+  font-weight: 900;
+  font-size: 48px;
+}

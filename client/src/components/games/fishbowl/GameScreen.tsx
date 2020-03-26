@@ -6,6 +6,7 @@ import {
 import Guessing from './Guessing';
 import Results from './Results';
 import PreRound from './PreRound';
+import GameOver from './GameOver';
 
 export interface GameScreenProps {
   game: FishbowlGameState;
@@ -20,7 +21,7 @@ const GameScreen: React.FC<GameScreenProps> = ({ game }) => {
     case FishbowlPhase.RESULTS:
       return <Results game={game} />;
     case FishbowlPhase.END_GAME_RESULTS:
-      return <div>the game is over</div>;
+      return <GameOver game={game} />;
   }
 };
 
