@@ -51,7 +51,9 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
 
   return (
     <div className={styles.wrapper}>
-      <h2>{game.activePlayer.name} is guessing!</h2>
+      <p>
+        <strong>{game.activePlayer.name}</strong> is the active player!
+      </p>
       <div>The current game is {game.currentGameType}.</div>
       {isActivePlayer && (
         <>

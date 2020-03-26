@@ -17,6 +17,9 @@ export interface FishbowlGameState extends Game {
   answersGot: FishbowlAnswer[];
   answersSkipped: FishbowlAnswer[];
   acknowledged: UserID[];
+  score: {
+    [key in FishbowlTeam]: number;
+  };
 }
 
 export enum FishbowlPhase {

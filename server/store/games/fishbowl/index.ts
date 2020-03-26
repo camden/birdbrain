@@ -8,9 +8,9 @@ import {
 } from './types';
 import { GameID, GameType } from '../types';
 import { User } from 'store/general/types';
-import shuffleArray from 'utils/shuffle-array';
+import shuffleArray from '../../../utils/shuffle-array';
 import answers from './answers';
-import { pickRandomNumber } from 'utils/rng';
+import { pickRandomNumber } from '../../../utils/rng';
 
 export const DEFAULT_DURATION = 30500;
 export const QUICK_DEBUG_DURATION = 10500;
@@ -18,6 +18,11 @@ export const LONG_DEBUG_DURATION = 60500;
 
 export const ROUND_DURATION_MS = LONG_DEBUG_DURATION;
 export const ANSWERS_PER_PLAYER = 3;
+export const POINTS_FOR_GOT = 2;
+export const POINTS_FOR_SKIPPED = -1;
+
+export const TEAM_A_DISPLAY_NAME = 'Team Finch';
+export const TEAM_B_DISPLAY_NAME = 'Team Sparrow';
 
 const createPlayerFromUser = (
   user: User,
@@ -28,7 +33,7 @@ const createPlayerFromUser = (
     userId: user.id,
     team,
     teamDisplayName:
-      team === FishbowlTeam.TEAM_A ? 'Team Finch' : 'Team Sparrow',
+      team === FishbowlTeam.TEAM_A ? TEAM_A_DISPLAY_NAME : TEAM_B_DISPLAY_NAME,
   };
 };
 
@@ -91,5 +96,9 @@ export const createNewGameOfFishbowl = (
     answersGot: [],
     answersSkipped: [],
     acknowledged: [],
+    score: {
+      [FishbowlTeam.TEAM_A]: 0,
+      [FishbowlTeam.TEAM_B]: 0,
+    },
   };
 };

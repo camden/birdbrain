@@ -13,9 +13,23 @@ import {
   FSH_ACK_RESULTS,
 } from './actions';
 import produce from 'immer';
-import { ROUND_DURATION_MS } from '.';
+import { ROUND_DURATION_MS, POINTS_FOR_SKIPPED, POINTS_FOR_GOT } from '.';
 import { getCurrentAnswer } from './selectors';
 import shuffleArray from 'utils/shuffle-array';
+
+const getScoreAddition = (game: FishbowlGameState): number => {
+  const pointsForSkipped = game.answersSkipped.length * POINTS_FOR_SKIPPED;
+  const pointsForGot = game.answersGot.length * POINTS_FOR_GOT;
+
+  console.log(
+    pointsForSkipped,
+    pointsForGot,
+    game.answersSkipped,
+    game.answersGot
+  );
+
+  return pointsForSkipped + pointsForGot;
+};
 
 const getNextActivePlayer = (game: FishbowlGameState): FishbowlPlayer => {
   if (game.players.length === 1) {
@@ -80,9 +94,16 @@ export const fishbowlReducer = (
       });
     }
     case FSH_REPORT_END_ROUND: {
+      const isCorrectRound = game.phase === FishbowlPhase.GUESSING;
+      if (!isCorrectRound) {
+        return game;
+      }
+
       return produce(game, draftState => {
         draftState.roundEndTime = null;
         draftState.phase = FishbowlPhase.RESULTS;
+
+        draftState.score[game.activePlayer.team] += getScoreAddition(game);
       });
     }
     case FSH_GOT_ANSWER: {
@@ -104,6 +125,7 @@ export const fishbowlReducer = (
         ) {
           draftState.roundEndTime = null;
           draftState.phase = FishbowlPhase.RESULTS;
+          draftState.score[game.activePlayer.team] += getScoreAddition(game);
         }
       });
     }
@@ -118,6 +140,11 @@ export const fishbowlReducer = (
 
       return produce(game, draftState => {
         draftState.answersSkipped.push(getCurrentAnswer(game));
+        console.log(
+          'skipped',
+          getCurrentAnswer(game),
+          draftState.answersSkipped
+        );
         draftState.indexOfCurrentAnswer++;
 
         if (
@@ -126,6 +153,9 @@ export const fishbowlReducer = (
         ) {
           draftState.roundEndTime = null;
           draftState.phase = FishbowlPhase.RESULTS;
+          draftState.score[game.activePlayer.team] += getScoreAddition(
+            draftState
+          );
         }
       });
     }

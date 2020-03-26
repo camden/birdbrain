@@ -1,0 +1,33 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-bottom: 16px;
+}
+
+.wrapper > p {
+  margin-bottom: 0;
+}
+
+.title {
+  margin-bottom: 0;
+}
+
+.scores {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex: 1;
+}
+
+.teamScoreWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.teamPoints {
+  font-weight: 900;
+  font-size: 48px;
+}
