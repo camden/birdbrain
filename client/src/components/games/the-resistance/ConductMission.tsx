@@ -15,6 +15,7 @@ import styles from './ConductMission.module.css';
 import User from 'components/shared/user/User';
 import { faClock, faCheck } from '@fortawesome/pro-solid-svg-icons';
 import WaitingMessage from './WaitingMessage';
+import { prop } from 'ramda';
 
 export interface ResistanceProps {
   game: ResistanceGameState;
@@ -98,7 +99,7 @@ const TheResistanceConductMission: React.FC<ResistanceProps> = ({ game }) => {
       {currentUserIsOnTeam && <h2>Vote on the mission outcome:</h2>}
       {currentUserIsOnTeam && !voted && voteButtons}
       <WaitingMessage
-        playersThatNeedToAct={playersWhoStillNeedToVote}
+        playersThatNeedToAct={playersWhoStillNeedToVote.map(prop('name'))}
         verb={'vote'}
       />
     </div>

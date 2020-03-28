@@ -12,6 +12,9 @@ export interface FishbowlGameState extends Game {
   phase: FishbowlPhase;
   currentGameType: FishbowlGameType;
   allAnswers: FishbowlAnswer[];
+  answersSubmitted: {
+    [key in UserID]: FishbowlAnswer[];
+  };
   answersForCurrentGameType: FishbowlAnswer[];
   indexOfCurrentAnswer: number;
   answersGot: FishbowlAnswer[];
@@ -23,6 +26,7 @@ export interface FishbowlGameState extends Game {
 }
 
 export enum FishbowlPhase {
+  INPUT_ANSWERS = 'INPUT_ANSWERS',
   PRE_ROUND = 'PRE_ROUND',
   GUESSING = 'GUESSING',
   RESULTS = 'RESULTS',

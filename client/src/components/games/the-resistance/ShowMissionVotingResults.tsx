@@ -12,6 +12,7 @@ import styles from './ShowMissionVotingResults.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/pro-solid-svg-icons';
 import cx from 'classnames';
+import { prop } from 'ramda';
 
 const ANIMATION_DELAY_MULTIPLIER = 1.5;
 
@@ -89,7 +90,7 @@ const TheResistanceShowMissionVotingResults: React.FC<ResistanceProps> = ({
       </h2>
       {!acknowledged && <Button onClick={onContinueClick}>Continue</Button>}
       <WaitingMessage
-        playersThatNeedToAct={playersWhoStillNeedToAck}
+        playersThatNeedToAct={playersWhoStillNeedToAck.map(prop('name'))}
         verb={'move on'}
       />
     </div>

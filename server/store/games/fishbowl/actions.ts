@@ -1,6 +1,7 @@
 import { ActionMeta } from 'store/general/types';
-import { Timestamp } from './types';
+import { Timestamp, FishbowlAnswer } from './types';
 
+export const FSH_SUBMIT_ANSWER = 'FSH_SUBMIT_ANSWER';
 export const FSH_START_ROUND = 'FSH_START_ROUND';
 export const FSH_REPORT_END_ROUND = 'FSH_REPORT_END_ROUND';
 export const FSH_GOT_ANSWER = 'FSH_GOT_ANSWER';
@@ -10,6 +11,22 @@ export const FSH_ACK_RESULTS = 'FSH_ACK_RESULTS';
 export interface FshBaseAction {
   meta: ActionMeta;
 }
+
+export interface FshSubmitAnswerAction extends FshBaseAction {
+  type: typeof FSH_SUBMIT_ANSWER;
+  payload: {
+    answer: FishbowlAnswer;
+  };
+}
+
+export const fshSubmitAnswer = (answer: FishbowlAnswer) => {
+  return {
+    type: FSH_SUBMIT_ANSWER,
+    payload: {
+      answer,
+    },
+  };
+};
 
 export interface FshStartRoundAction extends FshBaseAction {
   type: typeof FSH_START_ROUND;
@@ -68,6 +85,7 @@ export const fshAckResults = () => {
 };
 
 export type FishbowlActionTypes =
+  | FshSubmitAnswerAction
   | FshStartRoundAction
   | FshReportEndOfRoundAction
   | FshGotAnswerAction

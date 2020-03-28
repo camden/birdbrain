@@ -7,7 +7,7 @@ import {
   FishbowlGameType,
 } from './types';
 import { GameID, GameType } from '../types';
-import { User } from 'store/general/types';
+import { User, UserID } from 'store/general/types';
 import shuffleArray from '../../../utils/shuffle-array';
 import answers from './answers';
 import { pickRandomNumber } from '../../../utils/rng';
@@ -57,29 +57,11 @@ export const createNewGameOfFishbowl = (
     )
   );
 
-  const allAnswers: FishbowlAnswer[] = [];
-  const numberOfAnswers = ANSWERS_PER_PLAYER * players.length;
+  const answersSubmitted: { [key in UserID]: FishbowlAnswer[] } = {};
 
-  let tries = 0;
-  while (allAnswers.length < numberOfAnswers) {
-    ++tries;
-    if (tries > 1000) {
-      throw new Error('Infinite loop detected in answer generation.');
-    }
-
-    const idx = pickRandomNumber(0, answers.length - 1);
-    const nextAnswerToAdd = answers[idx];
-
-    if (allAnswers.includes(nextAnswerToAdd)) {
-      continue;
-    } else {
-      allAnswers.push(nextAnswerToAdd);
-    }
-  }
-
-  const answersForCurrentGameType: FishbowlAnswer[] = shuffleArray([
-    ...allAnswers,
-  ]);
+  players.forEach(player => {
+    answersSubmitted[player.userId] = [];
+  });
 
   return {
     id,
@@ -88,10 +70,11 @@ export const createNewGameOfFishbowl = (
     players,
     lastActivePlayer: null,
     activePlayer: players[0],
-    phase: FishbowlPhase.PRE_ROUND,
+    phase: FishbowlPhase.INPUT_ANSWERS,
     currentGameType: FishbowlGameType.TABOO,
-    allAnswers,
-    answersForCurrentGameType,
+    allAnswers: [],
+    answersSubmitted,
+    answersForCurrentGameType: [],
     indexOfCurrentAnswer: 0,
     answersGot: [],
     answersSkipped: [],

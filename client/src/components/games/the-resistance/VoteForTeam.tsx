@@ -11,6 +11,7 @@ import { rstCastTeamVote } from '@server/store/games/the-resistance/actions';
 import styles from './VoteForTeam.module.css';
 import User from 'components/shared/user/User';
 import WaitingMessage from './WaitingMessage';
+import { prop } from 'ramda';
 
 export interface ResistanceProps {
   game: ResistanceGameState;
@@ -63,7 +64,7 @@ const TheResistanceVoteForTeam: React.FC<ResistanceProps> = ({ game }) => {
       </section>
       {!voted && voteButtons}
       <WaitingMessage
-        playersThatNeedToAct={playersWhoStillNeedToVote}
+        playersThatNeedToAct={playersWhoStillNeedToVote.map(prop('name'))}
         verb={'vote'}
       />
     </div>

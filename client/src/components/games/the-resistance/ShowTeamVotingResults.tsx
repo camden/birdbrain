@@ -8,6 +8,7 @@ import User from 'components/shared/user/User';
 import { faThumbsUp, faThumbsDown } from '@fortawesome/pro-solid-svg-icons';
 import WaitingMessage from './WaitingMessage';
 import styles from './ShowTeamVotingResults.module.css';
+import { prop } from 'ramda';
 
 export interface ResistanceProps {
   game: ResistanceGameState;
@@ -69,7 +70,7 @@ const TheResistanceShowTeamVotingResults: React.FC<ResistanceProps> = ({
       </section>
       {missionWasApproved ? missionApprovedRender : missionRejectedRender}
       <WaitingMessage
-        playersThatNeedToAct={playersWhoStillNeedToAck}
+        playersThatNeedToAct={playersWhoStillNeedToAck.map(prop('name'))}
         verb={'move on'}
       />
     </div>

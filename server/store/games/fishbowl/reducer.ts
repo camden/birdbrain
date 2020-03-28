@@ -3,6 +3,7 @@ import {
   FishbowlPhase,
   FishbowlPlayer,
   FishbowlGameType,
+  FishbowlAnswer,
 } from './types';
 import {
   FishbowlActionTypes,
@@ -11,22 +12,21 @@ import {
   FSH_GOT_ANSWER,
   FSH_SKIP_ANSWER,
   FSH_ACK_RESULTS,
+  FSH_SUBMIT_ANSWER,
 } from './actions';
 import produce from 'immer';
-import { ROUND_DURATION_MS, POINTS_FOR_SKIPPED, POINTS_FOR_GOT } from '.';
+import {
+  ROUND_DURATION_MS,
+  POINTS_FOR_SKIPPED,
+  POINTS_FOR_GOT,
+  ANSWERS_PER_PLAYER,
+} from '.';
 import { getCurrentAnswer } from './selectors';
 import shuffleArray from 'utils/shuffle-array';
 
 const getScoreAddition = (game: FishbowlGameState): number => {
   const pointsForSkipped = game.answersSkipped.length * POINTS_FOR_SKIPPED;
   const pointsForGot = game.answersGot.length * POINTS_FOR_GOT;
-
-  console.log(
-    pointsForSkipped,
-    pointsForGot,
-    game.answersSkipped,
-    game.answersGot
-  );
 
   return pointsForSkipped + pointsForGot;
 };
@@ -79,6 +79,40 @@ export const fishbowlReducer = (
   action: FishbowlActionTypes
 ): FishbowlGameState => {
   switch (action.type) {
+    case FSH_SUBMIT_ANSWER: {
+      const userId = action.meta.userId;
+      const answersSoFar = game.answersSubmitted[userId];
+      if (!answersSoFar) {
+        console.error(`User with id ${userId} submitted incorrectly.`);
+        return game;
+      }
+
+      if (answersSoFar.length >= ANSWERS_PER_PLAYER) {
+        return game;
+      }
+
+      return produce(game, draftState => {
+        draftState.answersSubmitted[userId].push(action.payload.answer);
+
+        const allUsersSubmitted = game.players.every(
+          player =>
+            draftState.answersSubmitted[player.userId].length ===
+            ANSWERS_PER_PLAYER
+        );
+
+        if (allUsersSubmitted) {
+          draftState.phase = FishbowlPhase.PRE_ROUND;
+          let allAnswers: FishbowlAnswer[] = [];
+          game.players.forEach(player => {
+            allAnswers = allAnswers.concat(
+              draftState.answersSubmitted[player.userId]
+            );
+          });
+          draftState.allAnswers = allAnswers;
+          draftState.answersForCurrentGameType = shuffleArray([...allAnswers]);
+        }
+      });
+    }
     case FSH_START_ROUND: {
       const isCorrectRound = game.phase === FishbowlPhase.PRE_ROUND;
       const isFromActivePlayer =
@@ -140,11 +174,6 @@ export const fishbowlReducer = (
 
       return produce(game, draftState => {
         draftState.answersSkipped.push(getCurrentAnswer(game));
-        console.log(
-          'skipped',
-          getCurrentAnswer(game),
-          draftState.answersSkipped
-        );
         draftState.indexOfCurrentAnswer++;
 
         if (
