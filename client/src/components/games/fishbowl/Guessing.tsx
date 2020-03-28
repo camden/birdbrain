@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { FishbowlGameState } from '@server/store/games/fishbowl/types';
 import useInterval from 'use-interval';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,10 +18,13 @@ export interface GuessingProps {
   game: FishbowlGameState;
 }
 
+const BUTTON_DISABLED_TIMEOUT = 500;
+
 const Guessing: React.FC<GuessingProps> = ({ game }) => {
   const currentUser = useSelector(getCurrentUser());
   const isActivePlayer = currentUser?.id === game.activePlayer.userId;
 
+  const [areButtonsDisabled, setAreButtonsDisabled] = useState(false);
   const [timeLeft, setTimeLeft] = useState(30);
   const dispatch = useDispatch();
   const currentAnswer = getCurrentAnswer(game);
@@ -40,6 +43,34 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
       dispatch(sendMessage(fshReportEndOfRound()));
     }
   }, 1000);
+
+  const timer = useRef<NodeJS.Timeout | null>(null);
+
+  const onButtonClick = useCallback(() => {
+    setAreButtonsDisabled(true);
+    timer.current = setTimeout(() => {
+      setAreButtonsDisabled(false);
+    }, BUTTON_DISABLED_TIMEOUT);
+  }, []);
+
+  // Cleanup timer
+  useEffect(() => {
+    return () => {
+      if (timer.current) {
+        clearTimeout(timer.current);
+      }
+    };
+  }, []);
+
+  const onGotAnswer = useCallback(() => {
+    dispatch(sendMessage(fshGotAnswer()));
+    onButtonClick();
+  }, [dispatch, onButtonClick]);
+
+  const onSkippedAnswer = useCallback(() => {
+    dispatch(sendMessage(fshSkipAnswer()));
+    onButtonClick();
+  }, [dispatch, onButtonClick]);
 
   const currentPlayer = game.players.find(p => p.userId === currentUser?.id);
   if (!currentPlayer) {
@@ -63,14 +94,16 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
           <section className={styles.buttons}>
             <Button
               className={styles.button}
-              onClick={() => dispatch(sendMessage(fshGotAnswer()))}
+              onClick={onGotAnswer}
+              disabled={areButtonsDisabled}
             >
               Got it!
             </Button>
             <Button
               className={styles.button}
               secondary
-              onClick={() => dispatch(sendMessage(fshSkipAnswer()))}
+              onClick={onSkippedAnswer}
+              disabled={areButtonsDisabled}
             >
               Skip it!
             </Button>
