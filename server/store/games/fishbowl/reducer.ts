@@ -138,6 +138,9 @@ export const fishbowlReducer = (
         draftState.phase = FishbowlPhase.RESULTS;
 
         draftState.score[game.activePlayer.team] += getScoreAddition(game);
+        draftState.answersForCurrentGameType = shuffleArray([
+          ...game.answersForCurrentGameType,
+        ]);
       });
     }
     case FSH_GOT_ANSWER: {

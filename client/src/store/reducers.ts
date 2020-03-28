@@ -16,7 +16,7 @@ export const reducer = (state = initialState, action: ActionTypes) => {
       };
     case SET_CLIENT_STATE:
       if (process.env.NODE_ENV !== 'production') {
-        console.log('Got Client State: ', action);
+        console.log('GAME STATE', action.payload.game);
       }
       return {
         ...state,
