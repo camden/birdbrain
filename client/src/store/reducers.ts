@@ -15,7 +15,9 @@ export const reducer = (state = initialState, action: ActionTypes) => {
         user: action.payload.user,
       };
     case SET_CLIENT_STATE:
-      console.log('Got Client State: ', action);
+      if (process.env.NODE_ENV !== 'production') {
+        console.log('Got Client State: ', action);
+      }
       return {
         ...state,
         room: action.payload.room,

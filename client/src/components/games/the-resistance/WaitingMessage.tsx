@@ -1,5 +1,4 @@
 import React from 'react';
-import { ResistancePlayer } from '@server/store/games/the-resistance/types';
 
 export interface WaitingMessageProps {
   playersThatNeedToAct: string[];

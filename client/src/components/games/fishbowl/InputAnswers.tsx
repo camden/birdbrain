@@ -14,6 +14,8 @@ import { sendMessage } from 'store/websocket/actions';
 import { fshSubmitAnswer } from '@server/store/games/fishbowl/actions';
 import WaitingMessage from '../the-resistance/WaitingMessage';
 import { prop } from 'ramda';
+import answers from '@server/store/games/fishbowl/answers';
+import { pickRandomNumber } from '@server/utils/rng';
 
 export interface InputAnswersProps {
   game: FishbowlGameState;
@@ -28,6 +30,11 @@ const InputAnswers: React.FC<InputAnswersProps> = ({ game }) => {
     dispatch(sendMessage(fshSubmitAnswer(curAnswer)));
     setCurAnswer('');
   }, [dispatch, curAnswer]);
+
+  const onSuggestAnswer = useCallback(() => {
+    const randomAnswer = answers[pickRandomNumber(0, answers.length - 1)];
+    setCurAnswer(randomAnswer);
+  }, []);
 
   if (!currentUser) {
     return (
@@ -45,7 +52,7 @@ const InputAnswers: React.FC<InputAnswersProps> = ({ game }) => {
 
   if (answersAlreadySubmitted.length === ANSWERS_PER_PLAYER) {
     return (
-      <div>
+      <div className={styles.wrapper}>
         <p>You've submitted all of your answers!</p>
         <WaitingMessage
           playersThatNeedToAct={playersWhoAreNotDone.map(prop('name'))}
@@ -56,17 +63,29 @@ const InputAnswers: React.FC<InputAnswersProps> = ({ game }) => {
   }
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <h1>
-        Submit {ANSWERS_PER_PLAYER - answersAlreadySubmitted.length} answers
+        Submit {ANSWERS_PER_PLAYER - answersAlreadySubmitted.length} answers.
       </h1>
+      <p>
+        An answer can be a short phrase, a word, a celebrity name, a movie, etc
+      </p>
       <TextInput
+        className={styles.input}
         value={curAnswer}
         onChange={e => setCurAnswer(e.target.value)}
         onKeyPress={event => event.key === 'Enter' && onSubmitAnswer()}
       />
-      <Button fullWidth onClick={onSubmitAnswer}>
+      <Button className={styles.button} fullWidth onClick={onSubmitAnswer}>
         Submit
+      </Button>
+      <Button
+        className={styles.button}
+        secondary
+        fullWidth
+        onClick={onSuggestAnswer}
+      >
+        Suggest something for me
       </Button>
     </div>
   );
