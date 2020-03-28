@@ -1,5 +1,8 @@
 import React, { useState, useCallback } from 'react';
-import { FishbowlGameState } from '@server/store/games/fishbowl/types';
+import {
+  FishbowlGameState,
+  FishbowlPlayer,
+} from '@server/store/games/fishbowl/types';
 import Button from 'components/shared/button/Button';
 import { useDispatch } from 'react-redux';
 import { sendMessage } from 'store/websocket/actions';
@@ -14,6 +17,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowRight, faCheck } from '@fortawesome/pro-solid-svg-icons';
 import TeamScore from './TeamScore';
+import WaitingMessage from '../the-resistance/WaitingMessage';
+import { prop } from 'ramda';
 
 export interface ResultsProps {
   game: FishbowlGameState;
@@ -32,6 +37,10 @@ const Results: React.FC<ResultsProps> = ({ game }) => {
     POINTS_FOR_GOT * game.answersGot.length +
     POINTS_FOR_SKIPPED * game.answersSkipped.length;
 
+  const playersWhoHaveNotAcked: FishbowlPlayer[] = game.players.filter(
+    player => !game.acknowledged.includes(player.userId)
+  );
+
   return (
     <div className={styles.wrapper}>
       <h1 className={styles.title}>Round Results</h1>
@@ -46,11 +55,13 @@ const Results: React.FC<ResultsProps> = ({ game }) => {
         <FontAwesomeIcon icon={faLongArrowRight} /> +
         {POINTS_FOR_GOT * game.answersGot.length} points.
       </p>
-      {game.answersGot.map(answer => (
-        <div key={answer}>
-          <FontAwesomeIcon icon={faCheck} /> {answer}
-        </div>
-      ))}
+      <section className={styles.answersList}>
+        {game.answersGot.map(answer => (
+          <div key={answer}>
+            <FontAwesomeIcon icon={faCheck} /> {answer}
+          </div>
+        ))}
+      </section>
       <p>
         Skipped {game.answersSkipped.length} phrases{' '}
         <FontAwesomeIcon icon={faLongArrowRight} />{' '}
@@ -64,11 +75,19 @@ const Results: React.FC<ResultsProps> = ({ game }) => {
         <TeamScore teamName={TEAM_A_DISPLAY_NAME} score={game.score.TEAM_A} />
         <TeamScore teamName={TEAM_B_DISPLAY_NAME} score={game.score.TEAM_B} />
       </section>
-      {!acked && (
-        <Button secondary onClick={onContinueClick} fullWidth>
-          Continue
-        </Button>
-      )}
+      <section className={styles.continueArea}>
+        {acked && (
+          <WaitingMessage
+            playersThatNeedToAct={playersWhoHaveNotAcked.map(prop('name'))}
+            verb="continue"
+          />
+        )}
+        {!acked && (
+          <Button secondary onClick={onContinueClick} fullWidth>
+            Continue
+          </Button>
+        )}
+      </section>
     </div>
   );
 };

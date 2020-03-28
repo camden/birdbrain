@@ -3,21 +3,29 @@
   flex-direction: column;
   flex: 1;
   padding-bottom: 16px;
+  height: 100%;
 }
 
 .wrapper > p {
-  margin-bottom: 0;
+  margin-bottom: 4px;
+  margin-top: 8px;
 }
 
 .title {
+  margin-top: 8px;
   margin-bottom: 0;
 }
 
 .scores {
+  padding: 24px 0;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   flex: 1;
+}
+
+.answersList {
+  overflow-y: auto;
 }
 
 .teamScoreWrapper {
@@ -30,4 +38,8 @@
 .teamPoints {
   font-weight: 900;
   font-size: 48px;
+}
+
+.continueArea {
+  flex-basis: 64px;
 }
