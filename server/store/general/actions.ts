@@ -21,6 +21,7 @@ export const addUserToRoom = (room: Room, user: User): AddUserToRoomAction => {
       roomId: room.id,
       userId: user.id,
       sendClientUpdate: true,
+      timestamp: Date.now(),
     },
   };
 };
@@ -39,6 +40,7 @@ export const removeUserFromRoom = (
       roomId: room.id,
       userId: user.id,
       sendClientUpdate: true,
+      timestamp: Date.now(),
     },
   };
 };
@@ -51,6 +53,7 @@ export const receivedClientMessage = (message: ClientMessageWithMeta) => {
       roomId: message.meta.roomId,
       userId: message.meta.userId,
       sendClientUpdate: message.meta.sendClientUpdate ?? true,
+      timestamp: Date.now(),
     },
   };
 };

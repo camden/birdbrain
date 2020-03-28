@@ -1,5 +1,5 @@
 import { GameType } from '../games/types';
-import { RoomID, UserID, ActionMeta } from '../general/types';
+import { RoomID, UserID, ActionMeta, Timestamp } from '../general/types';
 
 export const START_GAME_MESSAGE = 'START_GAME_MESSAGE';
 export const PICK_GAME_TYPE_MESSAGE = 'PICK_GAME_TYPE_MESSAGE';

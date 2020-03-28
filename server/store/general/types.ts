@@ -62,10 +62,13 @@ export const REMOVE_USER_FROM_ROOM = 'REMOVE_USER_FROM_ROOM';
 export const RECEIVED_CLIENT_MESSAGE = 'RECEIVED_CLIENT_MESSAGE';
 export const CREATE_NEW_ROOM = 'CREATE_NEW_ROOM';
 
+export type Timestamp = number;
+
 export interface ActionMeta {
   roomId: RoomID;
   userId: UserID;
   sendClientUpdate: boolean;
+  timestamp: Timestamp;
 }
 
 export interface AddUserToRoomAction {

@@ -1,5 +1,5 @@
-import { ActionMeta } from 'store/general/types';
-import { Timestamp, FishbowlAnswer } from './types';
+import { ActionMeta, Timestamp } from 'store/general/types';
+import { FishbowlAnswer } from './types';
 
 export const FSH_SUBMIT_ANSWER = 'FSH_SUBMIT_ANSWER';
 export const FSH_START_ROUND = 'FSH_START_ROUND';

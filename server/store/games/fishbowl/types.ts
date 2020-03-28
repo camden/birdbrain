@@ -1,7 +1,5 @@
 import { Game, GameType } from '../types';
-import { UserID } from 'store/general/types';
-
-export type Timestamp = number;
+import { UserID, Timestamp } from 'store/general/types';
 
 export interface FishbowlGameState extends Game {
   type: GameType.FISHBOWL;
@@ -11,6 +9,7 @@ export interface FishbowlGameState extends Game {
   activePlayer: FishbowlPlayer;
   phase: FishbowlPhase;
   currentGameType: FishbowlGameType;
+  nextRoundDuration: number;
   allAnswers: FishbowlAnswer[];
   answersSubmitted: {
     [key in UserID]: FishbowlAnswer[];

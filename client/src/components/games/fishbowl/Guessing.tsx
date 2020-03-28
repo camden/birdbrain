@@ -25,7 +25,9 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
   const isActivePlayer = currentUser?.id === game.activePlayer.userId;
 
   const [areButtonsDisabled, setAreButtonsDisabled] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(30);
+
+  const startingTimeSeconds = Math.floor(game.nextRoundDuration / 1000);
+  const [timeLeft, setTimeLeft] = useState(startingTimeSeconds);
   const dispatch = useDispatch();
   const currentAnswer = getCurrentAnswer(game);
 

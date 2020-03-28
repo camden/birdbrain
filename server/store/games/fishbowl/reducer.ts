@@ -32,6 +32,11 @@ const getScoreAddition = (game: FishbowlGameState): number => {
 };
 
 const getNextActivePlayer = (game: FishbowlGameState): FishbowlPlayer => {
+  if (game.nextRoundDuration !== ROUND_DURATION_MS) {
+    // If the last round ended prematurely, give the active player another shot
+    return game.activePlayer;
+  }
+
   if (game.players.length === 1) {
     return game.activePlayer;
   }
@@ -123,7 +128,8 @@ export const fishbowlReducer = (
       }
 
       return produce(game, draftState => {
-        draftState.roundEndTime = action.payload.startTime + ROUND_DURATION_MS;
+        draftState.roundEndTime =
+          action.payload.startTime + game.nextRoundDuration;
         draftState.phase = FishbowlPhase.GUESSING;
       });
     }
@@ -137,10 +143,8 @@ export const fishbowlReducer = (
         draftState.roundEndTime = null;
         draftState.phase = FishbowlPhase.RESULTS;
 
+        draftState.nextRoundDuration = ROUND_DURATION_MS;
         draftState.score[game.activePlayer.team] += getScoreAddition(game);
-        draftState.answersForCurrentGameType = shuffleArray([
-          ...game.answersForCurrentGameType,
-        ]);
       });
     }
     case FSH_GOT_ANSWER: {
@@ -154,12 +158,20 @@ export const fishbowlReducer = (
 
       return produce(game, draftState => {
         draftState.answersGot.push(getCurrentAnswer(game));
-        draftState.indexOfCurrentAnswer++;
+        draftState.indexOfCurrentAnswer = 0;
+        draftState.answersForCurrentGameType = game.answersForCurrentGameType.filter(
+          answer => answer !== getCurrentAnswer(game)
+        );
 
         if (
           draftState.indexOfCurrentAnswer >=
-          game.answersForCurrentGameType.length
+          draftState.answersForCurrentGameType.length
         ) {
+          if (!game.roundEndTime) {
+            throw new Error('Expected roundEndTime to exist.');
+          }
+          const timeLeftInRoundMs = game.roundEndTime - action.meta.timestamp;
+          draftState.nextRoundDuration = timeLeftInRoundMs;
           draftState.roundEndTime = null;
           draftState.phase = FishbowlPhase.RESULTS;
           draftState.score[game.activePlayer.team] += getScoreAddition(game);
@@ -177,18 +189,9 @@ export const fishbowlReducer = (
 
       return produce(game, draftState => {
         draftState.answersSkipped.push(getCurrentAnswer(game));
-        draftState.indexOfCurrentAnswer++;
-
-        if (
-          draftState.indexOfCurrentAnswer >=
-          game.answersForCurrentGameType.length
-        ) {
-          draftState.roundEndTime = null;
-          draftState.phase = FishbowlPhase.RESULTS;
-          draftState.score[game.activePlayer.team] += getScoreAddition(
-            draftState
-          );
-        }
+        draftState.indexOfCurrentAnswer =
+          (game.indexOfCurrentAnswer + 1) %
+          game.answersForCurrentGameType.length;
       });
     }
     case FSH_ACK_RESULTS: {
@@ -209,15 +212,15 @@ export const fishbowlReducer = (
           draftState.lastActivePlayer = game.activePlayer;
           draftState.activePlayer = getNextActivePlayer(game);
           draftState.answersGot = [];
-          draftState.answersForCurrentGameType = game.answersForCurrentGameType.concat(
-            game.answersSkipped
-          );
+          draftState.answersForCurrentGameType = shuffleArray([
+            ...game.answersForCurrentGameType.filter(
+              answer => !game.answersGot.includes(answer)
+            ),
+          ]);
+          draftState.indexOfCurrentAnswer = 0;
           draftState.answersSkipped = [];
 
-          if (
-            game.indexOfCurrentAnswer >=
-            draftState.answersForCurrentGameType.length
-          ) {
+          if (draftState.answersForCurrentGameType.length === 0) {
             if (game.currentGameType === FishbowlGameType.PASSWORD) {
               draftState.phase = FishbowlPhase.END_GAME_RESULTS;
             } else {
