@@ -78,7 +78,12 @@ const InputAnswers: React.FC<InputAnswersProps> = ({ game }) => {
         onChange={e => setCurAnswer(e.target.value)}
         onKeyPress={event => event.key === 'Enter' && onSubmitAnswer()}
       />
-      <Button className={styles.button} fullWidth onClick={onSubmitAnswer}>
+      <Button
+        className={styles.button}
+        fullWidth
+        onClick={onSubmitAnswer}
+        disabled={curAnswer.length === 0}
+      >
         Submit
       </Button>
       <Button

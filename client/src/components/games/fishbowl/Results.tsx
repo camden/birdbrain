@@ -33,9 +33,13 @@ const Results: React.FC<ResultsProps> = ({ game }) => {
     setAcked(true);
   }, [dispatch]);
 
+  const answersSkippedWithoutDupes = game.answersSkipped.filter(
+    (item, index) => game.answersSkipped.indexOf(item) === index
+  );
+
   const totalPointsScoredThisRound =
     POINTS_FOR_GOT * game.answersGot.length +
-    POINTS_FOR_SKIPPED * game.answersSkipped.length;
+    POINTS_FOR_SKIPPED * answersSkippedWithoutDupes.length;
 
   const playersWhoHaveNotAcked: FishbowlPlayer[] = game.players.filter(
     player => !game.acknowledged.includes(player.userId)
@@ -63,9 +67,10 @@ const Results: React.FC<ResultsProps> = ({ game }) => {
         ))}
       </section>
       <p>
-        Skipped {game.answersSkipped.length} phrases{' '}
+        Skipped {answersSkippedWithoutDupes.length} phrase
+        {answersSkippedWithoutDupes.length !== 1 ? 's' : ''}{' '}
         <FontAwesomeIcon icon={faLongArrowRight} />{' '}
-        {POINTS_FOR_SKIPPED * game.answersSkipped.length} points.
+        {POINTS_FOR_SKIPPED * answersSkippedWithoutDupes.length} points.
       </p>
       <p>
         This round, <strong>{game.activePlayer.teamDisplayName}</strong> scored{' '}

@@ -25,8 +25,14 @@ import { getCurrentAnswer } from './selectors';
 import shuffleArray from 'utils/shuffle-array';
 
 const getScoreAddition = (game: FishbowlGameState): number => {
-  const pointsForSkipped = game.answersSkipped.length * POINTS_FOR_SKIPPED;
+  const answersSkippedWithoutDupes = game.answersSkipped.filter(
+    (item, index) => game.answersSkipped.indexOf(item) === index
+  );
+  const pointsForSkipped =
+    answersSkippedWithoutDupes.length * POINTS_FOR_SKIPPED;
   const pointsForGot = game.answersGot.length * POINTS_FOR_GOT;
+
+  console.log(answersSkippedWithoutDupes, pointsForSkipped, pointsForGot);
 
   return pointsForSkipped + pointsForGot;
 };
@@ -174,7 +180,9 @@ export const fishbowlReducer = (
           draftState.nextRoundDuration = timeLeftInRoundMs;
           draftState.roundEndTime = null;
           draftState.phase = FishbowlPhase.RESULTS;
-          draftState.score[game.activePlayer.team] += getScoreAddition(game);
+          draftState.score[game.activePlayer.team] += getScoreAddition(
+            draftState
+          );
         }
       });
     }
