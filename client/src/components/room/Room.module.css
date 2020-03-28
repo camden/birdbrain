@@ -30,6 +30,7 @@
 }
 
 .subtitle {
+  margin-top: 8px;
   margin-bottom: 8px;
 }
 
@@ -38,7 +39,4 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.loading_icon {
 }

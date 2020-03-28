@@ -5,11 +5,10 @@
   position: absolute;
   left: 0;
   right: 0;
-  height: 48px;
 }
 
 .spacing {
-  height: 80px;
+  height: 66px;
 }
 
 .room_name {
