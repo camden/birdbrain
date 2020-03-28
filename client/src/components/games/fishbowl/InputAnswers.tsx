@@ -56,16 +56,18 @@ const InputAnswers: React.FC<InputAnswersProps> = ({ game }) => {
         <p>You've submitted all of your answers!</p>
         <WaitingMessage
           playersThatNeedToAct={playersWhoAreNotDone.map(prop('name'))}
-          verb={'submit answers'}
+          verb={'submit their answers'}
         />
       </div>
     );
   }
 
+  const answersLeft = ANSWERS_PER_PLAYER - answersAlreadySubmitted.length;
+
   return (
     <div className={styles.wrapper}>
       <h1>
-        Submit {ANSWERS_PER_PLAYER - answersAlreadySubmitted.length} answers.
+        Submit {answersLeft} more answer{answersLeft !== 1 ? 's' : ''}.
       </h1>
       <p>
         An answer can be a short phrase, a word, a celebrity name, a movie, etc
