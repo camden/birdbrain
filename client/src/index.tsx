@@ -9,6 +9,7 @@ import websocketMiddleware from './store/middleware/websocket-middleware';
 import { createStore, applyMiddleware, compose } from 'redux';
 import initReactFastclick from 'react-fastclick';
 import { HelmetProvider } from 'react-helmet-async';
+import ReactGA from 'react-ga';
 import 'typeface-rubik';
 import 'normalize.css';
 
@@ -25,6 +26,8 @@ const store = createStore(
   reducer,
   composeEnhancers(applyMiddleware(websocketMiddleware))
 );
+
+ReactGA.initialize('UA-71680879-6');
 
 ReactDOM.render(
   <HelmetProvider>

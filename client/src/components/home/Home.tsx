@@ -9,6 +9,8 @@ import TextInput from 'components/shared/form/TextInput';
 import LogoHeader from 'components/shared/logo-header/LogoHeader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faKey } from '@fortawesome/pro-solid-svg-icons';
+import ReactGA from 'react-ga';
+import { AnalyticsCategory } from 'analytics';
 
 const getRoomViaAPI = async (roomCode: string, name: string) => {
   try {
@@ -55,6 +57,13 @@ const Home: React.FC = () => {
   if (isJoinSuccessful) {
     return <Redirect push to={`/room/${roomCode}?name=${name}`} />;
   }
+
+  const onCreateRoomButtonClick = useCallback(() => {
+    ReactGA.event({
+      category: AnalyticsCategory.ROOM,
+      action: 'Clicked Create New Room',
+    });
+  }, []);
 
   const showCreateRoomOption = !getQueryStringValue('room');
 
@@ -106,6 +115,7 @@ const Home: React.FC = () => {
             <div className={styles.input_section_divider}>OR</div>
             <section className={styles.input_section}>
               <LinkButton
+                onClick={onCreateRoomButtonClick}
                 to={'/create-room'}
                 className={styles.button}
                 disabled={isLoadingJoin}
