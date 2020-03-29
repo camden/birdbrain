@@ -31,9 +31,6 @@ const UserAvatar: React.FC<UserProps> = ({
         [styles.bordered]: isBordered,
         [styles.small]: small,
       })}
-      style={{
-        borderColor: isBordered ? borderColor || 'black' : 'transparent',
-      }}
       onClick={onClick}
     >
       <div>{letter}</div>
