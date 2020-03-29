@@ -15,7 +15,13 @@ const LinkButton: React.FC<ButtonProps> = props => {
   const { staticContext, ...rest } = props;
 
   return (
-    <Button {...rest} onClick={() => props.history.push(props.to)}></Button>
+    <Button
+      {...rest}
+      onClick={evt => {
+        props.onClick && props.onClick(evt);
+        props.history.push(props.to);
+      }}
+    ></Button>
   );
 };
 
