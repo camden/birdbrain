@@ -48,12 +48,12 @@ export const createNewGameOfFishbowl = (
       unshuffledTeamArray.push(FishbowlTeam.TEAM_B);
     }
   }
-  const teamsArray = shuffleArray(unshuffledTeamArray);
-  const players = shuffleArray(
-    usersInRoom.map((user, index) =>
+  const teamsArray = shuffleArray([...unshuffledTeamArray]);
+  const players = shuffleArray([
+    ...usersInRoom.map((user, index) =>
       createPlayerFromUser(user, teamsArray[index])
-    )
-  );
+    ),
+  ]);
 
   const answersSubmitted: { [key in UserID]: FishbowlAnswer[] } = {};
 
