@@ -13,6 +13,8 @@ import { getCurrentAnswer } from '@server/store/games/fishbowl/selectors';
 import { getCurrentUser } from 'store/selectors';
 import styles from './Guessing.module.css';
 import { Textfit } from 'react-textfit';
+const GotAnswerNoise = require('assets/sounds/got-answer.wav');
+const SkippedAnswerNoise = require('assets/sounds/skipped-answer.wav');
 
 export interface GuessingProps {
   game: FishbowlGameState;
@@ -64,13 +66,18 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
     };
   }, []);
 
+  const gotItAudio = new Audio(GotAnswerNoise);
+  const skippedItAudio = new Audio(SkippedAnswerNoise);
+
   const onGotAnswer = useCallback(() => {
     dispatch(sendMessage(fshGotAnswer()));
+    gotItAudio.play();
     onButtonClick();
   }, [dispatch, onButtonClick]);
 
   const onSkippedAnswer = useCallback(() => {
     dispatch(sendMessage(fshSkipAnswer()));
+    skippedItAudio.play();
     onButtonClick();
   }, [dispatch, onButtonClick]);
 
