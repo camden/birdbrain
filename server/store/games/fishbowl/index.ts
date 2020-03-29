@@ -74,7 +74,6 @@ export const createNewGameOfFishbowl = (
     allAnswers: [],
     answersSubmitted,
     answersForCurrentGameType: [],
-    indexOfCurrentAnswer: 0,
     answersGot: [],
     answersSkipped: [],
     acknowledged: [],

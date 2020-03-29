@@ -15,7 +15,6 @@ export interface FishbowlGameState extends Game {
     [key in UserID]: FishbowlAnswer[];
   };
   answersForCurrentGameType: FishbowlAnswer[];
-  indexOfCurrentAnswer: number;
   answersGot: FishbowlAnswer[];
   answersSkipped: FishbowlAnswer[];
   acknowledged: UserID[];

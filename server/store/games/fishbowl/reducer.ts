@@ -32,8 +32,6 @@ const getScoreAddition = (game: FishbowlGameState): number => {
     answersSkippedWithoutDupes.length * POINTS_FOR_SKIPPED;
   const pointsForGot = game.answersGot.length * POINTS_FOR_GOT;
 
-  console.log(answersSkippedWithoutDupes, pointsForSkipped, pointsForGot);
-
   return pointsForSkipped + pointsForGot;
 };
 
@@ -164,15 +162,11 @@ export const fishbowlReducer = (
 
       return produce(game, draftState => {
         draftState.answersGot.push(getCurrentAnswer(game));
-        draftState.indexOfCurrentAnswer = 0;
         draftState.answersForCurrentGameType = game.answersForCurrentGameType.filter(
           answer => answer !== getCurrentAnswer(game)
         );
 
-        if (
-          draftState.indexOfCurrentAnswer >=
-          draftState.answersForCurrentGameType.length
-        ) {
+        if (draftState.answersForCurrentGameType.length === 0) {
           if (!game.roundEndTime) {
             throw new Error('Expected roundEndTime to exist.');
           }
@@ -196,10 +190,13 @@ export const fishbowlReducer = (
       }
 
       return produce(game, draftState => {
-        draftState.answersSkipped.push(getCurrentAnswer(game));
-        draftState.indexOfCurrentAnswer =
-          (game.indexOfCurrentAnswer + 1) %
-          game.answersForCurrentGameType.length;
+        const currentAnswer = getCurrentAnswer(game);
+        draftState.answersSkipped.push(currentAnswer);
+
+        draftState.answersForCurrentGameType = draftState.answersForCurrentGameType.filter(
+          a => a !== currentAnswer
+        );
+        draftState.answersForCurrentGameType.push(currentAnswer);
       });
     }
     case FSH_ACK_RESULTS: {
@@ -221,11 +218,8 @@ export const fishbowlReducer = (
           draftState.activePlayer = getNextActivePlayer(game);
           draftState.answersGot = [];
           draftState.answersForCurrentGameType = shuffleArray([
-            ...game.answersForCurrentGameType.filter(
-              answer => !game.answersGot.includes(answer)
-            ),
+            ...game.answersForCurrentGameType,
           ]);
-          draftState.indexOfCurrentAnswer = 0;
           draftState.answersSkipped = [];
 
           if (draftState.answersForCurrentGameType.length === 0) {
@@ -233,8 +227,6 @@ export const fishbowlReducer = (
               draftState.phase = FishbowlPhase.END_GAME_RESULTS;
             } else {
               draftState.currentGameType = getNextGameType(game);
-              draftState.indexOfCurrentAnswer = 0;
-              // TODO don't use rng here...
               draftState.answersForCurrentGameType = shuffleArray([
                 ...game.allAnswers,
               ]);
