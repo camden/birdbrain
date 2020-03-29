@@ -19,7 +19,6 @@ import { faLongArrowRight, faCheck } from '@fortawesome/pro-solid-svg-icons';
 import TeamScore from './TeamScore';
 import WaitingMessage from '../the-resistance/WaitingMessage';
 import { prop } from 'ramda';
-const RoundOverNoise = require('assets/sounds/round-over.wav');
 
 export interface ResultsProps {
   game: FishbowlGameState;
@@ -28,11 +27,6 @@ export interface ResultsProps {
 const Results: React.FC<ResultsProps> = ({ game }) => {
   const dispatch = useDispatch();
   const [acked, setAcked] = useState(false);
-
-  const roundOverSound = new Audio(RoundOverNoise);
-  useEffect(() => {
-    roundOverSound.play();
-  }, []);
 
   const onContinueClick = useCallback(() => {
     dispatch(sendMessage(fshAckResults()));

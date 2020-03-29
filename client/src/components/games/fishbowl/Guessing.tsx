@@ -71,13 +71,13 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
 
   const onGotAnswer = useCallback(() => {
     dispatch(sendMessage(fshGotAnswer()));
-    gotItAudio.play();
+    // gotItAudio.play(0)
     onButtonClick();
   }, [dispatch, onButtonClick]);
 
   const onSkippedAnswer = useCallback(() => {
     dispatch(sendMessage(fshSkipAnswer()));
-    skippedItAudio.play();
+    // skippedItAudio.play();
     onButtonClick();
   }, [dispatch, onButtonClick]);
 
