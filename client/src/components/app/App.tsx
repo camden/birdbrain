@@ -1,12 +1,13 @@
 import React from 'react';
 import Home from '../home/Home';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import Room from '../room/Room';
 import styles from './App.module.css';
 import Div100vh from 'react-div-100vh';
 import Demo from 'components/demo/Demo';
 import CreateRoom from 'components/home/CreateRoom';
 import Meta from 'components/shared/meta/Meta';
+import { TrackedRoute } from 'analytics';
 
 const App: React.FC = () => {
   return (
@@ -15,18 +16,18 @@ const App: React.FC = () => {
       <div className={styles.app_inner}>
         <Router>
           <Switch>
-            <Route path="/create-room">
+            <TrackedRoute path="/create-room">
               <CreateRoom />
-            </Route>
-            <Route path="/demo">
+            </TrackedRoute>
+            <TrackedRoute path="/demo">
               <Demo />
-            </Route>
-            <Route path="/room/:id">
+            </TrackedRoute>
+            <TrackedRoute path="/room/:id">
               <Room />
-            </Route>
-            <Route path="/">
+            </TrackedRoute>
+            <TrackedRoute path="/">
               <Home />
-            </Route>
+            </TrackedRoute>
           </Switch>
         </Router>
       </div>

@@ -54,16 +54,16 @@ const Home: React.FC = () => {
     setIsLoadingJoin(false);
   }, [name, roomCode, isLoadingJoin]);
 
-  if (isJoinSuccessful) {
-    return <Redirect push to={`/room/${roomCode}?name=${name}`} />;
-  }
-
   const onCreateRoomButtonClick = useCallback(() => {
     ReactGA.event({
       category: AnalyticsCategory.ROOM,
       action: 'Clicked Create New Room',
     });
   }, []);
+
+  if (isJoinSuccessful) {
+    return <Redirect push to={`/room/${roomCode}?name=${name}`} />;
+  }
 
   const showCreateRoomOption = !getQueryStringValue('room');
 
