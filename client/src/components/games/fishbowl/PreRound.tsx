@@ -54,14 +54,31 @@ const PreRound: React.FC<PreRoundProps> = ({ game }) => {
   const isOnSameTeamAsActivePlayer =
     currentPlayer?.team === game.activePlayer.team;
 
+  if (!currentUser) {
+    return <div>Something went wrong! Can't find current user. ERROR #1</div>;
+  }
+
+  if (!currentPlayer) {
+    return (
+      <div>
+        Something went wrong! Can't find player for current user. ERROR #2
+      </div>
+    );
+  }
+
+  if (!currentPlayer.teamDisplayName) {
+    return (
+      <div>
+        Something went wrong! Can't find team for current player. ERROR #3
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className={styles.nextTurnInfo}>
         It's <strong>{game.activePlayer.teamDisplayName}'s</strong> turn, and{' '}
         <strong>{game.activePlayer.name}</strong> is up next.
-      </div>
-      <div className={styles.gameInfo}>
-        {getGameMessage(game.currentGameType)}
       </div>
       {!isActivePlayer && isOnSameTeamAsActivePlayer && (
         <div className={styles.info}>
@@ -76,6 +93,9 @@ const PreRound: React.FC<PreRoundProps> = ({ game }) => {
           guessing this round.
         </div>
       )}
+      <div className={styles.gameInfo}>
+        {getGameMessage(game.currentGameType)}
+      </div>
       {isActivePlayer && (
         <>
           <div className={styles.info}>
