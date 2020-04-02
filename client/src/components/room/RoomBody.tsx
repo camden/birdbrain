@@ -5,6 +5,7 @@ import User from 'components/shared/user/User';
 import styles from './Room.module.css';
 import Button from 'components/shared/button/Button';
 import RoomWrapper from './RoomWrapper';
+import WaitingMessage from 'components/games/the-resistance/WaitingMessage';
 
 export interface RoomBodyProps {
   room: Room;
@@ -58,10 +59,16 @@ const RoomBody: React.FC<RoomBodyProps> = props => {
           )}
         </section>
         {!props.room.selectedGameType && !props.isCurrentUserRoomLeader && (
-          <div>Waiting for {props.roomLeader.name} to choose a game.</div>
+          <WaitingMessage
+            playersThatNeedToAct={[props.roomLeader.name]}
+            verb={'choose a game'}
+          />
         )}
-        {!props.isCurrentUserRoomLeader && (
-          <div>Waiting for {props.roomLeader.name} to start the game.</div>
+        {!!props.room.selectedGameType && !props.isCurrentUserRoomLeader && (
+          <WaitingMessage
+            playersThatNeedToAct={[props.roomLeader.name]}
+            verb={'start the game'}
+          />
         )}
         {props.isCurrentUserRoomLeader && (
           <Button
