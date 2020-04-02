@@ -28,6 +28,12 @@
   max-height: 80px;
 }
 
+@media (min-width: 600px) {
+  .answersList {
+    max-height: none;
+  }
+}
+
 .teamScoreWrapper {
   display: flex;
   flex-direction: column;
