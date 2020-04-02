@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { fshStartRound } from '@server/store/games/fishbowl/actions';
 import { sendMessage } from 'store/websocket/actions';
 import styles from './PreRound.module.css';
+import TeamBar from './TeamBar';
 
 export interface PreRoundProps {
   game: FishbowlGameState;
@@ -76,6 +77,10 @@ const PreRound: React.FC<PreRoundProps> = ({ game }) => {
 
   return (
     <div>
+      <TeamBar
+        teamName={currentPlayer.teamDisplayName}
+        playerName={currentPlayer.name}
+      />
       <div className={styles.nextTurnInfo}>
         It's <strong>{game.activePlayer.teamDisplayName}'s</strong> turn, and{' '}
         <strong>{game.activePlayer.name}</strong> is up next.

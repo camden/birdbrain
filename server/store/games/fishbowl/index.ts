@@ -19,8 +19,8 @@ export const ANSWERS_PER_PLAYER = 4;
 export const POINTS_FOR_GOT = 2;
 export const POINTS_FOR_SKIPPED = -1;
 
-export const TEAM_A_DISPLAY_NAME = 'Team Finch';
-export const TEAM_B_DISPLAY_NAME = 'Team Sparrow';
+export const TEAM_A_DISPLAY_NAME = 'TEAM BLUE';
+export const TEAM_B_DISPLAY_NAME = 'TEAM RED';
 
 const createPlayerFromUser = (
   user: User,
