@@ -299,7 +299,7 @@ export default [
   'Programmer',
   'Psychiatrist',
   'Psychologist',
-  'Public DEfender',
+  'Public Defender',
   'Receptionist',
   'Resident',
   'Robber',

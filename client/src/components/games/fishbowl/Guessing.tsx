@@ -13,6 +13,7 @@ import { getCurrentAnswer } from '@server/store/games/fishbowl/selectors';
 import { getCurrentUser } from 'store/selectors';
 import styles from './Guessing.module.css';
 import { Textfit } from 'react-textfit';
+import TeamBar from './TeamBar';
 const GotAnswerNoise = require('assets/sounds/got-answer.wav');
 const SkippedAnswerNoise = require('assets/sounds/skipped-answer.wav');
 
@@ -91,6 +92,7 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
 
   return (
     <div className={styles.wrapper}>
+      <TeamBar team={currentPlayer.team} playerName={currentPlayer.name} />
       <p>
         <strong>{game.activePlayer.name}</strong> is the active player!
       </p>

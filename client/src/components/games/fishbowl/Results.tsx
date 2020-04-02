@@ -19,12 +19,16 @@ import { faLongArrowRight, faCheck } from '@fortawesome/pro-solid-svg-icons';
 import TeamScore from './TeamScore';
 import WaitingMessage from '../the-resistance/WaitingMessage';
 import { prop } from 'ramda';
+import TeamBar from './TeamBar';
+import { getCurrentUser } from 'store/selectors';
+import useSelector from 'store/use-selector';
 
 export interface ResultsProps {
   game: FishbowlGameState;
 }
 
 const Results: React.FC<ResultsProps> = ({ game }) => {
+  const currentUser = useSelector(getCurrentUser());
   const dispatch = useDispatch();
   const [acked, setAcked] = useState(false);
 
@@ -45,8 +49,14 @@ const Results: React.FC<ResultsProps> = ({ game }) => {
     player => !game.acknowledged.includes(player.userId)
   );
 
+  const currentPlayer = game.players.find(p => p.userId === currentUser?.id);
+  if (!currentPlayer) {
+    throw new Error('Could not find player.');
+  }
+
   return (
     <div className={styles.wrapper}>
+      <TeamBar team={currentPlayer.team} playerName={currentPlayer.name} />
       <h1 className={styles.title}>Round Results</h1>
       <p>
         <strong>{game.activePlayer.teamDisplayName}</strong> was playing.
