@@ -13,6 +13,7 @@ import { sendMessage } from 'store/websocket/actions';
 import styles from './PreRound.module.css';
 import TeamBar from './TeamBar';
 import cx from 'classnames';
+import WaitingMessage from '../the-resistance/WaitingMessage';
 
 export interface PreRoundProps {
   game: FishbowlGameState;
@@ -81,7 +82,7 @@ const PreRound: React.FC<PreRoundProps> = ({ game }) => {
   }
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <TeamBar team={currentPlayer.team} playerName={currentPlayer.name} />
       <section>
         <h2 className={styles.subtitle}>Up Next:</h2>
@@ -104,14 +105,19 @@ const PreRound: React.FC<PreRoundProps> = ({ game }) => {
           {getGameMessage(game.currentGameType)}
         </div>
       </section>
-      {!isActivePlayer && (
-        <div>Waiting for {game.activePlayer.name} to start the round.</div>
-      )}
-      {isActivePlayer && (
-        <Button onClick={onStartRoundClick} fullWidth>
-          Start round
-        </Button>
-      )}
+      <section className={styles.bottomArea}>
+        {!isActivePlayer && (
+          <WaitingMessage
+            playersThatNeedToAct={[game.activePlayer.name]}
+            verb={'start the round'}
+          />
+        )}
+        {isActivePlayer && (
+          <Button onClick={onStartRoundClick} fullWidth>
+            Start round
+          </Button>
+        )}
+      </section>
     </div>
   );
 };

@@ -1,4 +1,6 @@
 import React from 'react';
+import { faClock } from '@fortawesome/pro-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export interface WaitingMessageProps {
   playersThatNeedToAct: string[];
@@ -12,6 +14,7 @@ const WaitingMessage: React.FC<WaitingMessageProps> = ({
   if (playersThatNeedToAct.length === 1) {
     return (
       <p>
+        <FontAwesomeIcon icon={faClock} style={{ marginRight: '0.25em' }} />{' '}
         Waiting for <strong>{playersThatNeedToAct[0]}</strong> to {verb}.
       </p>
     );
