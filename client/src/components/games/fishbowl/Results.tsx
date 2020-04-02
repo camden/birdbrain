@@ -23,6 +23,7 @@ import { prop } from 'ramda';
 import TeamBar from './TeamBar';
 import { getCurrentUser } from 'store/selectors';
 import useSelector from 'store/use-selector';
+import TeamName from './TeamName';
 
 export interface ResultsProps {
   game: FishbowlGameState;
@@ -60,7 +61,7 @@ const Results: React.FC<ResultsProps> = ({ game }) => {
       <TeamBar team={currentPlayer.team} playerName={currentPlayer.name} />
       <h1 className={styles.title}>Round Results</h1>
       <p>
-        <strong>{game.activePlayer.teamDisplayName}</strong> was playing.
+        <TeamName team={game.activePlayer.team} /> was playing.
       </p>
       <p>
         <strong>{game.activePlayer.name}</strong> was the active player.
@@ -84,7 +85,7 @@ const Results: React.FC<ResultsProps> = ({ game }) => {
         {POINTS_FOR_SKIPPED * answersSkippedWithoutDupes.length} points.
       </p>
       <p>
-        This round, <strong>{game.activePlayer.teamDisplayName}</strong> scored{' '}
+        This round, <TeamName team={game.activePlayer.team} /> scored{' '}
         {totalPointsScoredThisRound} points.
       </p>
       <section className={styles.scores}>
