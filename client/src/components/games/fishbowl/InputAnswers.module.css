@@ -3,6 +3,10 @@
   flex-direction: column;
 }
 
+.title {
+  margin: 0;
+}
+
 .input {
   margin-bottom: 16px;
 }

@@ -53,7 +53,11 @@ const Results: React.FC<ResultsProps> = ({ game }) => {
 
   const currentPlayer = game.players.find(p => p.userId === currentUser?.id);
   if (!currentPlayer) {
-    throw new Error('Could not find player.');
+    return (
+      <div>
+        Something went wrong! Can't find player for current user. ERROR #2
+      </div>
+    );
   }
 
   return (

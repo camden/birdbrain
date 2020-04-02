@@ -16,6 +16,7 @@ import WaitingMessage from '../the-resistance/WaitingMessage';
 import { prop } from 'ramda';
 import answers from '@server/store/games/fishbowl/answers';
 import { pickRandomNumber } from '@server/utils/rng';
+import TeamBar from './TeamBar';
 
 export interface InputAnswersProps {
   game: FishbowlGameState;
@@ -50,9 +51,19 @@ const InputAnswers: React.FC<InputAnswersProps> = ({ game }) => {
     player => game.answersSubmitted[player.userId].length < ANSWERS_PER_PLAYER
   );
 
+  const currentPlayer = game.players.find(p => p.userId === currentUser?.id);
+  if (!currentPlayer) {
+    return (
+      <div>
+        Something went wrong! Can't find player for current user. ERROR #2
+      </div>
+    );
+  }
+
   if (answersAlreadySubmitted.length === ANSWERS_PER_PLAYER) {
     return (
       <div className={styles.wrapper}>
+        <TeamBar team={currentPlayer.team} playerName={currentPlayer.name} />
         <p>You've submitted all of your answers!</p>
         <WaitingMessage
           playersThatNeedToAct={playersWhoAreNotDone.map(prop('name'))}
@@ -66,7 +77,8 @@ const InputAnswers: React.FC<InputAnswersProps> = ({ game }) => {
 
   return (
     <div className={styles.wrapper}>
-      <h1>
+      <TeamBar team={currentPlayer.team} playerName={currentPlayer.name} />
+      <h1 className={styles.title}>
         Submit {answersLeft} more answer{answersLeft !== 1 ? 's' : ''}.
       </h1>
       <p>
