@@ -22,7 +22,7 @@
 }
 
 .info {
-  margin: 32px 0 32px;
+  margin: 8px 0 32px;
 
   display: flex;
   flex-direction: column;
