@@ -7,10 +7,19 @@
 
 .mission_info {
   flex: 2;
+  margin-right: 8px;
 }
 
 .role_button_wrapper {
   flex: 1;
+}
+
+.role_button_wrapper button {
+  height: 100%;
+}
+
+.role_button_icon {
+  margin-bottom: 4px;
 }
 
 .missions {

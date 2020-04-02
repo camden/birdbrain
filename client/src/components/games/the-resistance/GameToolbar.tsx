@@ -3,6 +3,8 @@ import { ResistanceGameState } from '@server/store/games/the-resistance/types';
 import styles from './GameToolbar.module.css';
 import Button from 'components/shared/button/Button';
 import MissionInfo from './MissionInfo';
+import { faUserCircle } from '@fortawesome/pro-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export interface ResistanceToolbarProps {
   game: ResistanceGameState;
@@ -47,7 +49,10 @@ const TheResistanceGameToolbar: React.FC<ResistanceToolbarProps> = ({
           onMouseUp={onViewRoleMouseUp}
           onMouseLeave={onViewRoleMouseUp}
         >
-          Hold to View Role
+          <div className={styles.role_button_icon}>
+            <FontAwesomeIcon icon={faUserCircle} size={'2x'} />
+          </div>
+          View Role
         </Button>
       </section>
     </div>
