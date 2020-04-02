@@ -89,7 +89,7 @@ const Results: React.FC<ResultsProps> = ({ game }) => {
         {POINTS_FOR_SKIPPED * answersSkippedWithoutDupes.length} points.
       </p>
       <p>
-        This round, <TeamName team={game.activePlayer.team} /> scored{' '}
+        <TeamName team={game.activePlayer.team} /> scored{' '}
         {totalPointsScoredThisRound} points.
       </p>
       <section className={styles.scores}>
