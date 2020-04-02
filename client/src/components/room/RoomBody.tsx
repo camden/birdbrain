@@ -44,9 +44,6 @@ const RoomBody: React.FC<RoomBodyProps> = props => {
               }
             />
           )}
-          {!props.room.selectedGameType && !props.isCurrentUserRoomLeader && (
-            <div>Waiting for {props.roomLeader.name} to choose a game.</div>
-          )}
           {!props.room.selectedGameType && props.isCurrentUserRoomLeader && (
             <Button
               secondary
@@ -60,6 +57,9 @@ const RoomBody: React.FC<RoomBodyProps> = props => {
             </Button>
           )}
         </section>
+        {!props.room.selectedGameType && !props.isCurrentUserRoomLeader && (
+          <div>Waiting for {props.roomLeader.name} to choose a game.</div>
+        )}
         {!props.isCurrentUserRoomLeader && (
           <div>Waiting for {props.roomLeader.name} to start the game.</div>
         )}

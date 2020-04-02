@@ -25,6 +25,7 @@
 
 .answersList {
   overflow-y: auto;
+  max-height: 80px;
 }
 
 .teamScoreWrapper {
