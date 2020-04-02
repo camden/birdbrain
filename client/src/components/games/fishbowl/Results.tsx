@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import {
   FishbowlGameState,
   FishbowlPlayer,
+  FishbowlTeam,
 } from '@server/store/games/fishbowl/types';
 import Button from 'components/shared/button/Button';
 import { useDispatch } from 'react-redux';
@@ -87,8 +88,8 @@ const Results: React.FC<ResultsProps> = ({ game }) => {
         {totalPointsScoredThisRound} points.
       </p>
       <section className={styles.scores}>
-        <TeamScore teamName={TEAM_A_DISPLAY_NAME} score={game.score.TEAM_A} />
-        <TeamScore teamName={TEAM_B_DISPLAY_NAME} score={game.score.TEAM_B} />
+        <TeamScore team={FishbowlTeam.TEAM_A} score={game.score.TEAM_A} />
+        <TeamScore team={FishbowlTeam.TEAM_B} score={game.score.TEAM_B} />
       </section>
       <section className={styles.continueArea}>
         {acked && (

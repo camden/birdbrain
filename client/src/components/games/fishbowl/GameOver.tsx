@@ -44,8 +44,8 @@ const GameOver: React.FC<GameOverProps> = ({ game }) => {
       <h1>Game over!</h1>
       <p>{resultMessage}</p>
       <section className={styles.scores}>
-        <TeamScore teamName={TEAM_A_DISPLAY_NAME} score={game.score.TEAM_A} />
-        <TeamScore teamName={TEAM_B_DISPLAY_NAME} score={game.score.TEAM_B} />
+        <TeamScore team={FishbowlTeam.TEAM_A} score={game.score.TEAM_A} />
+        <TeamScore team={FishbowlTeam.TEAM_B} score={game.score.TEAM_B} />
       </section>
     </div>
   );
