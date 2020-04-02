@@ -14,6 +14,7 @@ import { getCurrentUser } from 'store/selectors';
 import styles from './Guessing.module.css';
 import { Textfit } from 'react-textfit';
 import TeamBar from './TeamBar';
+import TeamName from './TeamName';
 const GotAnswerNoise = require('assets/sounds/got-answer.wav');
 const SkippedAnswerNoise = require('assets/sounds/skipped-answer.wav');
 
@@ -97,10 +98,6 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
   return (
     <div className={styles.wrapper}>
       <TeamBar team={currentPlayer.team} playerName={currentPlayer.name} />
-      <p>
-        <strong>{game.activePlayer.name}</strong> is the active player!
-      </p>
-      <div>The current game is {game.currentGameType}.</div>
       {isActivePlayer && (
         <>
           <div className={styles.answer}>
@@ -136,9 +133,12 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
       {!isActivePlayer && !isOnSameTeamAsActivePlayer && (
         <div className={styles.info}>
           <div className={styles.teamInfo}>
-            <strong>{game.activePlayer.name}</strong> is not on your team.
+            <TeamName team={game.activePlayer.team} /> is playing now.
           </div>
-          <div>Hang tight, it'll be your team's turn soon!</div>
+          <div>
+            Hang tight, it'll be <TeamName team={currentPlayer.team} />
+            's turn soon!
+          </div>
         </div>
       )}
       <div className={styles.timeDisplay}>
