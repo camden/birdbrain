@@ -14,7 +14,7 @@ import { faCheck, faTimes } from '@fortawesome/pro-solid-svg-icons';
 import cx from 'classnames';
 import { prop } from 'ramda';
 
-const ANIMATION_DELAY_MULTIPLIER = 1.5;
+const ANIMATION_DELAY_MULTIPLIER_MS = 600;
 
 export interface ResistanceProps {
   game: ResistanceGameState;
@@ -29,7 +29,7 @@ const VoteResultCard: React.FC<VoteResultCardProps> = ({ vote, index }) => {
   const success = vote === ResistanceMissionVote.SUCCESS;
 
   const style = {
-    '--appear-delay': `${(index + 1) * ANIMATION_DELAY_MULTIPLIER}s`,
+    '--appear-delay': `${(index + 1) * ANIMATION_DELAY_MULTIPLIER_MS}ms`,
   } as CSSProperties;
 
   return (
@@ -72,12 +72,12 @@ const TheResistanceShowMissionVotingResults: React.FC<ResistanceProps> = ({
 
   const resultSummaryStyle = {
     '--appear-delay': `${(allResults.length + 1) *
-      ANIMATION_DELAY_MULTIPLIER}s`,
+      ANIMATION_DELAY_MULTIPLIER_MS}ms`,
   } as CSSProperties;
 
   return (
-    <div>
-      <h2>The results are in!</h2>
+    <div className={styles.wrapper}>
+      <h1 className={styles.title}>The results are in!</h1>
       <div className={styles.vote_results}>
         {allResults.map((vote, index) => (
           <VoteResultCard vote={vote} index={index} />
@@ -88,11 +88,24 @@ const TheResistanceShowMissionVotingResults: React.FC<ResistanceProps> = ({
           ? `Mission ${game.mission} has succeeded!`
           : `Mission ${game.mission} has failed!`}
       </h2>
-      {!acknowledged && <Button onClick={onContinueClick}>Continue</Button>}
-      <WaitingMessage
-        playersThatNeedToAct={playersWhoStillNeedToAck.map(prop('name'))}
-        verb={'move on'}
-      />
+      <section className={styles.bottom_area}>
+        {!acknowledged && (
+          <Button
+            fullWidth
+            className={styles.continue_button}
+            onClick={onContinueClick}
+            style={resultSummaryStyle}
+          >
+            Continue
+          </Button>
+        )}
+        {!!acknowledged && (
+          <WaitingMessage
+            playersThatNeedToAct={playersWhoStillNeedToAck.map(prop('name'))}
+            verb={'move on'}
+          />
+        )}
+      </section>
     </div>
   );
 };

@@ -51,7 +51,7 @@ const TheResistanceShowTeamVotingResults: React.FC<ResistanceProps> = ({
 
   return (
     <div className={styles.wrapper}>
-      <h2>The votes are in!</h2>
+      <h1 className={styles.title}>The votes are in!</h1>
       <section className={styles.user_list}>
         {game.players.map(player => (
           <User
@@ -69,10 +69,12 @@ const TheResistanceShowTeamVotingResults: React.FC<ResistanceProps> = ({
         ))}
       </section>
       {missionWasApproved ? missionApprovedRender : missionRejectedRender}
-      <WaitingMessage
-        playersThatNeedToAct={playersWhoStillNeedToAck.map(prop('name'))}
-        verb={'move on'}
-      />
+      {!!acknowledged && (
+        <WaitingMessage
+          playersThatNeedToAct={playersWhoStillNeedToAck.map(prop('name'))}
+          verb={'move on'}
+        />
+      )}
     </div>
   );
 };

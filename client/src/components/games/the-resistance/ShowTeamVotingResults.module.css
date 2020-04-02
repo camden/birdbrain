@@ -3,6 +3,10 @@
   flex-direction: column;
 }
 
+.title {
+  margin-bottom: 0;
+}
+
 .user_list {
   overflow-y: auto;
 }

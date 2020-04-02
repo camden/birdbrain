@@ -1,3 +1,7 @@
+.title {
+  margin-bottom: 0;
+}
+
 .vote_buttons {
   display: flex;
   flex-direction: column;

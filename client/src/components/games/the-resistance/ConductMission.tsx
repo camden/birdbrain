@@ -80,7 +80,9 @@ const TheResistanceConductMission: React.FC<ResistanceProps> = ({ game }) => {
 
   return (
     <div>
-      <h1>The mission team is now conducting Mission {game.mission}.</h1>
+      <h1 className={styles.title}>
+        The mission team is now conducting Mission {game.mission}.
+      </h1>
       <section>
         {missionTeam.map(player => (
           <User

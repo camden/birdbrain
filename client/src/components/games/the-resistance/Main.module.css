@@ -4,6 +4,14 @@
   flex-direction: column;
 }
 
+.main h1 {
+  font-size: 1.6em;
+}
+
+.main h2 {
+  font-size: 1.4em;
+}
+
 .game_screen_section {
   flex: 1;
   overflow: auto;

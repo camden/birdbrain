@@ -1,3 +1,11 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
 .vote_results {
   display: flex;
   flex-direction: row;
@@ -23,6 +31,7 @@
 
 .summary {
   opacity: 0;
+  margin-bottom: 32px;
 
   animation-name: card-reveal;
   animation-duration: 1s;
@@ -57,4 +66,18 @@
   $color: #ff7373;
   background: $color;
   @include card-shadow(darken($color, 30%));
+}
+
+.bottom_area {
+  margin-top: auto;
+  margin-bottom: 32px;
+}
+
+.continue_button {
+  opacity: 0;
+
+  animation-name: card-reveal;
+  animation-duration: 1s;
+  animation-delay: var(--appear-delay);
+  animation-fill-mode: forwards;
 }

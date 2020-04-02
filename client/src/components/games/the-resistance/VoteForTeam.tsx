@@ -52,8 +52,7 @@ const TheResistanceVoteForTeam: React.FC<ResistanceProps> = ({ game }) => {
 
   return (
     <div>
-      <h1>Cast your vote for this&nbsp;team:</h1>
-      <h3>This team was chosen by {game.missionLeader.name}.</h3>
+      <h1 className={styles.title}>Cast your vote for this&nbsp;team:</h1>
       <section className={styles.players}>
         {missionTeam.map(player => (
           <User
