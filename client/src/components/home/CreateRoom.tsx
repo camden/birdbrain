@@ -61,7 +61,10 @@ const CreateRoom = () => {
         }
         className={styles.name_input}
       />
-      <Button onClick={createRoomCallback} disabled={isLoading}>
+      <Button
+        onClick={createRoomCallback}
+        disabled={isLoading || name.length === 0}
+      >
         {isLoading ? 'Loading...' : 'Create Room'}
       </Button>
     </div>
