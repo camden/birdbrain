@@ -48,5 +48,6 @@
 }
 
 .spacing {
-  height: 56px;
+  height: 0;
+  margin-bottom: 36px;
 }
