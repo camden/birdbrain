@@ -23,7 +23,7 @@
   justify-content: space-between;
   align-items: center;
 
-  padding: 16px 16px;
+  padding: 8px 16px;
 
   color: white;
   font-weight: 900;
@@ -49,5 +49,5 @@
 
 .spacing {
   height: 0;
-  margin-bottom: 48px;
+  margin-bottom: 28px;
 }
