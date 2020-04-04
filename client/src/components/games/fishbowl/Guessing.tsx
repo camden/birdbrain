@@ -68,18 +68,27 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
     };
   }, []);
 
-  const gotItAudio = new Audio(GotAnswerNoise);
-  const skippedItAudio = new Audio(SkippedAnswerNoise);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   const onGotAnswer = useCallback(() => {
     dispatch(sendMessage(fshGotAnswer()));
-    // gotItAudio.play(0)
     onButtonClick();
+
+    const sound = audioRef.current;
+    if (!sound) {
+      return;
+    }
+
+    if (sound.currentTime !== 0) {
+      sound.pause();
+      sound.currentTime = 0;
+    }
+
+    sound.play();
   }, [dispatch, onButtonClick]);
 
   const onSkippedAnswer = useCallback(() => {
     dispatch(sendMessage(fshSkipAnswer()));
-    // skippedItAudio.play();
     onButtonClick();
   }, [dispatch, onButtonClick]);
 
@@ -97,6 +106,7 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
 
   return (
     <div className={styles.wrapper}>
+      <audio id="gotit" ref={audioRef} src={GotAnswerNoise} preload={'auto'} />
       <TeamBar team={currentPlayer.team} playerName={currentPlayer.name} />
       {isActivePlayer && (
         <>
