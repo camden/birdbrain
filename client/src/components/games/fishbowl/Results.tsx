@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   FishbowlGameState,
   FishbowlPlayer,
@@ -22,6 +22,8 @@ import TeamBar from './TeamBar';
 import { getCurrentUser } from 'store/selectors';
 import useSelector from 'store/use-selector';
 import TeamName from './TeamName';
+import useSound from 'hooks/use-sound';
+const RoundEndNoise = require('assets/sounds/round-end.wav');
 
 export interface ResultsProps {
   game: FishbowlGameState;
@@ -36,6 +38,18 @@ const Results: React.FC<ResultsProps> = ({ game }) => {
     dispatch(sendMessage(fshAckResults()));
     setAcked(true);
   }, [dispatch]);
+
+  const playRoundEndSound = useSound(RoundEndNoise);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      playRoundEndSound();
+    }, 250);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   const answersSkippedWithoutDupes = game.answersSkipped.filter(
     (item, index) => game.answersSkipped.indexOf(item) === index
