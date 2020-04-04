@@ -58,7 +58,7 @@ const GameOver: React.FC<GameOverProps> = ({ game }) => {
         fullWidth
         onClick={() => dispatch(sendMessage(endCurrentGame()))}
       >
-        End Game
+        Return to Room
       </Button>
     </div>
   );
