@@ -113,12 +113,14 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
       opacity: 1,
     },
     got: {
-      x: 30,
+      x: 20,
       opacity: 0,
+      color: 'green',
     },
     skipped: {
-      x: -30,
+      x: -20,
       opacity: 0,
+      color: 'red',
     },
   };
 
