@@ -35,6 +35,18 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
   const dispatch = useDispatch();
   const currentAnswer = getCurrentAnswer(game);
 
+  // sounds
+
+  const sounds = [
+    {
+      src: GotAnswerNoise,
+      id: 1,
+    },
+  ];
+  createjs.Sound.registerSounds(sounds);
+
+  // end sounds
+
   useInterval(() => {
     if (!game.roundEndTime) {
       throw new Error('RoundEndTime should be set.');
@@ -68,23 +80,12 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
     };
   }, []);
 
-  const audioRef = useRef<HTMLAudioElement>(null);
-
   const onGotAnswer = useCallback(() => {
     dispatch(sendMessage(fshGotAnswer()));
     onButtonClick();
 
-    const sound = audioRef.current;
-    if (!sound) {
-      return;
-    }
-
-    if (sound.currentTime !== 0) {
-      sound.pause();
-      sound.currentTime = 0;
-    }
-
-    sound.play();
+    // sound stuff
+    const instance = createjs.Sound.play('1');
   }, [dispatch, onButtonClick]);
 
   const onSkippedAnswer = useCallback(() => {
@@ -106,7 +107,6 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
 
   return (
     <div className={styles.wrapper}>
-      <audio id="gotit" ref={audioRef} src={GotAnswerNoise} preload={'auto'} />
       <TeamBar team={currentPlayer.team} playerName={currentPlayer.name} />
       {isActivePlayer && (
         <>
