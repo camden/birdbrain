@@ -9,14 +9,13 @@ export interface CustomButtonProps {
   secondary?: boolean;
   small?: boolean;
   fullWidth?: boolean;
-  playSound?: boolean;
-  playSoundOnDown?: boolean;
+  disableSound?: boolean;
 }
 
 export type ButtonProps = ComponentProps<'button'> & CustomButtonProps;
 
 const Button: React.FC<ButtonProps> = props => {
-  const { secondary, fullWidth, small, playSound, ...rest } = props;
+  const { secondary, fullWidth, small, disableSound, ...rest } = props;
 
   const playSoundFn = useSound(ButtonClickSound);
 
@@ -24,22 +23,10 @@ const Button: React.FC<ButtonProps> = props => {
     <button
       {...rest}
       onClick={(...args) => {
-        if (playSound) {
+        if (!disableSound) {
           playSoundFn();
         }
         props.onClick && props.onClick(...args);
-      }}
-      onMouseDown={(...args) => {
-        if (props.playSoundOnDown) {
-          playSoundFn();
-        }
-        props.onMouseDown && props.onMouseDown(...args);
-      }}
-      onTouchStart={(...args) => {
-        if (props.playSoundOnDown) {
-          playSoundFn();
-        }
-        props.onTouchStart && props.onTouchStart(...args);
       }}
       className={cx(styles.button, props.className, {
         [styles.primary]: !props.secondary,

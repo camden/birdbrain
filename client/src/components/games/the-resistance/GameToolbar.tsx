@@ -48,6 +48,7 @@ const TheResistanceGameToolbar: React.FC<ResistanceToolbarProps> = ({
           onMouseDown={onViewRoleMouseDown}
           onMouseUp={onViewRoleMouseUp}
           onMouseLeave={onViewRoleMouseUp}
+          disableSound
         >
           <div className={styles.role_button_icon}>
             <FontAwesomeIcon icon={faUserCircle} size={'2x'} />

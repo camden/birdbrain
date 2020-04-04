@@ -9,7 +9,7 @@ export interface GameCardProps {
   gameType: GameType;
   onClick?: () => void;
   className?: string;
-  playSound?: boolean;
+  disableSound?: boolean;
 }
 
 const getGameMetadata = (gameType: GameType): GameMetadata => {
@@ -59,7 +59,7 @@ const GameCard: React.FC<GameCardProps> = props => {
       time={metadata.time}
       description={metadata.description}
       onClick={(...args) => {
-        if (props.playSound) {
+        if (!props.disableSound) {
           playSoundFn();
         }
 

@@ -20,7 +20,7 @@ const PickGame: React.FC<PickGameProps> = props => {
       <main className={styles.pick_game}>
         <section className={styles.header}>
           <div>
-            <Button secondary small playSound onClick={props.onCancel}>
+            <Button secondary small onClick={props.onCancel}>
               <FontAwesomeIcon
                 icon={faAngleLeft}
                 size="lg"
@@ -36,25 +36,21 @@ const PickGame: React.FC<PickGameProps> = props => {
             className={styles.game_card}
             gameType={GameType.THE_RESISTANCE}
             onClick={() => props.onPickGame(GameType.THE_RESISTANCE)}
-            playSound
           />
           <GameCard
             className={styles.game_card}
             gameType={GameType.FISHBOWL}
             onClick={() => props.onPickGame(GameType.FISHBOWL)}
-            playSound
           />
           <GameCard
             className={styles.game_card}
             gameType={GameType.CHAT}
             onClick={() => props.onPickGame(GameType.CHAT)}
-            playSound
           />
           <GameCard
             className={styles.game_card}
             gameType={GameType.SKULL}
             onClick={() => props.onPickGame(GameType.SKULL)}
-            playSound
           />
         </section>
       </main>

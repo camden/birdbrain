@@ -43,7 +43,6 @@ const RoomBody: React.FC<RoomBodyProps> = props => {
                   ? props.onChangeGameClick
                   : undefined
               }
-              playSound
             />
           )}
           {!props.room.selectedGameType && props.isCurrentUserRoomLeader && (
@@ -54,7 +53,6 @@ const RoomBody: React.FC<RoomBodyProps> = props => {
                   ? props.onChangeGameClick
                   : undefined
               }
-              playSound
             >
               Choose Game
             </Button>
@@ -77,7 +75,6 @@ const RoomBody: React.FC<RoomBodyProps> = props => {
             fullWidth
             onClick={props.onStartGameClick}
             disabled={!props.room.selectedGameType}
-            playSound
           >
             Start game
           </Button>

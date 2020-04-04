@@ -64,7 +64,6 @@ const CreateRoom = () => {
       <Button
         onClick={createRoomCallback}
         disabled={isLoading || name.length === 0}
-        playSound
       >
         {isLoading ? 'Loading...' : 'Create Room'}
       </Button>
