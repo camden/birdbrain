@@ -2,11 +2,14 @@ import React from 'react';
 
 import { GameType, GameMetadata } from '@server/store/games/types';
 import CustomGameCard from './CustomGameCard';
+import useSound from 'hooks/use-sound';
+const ButtonClickSound = require('assets/sounds/card-click.wav');
 
 export interface GameCardProps {
   gameType: GameType;
   onClick?: () => void;
   className?: string;
+  playSound?: boolean;
 }
 
 const getGameMetadata = (gameType: GameType): GameMetadata => {
@@ -45,6 +48,7 @@ const getGameMetadata = (gameType: GameType): GameMetadata => {
 };
 
 const GameCard: React.FC<GameCardProps> = props => {
+  const playSoundFn = useSound(ButtonClickSound);
   const metadata = getGameMetadata(props.gameType);
 
   return (
@@ -54,7 +58,13 @@ const GameCard: React.FC<GameCardProps> = props => {
       playerCount={metadata.playerCount}
       time={metadata.time}
       description={metadata.description}
-      onClick={props.onClick}
+      onClick={(...args) => {
+        if (props.playSound) {
+          playSoundFn();
+        }
+
+        props.onClick && props.onClick(...args);
+      }}
     />
   );
 };

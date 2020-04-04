@@ -106,6 +106,7 @@ const Home: React.FC = () => {
             onClick={joinRoomCallback}
             className={styles.button}
             disabled={isLoadingJoin}
+            playSound
           >
             {isLoadingJoin ? <div>loading...</div> : 'Join Room'}
           </Button>
@@ -120,6 +121,7 @@ const Home: React.FC = () => {
                 className={styles.button}
                 disabled={isLoadingJoin}
                 secondary
+                playSound
               >
                 {isLoadingJoin ? <div>loading...</div> : 'Create New Room'}
               </LinkButton>

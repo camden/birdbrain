@@ -102,7 +102,7 @@ const Results: React.FC<ResultsProps> = ({ game }) => {
           />
         )}
         {!acked && (
-          <Button secondary onClick={onContinueClick} fullWidth>
+          <Button secondary playSound onClick={onContinueClick} fullWidth>
             Continue
           </Button>
         )}
