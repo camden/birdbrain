@@ -52,7 +52,7 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
 
     setTimeLeft(timeLeftSeconds);
 
-    if (timeLeftSeconds <= 0) {
+    if (timeLeftMs <= 0) {
       dispatch(sendMessage(fshReportEndOfRound()));
     }
   }, 1000);
