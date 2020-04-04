@@ -9,6 +9,12 @@
   margin-bottom: 32px;
 }
 
+.answerFit {
+  display: flex;
+  height: 100%;
+  align-items: center;
+}
+
 .buttons {
   display: flex;
   flex-direction: column;

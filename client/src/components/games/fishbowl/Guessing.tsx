@@ -12,10 +12,12 @@ import Button from 'components/shared/button/Button';
 import { getCurrentAnswer } from '@server/store/games/fishbowl/selectors';
 import { getCurrentUser } from 'store/selectors';
 import styles from './Guessing.module.css';
-import { Textfit } from 'react-textfit';
+import TextFit from 'react-textfit';
 import TeamBar from './TeamBar';
 import TeamName from './TeamName';
 import useSound from 'hooks/use-sound';
+import { motion, AnimatePresence } from 'framer-motion';
+
 const GotAnswerNoise = require('assets/sounds/got-answer.wav');
 const SkippedAnswerNoise = require('assets/sounds/skipped-answer.wav');
 
@@ -30,6 +32,8 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
   const playSkippedAnswerSound = useSound(SkippedAnswerNoise);
   const currentUser = useSelector(getCurrentUser());
   const isActivePlayer = currentUser?.id === game.activePlayer.userId;
+
+  const [skippedLastAnswer, setSkippedLastAnswer] = useState(false);
 
   const [areButtonsDisabled, setAreButtonsDisabled] = useState(false);
 
@@ -75,6 +79,7 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
     dispatch(sendMessage(fshGotAnswer()));
     onButtonClick();
 
+    setSkippedLastAnswer(false);
     playGotAnswerSound();
   }, [dispatch, onButtonClick]);
 
@@ -82,6 +87,7 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
     dispatch(sendMessage(fshSkipAnswer()));
     onButtonClick();
 
+    setSkippedLastAnswer(true);
     playSkippedAnswerSound();
   }, [dispatch, onButtonClick]);
 
@@ -97,14 +103,44 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
   const isOnSameTeamAsActivePlayer =
     currentPlayer.team === game.activePlayer.team;
 
+  const answerVariants = {
+    initial: {
+      y: -20,
+      opacity: 0,
+    },
+    active: {
+      y: 0,
+      opacity: 1,
+    },
+    got: {
+      x: 30,
+      opacity: 0,
+    },
+    skipped: {
+      x: -30,
+      opacity: 0,
+    },
+  };
+
   return (
     <div className={styles.wrapper}>
       <TeamBar team={currentPlayer.team} playerName={currentPlayer.name} />
       {isActivePlayer && (
         <>
-          <div className={styles.answer}>
-            <Textfit mode="single">{currentAnswer}</Textfit>
-          </div>
+          <AnimatePresence exitBeforeEnter>
+            <motion.div
+              key={currentAnswer}
+              variants={answerVariants}
+              initial="initial"
+              animate="active"
+              exit={skippedLastAnswer ? 'skipped' : 'got'}
+              className={styles.answer}
+            >
+              <TextFit mode="single" className={styles.answerFit}>
+                {currentAnswer}
+              </TextFit>
+            </motion.div>
+          </AnimatePresence>
           <section className={styles.buttons}>
             <Button
               className={styles.button}
