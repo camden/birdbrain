@@ -61,6 +61,7 @@ export const ADD_USER_TO_ROOM = 'ADD_USER_TO_ROOM';
 export const REMOVE_USER_FROM_ROOM = 'REMOVE_USER_FROM_ROOM';
 export const RECEIVED_CLIENT_MESSAGE = 'RECEIVED_CLIENT_MESSAGE';
 export const CREATE_NEW_ROOM = 'CREATE_NEW_ROOM';
+export const END_CURRENT_GAME = 'END_CURRENT_GAME';
 
 export type Timestamp = number;
 
@@ -102,6 +103,11 @@ export interface CreateNewRoomAction {
   };
 }
 
+export interface EndCurrentGameAction {
+  type: typeof END_CURRENT_GAME;
+  meta: ActionMeta;
+}
+
 export type GameActionTypes =
   | FishbowlActionTypes
   | ChatActionTypes
@@ -114,4 +120,5 @@ export type GeneralActionTypes =
   | AddUserToRoomAction
   | CreateNewRoomAction
   | RemoveUserFromRoomAction
+  | EndCurrentGameAction
   | ReceivedClientMessage;

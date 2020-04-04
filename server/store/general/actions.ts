@@ -7,6 +7,8 @@ import {
   AddUserToRoomAction,
   RemoveUserFromRoomAction,
   CreateNewRoomAction,
+  EndCurrentGameAction,
+  END_CURRENT_GAME,
 } from './types';
 import { ClientMessageWithMeta } from '../client/types';
 
@@ -64,5 +66,11 @@ export const createNewRoom = (roomId: string): CreateNewRoomAction => {
     payload: {
       roomId,
     },
+  };
+};
+
+export const endCurrentGame = () => {
+  return {
+    type: END_CURRENT_GAME,
   };
 };

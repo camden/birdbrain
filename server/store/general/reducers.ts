@@ -7,6 +7,7 @@ import {
   Room,
   CREATE_NEW_ROOM,
   GameActionTypes,
+  END_CURRENT_GAME,
 } from './types';
 import { produce } from 'immer';
 import { START_GAME_MESSAGE, PICK_GAME_TYPE_MESSAGE } from '../client/types';
@@ -206,7 +207,40 @@ export const generalReducer = (
           room.leaderUserID =
             room.users[pickRandomNumber(0, room.users.length)];
         }
+
+        // if room is now empty, delete room (except when developing)
+        if (room.users.length === 0 && process.env.NODE_ENV === 'production') {
+          draftState.entities.rooms.allIds = draftState.entities.rooms.allIds.filter(
+            id => id !== room.id
+          );
+          delete draftState.entities.rooms.byId[room.id];
+        }
       });
+    case END_CURRENT_GAME: {
+      return produce(state, draftState => {
+        const room = draftState.entities.rooms.byId[action.meta.roomId];
+        if (!room) {
+          throw new Error(
+            `Expected room with id ${action.meta.roomId} to exist, but it doesn't.`
+          );
+        }
+
+        const gameId = room.game;
+
+        if (!gameId) {
+          return;
+        }
+
+        // delete game
+        draftState.entities.games.allIds = draftState.entities.games.allIds.filter(
+          id => id !== gameId
+        );
+        delete draftState.entities.games.byId[gameId];
+
+        // remove current game from room
+        room.game = null;
+      });
+    }
     default:
       return state;
   }

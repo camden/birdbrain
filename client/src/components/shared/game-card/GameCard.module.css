@@ -2,7 +2,7 @@
   background-color: white;
   border: 2px solid black;
   border-radius: 16px;
-  padding: 24px 16px;
+  padding: 16px;
   box-shadow: 4px 4px 0px black;
   transition: ease-out all 150ms;
 }

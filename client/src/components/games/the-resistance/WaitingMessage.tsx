@@ -22,6 +22,7 @@ const WaitingMessage: React.FC<WaitingMessageProps> = ({
 
   return (
     <p>
+      <FontAwesomeIcon icon={faClock} style={{ marginRight: '0.25em' }} />{' '}
       Waiting for{' '}
       <strong>{playersThatNeedToAct.slice(0, -1).join(', ')}</strong>
       {playersThatNeedToAct.length > 2 && ','} and{' '}

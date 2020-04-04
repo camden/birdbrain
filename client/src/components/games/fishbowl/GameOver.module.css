@@ -3,4 +3,6 @@
   flex-direction: row;
   justify-content: space-around;
   flex: 1;
+
+  margin-bottom: 32px;
 }

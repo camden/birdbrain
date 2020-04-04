@@ -18,7 +18,7 @@ export const ROUND_DURATION_MS =
   process.env.NODE_ENV === 'production'
     ? DEFAULT_DURATION
     : LONG_DEBUG_DURATION;
-export const ANSWERS_PER_PLAYER = 4;
+export const ANSWERS_PER_PLAYER = 1;
 export const POINTS_FOR_GOT = 2;
 export const POINTS_FOR_SKIPPED = -1;
 
