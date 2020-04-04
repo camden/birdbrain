@@ -15,6 +15,7 @@ import styles from './Guessing.module.css';
 import { Textfit } from 'react-textfit';
 import TeamBar from './TeamBar';
 import TeamName from './TeamName';
+import useSound from 'hooks/use-sound';
 const GotAnswerNoise = require('assets/sounds/got-answer.wav');
 const SkippedAnswerNoise = require('assets/sounds/skipped-answer.wav');
 
@@ -25,6 +26,8 @@ export interface GuessingProps {
 const BUTTON_DISABLED_TIMEOUT = 500;
 
 const Guessing: React.FC<GuessingProps> = ({ game }) => {
+  const playGotAnswerSound = useSound(GotAnswerNoise);
+  const playSkippedAnswerSound = useSound(SkippedAnswerNoise);
   const currentUser = useSelector(getCurrentUser());
   const isActivePlayer = currentUser?.id === game.activePlayer.userId;
 
@@ -34,18 +37,6 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
   const [timeLeft, setTimeLeft] = useState(startingTimeSeconds);
   const dispatch = useDispatch();
   const currentAnswer = getCurrentAnswer(game);
-
-  // sounds
-
-  const sounds = [
-    {
-      src: GotAnswerNoise,
-      id: 1,
-    },
-  ];
-  createjs.Sound.registerSounds(sounds);
-
-  // end sounds
 
   useInterval(() => {
     if (!game.roundEndTime) {
@@ -84,13 +75,14 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
     dispatch(sendMessage(fshGotAnswer()));
     onButtonClick();
 
-    // sound stuff
-    const instance = createjs.Sound.play('1');
+    playGotAnswerSound();
   }, [dispatch, onButtonClick]);
 
   const onSkippedAnswer = useCallback(() => {
     dispatch(sendMessage(fshSkipAnswer()));
     onButtonClick();
+
+    playSkippedAnswerSound();
   }, [dispatch, onButtonClick]);
 
   const currentPlayer = game.players.find(p => p.userId === currentUser?.id);

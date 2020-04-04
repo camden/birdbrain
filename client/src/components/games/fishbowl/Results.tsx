@@ -10,8 +10,6 @@ import { sendMessage } from 'store/websocket/actions';
 import { fshAckResults } from '@server/store/games/fishbowl/actions';
 import styles from './Results.module.css';
 import {
-  TEAM_A_DISPLAY_NAME,
-  TEAM_B_DISPLAY_NAME,
   POINTS_FOR_SKIPPED,
   POINTS_FOR_GOT,
 } from '@server/store/games/fishbowl';
