@@ -29,7 +29,7 @@ const MinidomMain: React.FC<MainProps> = ({ game }) => {
       <h2>hand:</h2>
       <MinidomCardRow cards={currentPlayer.collection.hand} />
       <h2>deck:</h2>
-      <MinidomCardRow cards={currentPlayer.collection.deck} />
+      <MinidomCardRow hidden cards={currentPlayer.collection.deck} />
       <h2>discard pile:</h2>
       <MinidomCardRow cards={currentPlayer.collection.discardPile} />
       <Button

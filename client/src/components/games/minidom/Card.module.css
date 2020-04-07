@@ -1,23 +1,8 @@
-.wrapper {
-  margin-right: 8px;
-
-  background-color: white;
-  border: 2px solid black;
-  box-shadow: 4px 4px 0px black;
-  border-radius: 4px;
-
-  width: 200px;
-  padding: 8px;
-
-  display: flex;
-  font-weight: 900;
-  flex-direction: column;
-  align-items: center;
-}
-
 .effect {
+  font-weight: 900;
 }
 
 .value {
+  font-weight: 900;
   font-size: 48px;
 }
