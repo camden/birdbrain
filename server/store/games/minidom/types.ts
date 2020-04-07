@@ -28,4 +28,5 @@ export interface MinidomCardType {
 
 export enum MinidomCardEffect {
   GAIN_POINTS = 'GAIN_POINTS',
+  GAIN_HEALTH = 'GAIN_HEALTH',
 }

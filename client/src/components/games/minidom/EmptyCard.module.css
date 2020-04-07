@@ -13,3 +13,7 @@
   flex-direction: column;
   align-items: center;
 }
+
+.dashed {
+  border-style: dashed;
+}

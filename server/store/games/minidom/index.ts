@@ -21,6 +21,14 @@ const startingDeck: MinidomCardType[] = [
     effect: MinidomCardEffect.GAIN_POINTS,
     value: 2,
   },
+  {
+    effect: MinidomCardEffect.GAIN_HEALTH,
+    value: 1,
+  },
+  {
+    effect: MinidomCardEffect.GAIN_HEALTH,
+    value: 5,
+  },
 ];
 
 const createStartingCollection = (): MinidomCardCollection => {

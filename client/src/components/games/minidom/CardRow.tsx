@@ -12,7 +12,7 @@ export interface CardRowProps {
 const MinidomCardRow: React.FC<CardRowProps> = ({ cards, hidden }) => {
   if (hidden) {
     return (
-      <MinidomEmptyCard>
+      <MinidomEmptyCard dashedBorder={cards.length === 0}>
         <div className={styles.deckSize}>{cards.length}</div>
         cards
       </MinidomEmptyCard>
