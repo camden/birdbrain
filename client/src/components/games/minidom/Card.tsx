@@ -9,7 +9,8 @@ export interface CardProps {
 const MinidomCard: React.FC<CardProps> = ({ card }) => {
   return (
     <div className={styles.wrapper}>
-      {card.effect} -> {card.value}
+      <div className={styles.effect}>{card.effect}</div>
+      <div className={styles.value}>{card.value}</div>
     </div>
   );
 };
