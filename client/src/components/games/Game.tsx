@@ -11,6 +11,8 @@ import ChatMain from './chat/ChatMain';
 import { ChatGameState } from '@server/store/games/chat/types';
 import FishbowlMain from './fishbowl/Main';
 import { FishbowlGameState } from '@server/store/games/fishbowl/types';
+import MinidomMain from './minidom/Main';
+import { MinidomGameState } from '@server/store/games/minidom/types';
 
 export interface GameProps {
   room: Room;
@@ -30,9 +32,11 @@ const Game: React.FC<GameProps> = ({ room }) => {
       return <ChatMain game={game as ChatGameState} room={room} />;
     case GameType.FISHBOWL:
       return <FishbowlMain game={game as FishbowlGameState} room={room} />;
+    case GameType.MINIDOM:
+      return <MinidomMain game={game as MinidomGameState} />;
   }
 
-  return <div>game</div>;
+  return <div>game not found</div>;
 };
 
 export default Game;

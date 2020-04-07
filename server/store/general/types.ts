@@ -1,4 +1,4 @@
-import uuid from 'uuid/v1';
+import uuid from 'uuid/v4';
 import { Game, GameID, GameType } from '../games/types';
 import {
   ClientMessage,
@@ -8,6 +8,7 @@ import {
 import { ResistanceActionTypes } from 'store/games/the-resistance/actions';
 import { ChatActionTypes } from 'store/games/chat/actions';
 import { FishbowlActionTypes } from 'store/games/fishbowl/actions';
+import { MinidomActionTypes } from 'store/games/minidom/actions';
 
 export type RoomID = string;
 
@@ -109,6 +110,7 @@ export interface EndCurrentGameAction {
 }
 
 export type GameActionTypes =
+  | MinidomActionTypes
   | FishbowlActionTypes
   | ChatActionTypes
   | ResistanceActionTypes;

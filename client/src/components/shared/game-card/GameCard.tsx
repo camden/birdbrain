@@ -44,6 +44,13 @@ const getGameMetadata = (gameType: GameType): GameMetadata => {
         description:
           'A fun party game that combines Password, Taboo, and Charades.',
       };
+    case GameType.MINIDOM:
+      return {
+        title: 'Minidom',
+        playerCount: '2-4',
+        time: '10 min',
+        description: 'A lightweight version of the deckbuilding game Dominion.',
+      };
   }
 };
 

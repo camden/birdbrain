@@ -1,0 +1,32 @@
+.wrapper {
+  background-color: white;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.inner {
+  flex: 1;
+
+  display: flex;
+  justify-content: space-between;
+
+  padding: 8px 16px;
+}
+
+@media (min-width: 600px) {
+  .inner {
+    max-width: 460px;
+  }
+}
+
+.spacing {
+  height: 0;
+  margin-bottom: 36px;
+}

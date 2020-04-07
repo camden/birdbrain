@@ -1,9 +1,10 @@
-import uuid from 'uuid/v1';
+import uuid from 'uuid/v4';
 import { Game, GameType, GameID } from './types';
 import { createNewGameOfTheResistance } from './the-resistance';
 import { createNewGameOfSkull } from './skull';
 import { createNewGameOfChat } from './chat';
 import { createNewGameOfFishbowl } from './fishbowl';
+import { createNewGameOfMinidom } from './minidom';
 import { User } from 'store/general/types';
 
 export const generateGameId = (type: GameType): GameID => {
@@ -20,5 +21,7 @@ export const createNewGame = (type: GameType, usersInRoom: User[]): Game => {
       return createNewGameOfChat(generateGameId(type), usersInRoom);
     case GameType.FISHBOWL:
       return createNewGameOfFishbowl(generateGameId(type), usersInRoom);
+    case GameType.MINIDOM:
+      return createNewGameOfMinidom(generateGameId(type), usersInRoom);
   }
 };

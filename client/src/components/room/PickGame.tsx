@@ -49,8 +49,8 @@ const PickGame: React.FC<PickGameProps> = props => {
           />
           <GameCard
             className={styles.game_card}
-            gameType={GameType.SKULL}
-            onClick={() => props.onPickGame(GameType.SKULL)}
+            gameType={GameType.MINIDOM}
+            onClick={() => props.onPickGame(GameType.MINIDOM)}
           />
         </section>
       </main>

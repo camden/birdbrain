@@ -11,6 +11,7 @@ import {
 } from './types';
 import { produce } from 'immer';
 import { START_GAME_MESSAGE, PICK_GAME_TYPE_MESSAGE } from '../client/types';
+import { pickRandomNumber } from 'utils/rng';
 import { GameType, Game } from '../games/types';
 import { createNewGame } from '../games';
 import { resistanceReducer } from '../games/the-resistance/reducers';
@@ -21,8 +22,10 @@ import { ChatActionTypes } from 'store/games/chat/actions';
 import { chatReducer } from 'store/games/chat/reducers';
 import { fishbowlReducer } from 'store/games/fishbowl/reducer';
 import { ChatGameState } from 'store/games/chat/types';
-import { pickRandomNumber } from 'utils/rng';
 import { FishbowlGameState } from 'store/games/fishbowl/types';
+import { MinidomGameState } from 'store/games/minidom/types';
+import { MinidomActionTypes } from 'store/games/minidom/actions';
+import { minidomReducer } from 'store/games/minidom/reducer';
 
 const initialState: GeneralState = {
   entities: {
@@ -33,7 +36,7 @@ const initialState: GeneralState = {
           users: [],
           leaderUserID: null,
           game: null,
-          selectedGameType: GameType.FISHBOWL,
+          selectedGameType: GameType.MINIDOM,
         },
       },
       allIds: ['DEBUG'],
@@ -88,6 +91,14 @@ export const generalReducer = (
   state = initialState,
   action: GeneralActionTypes
 ) => {
+  if (action.type.startsWith('DOM_')) {
+    return customGameReducer<MinidomActionTypes, MinidomGameState>(
+      minidomReducer,
+      state,
+      action
+    );
+  }
+
   if (action.type.startsWith('FSH_')) {
     return customGameReducer<FishbowlActionTypes, FishbowlGameState>(
       fishbowlReducer,

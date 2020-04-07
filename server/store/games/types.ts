@@ -3,6 +3,7 @@ export enum GameType {
   FISHBOWL = 'FISHBOWL',
   SKULL = 'SKULL',
   CHAT = 'CHAT',
+  MINIDOM = 'MINIDOM',
 }
 
 export type GameID = string;
