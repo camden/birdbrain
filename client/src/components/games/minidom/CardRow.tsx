@@ -6,10 +6,11 @@ import MinidomEmptyCard from './EmptyCard';
 
 export interface CardRowProps {
   cards: MinidomCardType[];
+  onClick?: (card: MinidomCardType, index: number) => void;
   hidden?: boolean;
 }
 
-const MinidomCardRow: React.FC<CardRowProps> = ({ cards, hidden }) => {
+const MinidomCardRow: React.FC<CardRowProps> = ({ cards, hidden, onClick }) => {
   if (hidden) {
     return (
       <MinidomEmptyCard dashedBorder={cards.length === 0}>
@@ -21,8 +22,11 @@ const MinidomCardRow: React.FC<CardRowProps> = ({ cards, hidden }) => {
 
   return (
     <div className={styles.wrapper}>
-      {cards.map(card => (
-        <MinidomCard card={card} />
+      {cards.map((card, index) => (
+        <MinidomCard
+          card={card}
+          onClick={() => onClick && onClick(card, index)}
+        />
       ))}
     </div>
   );

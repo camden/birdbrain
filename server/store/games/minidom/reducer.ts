@@ -1,7 +1,12 @@
-import { MinidomGameState, MinidomPlayer } from './types';
-import { MinidomActionTypes, DOM_DRAW_CARD } from './actions';
+import { MinidomGameState, MinidomPlayer, MinidomCardType } from './types';
+import {
+  MinidomActionTypes,
+  DOM_DRAW_CARD,
+  DOM_PLAY_CARD_FROM_HAND,
+} from './actions';
 import { produce } from 'immer';
 import { pickRandomNumber, pickElement } from '../../../utils/rng';
+import { UserID } from 'store/general/types';
 
 const getPlayer = (
   game: MinidomGameState,
@@ -15,11 +20,50 @@ const getPlayer = (
   return player;
 };
 
+/**
+ * Applies the given card effect to the passed-in game. Mutates!
+ * @param game
+ * @param card
+ */
+const applyCardEffect = (
+  game: MinidomGameState,
+  card: MinidomCardType,
+  senderId: UserID
+): void => {
+  const sender = game.players.find(p => p.userId === senderId);
+  if (!sender) {
+    console.error('invalid senderId.');
+    return;
+  }
+
+  sender.health += 1;
+};
+
 export const minidomReducer = (
   game: MinidomGameState,
   action: MinidomActionTypes
 ) => {
   switch (action.type) {
+    case DOM_PLAY_CARD_FROM_HAND: {
+      return produce(game, draftState => {
+        const player = getPlayer(draftState, action);
+        const idx = action.payload.cardIndex;
+
+        const card = player.collection.hand[idx];
+
+        if (!card) {
+          console.error('Player tried to play invalid card index.');
+          return;
+        }
+
+        // play the card
+        draftState = applyCardEffect(draftState, card, player.userId);
+
+        // remove the card from your hand
+        player.collection.hand.splice(idx, 1);
+      });
+    }
+
     case DOM_DRAW_CARD: {
       return produce(game, draftState => {
         const player = getPlayer(draftState, action);

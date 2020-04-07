@@ -5,11 +5,12 @@ import MinidomEmptyCard from './EmptyCard';
 
 export interface CardProps {
   card: MinidomCardType;
+  onClick?: () => void;
 }
 
-const MinidomCard: React.FC<CardProps> = ({ card }) => {
+const MinidomCard: React.FC<CardProps> = ({ card, onClick }) => {
   return (
-    <MinidomEmptyCard>
+    <MinidomEmptyCard onClick={onClick}>
       <div className={styles.effect}>{card.effect}</div>
       <div className={styles.value}>{card.value}</div>
     </MinidomEmptyCard>
