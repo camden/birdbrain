@@ -10,6 +10,7 @@ import { domDrawCard } from '@server/store/games/minidom/actions';
 import MinidomGameBar from './GameBar';
 import styles from './Main.module.css';
 import { useCurrentPlayer } from 'utils/minidom-utils';
+import MinidomCardRow from './CardRow';
 
 export interface MainProps {
   game: MinidomGameState;
@@ -23,18 +24,14 @@ const MinidomMain: React.FC<MainProps> = ({ game }) => {
     <div className={styles.wrapper}>
       <MinidomGameBar game={game} />
       <h1>minidom!</h1>
+      <h2>shop:</h2>
+      <MinidomCardRow cards={game.shop} />
       <h2>hand:</h2>
-      {currentPlayer.collection.hand.map(card => (
-        <MinidomCard card={card} />
-      ))}
+      <MinidomCardRow cards={currentPlayer.collection.hand} />
       <h2>deck:</h2>
-      {currentPlayer.collection.deck.map(card => (
-        <MinidomCard card={card} />
-      ))}
+      <MinidomCardRow cards={currentPlayer.collection.deck} />
       <h2>discard pile:</h2>
-      {currentPlayer.collection.discardPile.map(card => (
-        <MinidomCard card={card} />
-      ))}
+      <MinidomCardRow cards={currentPlayer.collection.discardPile} />
       <Button
         onClick={() => {
           dispatch(sendMessage(domDrawCard()));

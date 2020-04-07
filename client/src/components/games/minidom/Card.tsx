@@ -1,5 +1,5 @@
 import React from 'react';
-import { MinidomCard as MinidomCardType } from '@server/store/games/minidom/types';
+import { MinidomCardType } from '@server/store/games/minidom/types';
 import styles from './Card.module.css';
 
 export interface CardProps {

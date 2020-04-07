@@ -2,13 +2,13 @@ import {
   MinidomGameState,
   MinidomPlayer,
   MinidomCardEffect,
-  MinidomCard,
+  MinidomCardType,
   MinidomCardCollection,
 } from './types';
 import { GameType, GameID } from '../types';
 import { User } from 'store/general/types';
 
-const startingDeck: MinidomCard[] = [
+const startingDeck: MinidomCardType[] = [
   {
     effect: MinidomCardEffect.GAIN_POINTS,
     value: 1,
@@ -51,5 +51,6 @@ export const createNewGameOfMinidom = (
     id,
     type: GameType.MINIDOM,
     players,
+    shop: [],
   };
 };

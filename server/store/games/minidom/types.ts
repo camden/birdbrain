@@ -4,6 +4,7 @@ import { UserID } from 'store/general/types';
 export interface MinidomGameState extends Game {
   type: GameType.MINIDOM;
   players: MinidomPlayer[];
+  shop: MinidomCardType[];
 }
 
 export interface MinidomPlayer {
@@ -15,12 +16,12 @@ export interface MinidomPlayer {
 }
 
 export interface MinidomCardCollection {
-  hand: MinidomCard[];
-  deck: MinidomCard[];
-  discardPile: MinidomCard[];
+  hand: MinidomCardType[];
+  deck: MinidomCardType[];
+  discardPile: MinidomCardType[];
 }
 
-export interface MinidomCard {
+export interface MinidomCardType {
   effect: MinidomCardEffect;
   value: number;
 }
