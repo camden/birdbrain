@@ -10,6 +10,7 @@ import {
 import { GameType, GameID } from '../types';
 import { User } from 'store/general/types';
 import shuffleArray from 'utils/shuffle-array';
+import { pickRandomNumber, pickElement } from 'utils/rng';
 
 const startingDeck: MinidomCardType[] = [
   {
@@ -34,6 +35,17 @@ const createStartingCollection = (): MinidomCardCollection => {
   };
 };
 
+const colors = [
+  'teal',
+  'darkblue',
+  'lightgrey',
+  'orange',
+  'darkgreen',
+  'red',
+  'purple',
+  'indigo',
+];
+
 const createPlayerFromUser = (user: User): MinidomPlayer => {
   return {
     userId: user.id,
@@ -45,6 +57,7 @@ const createPlayerFromUser = (user: User): MinidomPlayer => {
       x: 0,
       y: 0,
     },
+    color: pickElement(colors)[0] || 'black',
   };
 };
 

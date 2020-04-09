@@ -14,21 +14,34 @@ const MinidomMap: React.FC<MinidomMapProps> = ({ game }) => {
   // @TODO this is a dumb way of doing it
   const rows = [0, 1, 2];
   const cols = [0, 1, 2];
+  const numRows = 3;
+  const numCols = 3;
 
-  const mapLocations = game.players.map((x, index) => ({
-    ...x.location,
-    color: index === 0 ? 'hotpink' : 'teal',
-  }));
+  const locations: {
+    [x: number]: {
+      [y: number]: any[];
+    };
+  } = {};
+
+  for (let x = 0; x < numCols; x++) {
+    locations[x] = [];
+    for (let y = 0; y < numRows; y++) {
+      locations[x][y] = [];
+    }
+  }
+
+  for (let i = 0; i < game.players.length; i++) {
+    const player = game.players[i];
+    const { x, y } = player.location;
+    locations[x][y].push(player);
+  }
 
   return (
     <div className={styles.wrapper}>
       {rows.map((y) => (
         <div className={styles.row}>
           {cols.map((x) => (
-            <Point
-              occupied={!!mapLocations.find((l) => l.x === x && l.y === y)}
-              color={mapLocations.find((l) => l.x === x && l.y === y)?.color}
-            />
+            <Point occupants={locations[x][y]} />
           ))}
         </div>
       ))}
@@ -37,24 +50,21 @@ const MinidomMap: React.FC<MinidomMapProps> = ({ game }) => {
 };
 
 export interface PointProps {
-  occupied?: boolean;
-  color?: string;
+  occupants: MinidomPlayer[];
 }
 
-const OccupiedPoint = (player: MinidomPlayer) => {
-  return <Point occupied />;
-};
-
-const Point: React.FC<PointProps> = (props) => {
+const Point: React.FC<PointProps> = ({ occupants }) => {
   return (
-    <div
-      style={{
-        backgroundColor: props.color,
-      }}
-      className={cx(styles.point, {
-        [styles.occupied]: props.occupied,
-      })}
-    />
+    <div className={styles.point}>
+      <div className={styles.inner}>
+        {occupants.map((player) => (
+          <div
+            style={{ backgroundColor: player.color }}
+            className={styles.player}
+          />
+        ))}
+      </div>
+    </div>
   );
 };
 

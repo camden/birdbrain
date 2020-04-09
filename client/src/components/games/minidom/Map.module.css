@@ -16,9 +16,24 @@
   height: 33px;
   background: white;
   border-radius: 64px;
+  position: relative;
 }
 
-.point.occupied {
-  background: black;
-  border: 4px solid white;
+.inner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.player {
+  border-radius: 64px;
+  width: 24px;
+  height: 24px;
+}
+
+.inner .player:not(:first-child) {
+  display: none;
 }

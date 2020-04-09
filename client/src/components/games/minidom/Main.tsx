@@ -38,7 +38,6 @@ const MinidomMain: React.FC<MainProps> = ({ game }) => {
   return (
     <div className={styles.wrapper}>
       <MinidomGameBar game={game} />
-      <h1>minidom!</h1>
       <MinidomMap game={game} />
       <MinidomMoveControls game={game} />
       <h2>hand:</h2>
