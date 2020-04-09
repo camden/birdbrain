@@ -5,6 +5,7 @@ import {
   MinidomCardType,
   MinidomCardCollection,
   MinidomTurnPhase,
+  MinidomCardDirection,
 } from './types';
 import { GameType, GameID } from '../types';
 import { User } from 'store/general/types';
@@ -21,7 +22,7 @@ const startingDeck: MinidomCardType[] = [
   },
   {
     effect: MinidomCardEffect.MOVE,
-    value: 1,
+    target: MinidomCardDirection.RIGHT,
   },
 ];
 

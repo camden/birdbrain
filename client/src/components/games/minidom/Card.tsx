@@ -46,7 +46,7 @@ const CardTarget: React.FC<CardTargetProps> = ({ target }) => {
 
   return (
     <div className={styles.target}>
-      {!!icon ? <FontAwesomeIcon icon={icon} /> : target}
+      {!!icon ? <FontAwesomeIcon icon={icon} size="lg" /> : target}
     </div>
   );
 };
