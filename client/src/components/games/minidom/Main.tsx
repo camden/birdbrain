@@ -41,8 +41,6 @@ const MinidomMain: React.FC<MainProps> = ({ game }) => {
       <h1>minidom!</h1>
       <MinidomMap game={game} />
       <MinidomMoveControls game={game} />
-      <h2>shop:</h2>
-      <MinidomCardRow cards={game.shop} />
       <h2>hand:</h2>
       <MinidomCardRow
         cards={currentPlayer.collection.hand}
@@ -50,8 +48,6 @@ const MinidomMain: React.FC<MainProps> = ({ game }) => {
       />
       <h2>deck:</h2>
       <MinidomCardRow hidden cards={currentPlayer.collection.deck} />
-      <h2>discard pile:</h2>
-      <MinidomCardRow cards={currentPlayer.collection.discardPile} />
       <Button
         onClick={() => {
           dispatch(sendMessage(domDrawCard()));
