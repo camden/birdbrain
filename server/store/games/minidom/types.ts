@@ -5,6 +5,14 @@ export interface MinidomGameState extends Game {
   type: GameType.MINIDOM;
   players: MinidomPlayer[];
   shop: MinidomCardType[];
+  turnIndex: number;
+  currentTurnPhase: MinidomTurnPhase;
+}
+
+export enum MinidomTurnPhase {
+  MOVE = 'MOVE',
+  PLAY = 'PLAY',
+  BUY = 'BUY',
 }
 
 export interface MinidomPlayer {
@@ -13,6 +21,12 @@ export interface MinidomPlayer {
   collection: MinidomCardCollection;
   score: number;
   health: number;
+  location: MinidomPlayerLocation;
+}
+
+export interface MinidomPlayerLocation {
+  x: 0 | 1 | 2;
+  y: 0 | 1 | 2;
 }
 
 export interface MinidomCardCollection {
@@ -29,4 +43,5 @@ export interface MinidomCardType {
 export enum MinidomCardEffect {
   GAIN_POINTS = 'GAIN_POINTS',
   GAIN_HEALTH = 'GAIN_HEALTH',
+  MOVE = 'MOVE',
 }

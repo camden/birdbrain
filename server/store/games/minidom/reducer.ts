@@ -1,4 +1,9 @@
-import { MinidomGameState, MinidomPlayer, MinidomCardType } from './types';
+import {
+  MinidomGameState,
+  MinidomPlayer,
+  MinidomCardType,
+  MinidomCardEffect,
+} from './types';
 import {
   MinidomActionTypes,
   DOM_DRAW_CARD,
@@ -12,7 +17,7 @@ const getPlayer = (
   game: MinidomGameState,
   action: MinidomActionTypes
 ): MinidomPlayer => {
-  const player = game.players.find(p => p.userId === action.meta.userId);
+  const player = game.players.find((p) => p.userId === action.meta.userId);
   if (!player) {
     throw new Error('Expected to find player for id.');
   }
@@ -30,13 +35,19 @@ const applyCardEffect = (
   card: MinidomCardType,
   senderId: UserID
 ): void => {
-  const sender = game.players.find(p => p.userId === senderId);
+  const sender = game.players.find((p) => p.userId === senderId);
   if (!sender) {
     console.error('invalid senderId.');
     return;
   }
 
-  sender.health += 1;
+  switch (card.effect) {
+    case MinidomCardEffect.MOVE: {
+      sender.location.x += 1;
+    }
+    default:
+      return;
+  }
 };
 
 export const minidomReducer = (
@@ -45,7 +56,7 @@ export const minidomReducer = (
 ) => {
   switch (action.type) {
     case DOM_PLAY_CARD_FROM_HAND: {
-      return produce(game, draftState => {
+      return produce(game, (draftState) => {
         const player = getPlayer(draftState, action);
         const idx = action.payload.cardIndex;
 
@@ -65,7 +76,7 @@ export const minidomReducer = (
     }
 
     case DOM_DRAW_CARD: {
-      return produce(game, draftState => {
+      return produce(game, (draftState) => {
         const player = getPlayer(draftState, action);
         const [drawnCard, indexOfDrawnCard] = pickElement(
           player.collection.deck

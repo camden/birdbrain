@@ -1,0 +1,24 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 4px;
+}
+
+.point {
+  margin-right: 4px;
+  width: 33px;
+  height: 33px;
+  background: white;
+  border-radius: 64px;
+}
+
+.point.occupied {
+  background: black;
+  border: 4px solid white;
+}
