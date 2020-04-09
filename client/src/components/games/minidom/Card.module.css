@@ -1,8 +1,12 @@
+.body {
+  margin-top: 16px;
+}
+
 .effect {
   font-weight: 900;
 }
 
 .value {
   font-weight: 900;
-  font-size: 48px;
+  font-size: 24px;
 }

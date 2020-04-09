@@ -3,6 +3,7 @@ import {
   MinidomCardType,
   MinidomCardTarget,
   MinidomCardDirection,
+  MinidomCardEffectTitles,
 } from '@server/store/games/minidom/types';
 import styles from './Card.module.css';
 import MinidomEmptyCard from './EmptyCard';
@@ -46,17 +47,21 @@ const CardTarget: React.FC<CardTargetProps> = ({ target }) => {
 
   return (
     <div className={styles.target}>
-      {!!icon ? <FontAwesomeIcon icon={icon} size="lg" /> : target}
+      {!!icon ? <FontAwesomeIcon icon={icon} size="2x" /> : target}
     </div>
   );
 };
 
 const MinidomCard: React.FC<CardProps> = ({ card, onClick }) => {
+  const effectTitle = MinidomCardEffectTitles[card.effect];
+
   return (
     <MinidomEmptyCard onClick={onClick}>
-      <div className={styles.effect}>{card.effect}</div>
-      <div className={styles.value}>{card.value}</div>
-      {card.target && <CardTarget target={card.target} />}
+      <div className={styles.effect}>{effectTitle || card.effect}</div>
+      <div className={styles.body}>
+        <div className={styles.value}>{card.value}</div>
+        {card.target && <CardTarget target={card.target} />}
+      </div>
     </MinidomEmptyCard>
   );
 };

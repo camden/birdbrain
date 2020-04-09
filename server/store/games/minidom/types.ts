@@ -55,3 +55,9 @@ export enum MinidomCardEffect {
   GAIN_HEALTH = 'GAIN_HEALTH',
   MOVE = 'MOVE',
 }
+
+export const MinidomCardEffectTitles: { [key in MinidomCardEffect]: string } = {
+  [MinidomCardEffect.MOVE]: 'Move',
+  [MinidomCardEffect.GAIN_HEALTH]: 'Gain Health',
+  [MinidomCardEffect.GAIN_POINTS]: 'Gain Points',
+};
