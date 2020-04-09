@@ -4,6 +4,7 @@ import {
   MinidomCardType,
   MinidomCardEffect,
   MinidomCardDirection,
+  MinidomPlayerLocation,
 } from './types';
 import {
   MinidomActionTypes,
@@ -26,6 +27,35 @@ const getPlayer = (
   }
 
   return player;
+};
+
+const getNextLocation = (
+  curLocation: MinidomPlayerLocation,
+  game: MinidomGameState,
+  direction: MinidomCardDirection
+): { x: number; y: number } => {
+  switch (direction) {
+    case MinidomCardDirection.UP:
+      return {
+        ...curLocation,
+        y: (curLocation.y - 1 + 3) % 3,
+      };
+    case MinidomCardDirection.DOWN:
+      return {
+        ...curLocation,
+        y: (curLocation.y + 1 + 3) % 3,
+      };
+    case MinidomCardDirection.LEFT:
+      return {
+        ...curLocation,
+        x: (curLocation.x - 1 + 3) % 3,
+      };
+    case MinidomCardDirection.RIGHT:
+      return {
+        ...curLocation,
+        x: (curLocation.x + 1 + 3) % 3,
+      };
+  }
 };
 
 /**
@@ -52,20 +82,7 @@ const applyCardEffect = (
         return;
       }
 
-      switch (card.target) {
-        case MinidomCardDirection.UP:
-          sender.location.y = (sender.location.y - 1 + 3) % 3;
-          break;
-        case MinidomCardDirection.DOWN:
-          sender.location.y = (sender.location.y + 1 + 3) % 3;
-          break;
-        case MinidomCardDirection.LEFT:
-          sender.location.x = (sender.location.x - 1 + 3) % 3;
-          break;
-        case MinidomCardDirection.RIGHT:
-          sender.location.x = (sender.location.x + 1 + 3) % 3;
-          break;
-      }
+      sender.location = getNextLocation(sender.location, game, card.target);
     }
     default:
       return;
