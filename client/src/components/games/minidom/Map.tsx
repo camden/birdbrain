@@ -5,12 +5,15 @@ import {
 } from '@server/store/games/minidom/types';
 import styles from './Map.module.css';
 import cx from 'classnames';
+import { useCurrentPlayer } from 'utils/minidom-utils';
 
 export interface MinidomMapProps {
   game: MinidomGameState;
 }
 
 const MinidomMap: React.FC<MinidomMapProps> = ({ game }) => {
+  const currentPlayer = useCurrentPlayer(game);
+
   // @TODO this is a dumb way of doing it
   const rows = [0, 1, 2];
   const cols = [0, 1, 2];
@@ -33,7 +36,9 @@ const MinidomMap: React.FC<MinidomMapProps> = ({ game }) => {
   for (let i = 0; i < game.players.length; i++) {
     const player = game.players[i];
     const { x, y } = player.location;
-    locations[x][y].push(player);
+    if (player.userId === currentPlayer.userId) {
+      locations[x][y].push(player);
+    }
   }
 
   return (
