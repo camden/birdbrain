@@ -25,8 +25,8 @@ export interface MinidomPlayer {
 }
 
 export interface MinidomPlayerLocation {
-  x: 0 | 1 | 2;
-  y: 0 | 1 | 2;
+  x: number;
+  y: number;
 }
 
 export interface MinidomCardCollection {
@@ -37,7 +37,17 @@ export interface MinidomCardCollection {
 
 export interface MinidomCardType {
   effect: MinidomCardEffect;
-  value: number;
+  value?: number;
+  target?: MinidomCardTarget;
+}
+
+export type MinidomCardTarget = MinidomCardDirection;
+
+export enum MinidomCardDirection {
+  LEFT = 'LEFT',
+  RIGHT = 'RIGHT',
+  UP = 'UP',
+  DOWN = 'DOWN',
 }
 
 export enum MinidomCardEffect {

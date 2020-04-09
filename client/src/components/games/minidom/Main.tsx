@@ -18,6 +18,7 @@ import styles from './Main.module.css';
 import { useCurrentPlayer } from 'utils/minidom-utils';
 import MinidomCardRow from './CardRow';
 import MinidomMap from './Map';
+import MinidomMoveControls from './MoveControls';
 
 export interface MainProps {
   game: MinidomGameState;
@@ -39,6 +40,7 @@ const MinidomMain: React.FC<MainProps> = ({ game }) => {
       <MinidomGameBar game={game} />
       <h1>minidom!</h1>
       <MinidomMap game={game} />
+      <MinidomMoveControls game={game} />
       <h2>shop:</h2>
       <MinidomCardRow cards={game.shop} />
       <h2>hand:</h2>

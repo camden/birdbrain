@@ -3,15 +3,18 @@ import {
   MinidomPlayer,
   MinidomCardType,
   MinidomCardEffect,
+  MinidomCardDirection,
 } from './types';
 import {
   MinidomActionTypes,
   DOM_DRAW_CARD,
   DOM_PLAY_CARD_FROM_HAND,
+  DOM_ACTIVATE_CARD,
 } from './actions';
 import { produce } from 'immer';
-import { pickRandomNumber, pickElement } from '../../../utils/rng';
+import { pickElement } from '../../../utils/rng';
 import { UserID } from 'store/general/types';
+import { log } from 'utils/log';
 
 const getPlayer = (
   game: MinidomGameState,
@@ -41,9 +44,28 @@ const applyCardEffect = (
     return;
   }
 
+  log(`${sender.name} played ${card.effect}`);
+
   switch (card.effect) {
     case MinidomCardEffect.MOVE: {
-      sender.location.x += 1;
+      if (!card.target) {
+        return;
+      }
+
+      switch (card.target) {
+        case MinidomCardDirection.UP:
+          sender.location.y = (sender.location.y - 1 + 3) % 3;
+          break;
+        case MinidomCardDirection.DOWN:
+          sender.location.y = (sender.location.y + 1 + 3) % 3;
+          break;
+        case MinidomCardDirection.LEFT:
+          sender.location.x = (sender.location.x - 1 + 3) % 3;
+          break;
+        case MinidomCardDirection.RIGHT:
+          sender.location.x = (sender.location.x + 1 + 3) % 3;
+          break;
+      }
     }
     default:
       return;
@@ -55,6 +77,20 @@ export const minidomReducer = (
   action: MinidomActionTypes
 ) => {
   switch (action.type) {
+    case DOM_ACTIVATE_CARD: {
+      return produce(game, (draftState) => {
+        const player = getPlayer(draftState, action);
+        const card = action.payload.card;
+
+        if (!card) {
+          console.error('Player tried to play invalid card.');
+          return;
+        }
+
+        // play the card
+        applyCardEffect(draftState, card, player.userId);
+      });
+    }
     case DOM_PLAY_CARD_FROM_HAND: {
       return produce(game, (draftState) => {
         const player = getPlayer(draftState, action);
@@ -68,7 +104,7 @@ export const minidomReducer = (
         }
 
         // play the card
-        draftState = applyCardEffect(draftState, card, player.userId);
+        applyCardEffect(draftState, card, player.userId);
 
         // remove the card from your hand
         player.collection.hand.splice(idx, 1);
@@ -90,5 +126,7 @@ export const minidomReducer = (
         player.collection.hand.push(drawnCard);
       });
     }
+    default:
+      return game;
   }
 };
