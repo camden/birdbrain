@@ -20,6 +20,7 @@ import { pickElement } from '../../../utils/rng';
 import { UserID } from 'store/general/types';
 import { log } from 'utils/log';
 import shuffleArray from 'utils/shuffle-array';
+import { STARTING_CARD_PLAYS } from '.';
 
 const getPlayer = (
   game: MinidomGameState,
@@ -109,7 +110,7 @@ const endCurrentTurn = (game: MinidomGameState) => {
   const lastActivePlayer = game.players[game.activePlayerIndex];
   game.activePlayerIndex = (game.activePlayerIndex + 1) % game.players.length;
   game.currentTurnPhase = MinidomTurnPhase.MOVE;
-  game.cardPlaysRemaining = 1;
+  game.cardPlaysRemaining = STARTING_CARD_PLAYS;
 
   const discardPile = lastActivePlayer.collection.discardPile;
   const hand = lastActivePlayer.collection.hand;

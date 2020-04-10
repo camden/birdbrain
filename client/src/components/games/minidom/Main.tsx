@@ -24,12 +24,10 @@ const MinidomMain: React.FC<MainProps> = ({ game }) => {
       <h2>{activePlayer.name}'s turn</h2>
       <MinidomMap game={game} />
       {isActivePlayer && <MinidomMainInput game={game} />}
-      <div>hand</div>
-      <MinidomCardRow cards={currentPlayer.collection.hand} />
       <div>deck</div>
       <MinidomCardRow cards={currentPlayer.collection.deck} hidden />
       <div>discard pile:</div>
-      <MinidomCardRow cards={currentPlayer.collection.discardPile} />
+      <MinidomCardRow cards={currentPlayer.collection.discardPile} hidden />
     </div>
   );
 };

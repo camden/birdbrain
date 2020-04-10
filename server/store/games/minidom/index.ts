@@ -12,6 +12,8 @@ import { User } from 'store/general/types';
 import shuffleArray from 'utils/shuffle-array';
 import { pickRandomNumber, pickElement } from 'utils/rng';
 
+export const STARTING_CARD_PLAYS = 2;
+
 const startingDeck: MinidomCardType[] = [
   {
     effect: MinidomCardEffect.GAIN_POINTS,
@@ -84,7 +86,7 @@ export const createNewGameOfMinidom = (
     players,
     shop: [],
     activePlayerIndex: 0,
-    cardPlaysRemaining: 1,
+    cardPlaysRemaining: STARTING_CARD_PLAYS,
     currentTurnPhase: MinidomTurnPhase.MOVE,
   };
 };
