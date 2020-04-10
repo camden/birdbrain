@@ -42,3 +42,10 @@
 .footer p {
   margin-bottom: 0;
 }
+
+.footer .emoji {
+  display: inline-block;
+  font-size: 1.3rem;
+  position: relative;
+  bottom: -2px;
+}
