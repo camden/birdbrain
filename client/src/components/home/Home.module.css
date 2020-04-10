@@ -1,4 +1,9 @@
 .home {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
   padding: 32px;
 }
 
@@ -9,7 +14,7 @@
 
 .input_section_divider {
   text-align: center;
-  margin: 40px 0;
+  margin: 24px 0;
 }
 
 .label {
@@ -24,4 +29,16 @@
 
 .join_room_input {
   margin-bottom: 24px;
+}
+
+.footer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.footer p {
+  margin-bottom: 0;
 }

@@ -80,10 +80,10 @@ const Home: React.FC = () => {
             id="room-code"
             name="called-search-to-disable-autocomplete1"
             value={roomCode}
-            onKeyPress={event =>
+            onKeyPress={(event) =>
               event.key === 'Enter' ? joinRoomCallback() : null
             }
-            onChange={event => setRoomCode(event.target.value.toUpperCase())}
+            onChange={(event) => setRoomCode(event.target.value.toUpperCase())}
             className={styles.join_room_input}
             autoComplete="off"
           />
@@ -95,8 +95,8 @@ const Home: React.FC = () => {
             id="user-name"
             name="called-search-to-disable-autocomplete2"
             value={name}
-            onChange={event => setName(event.target.value)}
-            onKeyPress={event =>
+            onChange={(event) => setName(event.target.value)}
+            onKeyPress={(event) =>
               event.key === 'Enter' ? joinRoomCallback() : null
             }
             className={styles.join_room_input}
@@ -126,6 +126,15 @@ const Home: React.FC = () => {
             </section>
           </>
         )}
+      </section>
+      <section className={styles.footer}>
+        <p>
+          Made with 💜 by{' '}
+          <a href="https://twitter.com/camdenbickel" target="_blank">
+            Camden Bickel
+          </a>
+          .
+        </p>
       </section>
     </div>
   );
