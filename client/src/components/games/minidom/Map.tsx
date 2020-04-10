@@ -4,11 +4,16 @@ import {
   MinidomPlayer,
 } from '@server/store/games/minidom/types';
 import styles from './Map.module.css';
-import cx from 'classnames';
 import { useCurrentPlayer } from 'utils/minidom-utils';
+import cx from 'classnames';
 
 export interface MinidomMapProps {
   game: MinidomGameState;
+}
+
+export interface MapOccupant {
+  player: MinidomPlayer;
+  type: 'active' | 'hidden' | 'previous';
 }
 
 const MinidomMap: React.FC<MinidomMapProps> = ({ game }) => {
@@ -22,7 +27,7 @@ const MinidomMap: React.FC<MinidomMapProps> = ({ game }) => {
 
   const locations: {
     [x: number]: {
-      [y: number]: any[];
+      [y: number]: MapOccupant[];
     };
   } = {};
 
@@ -36,8 +41,25 @@ const MinidomMap: React.FC<MinidomMapProps> = ({ game }) => {
   for (let i = 0; i < game.players.length; i++) {
     const player = game.players[i];
     const { x, y } = player.location;
+
     if (player.userId === currentPlayer.userId) {
-      locations[x][y].push(player);
+      locations[x][y].push({
+        player,
+        type: 'active',
+      });
+    } else {
+      locations[x][y].push({
+        player,
+        type: 'hidden',
+      });
+    }
+
+    if (player.previousLocation) {
+      const { x: prevX, y: prevY } = player.previousLocation;
+      locations[prevX][prevY].push({
+        player,
+        type: 'previous',
+      });
     }
   }
 
@@ -55,19 +77,26 @@ const MinidomMap: React.FC<MinidomMapProps> = ({ game }) => {
 };
 
 export interface PointProps {
-  occupants: MinidomPlayer[];
+  occupants: MapOccupant[];
 }
 
 const Point: React.FC<PointProps> = ({ occupants }) => {
   return (
     <div className={styles.point}>
       <div className={styles.inner}>
-        {occupants.map((player) => (
-          <div
-            style={{ backgroundColor: player.color }}
-            className={styles.player}
-          />
-        ))}
+        {occupants
+          .filter((o) => o.type !== 'hidden')
+          .map((occupant) => (
+            <div
+              style={{
+                color: occupant.player.color,
+              }}
+              className={cx(styles.player, {
+                [styles.active]: occupant.type === 'active',
+                [styles.previous]: occupant.type === 'previous',
+              })}
+            />
+          ))}
       </div>
     </div>
   );

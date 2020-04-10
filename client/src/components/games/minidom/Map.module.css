@@ -37,3 +37,11 @@
 .inner .player:not(:first-child) {
   display: none;
 }
+
+.player.active {
+  background-color: currentColor;
+}
+
+.player.previous {
+  border: 2px dotted currentColor;
+}

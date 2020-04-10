@@ -4,6 +4,8 @@ import { MinidomCardType } from './types';
 export const DOM_DRAW_CARD = 'DOM_DRAW_CARD';
 export const DOM_PLAY_CARD_FROM_HAND = 'DOM_PLAY_CARD_FROM_HAND';
 export const DOM_ACTIVATE_CARD = 'DOM_ACTIVATE_CARD';
+export const DOM_MAKE_MOVE = 'DOM_MAKE_MOVE';
+export const DOM_BUY_CARD_FROM_SHOP = 'DOM_BUY_CARD_FROM_SHOP';
 
 export interface DomBaseAction {
   meta: ActionMeta;

@@ -22,6 +22,7 @@ export interface MinidomPlayer {
   score: number;
   health: number;
   location: MinidomPlayerLocation;
+  previousLocation: MinidomPlayerLocation | null;
   color: string;
 }
 

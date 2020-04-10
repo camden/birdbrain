@@ -82,6 +82,7 @@ const applyCardEffect = (
         return;
       }
 
+      sender.previousLocation = sender.location;
       sender.location = getNextLocation(sender.location, game, card.target);
     }
     default:
