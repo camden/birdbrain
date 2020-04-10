@@ -20,7 +20,7 @@ const startingDeck: MinidomCardType[] = [
     value: 2,
   },
   {
-    effect: MinidomCardEffect.GAIN_HEALTH,
+    effect: MinidomCardEffect.GAIN_MONEY,
     value: 1,
   },
   {
@@ -31,6 +31,10 @@ const startingDeck: MinidomCardType[] = [
 
 const createStartingCollection = (): MinidomCardCollection => {
   const deck = shuffleArray([...startingDeck]);
+
+  if (deck.length < 3) {
+    throw new Error('Cannot start game with less than 3 cards.');
+  }
 
   const startingHand = [deck.pop(), deck.pop(), deck.pop()];
 
