@@ -133,8 +133,6 @@ export const minidomReducer = (
   game: MinidomGameState,
   action: MinidomActionTypes
 ) => {
-  // @TODO this is a super hacky way (i think?) to fix "cannot perform isarray on proxy that has been revoked"
-  setUseProxies(false);
   switch (action.type) {
     case DOM_END_PHASE: {
       return produce(game, (draftState) => {
