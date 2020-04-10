@@ -8,6 +8,7 @@ const useSound = (soundUrl: string) => {
     };
 
     createjs.Sound.registerSound(sound);
+    createjs.Sound.volume = 0.3;
   }, [soundUrl]);
 
   return useCallback(() => {

@@ -60,7 +60,7 @@ export const createNewGameOfFishbowl = (
 
   const answersSubmitted: { [key in UserID]: FishbowlAnswer[] } = {};
 
-  players.forEach(player => {
+  players.forEach((player) => {
     answersSubmitted[player.userId] = [];
   });
 
