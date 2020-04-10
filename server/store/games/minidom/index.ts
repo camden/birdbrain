@@ -28,9 +28,13 @@ const startingDeck: MinidomCardType[] = [
 ];
 
 const createStartingCollection = (): MinidomCardCollection => {
+  const deck = shuffleArray([...startingDeck]);
+
+  const startingHand = [deck.pop(), deck.pop(), deck.pop()];
+
   return {
-    deck: startingDeck,
-    hand: [],
+    deck,
+    hand: startingHand as MinidomCardType[],
     discardPile: [],
   };
 };

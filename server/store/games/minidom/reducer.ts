@@ -107,24 +107,29 @@ const applyCardEffect = (
  */
 const endCurrentTurn = (game: MinidomGameState) => {
   const lastActivePlayer = game.players[game.activePlayerIndex];
-  // game.activePlayerIndex = (game.activePlayerIndex + 1) % game.players.length;
+  game.activePlayerIndex = (game.activePlayerIndex + 1) % game.players.length;
   game.currentTurnPhase = MinidomTurnPhase.MOVE;
   game.cardPlaysRemaining = 1;
 
-  const deck = lastActivePlayer.collection.deck;
   const discardPile = lastActivePlayer.collection.discardPile;
   const hand = lastActivePlayer.collection.hand;
 
   // discard cards in hand
   lastActivePlayer.collection.discardPile = discardPile.concat(hand);
+  lastActivePlayer.collection.hand = [];
 
-  // deal new cards
-  if (deck.length === 0) {
-    lastActivePlayer.collection.deck = shuffleArray([
-      ...lastActivePlayer.collection.discardPile,
-    ]);
-  } else {
-    const topCardOfDeck = { ...deck.pop() } as MinidomCardType;
+  const cardsToDraw = 3;
+
+  for (let i = 0; i < cardsToDraw; i++) {
+    const deck = lastActivePlayer.collection.deck;
+    if (deck.length === 0) {
+      lastActivePlayer.collection.deck = shuffleArray([
+        ...lastActivePlayer.collection.discardPile,
+      ]);
+      lastActivePlayer.collection.discardPile = [];
+    }
+
+    const topCardOfDeck = lastActivePlayer.collection.deck.pop() as MinidomCardType;
     lastActivePlayer.collection.hand.push(topCardOfDeck);
   }
 };

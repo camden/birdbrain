@@ -5,6 +5,7 @@ import styles from './Main.module.css';
 import { useCurrentPlayer } from 'utils/minidom-utils';
 import MinidomMap from './Map';
 import MinidomMainInput from './MainInput';
+import MinidomCardRow from './CardRow';
 
 export interface MainProps {
   game: MinidomGameState;
@@ -23,6 +24,12 @@ const MinidomMain: React.FC<MainProps> = ({ game }) => {
       <h2>{activePlayer.name}'s turn</h2>
       <MinidomMap game={game} />
       {isActivePlayer && <MinidomMainInput game={game} />}
+      <div>hand</div>
+      <MinidomCardRow cards={currentPlayer.collection.hand} />
+      <div>deck</div>
+      <MinidomCardRow cards={currentPlayer.collection.deck} hidden />
+      <div>discard pile:</div>
+      <MinidomCardRow cards={currentPlayer.collection.discardPile} />
     </div>
   );
 };
