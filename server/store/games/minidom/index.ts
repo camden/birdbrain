@@ -57,6 +57,7 @@ const createPlayerFromUser = (user: User): MinidomPlayer => {
       x: 0,
       y: 0,
     },
+    previousLocation: null,
     color: pickElement(colors)[0] || 'black',
   };
 };
