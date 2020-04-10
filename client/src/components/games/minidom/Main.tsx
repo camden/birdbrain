@@ -35,12 +35,17 @@ const MinidomMain: React.FC<MainProps> = ({ game }) => {
     []
   );
 
+  const activePlayer = game.players[game.activePlayerIndex];
+  const isActivePlayer = activePlayer.userId === currentPlayer.userId;
+
   return (
     <div className={styles.wrapper}>
       <MinidomGameBar game={game} />
+      <h2>Phase: {game.currentTurnPhase}</h2>
+      <h2>{activePlayer.name}'s turn</h2>
       <MinidomMap game={game} />
-      <MinidomMoveControls game={game} />
-      <h2>hand:</h2>
+      {isActivePlayer && <MinidomMoveControls game={game} />}
+      {/* <h2>hand:</h2>
       <MinidomCardRow
         cards={currentPlayer.collection.hand}
         onClick={onPlayCardFromHand}
@@ -53,7 +58,7 @@ const MinidomMain: React.FC<MainProps> = ({ game }) => {
         }}
       >
         Draw a card
-      </Button>
+      </Button> */}
     </div>
   );
 };

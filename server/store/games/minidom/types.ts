@@ -5,7 +5,7 @@ export interface MinidomGameState extends Game {
   type: GameType.MINIDOM;
   players: MinidomPlayer[];
   shop: MinidomCardType[];
-  turnIndex: number;
+  activePlayerIndex: number;
   currentTurnPhase: MinidomTurnPhase;
 }
 

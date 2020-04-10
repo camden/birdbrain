@@ -10,6 +10,7 @@ import { sendMessage } from 'store/websocket/actions';
 import {
   domPlayCardFromHand,
   domActivateCard,
+  domMakeMove,
 } from '@server/store/games/minidom/actions';
 import { useDispatch } from 'react-redux';
 
@@ -41,7 +42,11 @@ const MinidomMoveControls: React.FC<MinidomMoveControlsProps> = (props) => {
 
   const onActivateCard = useCallback(
     (card: MinidomCardType, cardIndex: number) => {
-      dispatch(sendMessage(domActivateCard(card)));
+      if (!card.target) {
+        return;
+      }
+
+      dispatch(sendMessage(domMakeMove(card.target)));
     },
     []
   );

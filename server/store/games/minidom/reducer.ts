@@ -5,12 +5,14 @@ import {
   MinidomCardEffect,
   MinidomCardDirection,
   MinidomPlayerLocation,
+  MinidomTurnPhase,
 } from './types';
 import {
   MinidomActionTypes,
   DOM_DRAW_CARD,
   DOM_PLAY_CARD_FROM_HAND,
   DOM_ACTIVATE_CARD,
+  DOM_MAKE_MOVE,
 } from './actions';
 import { produce } from 'immer';
 import { pickElement } from '../../../utils/rng';
@@ -90,11 +92,40 @@ const applyCardEffect = (
   }
 };
 
+/**
+ * ends the current turn. mutates!
+ * @param game
+ */
+const endCurrentTurn = (game: MinidomGameState) => {
+  game.activePlayerIndex = (game.activePlayerIndex + 1) % game.players.length;
+  game.currentTurnPhase = MinidomTurnPhase.MOVE;
+};
+
 export const minidomReducer = (
   game: MinidomGameState,
   action: MinidomActionTypes
 ) => {
   switch (action.type) {
+    case DOM_MAKE_MOVE: {
+      return produce(game, (draftState) => {
+        const player = getPlayer(draftState, action);
+        const isNotActivePlayer =
+          player.userId !== game.players[game.activePlayerIndex].userId;
+        if (isNotActivePlayer) {
+          return;
+        }
+
+        const direction = action.payload.direction;
+
+        const moveCard: MinidomCardType = {
+          effect: MinidomCardEffect.MOVE,
+          target: direction,
+        };
+
+        applyCardEffect(draftState, moveCard, player.userId);
+        endCurrentTurn(draftState);
+      });
+    }
     case DOM_ACTIVATE_CARD: {
       return produce(game, (draftState) => {
         const player = getPlayer(draftState, action);

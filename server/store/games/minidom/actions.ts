@@ -1,5 +1,5 @@
 import { ActionMeta } from '../../general/types';
-import { MinidomCardType } from './types';
+import { MinidomCardType, MinidomCardDirection } from './types';
 
 export const DOM_DRAW_CARD = 'DOM_DRAW_CARD';
 export const DOM_PLAY_CARD_FROM_HAND = 'DOM_PLAY_CARD_FROM_HAND';
@@ -53,7 +53,24 @@ export const domActivateCard = (card: MinidomCardType) => {
   };
 };
 
+export interface DomMakeMoveAction extends DomBaseAction {
+  type: typeof DOM_MAKE_MOVE;
+  payload: {
+    direction: MinidomCardDirection;
+  };
+}
+
+export const domMakeMove = (direction: MinidomCardDirection) => {
+  return {
+    type: DOM_MAKE_MOVE,
+    payload: {
+      direction,
+    },
+  };
+};
+
 export type MinidomActionTypes =
+  | DomMakeMoveAction
   | DomDrawCardAction
   | DomPlayCardFromHandAction
   | DomActivateCardAction;

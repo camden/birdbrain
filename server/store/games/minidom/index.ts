@@ -73,7 +73,7 @@ export const createNewGameOfMinidom = (
     type: GameType.MINIDOM,
     players,
     shop: [],
-    turnIndex: 0,
+    activePlayerIndex: 0,
     currentTurnPhase: MinidomTurnPhase.MOVE,
   };
 };
