@@ -7,6 +7,7 @@ export interface MinidomGameState extends Game {
   shop: MinidomCardType[];
   activePlayerIndex: number;
   currentTurnPhase: MinidomTurnPhase;
+  cardPlaysRemaining: number;
 }
 
 export enum MinidomTurnPhase {

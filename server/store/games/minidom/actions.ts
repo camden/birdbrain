@@ -5,6 +5,7 @@ export const DOM_DRAW_CARD = 'DOM_DRAW_CARD';
 export const DOM_PLAY_CARD_FROM_HAND = 'DOM_PLAY_CARD_FROM_HAND';
 export const DOM_ACTIVATE_CARD = 'DOM_ACTIVATE_CARD';
 export const DOM_MAKE_MOVE = 'DOM_MAKE_MOVE';
+export const DOM_END_PHASE = 'DOM_END_PHASE';
 export const DOM_BUY_CARD_FROM_SHOP = 'DOM_BUY_CARD_FROM_SHOP';
 
 export interface DomBaseAction {
@@ -69,7 +70,18 @@ export const domMakeMove = (direction: MinidomCardDirection) => {
   };
 };
 
+export interface DomEndPhaseAction extends DomBaseAction {
+  type: typeof DOM_END_PHASE;
+}
+
+export const domEndPhase = () => {
+  return {
+    type: DOM_END_PHASE,
+  };
+};
+
 export type MinidomActionTypes =
+  | DomEndPhaseAction
   | DomMakeMoveAction
   | DomDrawCardAction
   | DomPlayCardFromHandAction

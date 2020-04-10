@@ -1,39 +1,17 @@
-import React, { useCallback } from 'react';
-import useSelector from 'store/use-selector';
-import { getCurrentUser } from 'store/selectors';
-import {
-  MinidomGameState,
-  MinidomCardType,
-} from '@server/store/games/minidom/types';
-import MinidomCard from './Card';
-import Button from 'components/shared/button/Button';
-import { useDispatch } from 'react-redux';
-import { sendMessage } from 'store/websocket/actions';
-import {
-  domDrawCard,
-  domPlayCardFromHand,
-} from '@server/store/games/minidom/actions';
+import React from 'react';
+import { MinidomGameState } from '@server/store/games/minidom/types';
 import MinidomGameBar from './GameBar';
 import styles from './Main.module.css';
 import { useCurrentPlayer } from 'utils/minidom-utils';
-import MinidomCardRow from './CardRow';
 import MinidomMap from './Map';
-import MinidomMoveControls from './MoveControls';
+import MinidomMainInput from './MainInput';
 
 export interface MainProps {
   game: MinidomGameState;
 }
 
 const MinidomMain: React.FC<MainProps> = ({ game }) => {
-  const dispatch = useDispatch();
   const currentPlayer = useCurrentPlayer(game);
-
-  const onPlayCardFromHand = useCallback(
-    (card: MinidomCardType, cardIndex: number) => {
-      dispatch(sendMessage(domPlayCardFromHand(cardIndex)));
-    },
-    []
-  );
 
   const activePlayer = game.players[game.activePlayerIndex];
   const isActivePlayer = activePlayer.userId === currentPlayer.userId;
@@ -44,21 +22,7 @@ const MinidomMain: React.FC<MainProps> = ({ game }) => {
       <h2>Phase: {game.currentTurnPhase}</h2>
       <h2>{activePlayer.name}'s turn</h2>
       <MinidomMap game={game} />
-      {isActivePlayer && <MinidomMoveControls game={game} />}
-      {/* <h2>hand:</h2>
-      <MinidomCardRow
-        cards={currentPlayer.collection.hand}
-        onClick={onPlayCardFromHand}
-      />
-      <h2>deck:</h2>
-      <MinidomCardRow hidden cards={currentPlayer.collection.deck} />
-      <Button
-        onClick={() => {
-          dispatch(sendMessage(domDrawCard()));
-        }}
-      >
-        Draw a card
-      </Button> */}
+      {isActivePlayer && <MinidomMainInput game={game} />}
     </div>
   );
 };

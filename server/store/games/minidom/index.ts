@@ -44,6 +44,12 @@ const colors = [
   'red',
   'purple',
   'indigo',
+  'cyan',
+  'black',
+  'yellow',
+  'green',
+  'blue',
+  'hotpink',
 ];
 
 const createPlayerFromUser = (user: User): MinidomPlayer => {
@@ -74,6 +80,7 @@ export const createNewGameOfMinidom = (
     players,
     shop: [],
     activePlayerIndex: 0,
+    cardPlaysRemaining: 1,
     currentTurnPhase: MinidomTurnPhase.MOVE,
   };
 };
