@@ -53,7 +53,7 @@ const MinidomMainInput: React.FC<MinidomMainInputProps> = ({ game }) => {
     case MinidomTurnPhase.BUY:
       return (
         <div>
-          shop
+          <MinidomCardRow cards={game.shop} />
           <Button secondary onClick={endPhase}>
             Done Buying
           </Button>

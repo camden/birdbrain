@@ -78,6 +78,23 @@ const createPlayerFromUser = (user: User): MinidomPlayer => {
   };
 };
 
+const generateShopCards = (): MinidomCardType[] => {
+  return [
+    {
+      effect: MinidomCardEffect.GAIN_MONEY,
+      value: 99,
+    },
+    {
+      effect: MinidomCardEffect.GAIN_MONEY,
+      value: 99,
+    },
+    {
+      effect: MinidomCardEffect.GAIN_MONEY,
+      value: 99,
+    },
+  ];
+};
+
 export const createNewGameOfMinidom = (
   id: GameID,
   usersInRoom: User[]
@@ -88,7 +105,7 @@ export const createNewGameOfMinidom = (
     id,
     type: GameType.MINIDOM,
     players,
-    shop: [],
+    shop: generateShopCards(),
     activePlayerIndex: 0,
     cardPlaysRemaining: STARTING_CARD_PLAYS,
     currentTurnPhase: MinidomTurnPhase.MOVE,
