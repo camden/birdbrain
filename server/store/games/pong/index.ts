@@ -6,6 +6,10 @@ const createPlayerFromUser = (user: User): PongPlayer => {
   return {
     userId: user.id,
     name: user.name,
+    position: {
+      x: 10,
+      y: 10,
+    },
   };
 };
 

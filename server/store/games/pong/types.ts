@@ -9,4 +9,8 @@ export interface PongGameState extends Game {
 export interface PongPlayer {
   userId: string;
   name: string;
+  position: {
+    x: number;
+    y: number;
+  };
 }
