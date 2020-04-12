@@ -25,7 +25,7 @@ const PongMain: React.FC<PongMainProps> = ({ game }) => {
   );
 
   const throttledSendUpdate = useCallback(
-    throttle(100, (x: number, y: number) => {
+    throttle(50, (x: number, y: number) => {
       dispatch(sendMessage(pongUpdatePosition(x, y)));
     }),
     []
