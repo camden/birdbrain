@@ -24,16 +24,15 @@ const PongMain: React.FC<PongMainProps> = ({ game }) => {
     (p) => p.userId !== currentPlayer.userId
   );
 
-  console.log(otherPlayers);
-
   const throttledSendUpdate = useCallback(
     throttle(100, (x: number, y: number) => {
       dispatch(sendMessage(pongUpdatePosition(x, y)));
     }),
     []
   );
+
   const onMouseMove = useCallback(
-    (evt: KonvaEventObject<MouseEvent>) => {
+    (evt: KonvaEventObject<MouseEvent> | KonvaEventObject<TouchEvent>) => {
       const pos = evt.currentTarget.getStage()?.getPointerPosition();
       if (!pos) {
         return;
@@ -54,7 +53,14 @@ const PongMain: React.FC<PongMainProps> = ({ game }) => {
 
   return (
     <div ref={wrapperRef}>
-      <Stage width={WIDTH || 10} height={HEIGHT} onMouseMove={onMouseMove}>
+      <Stage
+        width={WIDTH || 10}
+        height={HEIGHT}
+        onMouseMove={onMouseMove}
+        onTouchMove={onMouseMove}
+        onTouchStart={onMouseMove}
+        onTouchEnd={onMouseMove}
+      >
         <Layer>
           <Rect x={0} y={0} width={WIDTH} height={HEIGHT} fill={'white'} />
         </Layer>
