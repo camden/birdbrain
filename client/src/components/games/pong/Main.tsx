@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { PongGameState } from '@server/store/games/pong/types';
 import styles from './Main.module.css';
-import { Stage, Layer, Rect, Line } from 'react-konva';
+import { Stage, Layer, Rect, Line, Circle } from 'react-konva';
 import { useDispatch } from 'react-redux';
 import { sendMessage } from 'store/websocket/actions';
 import { pongUpdatePosition } from '@server/store/games/pong/actions';
@@ -18,29 +18,50 @@ const PongMain: React.FC<PongMainProps> = ({ game }) => {
   const dispatch = useDispatch();
   const currentPlayer = useCurrentPlayer(game);
 
+  const [curPlayerPos, setCurPlayerPos] = useState({ x: 0, y: 0 });
+
   const otherPlayers = game.players.filter(
     (p) => p.userId !== currentPlayer.userId
   );
 
   console.log(otherPlayers);
 
-  const onMouseMove = useCallback(
+  const throttledSendUpdate = useCallback(
     throttle(100, (evt: KonvaEventObject<MouseEvent>) => {
       const { x, y } = evt.evt;
       dispatch(sendMessage(pongUpdatePosition(x, y)));
     }),
     []
   );
+  const onMouseMove = useCallback(
+    (evt: KonvaEventObject<MouseEvent>) => {
+      throttledSendUpdate(evt);
+      const { x, y } = evt.evt;
+      setCurPlayerPos({ x, y });
+    },
+    [throttledSendUpdate]
+  );
+
+  const WIDTH = window.innerWidth;
+  const HEIGHT = 300;
 
   return (
     <div>
-      <h1>pong</h1>
-      <Stage width={window.innerWidth} height={300} onMouseMove={onMouseMove}>
+      <Stage width={WIDTH} height={HEIGHT} onMouseMove={onMouseMove}>
         <Layer>
+          <Rect x={0} y={0} width={WIDTH} height={HEIGHT} fill={'white'} />
+        </Layer>
+        <Layer>
+          <Circle
+            radius={16}
+            fill={stringToColor(currentPlayer.name)}
+            x={curPlayerPos.x}
+            y={curPlayerPos.y}
+          />
           {otherPlayers.map((p) => (
-            <Rect
-              width={10}
-              height={10}
+            <Circle
+              key={p.userId}
+              radius={16}
               fill={stringToColor(p.name)}
               x={p.position.x}
               y={p.position.y}
