@@ -13,6 +13,8 @@ import FishbowlMain from './fishbowl/Main';
 import { FishbowlGameState } from '@server/store/games/fishbowl/types';
 import MinidomMain from './minidom/Main';
 import { MinidomGameState } from '@server/store/games/minidom/types';
+import PongMain from './pong/Main';
+import { PongGameState } from '@server/store/games/pong/types';
 
 export interface GameProps {
   room: Room;
@@ -34,6 +36,8 @@ const Game: React.FC<GameProps> = ({ room }) => {
       return <FishbowlMain game={game as FishbowlGameState} room={room} />;
     case GameType.MINIDOM:
       return <MinidomMain game={game as MinidomGameState} />;
+    case GameType.PONG:
+      return <PongMain game={game as PongGameState} />;
   }
 
   return <div>game not found</div>;

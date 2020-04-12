@@ -51,10 +51,17 @@ const getGameMetadata = (gameType: GameType): GameMetadata => {
         time: '10 min',
         description: 'A lightweight version of the deckbuilding game Dominion.',
       };
+    case GameType.PONG:
+      return {
+        title: 'Pong',
+        playerCount: '2',
+        time: '10 min',
+        description: 'The classic virtual tennis game.',
+      };
   }
 };
 
-const GameCard: React.FC<GameCardProps> = props => {
+const GameCard: React.FC<GameCardProps> = (props) => {
   const playSoundFn = useSound(ButtonClickSound);
   const metadata = getGameMetadata(props.gameType);
 

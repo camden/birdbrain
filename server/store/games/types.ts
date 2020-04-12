@@ -4,6 +4,7 @@ export enum GameType {
   SKULL = 'SKULL',
   CHAT = 'CHAT',
   MINIDOM = 'MINIDOM',
+  PONG = 'PONG',
 }
 
 export type GameID = string;

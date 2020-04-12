@@ -26,6 +26,9 @@ import { FishbowlGameState } from 'store/games/fishbowl/types';
 import { MinidomGameState } from 'store/games/minidom/types';
 import { MinidomActionTypes } from 'store/games/minidom/actions';
 import { minidomReducer } from 'store/games/minidom/reducer';
+import { PongGameState } from 'store/games/pong/types';
+import { PongActionTypes } from 'store/games/pong/actions';
+import { pongReducer } from 'store/games/pong/reducer';
 
 const initialState: GeneralState = {
   entities: {
@@ -36,7 +39,7 @@ const initialState: GeneralState = {
           users: [],
           leaderUserID: null,
           game: null,
-          selectedGameType: GameType.MINIDOM,
+          selectedGameType: GameType.PONG,
         },
       },
       allIds: ['DEBUG'],
@@ -75,7 +78,7 @@ function customGameReducer<
   if (!gameId) {
     return state;
   }
-  return produce(state, draftState => {
+  return produce(state, (draftState) => {
     const game = draftState.entities.games.byId[gameId];
     if (!game) {
       return;
@@ -91,6 +94,14 @@ export const generalReducer = (
   state = initialState,
   action: GeneralActionTypes
 ) => {
+  if (action.type.startsWith('PONG_')) {
+    return customGameReducer<PongActionTypes, PongGameState>(
+      pongReducer,
+      state,
+      action
+    );
+  }
+
   if (action.type.startsWith('DOM_')) {
     return customGameReducer<MinidomActionTypes, MinidomGameState>(
       minidomReducer,
@@ -131,7 +142,7 @@ export const generalReducer = (
         return state;
       }
 
-      return produce(state, draftState => {
+      return produce(state, (draftState) => {
         const room = draftState.entities.rooms.byId[roomId];
         room.selectedGameType = action.payload.gameType;
       });
@@ -149,11 +160,11 @@ export const generalReducer = (
       }
 
       const usersInRoom = room.users.map(
-        userId => state.entities.users.byId[userId]
+        (userId) => state.entities.users.byId[userId]
       );
       const newGame = createNewGame(room.selectedGameType, usersInRoom);
 
-      return produce(state, draftState => {
+      return produce(state, (draftState) => {
         const room = draftState.entities.rooms.byId[roomId];
 
         room.game = newGame.id;
@@ -163,7 +174,7 @@ export const generalReducer = (
       });
     }
     case CREATE_NEW_ROOM:
-      return produce(state, draftState => {
+      return produce(state, (draftState) => {
         const newRoomId = action.payload.roomId;
         draftState.entities.rooms.allIds.push(newRoomId);
 
@@ -176,7 +187,7 @@ export const generalReducer = (
         };
       });
     case ADD_USER_TO_ROOM:
-      return produce(state, draftState => {
+      return produce(state, (draftState) => {
         const room = draftState.entities.rooms.byId[action.payload.room.id];
         const newUser = action.payload.user;
 
@@ -185,7 +196,7 @@ export const generalReducer = (
         }
 
         const roomLeaderIsNotInRoom = room.users.every(
-          userId => room.leaderUserID !== userId
+          (userId) => room.leaderUserID !== userId
         );
 
         if (room.users.length === 0 || roomLeaderIsNotInRoom) {
@@ -197,7 +208,7 @@ export const generalReducer = (
         draftState.entities.users.byId[newUser.id] = newUser;
       });
     case REMOVE_USER_FROM_ROOM:
-      return produce(state, draftState => {
+      return produce(state, (draftState) => {
         const room = draftState.entities.rooms.byId[action.payload.room.id];
         const userToRemove = action.payload.user;
 
@@ -205,10 +216,10 @@ export const generalReducer = (
           return;
         }
 
-        room.users = room.users.filter(id => id !== userToRemove.id);
+        room.users = room.users.filter((id) => id !== userToRemove.id);
 
         draftState.entities.users.allIds = draftState.entities.users.allIds.filter(
-          id => id !== userToRemove.id
+          (id) => id !== userToRemove.id
         );
 
         delete draftState.entities.users.byId[userToRemove.id];
@@ -222,13 +233,13 @@ export const generalReducer = (
         // if room is now empty, delete room (except when developing)
         if (room.users.length === 0 && process.env.NODE_ENV === 'production') {
           draftState.entities.rooms.allIds = draftState.entities.rooms.allIds.filter(
-            id => id !== room.id
+            (id) => id !== room.id
           );
           delete draftState.entities.rooms.byId[room.id];
         }
       });
     case END_CURRENT_GAME: {
-      return produce(state, draftState => {
+      return produce(state, (draftState) => {
         const room = draftState.entities.rooms.byId[action.meta.roomId];
         if (!room) {
           throw new Error(
@@ -244,7 +255,7 @@ export const generalReducer = (
 
         // delete game
         draftState.entities.games.allIds = draftState.entities.games.allIds.filter(
-          id => id !== gameId
+          (id) => id !== gameId
         );
         delete draftState.entities.games.byId[gameId];
 

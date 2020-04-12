@@ -5,6 +5,7 @@ import { createNewGameOfSkull } from './skull';
 import { createNewGameOfChat } from './chat';
 import { createNewGameOfFishbowl } from './fishbowl';
 import { createNewGameOfMinidom } from './minidom';
+import { createNewGameOfPong } from './pong';
 import { User } from 'store/general/types';
 
 export const generateGameId = (type: GameType): GameID => {
@@ -23,5 +24,7 @@ export const createNewGame = (type: GameType, usersInRoom: User[]): Game => {
       return createNewGameOfFishbowl(generateGameId(type), usersInRoom);
     case GameType.MINIDOM:
       return createNewGameOfMinidom(generateGameId(type), usersInRoom);
+    case GameType.PONG:
+      return createNewGameOfPong(generateGameId(type), usersInRoom);
   }
 };

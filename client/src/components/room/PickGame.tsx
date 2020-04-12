@@ -14,7 +14,7 @@ export interface PickGameProps {
   onPickGame: (game: GameType) => void;
 }
 
-const PickGame: React.FC<PickGameProps> = props => {
+const PickGame: React.FC<PickGameProps> = (props) => {
   return (
     <RoomWrapper room={props.room} className={styles.wrapper}>
       <main className={styles.pick_game}>
@@ -51,6 +51,11 @@ const PickGame: React.FC<PickGameProps> = props => {
             className={styles.game_card}
             gameType={GameType.MINIDOM}
             onClick={() => props.onPickGame(GameType.MINIDOM)}
+          />
+          <GameCard
+            className={styles.game_card}
+            gameType={GameType.PONG}
+            onClick={() => props.onPickGame(GameType.PONG)}
           />
         </section>
       </main>
