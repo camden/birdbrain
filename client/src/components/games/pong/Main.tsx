@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import { PongGameState } from '@server/store/games/pong/types';
 import styles from './Main.module.css';
 import { Stage, Layer, Rect, Line, Circle } from 'react-konva';
@@ -27,27 +27,34 @@ const PongMain: React.FC<PongMainProps> = ({ game }) => {
   console.log(otherPlayers);
 
   const throttledSendUpdate = useCallback(
-    throttle(100, (evt: KonvaEventObject<MouseEvent>) => {
-      const { x, y } = evt.evt;
+    throttle(100, (x: number, y: number) => {
       dispatch(sendMessage(pongUpdatePosition(x, y)));
     }),
     []
   );
   const onMouseMove = useCallback(
     (evt: KonvaEventObject<MouseEvent>) => {
-      throttledSendUpdate(evt);
-      const { x, y } = evt.evt;
+      const pos = evt.currentTarget.getStage()?.getPointerPosition();
+      if (!pos) {
+        return;
+      }
+
+      const { x, y } = pos;
+
+      throttledSendUpdate(x, y);
       setCurPlayerPos({ x, y });
     },
     [throttledSendUpdate]
   );
 
-  const WIDTH = window.innerWidth;
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  const WIDTH = wrapperRef.current?.clientWidth;
   const HEIGHT = 300;
 
   return (
-    <div>
-      <Stage width={WIDTH} height={HEIGHT} onMouseMove={onMouseMove}>
+    <div ref={wrapperRef}>
+      <Stage width={WIDTH || 10} height={HEIGHT} onMouseMove={onMouseMove}>
         <Layer>
           <Rect x={0} y={0} width={WIDTH} height={HEIGHT} fill={'white'} />
         </Layer>
