@@ -10,7 +10,7 @@ import { GameID, GameType } from '../types';
 import { User, UserID } from 'store/general/types';
 import shuffleArray from '../../../utils/shuffle-array';
 
-export const DEFAULT_DURATION = 30500;
+export const DEFAULT_DURATION = 30200;
 export const QUICK_DEBUG_DURATION = 10500;
 export const LONG_DEBUG_DURATION = 600500;
 
