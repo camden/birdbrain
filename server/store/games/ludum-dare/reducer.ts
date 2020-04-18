@@ -9,7 +9,9 @@ import {
   LD_ACK,
   LD_START_MINIGAME,
   LD_REPORT_END_MINIGAME,
+  LD_CHECK_MINIGAME_ANSWER,
 } from './actions';
+import { createSimonSaysState, checkMinigameAnswer } from './minigames';
 import produce from 'immer';
 import { MINIGAME_DURATION_MS } from '.';
 
@@ -48,6 +50,7 @@ const ludumReducer = (
           if (game.phase === LudumPhase.INTRO) {
             draftState.phase = LudumPhase.PRE_MINIGAME;
             draftState.currentMinigame = LudumMinigame.SIMON_SAYS;
+            draftState.currentMinigameState = createSimonSaysState();
             draftState.acknowledged = [];
             draftState.roundNumber++;
             return;
@@ -56,8 +59,10 @@ const ludumReducer = (
           if (game.phase === LudumPhase.MINIGAME_RESULTS) {
             draftState.phase = LudumPhase.PRE_MINIGAME;
             draftState.currentMinigame = LudumMinigame.SIMON_SAYS;
+            draftState.currentMinigameState = createSimonSaysState();
             draftState.acknowledged = [];
             draftState.roundNumber++;
+            draftState.playersWhoPassedCurrentMinigame = [];
             return;
           }
         }
@@ -96,6 +101,38 @@ const ludumReducer = (
         draftState.minigameEndTime = null;
         draftState.currentMinigame = null;
         draftState.phase = LudumPhase.MINIGAME_RESULTS;
+      });
+    case LD_CHECK_MINIGAME_ANSWER:
+      return produce(game, (draftState) => {
+        if (game.phase !== LudumPhase.PLAY_MINIGAME) {
+          return;
+        }
+
+        const currentPlayer = getPlayer(draftState, action);
+        if (
+          game.playersWhoPassedCurrentMinigame.includes(currentPlayer.userId)
+        ) {
+          return;
+        }
+
+        const hasCorrectAnswer = checkMinigameAnswer(
+          game,
+          action.payload.answer
+        );
+
+        if (hasCorrectAnswer) {
+          draftState.playersWhoPassedCurrentMinigame.push(currentPlayer.userId);
+        }
+
+        const everyonePassed = game.players.every((p) =>
+          draftState.playersWhoPassedCurrentMinigame.includes(p.userId)
+        );
+
+        if (everyonePassed) {
+          draftState.minigameEndTime = null;
+          draftState.currentMinigame = null;
+          draftState.phase = LudumPhase.MINIGAME_RESULTS;
+        }
       });
   }
 };

@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
-import { LudumGameState } from '@server/store/games/ludum-dare/types';
+import React, { useState, ReactNode } from 'react';
+import {
+  LudumGameState,
+  LudumMinigame,
+  LudumMinigameSimonSaysState,
+} from '@server/store/games/ludum-dare/types';
 import useInterval from 'use-interval';
 import { MINIGAME_DURATION_MS } from '@server/store/games/ludum-dare';
 import { useDispatch } from 'react-redux';
 import { sendMessage } from 'store/websocket/actions';
 import { ludumReportEndMinigame } from '@server/store/games/ludum-dare/actions';
+import LudumMinigameSimonSays from './MinigameSimonSays';
 
 export interface LudumPlayMinigameProps {
   game: LudumGameState;
@@ -31,10 +36,22 @@ const LudumPlayMinigame: React.FC<LudumPlayMinigameProps> = ({ game }) => {
     }
   }, 1000);
 
+  let minigame: ReactNode = null;
+  switch (game.currentMinigame) {
+    case LudumMinigame.SIMON_SAYS:
+      minigame = (
+        <LudumMinigameSimonSays
+          game={game}
+          minigame={game.currentMinigameState as LudumMinigameSimonSaysState}
+        />
+      );
+  }
+
   return (
     <div>
       <div>playing the game {game.currentMinigame}</div>
       <div>{timeLeft} seconds left</div>
+      {minigame}
     </div>
   );
 };

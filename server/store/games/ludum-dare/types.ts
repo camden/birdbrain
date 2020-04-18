@@ -8,7 +8,25 @@ export interface LudumGameState extends Game {
   phase: LudumPhase;
   minigameEndTime: Timestamp | null;
   currentMinigame: LudumMinigame | null;
+  currentMinigameState: LudumMinigameState | null;
+  playersWhoPassedCurrentMinigame: UserID[];
   roundNumber: number;
+}
+
+export type LudumMinigameState = LudumMinigameSimonSaysState;
+
+export type LudumMinigameAnswer = LudumMinigameSimonSaysAnswer;
+
+export type LudumMinigameSimonSaysAnswer = LudumShape[];
+
+export enum LudumShape {
+  CIRCLE = 'CIRCLE',
+  HEART = 'HEART',
+  TRIANGLE = 'TRIANGLE',
+}
+
+export interface LudumMinigameSimonSaysState {
+  phrase: LudumShape[];
 }
 
 export enum LudumPhase {

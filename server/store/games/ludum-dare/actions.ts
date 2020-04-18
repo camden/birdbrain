@@ -1,5 +1,6 @@
 import { UserID, ActionMeta, Timestamp } from 'store/general/types';
 import uuid from 'uuid/v4';
+import { LudumMinigameAnswer, LudumMinigame } from './types';
 
 export interface LudumBaseAction {
   meta: ActionMeta;
@@ -8,6 +9,7 @@ export interface LudumBaseAction {
 export const LD_ACK = 'LD_ACK';
 export const LD_START_MINIGAME = 'LD_START_MINIGAME';
 export const LD_REPORT_END_MINIGAME = 'LD_REPORT_END_MINIGAME';
+export const LD_CHECK_MINIGAME_ANSWER = 'LD_CHECK_MINIGAME_ANSWER';
 
 export interface LudumAckAction extends LudumBaseAction {
   type: typeof LD_ACK;
@@ -45,7 +47,24 @@ export const ludumReportEndMinigame = () => {
   };
 };
 
+export interface LudumCheckMinigameAnswerAction extends LudumBaseAction {
+  type: typeof LD_CHECK_MINIGAME_ANSWER;
+  payload: {
+    answer: LudumMinigameAnswer;
+  };
+}
+
+export const ludumCheckMinigameAnswer = (answer: LudumMinigameAnswer) => {
+  return {
+    type: LD_CHECK_MINIGAME_ANSWER,
+    payload: {
+      answer,
+    },
+  };
+};
+
 export type LudumActionTypes =
+  | LudumCheckMinigameAnswerAction
   | LudumAckAction
   | LudumStartMinigameAction
   | LudumReportEndMinigameAction;

@@ -2,7 +2,7 @@ import { LudumGameState, LudumPlayer, LudumPhase } from './types';
 import { GameType, GameID } from '../types';
 import { User } from 'store/general/types';
 
-export const MINIGAME_DURATION_MS = 5500;
+export const MINIGAME_DURATION_MS = 550000;
 
 const createPlayerFromUser = (user: User): LudumPlayer => {
   return {
@@ -25,6 +25,8 @@ export const createNewGameOfLudum = (
     phase: LudumPhase.INTRO,
     minigameEndTime: null,
     currentMinigame: null,
+    currentMinigameState: null,
+    playersWhoPassedCurrentMinigame: [],
     roundNumber: 0,
   };
 };
