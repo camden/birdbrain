@@ -8,6 +8,7 @@ export interface LudumGameState extends Game {
   phase: LudumPhase;
   minigameEndTime: Timestamp | null;
   currentMinigame: LudumMinigame | null;
+  roundNumber: number;
 }
 
 export enum LudumPhase {

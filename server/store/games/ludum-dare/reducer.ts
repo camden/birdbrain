@@ -49,6 +49,7 @@ const ludumReducer = (
             draftState.phase = LudumPhase.PRE_MINIGAME;
             draftState.currentMinigame = LudumMinigame.SIMON_SAYS;
             draftState.acknowledged = [];
+            draftState.roundNumber++;
             return;
           }
 
@@ -56,6 +57,7 @@ const ludumReducer = (
             draftState.phase = LudumPhase.PRE_MINIGAME;
             draftState.currentMinigame = LudumMinigame.SIMON_SAYS;
             draftState.acknowledged = [];
+            draftState.roundNumber++;
             return;
           }
         }

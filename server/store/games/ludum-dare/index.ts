@@ -25,5 +25,6 @@ export const createNewGameOfLudum = (
     phase: LudumPhase.INTRO,
     minigameEndTime: null,
     currentMinigame: null,
+    roundNumber: 0,
   };
 };

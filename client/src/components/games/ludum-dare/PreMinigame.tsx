@@ -19,6 +19,7 @@ const LudumPreMinigame: React.FC<LudumPreMinigameProps> = ({ game }) => {
 
   return (
     <div>
+      <div>Round {game.roundNumber}</div>
       <div>uh oh looks like Zooboo wants help with something...</div>
       <div>🌝</div>
       <Button onClick={onStartClick}>start game</Button>
