@@ -22,7 +22,12 @@ const ludumReducer = (
     case LD_ACK_INTRO:
       return produce(game, (draftState) => {
         const player = getPlayer(draftState, action);
-        draftState.acknowledged.push(player);
+
+        if (game.acknowledged.includes(player.userId)) {
+          return;
+        }
+
+        draftState.acknowledged.push(player.userId);
       });
   }
 };
