@@ -129,11 +129,15 @@ const Home: React.FC = () => {
       </section>
       <section className={styles.footer}>
         <p>
-          Made with <span className={styles.emoji}>💜</span> by{' '}
+          Made with{' '}
+          <span className={styles.emoji} role="img" aria-label="heart">
+            💜
+          </span>{' '}
+          by{' '}
           <a
             href="https://twitter.com/camdenbickel"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >
             Camden Bickel
           </a>

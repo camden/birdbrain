@@ -57,9 +57,7 @@ const PreRound: React.FC<PreRoundProps> = ({ game }) => {
   }, [dispatch]);
 
   const isActivePlayer = currentUser?.id === game.activePlayer.userId;
-  const currentPlayer = game.players.find(p => p.userId === currentUser?.id);
-  const isOnSameTeamAsActivePlayer =
-    currentPlayer?.team === game.activePlayer.team;
+  const currentPlayer = game.players.find((p) => p.userId === currentUser?.id);
 
   if (!currentUser) {
     return <div>Something went wrong! Can't find current user. ERROR #1</div>;

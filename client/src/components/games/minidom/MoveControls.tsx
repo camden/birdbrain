@@ -44,7 +44,7 @@ const MinidomMoveControls: React.FC<MinidomMoveControlsProps> = (props) => {
 
       dispatch(sendMessage(domMakeMove(card.target)));
     },
-    []
+    [dispatch]
   );
 
   return <MinidomCardRow cards={cards} onClick={onActivateCard} />;
