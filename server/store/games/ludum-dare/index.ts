@@ -24,5 +24,6 @@ export const createNewGameOfLudum = (
     acknowledged: [],
     phase: LudumPhase.INTRO,
     minigameEndTime: null,
+    currentMinigame: null,
   };
 };

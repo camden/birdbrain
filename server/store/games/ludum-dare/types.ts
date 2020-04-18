@@ -7,6 +7,7 @@ export interface LudumGameState extends Game {
   acknowledged: UserID[];
   phase: LudumPhase;
   minigameEndTime: Timestamp | null;
+  currentMinigame: LudumMinigame | null;
 }
 
 export enum LudumPhase {
@@ -15,6 +16,10 @@ export enum LudumPhase {
   PLAY_MINIGAME = 'PLAY_MINIGAME',
   MINIGAME_RESULTS = 'MINIGAME_RESULTS',
   GAME_OVER = 'GAME_OVER',
+}
+
+export enum LudumMinigame {
+  SIMON_SAYS = 'SIMON_SAYS',
 }
 
 export interface LudumPlayer {

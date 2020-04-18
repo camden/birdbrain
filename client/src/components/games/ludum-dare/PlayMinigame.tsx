@@ -33,7 +33,7 @@ const LudumPlayMinigame: React.FC<LudumPlayMinigameProps> = ({ game }) => {
 
   return (
     <div>
-      <div>playing the game</div>
+      <div>playing the game {game.currentMinigame}</div>
       <div>{timeLeft} seconds left</div>
     </div>
   );

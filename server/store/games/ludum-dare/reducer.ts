@@ -1,4 +1,9 @@
-import { LudumGameState, LudumPlayer, LudumPhase } from './types';
+import {
+  LudumGameState,
+  LudumPlayer,
+  LudumPhase,
+  LudumMinigame,
+} from './types';
 import {
   LudumActionTypes,
   LD_ACK,
@@ -42,6 +47,14 @@ const ludumReducer = (
         if (everyoneAcked) {
           if (game.phase === LudumPhase.INTRO) {
             draftState.phase = LudumPhase.PRE_MINIGAME;
+            draftState.currentMinigame = LudumMinigame.SIMON_SAYS;
+            draftState.acknowledged = [];
+            return;
+          }
+
+          if (game.phase === LudumPhase.MINIGAME_RESULTS) {
+            draftState.phase = LudumPhase.PRE_MINIGAME;
+            draftState.currentMinigame = LudumMinigame.SIMON_SAYS;
             draftState.acknowledged = [];
             return;
           }
@@ -79,6 +92,7 @@ const ludumReducer = (
         }
 
         draftState.minigameEndTime = null;
+        draftState.currentMinigame = null;
         draftState.phase = LudumPhase.MINIGAME_RESULTS;
       });
   }
