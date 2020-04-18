@@ -48,7 +48,7 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
     }
 
     const timeLeftMs = game.roundEndTime - Date.now();
-    const timeLeftSeconds = Math.floor(timeLeftMs / 1000);
+    const timeLeftSeconds = Math.max(0, Math.floor(timeLeftMs / 1000));
 
     setTimeLeft(timeLeftSeconds);
 

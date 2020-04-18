@@ -22,7 +22,7 @@ const LudumPlayMinigame: React.FC<LudumPlayMinigameProps> = ({ game }) => {
     }
 
     const timeLeftMs = game.minigameEndTime - Date.now();
-    const timeLeftSeconds = Math.floor(timeLeftMs / 1000);
+    const timeLeftSeconds = Math.max(0, Math.floor(timeLeftMs / 1000));
 
     setTimeLeft(timeLeftSeconds);
 
