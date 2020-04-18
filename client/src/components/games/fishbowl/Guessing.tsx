@@ -81,7 +81,7 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
 
     setSkippedLastAnswer(false);
     playGotAnswerSound();
-  }, [dispatch, onButtonClick]);
+  }, [dispatch, onButtonClick, playGotAnswerSound]);
 
   const onSkippedAnswer = useCallback(() => {
     dispatch(sendMessage(fshSkipAnswer()));
@@ -89,9 +89,9 @@ const Guessing: React.FC<GuessingProps> = ({ game }) => {
 
     setSkippedLastAnswer(true);
     playSkippedAnswerSound();
-  }, [dispatch, onButtonClick]);
+  }, [dispatch, onButtonClick, playSkippedAnswerSound]);
 
-  const currentPlayer = game.players.find(p => p.userId === currentUser?.id);
+  const currentPlayer = game.players.find((p) => p.userId === currentUser?.id);
   if (!currentPlayer) {
     return (
       <div>

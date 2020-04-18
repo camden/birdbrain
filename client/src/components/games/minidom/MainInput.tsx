@@ -27,10 +27,12 @@ const MinidomMainInput: React.FC<MinidomMainInputProps> = ({ game }) => {
     (card: MinidomCardType, cardIndex: number) => {
       dispatch(sendMessage(domPlayCardFromHand(cardIndex)));
     },
-    []
+    [dispatch]
   );
 
-  const endPhase = useCallback(() => dispatch(sendMessage(domEndPhase())), []);
+  const endPhase = useCallback(() => dispatch(sendMessage(domEndPhase())), [
+    dispatch,
+  ]);
 
   switch (game.currentTurnPhase) {
     case MinidomTurnPhase.MOVE:

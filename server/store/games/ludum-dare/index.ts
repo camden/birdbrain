@@ -1,4 +1,4 @@
-import { LudumGameState, LudumPlayer } from './types';
+import { LudumGameState, LudumPlayer, LudumPhase } from './types';
 import { GameType, GameID } from '../types';
 import { User } from 'store/general/types';
 
@@ -19,5 +19,7 @@ export const createNewGameOfLudum = (
     id,
     type: GameType.LUDUM,
     players,
+    acknowledged: [],
+    phase: LudumPhase.INTRO,
   };
 };

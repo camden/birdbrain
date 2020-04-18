@@ -1,7 +1,6 @@
 import React, { useCallback, useState, useRef } from 'react';
 import { PongGameState } from '@server/store/games/pong/types';
-import styles from './Main.module.css';
-import { Stage, Layer, Rect, Line, Circle } from 'react-konva';
+import { Stage, Layer, Rect, Circle } from 'react-konva';
 import { useDispatch } from 'react-redux';
 import { sendMessage } from 'store/websocket/actions';
 import { pongUpdatePosition } from '@server/store/games/pong/actions';

@@ -7,11 +7,7 @@ import {
   MinidomCardDirection,
 } from '@server/store/games/minidom/types';
 import { sendMessage } from 'store/websocket/actions';
-import {
-  domPlayCardFromHand,
-  domActivateCard,
-  domMakeMove,
-} from '@server/store/games/minidom/actions';
+import { domMakeMove } from '@server/store/games/minidom/actions';
 import { useDispatch } from 'react-redux';
 
 export interface MinidomMoveControlsProps {

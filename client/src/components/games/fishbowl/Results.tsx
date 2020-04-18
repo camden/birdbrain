@@ -49,7 +49,7 @@ const Results: React.FC<ResultsProps> = ({ game }) => {
     return () => {
       clearInterval(timer);
     };
-  }, []);
+  }, [playRoundEndSound]);
 
   const answersSkippedWithoutDupes = game.answersSkipped.filter(
     (item, index) => game.answersSkipped.indexOf(item) === index
@@ -60,10 +60,10 @@ const Results: React.FC<ResultsProps> = ({ game }) => {
     POINTS_FOR_SKIPPED * answersSkippedWithoutDupes.length;
 
   const playersWhoHaveNotAcked: FishbowlPlayer[] = game.players.filter(
-    player => !game.acknowledged.includes(player.userId)
+    (player) => !game.acknowledged.includes(player.userId)
   );
 
-  const currentPlayer = game.players.find(p => p.userId === currentUser?.id);
+  const currentPlayer = game.players.find((p) => p.userId === currentUser?.id);
   if (!currentPlayer) {
     return (
       <div>
@@ -88,7 +88,7 @@ const Results: React.FC<ResultsProps> = ({ game }) => {
         {POINTS_FOR_GOT * game.answersGot.length} points.
       </p>
       <section className={styles.answersList}>
-        {game.answersGot.map(answer => (
+        {game.answersGot.map((answer) => (
           <div key={answer}>
             <FontAwesomeIcon icon={faCheck} /> {answer}
           </div>
