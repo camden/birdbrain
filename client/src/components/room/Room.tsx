@@ -34,7 +34,10 @@ const Room: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isPickingGame, setIsPickingGame] = useState(false);
 
-  const showDevGames = !!localStorage.getItem('birdbrain__show_dev_games');
+  const query = QueryString.parse(window.location.search);
+  const hasDevQuery = query && !!query.dev;
+  const showDevGames =
+    hasDevQuery || !!localStorage.getItem('birdbrain__show_dev_games');
 
   useEffect(() => {
     if (!id) {
