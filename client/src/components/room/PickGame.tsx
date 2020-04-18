@@ -10,6 +10,7 @@ import GameCard from 'components/shared/game-card/GameCard';
 
 export interface PickGameProps {
   room: Room;
+  showDevGames: boolean;
   onCancel: () => void;
   onPickGame: (game: GameType) => void;
 }
@@ -42,26 +43,32 @@ const PickGame: React.FC<PickGameProps> = (props) => {
             gameType={GameType.FISHBOWL}
             onClick={() => props.onPickGame(GameType.FISHBOWL)}
           />
-          <GameCard
-            className={styles.game_card}
-            gameType={GameType.LUDUM}
-            onClick={() => props.onPickGame(GameType.LUDUM)}
-          />
+          {props.showDevGames && (
+            <GameCard
+              className={styles.game_card}
+              gameType={GameType.LUDUM}
+              onClick={() => props.onPickGame(GameType.LUDUM)}
+            />
+          )}
           <GameCard
             className={styles.game_card}
             gameType={GameType.CHAT}
             onClick={() => props.onPickGame(GameType.CHAT)}
           />
-          <GameCard
-            className={styles.game_card}
-            gameType={GameType.MINIDOM}
-            onClick={() => props.onPickGame(GameType.MINIDOM)}
-          />
-          <GameCard
-            className={styles.game_card}
-            gameType={GameType.PONG}
-            onClick={() => props.onPickGame(GameType.PONG)}
-          />
+          {props.showDevGames && (
+            <GameCard
+              className={styles.game_card}
+              gameType={GameType.MINIDOM}
+              onClick={() => props.onPickGame(GameType.MINIDOM)}
+            />
+          )}
+          {props.showDevGames && (
+            <GameCard
+              className={styles.game_card}
+              gameType={GameType.PONG}
+              onClick={() => props.onPickGame(GameType.PONG)}
+            />
+          )}
         </section>
       </main>
     </RoomWrapper>

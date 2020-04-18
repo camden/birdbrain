@@ -25,7 +25,7 @@ const LOADING_TIMEOUT_MS = 1000;
 const Room: React.FC = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const room = useSelector(state => state.room);
+  const room = useSelector((state) => state.room);
   const isRoomLeader = useSelector(getIsRoomLeader());
   const usersInRoom = useSelector(getUsersInRoom());
   const roomLeader = useSelector(getRoomLeader());
@@ -33,6 +33,8 @@ const Room: React.FC = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [isPickingGame, setIsPickingGame] = useState(false);
+
+  const showDevGames = !!localStorage.getItem('birdbrain__show_dev_games');
 
   useEffect(() => {
     if (!id) {
@@ -85,6 +87,7 @@ const Room: React.FC = () => {
   if (isPickingGame) {
     return (
       <PickGame
+        showDevGames={showDevGames}
         room={room}
         onCancel={() => setIsPickingGame(false)}
         onPickGame={(game: GameType) => {
