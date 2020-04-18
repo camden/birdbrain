@@ -29,6 +29,9 @@ import { minidomReducer } from 'store/games/minidom/reducer';
 import { PongGameState } from 'store/games/pong/types';
 import { PongActionTypes } from 'store/games/pong/actions';
 import { pongReducer } from 'store/games/pong/reducer';
+import { LudumGameState } from 'store/games/ludum-dare/types';
+import { LudumActionTypes } from 'store/games/ludum-dare/actions';
+import ludumReducer from 'store/games/ludum-dare/reducer';
 
 const initialState: GeneralState = {
   entities: {
@@ -39,7 +42,7 @@ const initialState: GeneralState = {
           users: [],
           leaderUserID: null,
           game: null,
-          selectedGameType: GameType.PONG,
+          selectedGameType: GameType.LUDUM,
         },
       },
       allIds: ['DEBUG'],
@@ -94,6 +97,14 @@ export const generalReducer = (
   state = initialState,
   action: GeneralActionTypes
 ) => {
+  if (action.type.startsWith('LD_')) {
+    return customGameReducer<LudumActionTypes, LudumGameState>(
+      ludumReducer,
+      state,
+      action
+    );
+  }
+
   if (action.type.startsWith('PONG_')) {
     return customGameReducer<PongActionTypes, PongGameState>(
       pongReducer,

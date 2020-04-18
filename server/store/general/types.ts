@@ -10,6 +10,7 @@ import { ChatActionTypes } from 'store/games/chat/actions';
 import { FishbowlActionTypes } from 'store/games/fishbowl/actions';
 import { MinidomActionTypes } from 'store/games/minidom/actions';
 import { PongActionTypes } from 'store/games/pong/actions';
+import { LudumActionTypes } from 'store/games/ludum-dare/actions';
 
 export type RoomID = string;
 
@@ -111,6 +112,7 @@ export interface EndCurrentGameAction {
 }
 
 export type GameActionTypes =
+  | LudumActionTypes
   | PongActionTypes
   | MinidomActionTypes
   | FishbowlActionTypes
