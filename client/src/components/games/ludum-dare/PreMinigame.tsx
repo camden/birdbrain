@@ -3,7 +3,7 @@ import { LudumGameState } from '@server/store/games/ludum-dare/types';
 import Button from 'components/shared/button/Button';
 import { useDispatch } from 'react-redux';
 import { sendMessage } from 'store/websocket/actions';
-import { ludumAck } from '@server/store/games/ludum-dare/actions';
+import { ludumStartMinigame } from '@server/store/games/ludum-dare/actions';
 
 export interface LudumPreMinigameProps {
   game: LudumGameState;
@@ -13,7 +13,8 @@ const LudumPreMinigame: React.FC<LudumPreMinigameProps> = ({ game }) => {
   const dispatch = useDispatch();
 
   const onStartClick = useCallback(() => {
-    dispatch(sendMessage(ludumAck()));
+    const currentTime = Date.now();
+    dispatch(sendMessage(ludumStartMinigame(currentTime)));
   }, [dispatch]);
 
   return (

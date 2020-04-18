@@ -1,6 +1,12 @@
 import { LudumGameState, LudumPlayer, LudumPhase } from './types';
-import { LudumActionTypes, LD_ACK } from './actions';
+import {
+  LudumActionTypes,
+  LD_ACK,
+  LD_START_MINIGAME,
+  LD_REPORT_END_MINIGAME,
+} from './actions';
 import produce from 'immer';
+import { MINIGAME_DURATION_MS } from '.';
 
 const getPlayer = (
   game: LudumGameState,
@@ -39,13 +45,41 @@ const ludumReducer = (
             draftState.acknowledged = [];
             return;
           }
-
-          if (game.phase === LudumPhase.PRE_MINIGAME) {
-            draftState.phase = LudumPhase.PLAY_MINIGAME;
-            draftState.acknowledged = [];
-            return;
-          }
         }
+      });
+    case LD_START_MINIGAME:
+      return produce(game, (draftState) => {
+        if (game.phase !== LudumPhase.PRE_MINIGAME) {
+          return;
+        }
+
+        const player = getPlayer(draftState, action);
+
+        if (game.acknowledged.includes(player.userId)) {
+          return;
+        }
+
+        draftState.acknowledged.push(player.userId);
+
+        const everyoneAcked = game.players.every((p) =>
+          draftState.acknowledged.includes(p.userId)
+        );
+
+        if (everyoneAcked) {
+          draftState.phase = LudumPhase.PLAY_MINIGAME;
+          draftState.acknowledged = [];
+          draftState.minigameEndTime =
+            action.payload.startTime + MINIGAME_DURATION_MS;
+        }
+      });
+    case LD_REPORT_END_MINIGAME:
+      return produce(game, (draftState) => {
+        if (game.phase !== LudumPhase.PLAY_MINIGAME) {
+          return;
+        }
+
+        draftState.minigameEndTime = null;
+        draftState.phase = LudumPhase.MINIGAME_RESULTS;
       });
   }
 };
