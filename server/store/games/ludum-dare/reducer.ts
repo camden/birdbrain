@@ -1,5 +1,5 @@
-import { LudumGameState, LudumPlayer } from './types';
-import { LudumActionTypes, LD_ACK_INTRO } from './actions';
+import { LudumGameState, LudumPlayer, LudumPhase } from './types';
+import { LudumActionTypes, LD_ACK } from './actions';
 import produce from 'immer';
 
 const getPlayer = (
@@ -19,7 +19,7 @@ const ludumReducer = (
   action: LudumActionTypes
 ): LudumGameState => {
   switch (action.type) {
-    case LD_ACK_INTRO:
+    case LD_ACK:
       return produce(game, (draftState) => {
         const player = getPlayer(draftState, action);
 
@@ -28,6 +28,24 @@ const ludumReducer = (
         }
 
         draftState.acknowledged.push(player.userId);
+
+        const everyoneAcked = game.players.every((p) =>
+          draftState.acknowledged.includes(p.userId)
+        );
+
+        if (everyoneAcked) {
+          if (game.phase === LudumPhase.INTRO) {
+            draftState.phase = LudumPhase.PRE_MINIGAME;
+            draftState.acknowledged = [];
+            return;
+          }
+
+          if (game.phase === LudumPhase.PRE_MINIGAME) {
+            draftState.phase = LudumPhase.PLAY_MINIGAME;
+            draftState.acknowledged = [];
+            return;
+          }
+        }
       });
   }
 };

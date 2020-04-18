@@ -5,16 +5,16 @@ export interface LudumBaseAction {
   meta: ActionMeta;
 }
 
-export const LD_ACK_INTRO = 'LD_ACK_INTRO';
+export const LD_ACK = 'LD_ACK';
 
-export interface LudumAckIntroAction extends LudumBaseAction {
-  type: typeof LD_ACK_INTRO;
+export interface LudumAckAction extends LudumBaseAction {
+  type: typeof LD_ACK;
 }
 
-export const ludumAckIntro = () => {
+export const ludumAck = () => {
   return {
-    type: LD_ACK_INTRO,
+    type: LD_ACK,
   };
 };
 
-export type LudumActionTypes = LudumAckIntroAction;
+export type LudumActionTypes = LudumAckAction;

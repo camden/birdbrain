@@ -5,26 +5,24 @@ import { useDispatch } from 'react-redux';
 import { sendMessage } from 'store/websocket/actions';
 import { ludumAck } from '@server/store/games/ludum-dare/actions';
 
-export interface LudumIntroProps {
+export interface LudumPreMinigameProps {
   game: LudumGameState;
 }
 
-const LudumIntro: React.FC<LudumIntroProps> = ({ game }) => {
+const LudumPreMinigame: React.FC<LudumPreMinigameProps> = ({ game }) => {
   const dispatch = useDispatch();
 
-  const onContinueClick = useCallback(() => {
+  const onStartClick = useCallback(() => {
     dispatch(sendMessage(ludumAck()));
   }, [dispatch]);
 
   return (
     <div>
-      <div>
-        this is where a brief intro to your character and a short tutorial might
-        go.
-      </div>
-      <Button onClick={onContinueClick}>got it!</Button>
+      <div>uh oh looks like Zooboo wants help with something...</div>
+      <div>🌝</div>
+      <Button onClick={onStartClick}>start game</Button>
     </div>
   );
 };
 
-export default LudumIntro;
+export default LudumPreMinigame;
