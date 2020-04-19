@@ -1,23 +1,18 @@
+import produce from 'immer';
+import { MINIGAME_DURATION_MS } from '.';
 import {
-  LudumGameState,
-  LudumPlayer,
-  LudumPhase,
-  LudumMinigame,
-} from './types';
-import {
-  LudumActionTypes,
   LD_ACK,
-  LD_START_MINIGAME,
-  LD_REPORT_END_MINIGAME,
   LD_CHECK_MINIGAME_ANSWER,
+  LD_REPORT_END_MINIGAME,
+  LD_START_MINIGAME,
+  LudumActionTypes,
 } from './actions';
 import {
   checkMinigameAnswer,
   createMinigameState,
   pickNextMinigame,
 } from './minigames';
-import produce from 'immer';
-import { MINIGAME_DURATION_MS } from '.';
+import { LudumGameState, LudumPhase, LudumPlayer } from './types';
 
 const getPlayer = (
   game: LudumGameState,

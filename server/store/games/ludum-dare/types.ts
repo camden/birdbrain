@@ -13,6 +13,11 @@ export interface LudumGameState extends Game {
   roundNumber: number;
 }
 
+export interface LudumCharacter {
+  id: string;
+  name: string;
+}
+
 export type LudumMinigameState =
   | LudumMinigameSimonSaysState
   | LudumMinigameHydraulicsState;
@@ -64,4 +69,5 @@ export enum LudumMinigame {
 export interface LudumPlayer {
   userId: UserID;
   name: string;
+  character: LudumCharacter;
 }
