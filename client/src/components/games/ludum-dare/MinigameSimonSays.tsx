@@ -11,6 +11,7 @@ import { sendMessage } from 'store/websocket/actions';
 import { ludumCheckMinigameAnswer } from '@server/store/games/ludum-dare/actions';
 import { useCurrentPlayer } from 'utils/ludum-dare-utils';
 import { equals } from 'ramda';
+import styles from './MinigameSimonSays.module.css';
 
 export interface LudumMinigameSimonSaysProps {
   game: LudumGameState;
@@ -54,7 +55,7 @@ const LudumMinigameSimonSays: React.FC<LudumMinigameSimonSaysProps> = ({
 
   const curShape: ReactNode =
     indexOfCurrentLetter === minigame.phrase.length
-      ? ' '
+      ? '⠀'
       : getImageForShape(minigame.phrase[indexOfCurrentLetter]);
 
   const passedMinigame = game.playersWhoPassedCurrentMinigame.includes(
@@ -62,13 +63,15 @@ const LudumMinigameSimonSays: React.FC<LudumMinigameSimonSaysProps> = ({
   );
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       {passedMinigame && <strong>Congrats! You got the right answer</strong>}
       {currentGuess.length >= minigame.phrase.length &&
         !equals(currentGuess, minigame.phrase) && (
           <strong>Nope, try again</strong>
         )}
-      <div>simon says! {curShape}</div>
+      <div className={styles.bubble}>
+        <div className={styles.currentShape}>{curShape}</div>
+      </div>
       <div>
         the answer has <strong>{minigame.phrase.length} shapes</strong>
       </div>
