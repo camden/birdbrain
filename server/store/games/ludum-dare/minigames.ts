@@ -64,9 +64,10 @@ export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
   return {
     pipeMaxLevel: 5,
     correctResult: [1, 3, 5],
+    startingResult: [0, 0, 0],
     buttons: [
-      [+1, +1, +1],
-      [undefined, -1, -1],
+      [1, [true, false, false]],
+      [-1, [true, true, false]],
     ],
   };
 };

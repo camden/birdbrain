@@ -35,11 +35,15 @@ export interface LudumMinigameSimonSaysState {
 
 export type LudumMinigameHydraulicsAnswer = [number, number, number];
 
-export type LudumMinigameHydraulicsButton = [number?, number?, number?];
+export type LudumMinigameHydraulicsButton = [
+  number,
+  [boolean, boolean, boolean]
+];
 
 export interface LudumMinigameHydraulicsState {
   pipeMaxLevel: number;
   correctResult: [number, number, number];
+  startingResult: [number, number, number];
   buttons: LudumMinigameHydraulicsButton[];
 }
 

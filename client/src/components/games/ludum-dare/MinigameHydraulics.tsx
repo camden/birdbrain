@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import {
   LudumGameState,
   LudumMinigameHydraulicsState,
+  LudumMinigameHydraulicsButton,
 } from '@server/store/games/ludum-dare/types';
 import { useCurrentPlayer } from 'utils/ludum-dare-utils';
 import styles from './MinigameHydraulics.module.css';
@@ -12,6 +13,29 @@ export interface LudumMinigameHydraulicsProps {
   game: LudumGameState;
   minigame: LudumMinigameHydraulicsState;
 }
+
+const getClassNameForButton = (
+  button: LudumMinigameHydraulicsButton
+): string => {
+  const buttonAsString = button[1].map((bool) => (bool ? 1 : 0)).join('');
+  switch (buttonAsString) {
+    case '111':
+      return styles.cols111;
+    case '110':
+      return styles.cols110;
+    case '001':
+      return styles.cols001;
+    case '100':
+      return styles.cols100;
+    case '010':
+      return styles.cols010;
+    case '001':
+      return styles.cols001;
+    default:
+      console.error('Unexpected button config!');
+      return '';
+  }
+};
 
 const LudumMinigameHydraulics: React.FC<LudumMinigameHydraulicsProps> = ({
   game,
@@ -25,19 +49,24 @@ const LudumMinigameHydraulics: React.FC<LudumMinigameHydraulicsProps> = ({
     currentPlayer.userId
   );
 
-  const onButtonPress = (columns: (0 | 1 | 2)[], value: number) => {
+  const onButtonPress = (button: LudumMinigameHydraulicsButton) => {
     let newPipes: [number, number, number] = [...pipes] as [
       number,
       number,
       number
     ];
 
-    for (let i = 0; i < columns.length; i++) {
-      const idxToUpdate = columns[i];
-      newPipes[idxToUpdate] = Math.min(
-        minigame.pipeMaxLevel,
-        Math.max(0, newPipes[idxToUpdate] + value)
-      );
+    const value = button[0];
+    const columns = button[1];
+
+    for (let i = 0; i < 3; i++) {
+      const isAffected = columns[i];
+      if (isAffected) {
+        newPipes[i] = Math.min(
+          minigame.pipeMaxLevel,
+          Math.max(0, newPipes[i] + value)
+        );
+      }
     }
 
     setPipes(newPipes);
@@ -57,38 +86,21 @@ const LudumMinigameHydraulics: React.FC<LudumMinigameHydraulicsProps> = ({
         <div className={styles.pipe}>{pipes[2]}</div>
       </div>
       <div className={styles.pipeWrapper}>
-        <Button
-          className={styles.cols110}
-          onClick={() => onButtonPress([0, 1], +2)}
-        >
-          +2
-        </Button>
-        <Button
-          className={styles.cols011}
-          onClick={() => onButtonPress([1, 2], -1)}
-        >
-          -1
-        </Button>
+        {minigame.buttons.map((b) => (
+          <Button
+            key={b[0] + b[1].join()}
+            className={getClassNameForButton(b)}
+            onClick={() => onButtonPress(b)}
+          >
+            {b[0] > 0 ? '+' : ''}
+            {b[0]}
+          </Button>
+        ))}
         <Button
           className={styles.cols111}
-          onClick={() => onButtonPress([0, 1, 2], -1)}
+          onClick={() => setPipes(minigame.startingResult)}
         >
-          -1
-        </Button>
-        <Button
-          className={styles.cols001}
-          onClick={() => onButtonPress([2], +3)}
-        >
-          +3
-        </Button>
-        <Button
-          className={styles.cols011}
-          onClick={() => onButtonPress([1, 2], +2)}
-        >
-          +2
-        </Button>
-        <Button className={styles.cols111} onClick={() => setPipes([0, 0, 0])}>
-          Set to 0
+          Reset
         </Button>
       </div>
     </div>
