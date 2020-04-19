@@ -19,6 +19,7 @@ import PickGame from './PickGame';
 import { GameType } from '@server/store/games/types';
 import { faSpinnerThird } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Button from 'components/shared/button/Button';
 
 const LOADING_TIMEOUT_MS = 1000;
 
@@ -36,8 +37,10 @@ const Room: React.FC = () => {
 
   const query = QueryString.parse(window.location.search);
   const hasDevQuery = query && !!query.dev;
-  const showDevGames =
-    hasDevQuery || !!localStorage.getItem('birdbrain__show_dev_games');
+  const hasDevLocalStorage = !!localStorage.getItem(
+    'birdbrain__show_dev_games'
+  );
+  const showDevGames = hasDevQuery || hasDevLocalStorage;
 
   useEffect(() => {
     if (!id) {
@@ -102,14 +105,32 @@ const Room: React.FC = () => {
   }
 
   return (
-    <RoomBody
-      room={room}
-      isCurrentUserRoomLeader={isRoomLeader}
-      onStartGameClick={() => dispatch(sendStartGame())}
-      onChangeGameClick={() => setIsPickingGame(true)}
-      roomLeader={roomLeader}
-      usersInRoom={usersInRoom}
-    />
+    <>
+      {hasDevQuery && !hasDevLocalStorage && (
+        <Button
+          onClick={() =>
+            localStorage.setItem('birdbrain__show_dev_games', 'true')
+          }
+        >
+          Always show dev games
+        </Button>
+      )}
+      {hasDevQuery && hasDevLocalStorage && (
+        <Button
+          onClick={() => localStorage.removeItem('birdbrain__show_dev_games')}
+        >
+          Hide dev games
+        </Button>
+      )}
+      <RoomBody
+        room={room}
+        isCurrentUserRoomLeader={isRoomLeader}
+        onStartGameClick={() => dispatch(sendStartGame())}
+        onChangeGameClick={() => setIsPickingGame(true)}
+        roomLeader={roomLeader}
+        usersInRoom={usersInRoom}
+      />
+    </>
   );
 };
 
