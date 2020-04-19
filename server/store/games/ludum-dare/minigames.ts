@@ -11,12 +11,15 @@ import {
   LudumMinigameHydraulicsButtonPosition,
   LudumMinigameHydraulicsResult,
 } from './types';
-import { equals } from 'ramda';
+import { equals, uniq } from 'ramda';
 import { pickElement, pickRandomNumber } from 'utils/rng';
 import shuffleArray from 'utils/shuffle-array';
 
 export const pickNextMinigame = (): LudumMinigame => {
-  return LudumMinigame.HYDRAULICS;
+  return pickElement([
+    LudumMinigame.HYDRAULICS,
+    LudumMinigame.SIMON_SAYS,
+  ])[0] as LudumMinigame;
 };
 
 export const checkMinigameAnswer = (
@@ -28,6 +31,11 @@ export const checkMinigameAnswer = (
       return checkSimonSaysAnswer(
         game.currentMinigameState as LudumMinigameSimonSaysState,
         answer as LudumMinigameSimonSaysAnswer
+      );
+    case LudumMinigame.HYDRAULICS:
+      return checkHydraulicsAnswer(
+        game.currentMinigameState as LudumMinigameHydraulicsState,
+        answer as LudumMinigameHydraulicsResult
       );
     default:
       return false;
@@ -84,7 +92,7 @@ export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
   const startConfig: LudumMinigameHydraulicsResult = [
     ...endGoal,
   ] as LudumMinigameHydraulicsResult;
-  const buttons: LudumMinigameHydraulicsButton[] = [];
+  let buttons: LudumMinigameHydraulicsButton[] = [];
 
   for (let i = 0; i < iterations; i++) {
     // pick a random button of the 6 possible
@@ -138,6 +146,9 @@ export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
     buttons.push(button);
   }
 
+  // remove duplicate buttons
+  buttons = uniq(buttons);
+
   // shuffle the list of buttons
   shuffleArray(buttons);
 
@@ -147,6 +158,13 @@ export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
     startingResult: startConfig,
     buttons,
   };
+};
+
+const checkHydraulicsAnswer = (
+  minigame: LudumMinigameHydraulicsState,
+  answer: LudumMinigameHydraulicsResult
+): boolean => {
+  return equals(minigame.correctResult, answer);
 };
 
 const checkSimonSaysAnswer = (

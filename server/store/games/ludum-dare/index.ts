@@ -2,7 +2,11 @@ import { LudumGameState, LudumPlayer, LudumPhase } from './types';
 import { GameType, GameID } from '../types';
 import { User } from 'store/general/types';
 
-export const MINIGAME_DURATION_MS = 3050000;
+export const DEBUG_DURATION = 3050000;
+export const DEFAULT_DURATION = 30500;
+
+export const MINIGAME_DURATION_MS =
+  process.env.NODE_ENV === 'production' ? DEFAULT_DURATION : DEBUG_DURATION;
 
 const createPlayerFromUser = (user: User): LudumPlayer => {
   return {

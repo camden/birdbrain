@@ -8,6 +8,8 @@ import {
 import { useCurrentPlayer } from 'utils/ludum-dare-utils';
 import styles from './MinigameHydraulics.module.css';
 import Button from 'components/shared/button/Button';
+import { sendMessage } from 'store/websocket/actions';
+import { ludumCheckMinigameAnswer } from '@server/store/games/ludum-dare/actions';
 
 export interface LudumMinigameHydraulicsProps {
   game: LudumGameState;
@@ -70,6 +72,8 @@ const LudumMinigameHydraulics: React.FC<LudumMinigameHydraulicsProps> = ({
         );
       }
     }
+
+    dispatch(sendMessage(ludumCheckMinigameAnswer(newPipes)));
 
     setPipes(newPipes);
   };

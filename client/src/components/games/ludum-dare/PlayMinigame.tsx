@@ -47,6 +47,7 @@ const LudumPlayMinigame: React.FC<LudumPlayMinigameProps> = ({ game }) => {
           minigame={game.currentMinigameState as LudumMinigameSimonSaysState}
         />
       );
+      break;
     case LudumMinigame.HYDRAULICS:
       minigame = (
         <LudumMinigameHydraulics
@@ -54,6 +55,7 @@ const LudumPlayMinigame: React.FC<LudumPlayMinigameProps> = ({ game }) => {
           minigame={game.currentMinigameState as LudumMinigameHydraulicsState}
         />
       );
+      break;
   }
 
   return (
