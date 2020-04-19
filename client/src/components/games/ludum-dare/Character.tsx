@@ -4,7 +4,7 @@ import cx from 'classnames';
 
 import allenIcon from 'assets/images/ludum-dare/characters/allen/allenIcon.png';
 import allenIdle from 'assets/images/ludum-dare/characters/allen/allenIdle.png';
-import allenLose from 'assets/images/ludum-dare/characters/allen/allenLose.png';
+import allenLose from 'assets/images/ludum-dare/characters/allen/allenLoseAnim.gif';
 import allenPuzzled from 'assets/images/ludum-dare/characters/allen/allenPuzz.png';
 import allenWin from 'assets/images/ludum-dare/characters/allen/allenWin.png';
 import allenTime from 'assets/images/ludum-dare/characters/allen/allenTime.png';
@@ -34,7 +34,7 @@ import montyWin from 'assets/images/ludum-dare/characters/monty/montyWin.png';
 import montyTime from 'assets/images/ludum-dare/characters/monty/montyTime.png';
 import ronIcon from 'assets/images/ludum-dare/characters/ron/ronIcon.png';
 import ronIdle from 'assets/images/ludum-dare/characters/ron/ronIdle.png';
-import ronLose from 'assets/images/ludum-dare/characters/ron/ronLose.png';
+import ronLose from 'assets/images/ludum-dare/characters/ron/ronLoseAnim.gif';
 import ronPuzzled from 'assets/images/ludum-dare/characters/ron/ronPuzz.png';
 import ronWin from 'assets/images/ludum-dare/characters/ron/ronWin.png';
 import ronTime from 'assets/images/ludum-dare/characters/ron/ronTime.png';
@@ -138,6 +138,7 @@ export interface LudumCharacterProps {
   type?: CharacterType;
   className?: string;
   animation?: CharacterAnimation;
+  typeWhenPressed?: CharacterType;
 }
 
 const LudumCharacter: React.FC<LudumCharacterProps> = ({
@@ -145,10 +146,13 @@ const LudumCharacter: React.FC<LudumCharacterProps> = ({
   type,
   className,
   animation,
+  typeWhenPressed,
 }) => {
   const [isPressed, setIsPressed] = useState(false);
 
-  const finalType = isPressed ? CharacterType.WIN : type || CharacterType.IDLE;
+  const finalType = isPressed
+    ? typeWhenPressed || CharacterType.WIN
+    : type || CharacterType.IDLE;
   const url = characters[id] && characters[id][finalType];
 
   if (!url) {

@@ -21,7 +21,7 @@ import { faSpinnerThird } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from 'components/shared/button/Button';
 
-const LOADING_TIMEOUT_MS = 1000;
+const LOADING_TIMEOUT_MS = process.env.NODE_ENV === 'production' ? 1000 : 250;
 
 const Room: React.FC = () => {
   const { id } = useParams();

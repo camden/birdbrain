@@ -33,12 +33,10 @@ const LudumIntro: React.FC<LudumIntroProps> = ({ game }) => {
   let topText;
   let bottomText;
   let buttonText;
+  let buttonSecondary = true;
+  let typeWhenPressed;
 
-  const name = (
-    <span style={{ color: character.color, display: 'inline-block' }}>
-      {character.name}
-    </span>
-  );
+  const name = <span style={{ color: character.color }}>{character.name}</span>;
 
   if (tutorialStage === 1) {
     topText = <span>This is {name}.</span>;
@@ -47,30 +45,39 @@ const LudumIntro: React.FC<LudumIntroProps> = ({ game }) => {
     animation = CharacterAnimation.HOVER;
     characterType = CharacterType.IDLE;
   } else if (tutorialStage === 2) {
-    topText = <span>Well, {name} wants you to play minigames.</span>;
+    topText = <span>{name} wants to play some games.</span>;
     bottomText = <span>{name} loves a good game. But...</span>;
     buttonText = 'Yeah...?';
     animation = CharacterAnimation.SWAY;
     characterType = CharacterType.PUZZLED;
   } else if (tutorialStage === 3) {
-    topText = <span>...if you fail 3 times, {name} will DIE.</span>;
+    topText = <span>...fail 3 times, and {name} will DIE.</span>;
     bottomText = <span>Can you keep {name} alive?</span>;
     buttonText = "Let's do it!";
+    typeWhenPressed = CharacterType.LOSE;
     animation = CharacterAnimation.SHAKE;
+    buttonSecondary = false;
     characterType = CharacterType.NERVOUS;
   }
 
   return (
     <div className={styles.wrapper}>
       <h1>{topText}</h1>
-      <LudumCharacter
-        className={styles.character}
-        id={character.id}
-        type={characterType}
-        animation={animation}
-      />
+      <div className={styles.characterWrapper}>
+        <LudumCharacter
+          className={styles.character}
+          id={character.id}
+          type={characterType}
+          animation={animation}
+          typeWhenPressed={typeWhenPressed}
+        />
+      </div>
       <h1>{bottomText}</h1>
-      <Button onClick={onContinueClick}>{buttonText}</Button>
+      <div className={styles.footer}>
+        <Button onClick={onContinueClick} secondary={buttonSecondary}>
+          {buttonText}
+        </Button>
+      </div>
     </div>
   );
 };
