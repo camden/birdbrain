@@ -29,6 +29,8 @@ const getImageForShape = (shape: LudumShape): ReactNode => {
   }
 };
 
+const NUM_TICKS_WITH_NO_SHAPE = 2;
+
 const LudumMinigameSimonSays: React.FC<LudumMinigameSimonSaysProps> = ({
   game,
   minigame,
@@ -49,12 +51,14 @@ const LudumMinigameSimonSays: React.FC<LudumMinigameSimonSaysProps> = ({
   const [indexOfCurrentLetter, setIndexOfCurrentLetter] = useState(0);
 
   useInterval(() => {
-    const nextIdx = (indexOfCurrentLetter + 1) % (minigame.phrase.length + 1);
+    const nextIdx =
+      (indexOfCurrentLetter + 1) %
+      (minigame.phrase.length + NUM_TICKS_WITH_NO_SHAPE);
     setIndexOfCurrentLetter(nextIdx);
   }, 250);
 
   const curShape: ReactNode =
-    indexOfCurrentLetter === minigame.phrase.length
+    indexOfCurrentLetter >= minigame.phrase.length
       ? '⠀'
       : getImageForShape(minigame.phrase[indexOfCurrentLetter]);
 
