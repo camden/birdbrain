@@ -5,9 +5,15 @@ import {
   LudumMinigame,
   LudumMinigameSimonSaysState,
   LudumShape,
+  LudumMinigameHydraulicsState,
+  LudumMinigameState,
 } from './types';
 import { equals } from 'ramda';
 import { pickElement } from 'utils/rng';
+
+export const pickNextMinigame = (): LudumMinigame => {
+  return LudumMinigame.HYDRAULICS;
+};
 
 export const checkMinigameAnswer = (
   game: LudumGameState,
@@ -24,7 +30,18 @@ export const checkMinigameAnswer = (
   }
 };
 
-export const createSimonSaysState = (): LudumMinigameSimonSaysState => {
+export const createMinigameState = (
+  minigame: LudumMinigame
+): LudumMinigameState => {
+  switch (minigame) {
+    case LudumMinigame.SIMON_SAYS:
+      return createSimonSaysState();
+    case LudumMinigame.HYDRAULICS:
+      return createHydraulicsState();
+  }
+};
+
+const createSimonSaysState = (): LudumMinigameSimonSaysState => {
   const targetLength = 6;
   const elements = [LudumShape.CIRCLE, LudumShape.HEART, LudumShape.TRIANGLE];
   const phrase: LudumShape[] = [];
@@ -40,6 +57,17 @@ export const createSimonSaysState = (): LudumMinigameSimonSaysState => {
 
   return {
     phrase,
+  };
+};
+
+export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
+  return {
+    pipeMaxLevel: 5,
+    correctResult: [1, 3, 5],
+    buttons: [
+      [+1, +1, +1],
+      [undefined, -1, -1],
+    ],
   };
 };
 

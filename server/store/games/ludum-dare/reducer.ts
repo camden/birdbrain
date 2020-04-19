@@ -11,7 +11,12 @@ import {
   LD_REPORT_END_MINIGAME,
   LD_CHECK_MINIGAME_ANSWER,
 } from './actions';
-import { createSimonSaysState, checkMinigameAnswer } from './minigames';
+import {
+  createSimonSaysState,
+  checkMinigameAnswer,
+  createMinigameState,
+  pickNextMinigame,
+} from './minigames';
 import produce from 'immer';
 import { MINIGAME_DURATION_MS } from '.';
 
@@ -47,24 +52,14 @@ const ludumReducer = (
         );
 
         if (everyoneAcked) {
-          if (game.phase === LudumPhase.INTRO) {
-            draftState.phase = LudumPhase.PRE_MINIGAME;
-            draftState.currentMinigame = LudumMinigame.SIMON_SAYS;
-            draftState.currentMinigameState = createSimonSaysState();
-            draftState.acknowledged = [];
-            draftState.roundNumber++;
-            return;
-          }
-
-          if (game.phase === LudumPhase.MINIGAME_RESULTS) {
-            draftState.phase = LudumPhase.PRE_MINIGAME;
-            draftState.currentMinigame = LudumMinigame.SIMON_SAYS;
-            draftState.currentMinigameState = createSimonSaysState();
-            draftState.acknowledged = [];
-            draftState.roundNumber++;
-            draftState.playersWhoPassedCurrentMinigame = [];
-            return;
-          }
+          draftState.phase = LudumPhase.PRE_MINIGAME;
+          const nextMinigame = pickNextMinigame();
+          draftState.currentMinigame = nextMinigame;
+          draftState.currentMinigameState = createMinigameState(nextMinigame);
+          draftState.acknowledged = [];
+          draftState.roundNumber++;
+          draftState.playersWhoPassedCurrentMinigame = [];
+          return;
         }
       });
     case LD_START_MINIGAME:

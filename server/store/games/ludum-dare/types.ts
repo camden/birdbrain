@@ -13,9 +13,13 @@ export interface LudumGameState extends Game {
   roundNumber: number;
 }
 
-export type LudumMinigameState = LudumMinigameSimonSaysState;
+export type LudumMinigameState =
+  | LudumMinigameSimonSaysState
+  | LudumMinigameHydraulicsState;
 
-export type LudumMinigameAnswer = LudumMinigameSimonSaysAnswer;
+export type LudumMinigameAnswer =
+  | LudumMinigameSimonSaysAnswer
+  | LudumMinigameHydraulicsAnswer;
 
 export type LudumMinigameSimonSaysAnswer = LudumShape[];
 
@@ -29,6 +33,16 @@ export interface LudumMinigameSimonSaysState {
   phrase: LudumShape[];
 }
 
+export type LudumMinigameHydraulicsAnswer = [number, number, number];
+
+export type LudumMinigameHydraulicsButton = [number?, number?, number?];
+
+export interface LudumMinigameHydraulicsState {
+  pipeMaxLevel: number;
+  correctResult: [number, number, number];
+  buttons: LudumMinigameHydraulicsButton[];
+}
+
 export enum LudumPhase {
   INTRO = 'INTRO',
   PRE_MINIGAME = 'PRE_MINIGAME',
@@ -39,6 +53,7 @@ export enum LudumPhase {
 
 export enum LudumMinigame {
   SIMON_SAYS = 'SIMON_SAYS',
+  HYDRAULICS = 'HYDRAULICS',
 }
 
 export interface LudumPlayer {
