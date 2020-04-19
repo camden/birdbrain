@@ -86,9 +86,6 @@ export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
   ] as LudumMinigameHydraulicsResult;
   const buttons: LudumMinigameHydraulicsButton[] = [];
 
-  console.log('endGoal', endGoal);
-  console.log('startConfig', startConfig);
-
   for (let i = 0; i < iterations; i++) {
     // pick a random button of the 6 possible
     const buttonPos = pickElement(
@@ -125,9 +122,6 @@ export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
 
     let buttonVal = pickElement(potentialValues)[0] as number;
 
-    console.log('got new button position: ', buttonPos);
-    console.log('got new button value: ', buttonVal);
-
     // add the inverse of that value to all of the affected values
     for (let j = 0; j < 3; j++) {
       const isAffected = buttonPos[j];
@@ -139,16 +133,13 @@ export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
       }
     }
 
-    console.log('startConfig: ', startConfig);
-
     // push that button onto the list of buttons
     const button: LudumMinigameHydraulicsButton = [buttonVal, buttonPos];
     buttons.push(button);
   }
-  console.log('final buttons', buttons);
 
   // shuffle the list of buttons
-  // shuffleArray(buttons);
+  shuffleArray(buttons);
 
   return {
     pipeMaxLevel: maxLevel,
