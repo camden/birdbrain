@@ -7,9 +7,13 @@ import {
   LudumShape,
   LudumMinigameHydraulicsState,
   LudumMinigameState,
+  LudumMinigameHydraulicsButton,
+  LudumMinigameHydraulicsButtonPosition,
+  LudumMinigameHydraulicsResult,
 } from './types';
 import { equals } from 'ramda';
-import { pickElement } from 'utils/rng';
+import { pickElement, pickRandomNumber } from 'utils/rng';
+import shuffleArray from 'utils/shuffle-array';
 
 export const pickNextMinigame = (): LudumMinigame => {
   return LudumMinigame.HYDRAULICS;
@@ -60,15 +64,97 @@ const createSimonSaysState = (): LudumMinigameSimonSaysState => {
   };
 };
 
+const allPossibleButtonPositions: LudumMinigameHydraulicsButtonPosition[] = [
+  [true, true, true],
+  [true, true, false],
+  [false, true, true],
+  [true, false, false],
+  [false, true, false],
+  [false, false, true],
+];
+
 export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
+  const maxLevel = 5;
+  const iterations = 5; // difficulty, essentially
+  const endGoal: LudumMinigameHydraulicsResult = [
+    pickRandomNumber(0, maxLevel),
+    pickRandomNumber(0, maxLevel),
+    pickRandomNumber(0, maxLevel),
+  ]; // <-- this can be randomized, and probably should be @TODO
+  const startConfig: LudumMinigameHydraulicsResult = [
+    ...endGoal,
+  ] as LudumMinigameHydraulicsResult;
+  const buttons: LudumMinigameHydraulicsButton[] = [];
+
+  console.log('endGoal', endGoal);
+  console.log('startConfig', startConfig);
+
+  for (let i = 0; i < iterations; i++) {
+    // pick a random button of the 6 possible
+    const buttonPos = pickElement(
+      allPossibleButtonPositions
+    )[0] as LudumMinigameHydraulicsButtonPosition;
+
+    // for this position, calculate the possible button values for each position
+    // and take the intersection of those values to get a valid value
+    let potentialValues = [];
+    for (let j = 0; j < 3; j++) {
+      if (buttonPos[j]) {
+        const startConfigValue = startConfig[j];
+        for (
+          let potentialValue = -maxLevel;
+          potentialValue <= maxLevel;
+          potentialValue++
+        ) {
+          if (potentialValue === 0) {
+            continue;
+          }
+
+          // if we make a button that adds "potentialValue" to the "startConfigValue",
+          // will that be in bounds? (i.e. will it be "reversible")
+          const resultOfPressingButton = startConfigValue - potentialValue;
+          if (
+            resultOfPressingButton >= 0 &&
+            resultOfPressingButton <= maxLevel
+          ) {
+            potentialValues.push(potentialValue);
+          }
+        }
+      }
+    }
+
+    let buttonVal = pickElement(potentialValues)[0] as number;
+
+    console.log('got new button position: ', buttonPos);
+    console.log('got new button value: ', buttonVal);
+
+    // add the inverse of that value to all of the affected values
+    for (let j = 0; j < 3; j++) {
+      const isAffected = buttonPos[j];
+      if (isAffected) {
+        startConfig[j] = Math.min(
+          maxLevel,
+          Math.max(0, startConfig[j] - buttonVal)
+        );
+      }
+    }
+
+    console.log('startConfig: ', startConfig);
+
+    // push that button onto the list of buttons
+    const button: LudumMinigameHydraulicsButton = [buttonVal, buttonPos];
+    buttons.push(button);
+  }
+  console.log('final buttons', buttons);
+
+  // shuffle the list of buttons
+  // shuffleArray(buttons);
+
   return {
-    pipeMaxLevel: 5,
-    correctResult: [1, 3, 5],
-    startingResult: [0, 0, 0],
-    buttons: [
-      [1, [true, false, false]],
-      [-1, [true, true, false]],
-    ],
+    pipeMaxLevel: maxLevel,
+    correctResult: endGoal,
+    startingResult: startConfig,
+    buttons,
   };
 };
 

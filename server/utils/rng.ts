@@ -11,6 +11,7 @@ export const pickRandomNumber = (min: number, max: number) => {
  * Pick an element from the given array and return a tuple with the element and its index.
  * Does not mutate the array.
  * @param arr
+ * @returns [element (T), index]
  */
 export function pickElement<T>(arr: T[]): [T | undefined, number] {
   if (arr.length === 0) {

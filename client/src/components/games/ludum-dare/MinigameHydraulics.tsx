@@ -23,8 +23,8 @@ const getClassNameForButton = (
       return styles.cols111;
     case '110':
       return styles.cols110;
-    case '001':
-      return styles.cols001;
+    case '011':
+      return styles.cols011;
     case '100':
       return styles.cols100;
     case '010':
@@ -32,7 +32,7 @@ const getClassNameForButton = (
     case '001':
       return styles.cols001;
     default:
-      console.error('Unexpected button config!');
+      console.error('Unexpected button config!' + buttonAsString);
       return '';
   }
 };
@@ -43,7 +43,9 @@ const LudumMinigameHydraulics: React.FC<LudumMinigameHydraulicsProps> = ({
 }) => {
   const dispatch = useDispatch();
   const currentPlayer = useCurrentPlayer(game);
-  const [pipes, setPipes] = useState<[number, number, number]>([0, 0, 0]);
+  const [pipes, setPipes] = useState<[number, number, number]>(
+    minigame.startingResult
+  );
 
   const passedMinigame = game.playersWhoPassedCurrentMinigame.includes(
     currentPlayer.userId
@@ -75,11 +77,13 @@ const LudumMinigameHydraulics: React.FC<LudumMinigameHydraulicsProps> = ({
   return (
     <div className={styles.wrapper}>
       {passedMinigame && <strong>Congrats! You got the right answer</strong>}
+      <h1>Goal:</h1>
       <div className={styles.pipeWrapper}>
         <div className={styles.pipe}>{minigame.correctResult[0]}</div>
         <div className={styles.pipe}>{minigame.correctResult[1]}</div>
         <div className={styles.pipe}>{minigame.correctResult[2]}</div>
       </div>
+      <h1>Current:</h1>
       <div className={styles.pipeWrapper}>
         <div className={styles.pipe}>{pipes[0]}</div>
         <div className={styles.pipe}>{pipes[1]}</div>

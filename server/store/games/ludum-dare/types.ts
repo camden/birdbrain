@@ -19,7 +19,7 @@ export type LudumMinigameState =
 
 export type LudumMinigameAnswer =
   | LudumMinigameSimonSaysAnswer
-  | LudumMinigameHydraulicsAnswer;
+  | LudumMinigameHydraulicsResult;
 
 export type LudumMinigameSimonSaysAnswer = LudumShape[];
 
@@ -33,17 +33,18 @@ export interface LudumMinigameSimonSaysState {
   phrase: LudumShape[];
 }
 
-export type LudumMinigameHydraulicsAnswer = [number, number, number];
-
 export type LudumMinigameHydraulicsButton = [
   number,
-  [boolean, boolean, boolean]
+  LudumMinigameHydraulicsButtonPosition
 ];
+
+export type LudumMinigameHydraulicsButtonPosition = [boolean, boolean, boolean];
+export type LudumMinigameHydraulicsResult = [number, number, number];
 
 export interface LudumMinigameHydraulicsState {
   pipeMaxLevel: number;
-  correctResult: [number, number, number];
-  startingResult: [number, number, number];
+  correctResult: LudumMinigameHydraulicsResult;
+  startingResult: LudumMinigameHydraulicsResult;
   buttons: LudumMinigameHydraulicsButton[];
 }
 
