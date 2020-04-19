@@ -12,7 +12,6 @@ import {
   LD_CHECK_MINIGAME_ANSWER,
 } from './actions';
 import {
-  createSimonSaysState,
   checkMinigameAnswer,
   createMinigameState,
   pickNextMinigame,
