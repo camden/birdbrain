@@ -1,5 +1,8 @@
 import React, { useCallback } from 'react';
-import { LudumGameState } from '@server/store/games/ludum-dare/types';
+import {
+  LudumGameState,
+  LudumPlayer,
+} from '@server/store/games/ludum-dare/types';
 import Button from 'components/shared/button/Button';
 import { useDispatch } from 'react-redux';
 import { sendMessage } from 'store/websocket/actions';
@@ -18,9 +21,17 @@ const LudumMinigameResults: React.FC<LudumMinigameResultsProps> = ({
     dispatch(sendMessage(ludumAck()));
   }, [dispatch]);
 
+  const playersWhoPassed: LudumPlayer[] = game.players.filter((p) =>
+    game.playersWhoPassedCurrentMinigame.includes(p.userId)
+  );
+
   return (
     <div>
-      nice the game is over. good job
+      <div>nice the game is over. good job</div>
+      <p>
+        these players were successful:{' '}
+        {playersWhoPassed.map((p) => p.name).join(', ')}
+      </p>
       <Button onClick={onContinueClick}>play again</Button>
     </div>
   );

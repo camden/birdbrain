@@ -64,7 +64,7 @@ const LudumMinigameSimonSays: React.FC<LudumMinigameSimonSaysProps> = ({
   return (
     <div>
       {passedMinigame && <strong>Congrats! You got the right answer</strong>}
-      {currentGuess.length === minigame.phrase.length &&
+      {currentGuess.length >= minigame.phrase.length &&
         !equals(currentGuess, minigame.phrase) && (
           <strong>Nope, try again</strong>
         )}
