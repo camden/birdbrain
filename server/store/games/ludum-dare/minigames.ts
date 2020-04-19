@@ -10,6 +10,7 @@ import {
   LudumMinigameHydraulicsButton,
   LudumMinigameHydraulicsButtonPosition,
   LudumMinigameHydraulicsResult,
+  LudumMinigameReflexesState,
 } from './types';
 import { equals, uniq } from 'ramda';
 import { pickElement, pickRandomNumber } from 'utils/rng';
@@ -50,6 +51,8 @@ export const createMinigameState = (
       return createSimonSaysState();
     case LudumMinigame.HYDRAULICS:
       return createHydraulicsState();
+    case LudumMinigame.REFLEXES:
+      return createReflexesState();
   }
 };
 
@@ -158,6 +161,10 @@ export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
     startingResult: startConfig,
     buttons,
   };
+};
+
+const createReflexesState = (): LudumMinigameReflexesState => {
+  return {};
 };
 
 const checkHydraulicsAnswer = (

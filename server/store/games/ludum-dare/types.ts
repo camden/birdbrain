@@ -20,7 +20,8 @@ export interface LudumCharacter {
 
 export type LudumMinigameState =
   | LudumMinigameSimonSaysState
-  | LudumMinigameHydraulicsState;
+  | LudumMinigameHydraulicsState
+  | LudumMinigameReflexesState;
 
 export type LudumMinigameAnswer =
   | LudumMinigameSimonSaysAnswer
@@ -53,6 +54,8 @@ export interface LudumMinigameHydraulicsState {
   buttons: LudumMinigameHydraulicsButton[];
 }
 
+export interface LudumMinigameReflexesState {}
+
 export enum LudumPhase {
   INTRO = 'INTRO',
   PRE_MINIGAME = 'PRE_MINIGAME',
@@ -64,6 +67,7 @@ export enum LudumPhase {
 export enum LudumMinigame {
   SIMON_SAYS = 'SIMON_SAYS',
   HYDRAULICS = 'HYDRAULICS',
+  REFLEXES = 'REFLEXES',
 }
 
 export interface LudumPlayer {

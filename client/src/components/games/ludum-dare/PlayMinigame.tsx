@@ -4,6 +4,7 @@ import {
   LudumMinigame,
   LudumMinigameSimonSaysState,
   LudumMinigameHydraulicsState,
+  LudumMinigameReflexesState,
 } from '@server/store/games/ludum-dare/types';
 import useInterval from 'use-interval';
 import { MINIGAME_DURATION_MS } from '@server/store/games/ludum-dare';
@@ -12,6 +13,7 @@ import { sendMessage } from 'store/websocket/actions';
 import { ludumReportEndMinigame } from '@server/store/games/ludum-dare/actions';
 import LudumMinigameSimonSays from './MinigameSimonSays';
 import LudumMinigameHydraulics from './MinigameHydraulics';
+import LudumMinigameReflexes from './MinigameReflexes';
 
 export interface LudumPlayMinigameProps {
   game: LudumGameState;
@@ -53,6 +55,14 @@ const LudumPlayMinigame: React.FC<LudumPlayMinigameProps> = ({ game }) => {
         <LudumMinigameHydraulics
           game={game}
           minigame={game.currentMinigameState as LudumMinigameHydraulicsState}
+        />
+      );
+      break;
+    case LudumMinigame.REFLEXES:
+      minigame = (
+        <LudumMinigameReflexes
+          game={game}
+          minigame={game.currentMinigameState as LudumMinigameReflexesState}
         />
       );
       break;
