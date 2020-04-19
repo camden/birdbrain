@@ -7,6 +7,7 @@ import {
   LudumShape,
 } from './types';
 import { equals } from 'ramda';
+import { pickElement } from 'utils/rng';
 
 export const checkMinigameAnswer = (
   game: LudumGameState,
@@ -24,8 +25,21 @@ export const checkMinigameAnswer = (
 };
 
 export const createSimonSaysState = (): LudumMinigameSimonSaysState => {
+  const targetLength = 6;
+  const elements = [LudumShape.CIRCLE, LudumShape.HEART, LudumShape.TRIANGLE];
+  const phrase: LudumShape[] = [];
+
+  let lastShape: LudumShape;
+
+  for (let i = 0; i < targetLength; i++) {
+    const elementsWithoutLastShape = elements.filter((e) => e !== lastShape);
+    const nextElement = pickElement(elementsWithoutLastShape)[0] as LudumShape;
+    lastShape = nextElement;
+    phrase.push(nextElement);
+  }
+
   return {
-    phrase: [LudumShape.CIRCLE, LudumShape.HEART, LudumShape.TRIANGLE],
+    phrase,
   };
 };
 
