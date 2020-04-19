@@ -1,3 +1,24 @@
 .characterImage {
-  width: 100%;
+  max-width: 100%;
+  transition: transform 150ms ease-in-out;
+  user-select: none;
+}
+
+.characterImage.pressed {
+  transform: scale(1.1);
+}
+
+.wrapper.hover {
+  animation: hoverAnimation 2s ease-in-out infinite alternate;
+  animation-play-state: running;
+}
+
+@keyframes hoverAnimation {
+  0% {
+    transform: translateY(5px);
+  }
+
+  100% {
+    transform: translateY(-5px);
+  }
 }

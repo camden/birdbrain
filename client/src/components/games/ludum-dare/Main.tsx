@@ -7,12 +7,13 @@ import LudumIntro from './Intro';
 import LudumPreMinigame from './PreMinigame';
 import LudumPlayMinigame from './PlayMinigame';
 import LudumMinigameResults from './MinigameResults';
+import styles from './Main.module.css';
 
 export interface LudumMainProps {
   game: LudumGameState;
 }
 
-const LudumMain: React.FC<LudumMainProps> = ({ game }) => {
+const Game: React.FC<LudumMainProps> = ({ game }) => {
   switch (game.phase) {
     case LudumPhase.INTRO:
       return <LudumIntro game={game} />;
@@ -25,6 +26,14 @@ const LudumMain: React.FC<LudumMainProps> = ({ game }) => {
     default:
       return <div>no state found for phase {game.phase}</div>;
   }
+};
+
+const LudumMain: React.FC<LudumMainProps> = ({ game }) => {
+  return (
+    <div className={styles.wrapper}>
+      <Game game={game} />
+    </div>
+  );
 };
 
 export default LudumMain;

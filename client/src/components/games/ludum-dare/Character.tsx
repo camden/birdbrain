@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Character.module.css';
+import cx from 'classnames';
 
 import allenIcon from 'assets/images/ludum-dare/characters/allen/allenIcon.png';
 import allenIdle from 'assets/images/ludum-dare/characters/allen/allenIdle.png';
@@ -48,6 +49,11 @@ export enum CharacterType {
   LOSE,
   PUZZLED,
   WIN,
+}
+
+export enum CharacterAnimation {
+  HOVER,
+  SHAKE,
 }
 
 const characters: any = {
@@ -112,17 +118,47 @@ const characters: any = {
 export interface LudumCharacterProps {
   id: string;
   type: CharacterType;
+  className?: string;
+  animation?: CharacterAnimation;
 }
 
-const LudumCharacter: React.FC<LudumCharacterProps> = ({ id, type }) => {
-  const url = characters[id] && characters[id][type];
+const LudumCharacter: React.FC<LudumCharacterProps> = ({
+  id,
+  type,
+  className,
+  animation,
+}) => {
+  const [isPressed, setIsPressed] = useState(false);
+
+  const finalType = isPressed ? CharacterType.WIN : type;
+  const url = characters[id] && characters[id][finalType];
+
   if (!url) {
     console.error(
       `Could not find url for character with id '${id}' and type '${type}'.`
     );
   }
 
-  return <img src={url} className={styles.characterImage} />;
+  return (
+    <div
+      className={cx(styles.wrapper, {
+        [styles.hover]: animation === CharacterAnimation.HOVER,
+        [styles.shake]: animation === CharacterAnimation.SHAKE,
+      })}
+    >
+      <img
+        onMouseDown={() => setIsPressed(true)}
+        onTouchStart={() => setIsPressed(true)}
+        onMouseUp={() => setIsPressed(false)}
+        onMouseLeave={() => setIsPressed(false)}
+        onTouchEnd={() => setIsPressed(false)}
+        src={url}
+        className={cx(styles.characterImage, className, {
+          [styles.pressed]: isPressed,
+        })}
+      />
+    </div>
+  );
 };
 
 export default LudumCharacter;
