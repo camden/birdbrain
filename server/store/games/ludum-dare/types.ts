@@ -16,6 +16,7 @@ export interface LudumGameState extends Game {
 export interface LudumCharacter {
   id: string;
   name: string;
+  color: string;
 }
 
 export type LudumMinigameState =

@@ -1,13 +1,13 @@
 import { LudumCharacter } from './types';
 
-const characters = [
-  { name: 'Monty Monster', id: 'monty' },
-  { name: 'Sally Squid', id: 'sally' },
-  { name: 'Allen Alien', id: 'allen' },
-  { name: 'Blocky Barney', id: 'barney' },
-  { name: 'Gamepad Gary', id: 'gary' },
-  { name: 'Rocky Ron', id: 'ron' },
-  { name: 'Wiggly Walter', id: 'walter' },
+const characters: LudumCharacter[] = [
+  { name: 'Monty Monster', id: 'monty', color: 'red' },
+  { name: 'Sally Squid', id: 'sally', color: 'fuchsia' },
+  { name: 'Allen Alien', id: 'allen', color: 'forestgreen' },
+  { name: 'Blocky Barney', id: 'barney', color: 'purple' },
+  { name: 'Gamepad Gary', id: 'gary', color: 'blue' },
+  { name: 'Rocky Ron', id: 'ron', color: 'darkgrey' },
+  { name: 'Wiggly Walter', id: 'walter', color: 'yellow' },
 ];
 
 export default characters;
