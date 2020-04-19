@@ -54,7 +54,7 @@ export const createMinigameState = (
 };
 
 const createSimonSaysState = (): LudumMinigameSimonSaysState => {
-  const targetLength = 6;
+  const targetLength = 5;
   const elements = [LudumShape.CIRCLE, LudumShape.HEART, LudumShape.TRIANGLE];
   const phrase: LudumShape[] = [];
 
@@ -83,7 +83,7 @@ const allPossibleButtonPositions: LudumMinigameHydraulicsButtonPosition[] = [
 
 export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
   const maxLevel = 5;
-  const iterations = 5; // difficulty, essentially
+  const iterations = 4; // difficulty, essentially
   const endGoal: LudumMinigameHydraulicsResult = [
     pickRandomNumber(0, maxLevel),
     pickRandomNumber(0, maxLevel),
