@@ -2,7 +2,7 @@ import { LudumGameState, LudumPlayer, LudumPhase } from './types';
 import { GameType, GameID } from '../types';
 import { User } from 'store/general/types';
 
-export const MINIGAME_DURATION_MS = 550000;
+export const MINIGAME_DURATION_MS = 30500;
 
 const createPlayerFromUser = (user: User): LudumPlayer => {
   return {
