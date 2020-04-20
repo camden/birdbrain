@@ -90,6 +90,13 @@ const ludumReducer = (
         draftState.minigameEndTime = null;
         draftState.currentMinigame = null;
         draftState.phase = LudumPhase.MINIGAME_RESULTS;
+
+        const playersWhoFailed = draftState.players.filter(
+          (p) => !game.playersWhoPassedCurrentMinigame.includes(p.userId)
+        );
+        playersWhoFailed.forEach(
+          (player) => (player.health = Math.max(0, player.health - 1))
+        );
       });
     case LD_CHECK_MINIGAME_ANSWER:
       return produce(game, (draftState) => {
