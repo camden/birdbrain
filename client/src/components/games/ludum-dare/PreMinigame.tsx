@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import { sendMessage } from 'store/websocket/actions';
 import { ludumStartMinigame } from '@server/store/games/ludum-dare/actions';
 import styles from './PreMinigame.module.css';
-import LudumCharacter, { CharacterType } from './Character';
 import { useCurrentPlayer } from 'utils/ludum-dare-utils';
 import LudumPlayerInfo from './PlayerInfo';
 import WaitingMessage from 'components/shared/WaitingMessage';

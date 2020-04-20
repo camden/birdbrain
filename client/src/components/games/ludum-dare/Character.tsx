@@ -178,6 +178,7 @@ const LudumCharacter: React.FC<LudumCharacterProps> = ({
       })}
     >
       <img
+        alt={`Character named ${id}`}
         onMouseDown={() => setIsPressed(true)}
         onTouchStart={() => setIsPressed(true)}
         onMouseUp={() => setIsPressed(false)}
