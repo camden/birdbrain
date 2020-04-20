@@ -12,9 +12,10 @@ import {
   LudumMinigameHydraulicsResult,
   LudumMinigameReflexesState,
 } from './types';
-import { equals, uniq, intersection } from 'ramda';
+import { equals, uniq, intersection, times, identity } from 'ramda';
 import { pickElement, pickRandomNumber } from 'utils/rng';
 import shuffleArray from 'utils/shuffle-array';
+import getAllPossibleButtonPositions from './get-button-combos';
 
 export const pickNextMinigame = (): LudumMinigame => {
   return pickElement([
@@ -87,27 +88,23 @@ const createSimonSaysState = (
   };
 };
 
-const allPossibleButtonPositions: LudumMinigameHydraulicsButtonPosition[] = [
-  [true, true, true],
-  [true, true, false],
-  [false, true, true],
-  [true, false, false],
-  [false, true, false],
-  [false, false, true],
-];
-
 export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
-  const pipeMaxLevel = 4;
+  const numberOfPipes = 1;
   let iterations = 4; // difficulty, essentially
-  const endGoal: LudumMinigameHydraulicsResult = [
-    pickRandomNumber(0, pipeMaxLevel),
-    pickRandomNumber(0, pipeMaxLevel),
-    pickRandomNumber(0, pipeMaxLevel),
-  ];
+
+  const pipeMaxLevel = 4;
+  const endGoal: LudumMinigameHydraulicsResult = times(
+    identity,
+    numberOfPipes
+  ).map((i) => pickRandomNumber(0, pipeMaxLevel));
   const startConfig: LudumMinigameHydraulicsResult = [
     ...endGoal,
   ] as LudumMinigameHydraulicsResult;
   let buttons: LudumMinigameHydraulicsButton[] = [];
+
+  const allPossibleButtonPositions = getAllPossibleButtonPositions(
+    numberOfPipes
+  );
 
   for (let i = 0; i < iterations; i++) {
     // pick a random button of the 6 possible
@@ -119,7 +116,7 @@ export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
     // and take the intersection of those values to get a valid value
     let valuesForEachPosition: number[][] = [];
 
-    for (let j = 0; j < 3; j++) {
+    for (let j = 0; j < startConfig.length; j++) {
       if (buttonPos[j]) {
         const startConfigValue = startConfig[j];
         const valuesForThisPosition = [];
@@ -151,7 +148,7 @@ export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
       return intersection(acc, cur);
     }, valuesForEachPosition[0]);
 
-    if (potentialValues.length === 0) {
+    if (!potentialValues || potentialValues.length === 0) {
       iterations++;
       continue;
     }
@@ -159,7 +156,7 @@ export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
     let buttonVal = pickElement(potentialValues)[0] as number;
 
     // add the inverse of that value to all of the affected values
-    for (let j = 0; j < 3; j++) {
+    for (let j = 0; j < startConfig.length; j++) {
       const isAffected = buttonPos[j];
       if (isAffected) {
         startConfig[j] = Math.min(

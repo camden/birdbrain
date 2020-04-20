@@ -114,20 +114,24 @@ const LudumMinigameHydraulics: React.FC<LudumMinigameHydraulicsProps> = ({
     setPipes(newPipes);
   };
 
+  const pipeRowStyle: React.CSSProperties = {
+    gridTemplateColumns: `repeat(${minigame.correctResult.length}, 1fr)`,
+  };
+
   return (
     <div className={styles.wrapper}>
       {passedMinigame && <strong>Congrats! You got the right answer</strong>}
       <h3>Goal:</h3>
-      <div className={styles.pipeRowWrapper}>
+      <div className={styles.pipeRowWrapper} style={pipeRowStyle}>
         {minigame.correctResult.map((pipe, idx) =>
           getPipeImgForValue(pipe, pipe + ' ' + idx)
         )}
       </div>
       <h3>Current:</h3>
-      <div className={styles.pipeRowWrapper}>
+      <div className={styles.pipeRowWrapper} style={pipeRowStyle}>
         {pipes.map((pipe, idx) => getPipeImgForValue(pipe, pipe + ' ' + idx))}
       </div>
-      <div className={styles.pipeRowWrapper}>
+      <div className={styles.pipeRowWrapper} style={pipeRowStyle}>
         {minigame.buttons.map((b) => (
           <Button
             secondary
