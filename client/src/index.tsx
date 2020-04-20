@@ -27,7 +27,9 @@ const store = createStore(
   composeEnhancers(applyMiddleware(websocketMiddleware))
 );
 
-ReactGA.initialize('UA-71680879-6');
+ReactGA.initialize('UA-71680879-6', {
+  testMode: process.env.NODE_ENV !== 'production',
+});
 
 ReactDOM.render(
   <HelmetProvider>
