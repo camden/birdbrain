@@ -94,7 +94,6 @@ export interface CardProps {
 
 const Card: React.FC<CardProps> = (props) => {
   const cardX = useMotionValue(0);
-  const xRangeOpacity = [-200, -100, 100, 200];
   const xRangeRotation = [-200, -10, 10, 200];
   const cardRotation = useTransform(cardX, xRangeRotation, [-10, 0, 0, 10]);
   const yesOpacity = useTransform(cardX, xRangeRotation, [0, 0, 0, 1]);
@@ -150,93 +149,6 @@ const Card: React.FC<CardProps> = (props) => {
         FALSE
       </motion.div>
       {props.children}
-    </motion.div>
-  );
-};
-
-// @TODO: delete this
-const OldCard: React.FC<CardProps> = () => {
-  const cardX = useMotionValue(0);
-  const xRangeOpacity = [-200, -100, 100, 200];
-  const opacity = useTransform(cardX, xRangeOpacity, [0, 1, 1, 0]);
-  const xRangeRotation = [-200, -10, 10, 200];
-  const rotation = useTransform(cardX, xRangeRotation, [-10, 0, 0, 10]);
-  const yesOpacity = useTransform(cardX, xRangeOpacity, [0, 0, 0, 1]);
-  const noOpacity = useTransform(cardX, xRangeOpacity, [1, 0, 0, 0]);
-  const secondaryCardScale = useTransform(cardX, xRangeRotation, [
-    1,
-    0.6,
-    0.6,
-    1,
-  ]);
-
-  const primaryCardControls = useAnimation();
-  const cardDisappearRight = {
-    x: 400,
-    transition: { duration: 0.2 },
-  };
-  const cardDisappearLeft = {
-    x: -400,
-    transition: { duration: 0.2 },
-  };
-  const cardReappear = {
-    x: 0,
-    transition: { duration: 0 },
-  };
-
-  const onDragEnd: DragHandlers['onDragEnd'] = async (
-    event: MouseEvent | TouchEvent | PointerEvent,
-    info: PanInfo
-  ) => {
-    if (info.point.x > 100) {
-      // await primaryCardControls.start(cardDisappearRight);
-      // await primaryCardControls.start(cardReappear);
-      console.log('animation!');
-    }
-    if (info.point.x < -100) {
-      // await primaryCardControls.start(cardDisappearLeft);
-      // await primaryCardControls.start(cardReappear);
-      console.log('animation!');
-    }
-  };
-
-  const primaryStyle = {
-    x: cardX,
-    opacity,
-    rotate: rotation,
-    zIndex: 100,
-  };
-
-  const secondaryStyle = {
-    x: 0,
-    zIndex: 10,
-  };
-
-  return (
-    <motion.div
-      whileTap={{ scale: 1.05 }}
-      animate={primaryCardControls}
-      className={cx(styles.card, styles.cardPrimary)}
-      drag={'x'}
-      dragMomentum={true}
-      dragConstraints={{ left: 0, right: 0 }}
-      dragElastic={0.9}
-      onDragEnd={onDragEnd}
-      style={primaryStyle}
-    >
-      <div className={styles.cardText}>PRIMARY</div>
-      <motion.div
-        style={{ opacity: yesOpacity }}
-        className={cx(styles.cardJudgment, styles.cardJudgmentTrue)}
-      >
-        TRUE
-      </motion.div>
-      <motion.div
-        style={{ opacity: noOpacity }}
-        className={cx(styles.cardJudgment, styles.cardJudgmentFalse)}
-      >
-        FALSE
-      </motion.div>
     </motion.div>
   );
 };
