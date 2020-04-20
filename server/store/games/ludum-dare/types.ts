@@ -75,4 +75,5 @@ export interface LudumPlayer {
   userId: UserID;
   name: string;
   character: LudumCharacter;
+  health: number;
 }

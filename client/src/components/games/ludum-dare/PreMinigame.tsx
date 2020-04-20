@@ -7,6 +7,7 @@ import { ludumStartMinigame } from '@server/store/games/ludum-dare/actions';
 import styles from './PreMinigame.module.css';
 import LudumCharacter, { CharacterType } from './Character';
 import { useCurrentPlayer } from 'utils/ludum-dare-utils';
+import LudumPlayerInfo from './PlayerInfo';
 
 export interface LudumPreMinigameProps {
   game: LudumGameState;
@@ -28,10 +29,13 @@ const LudumPreMinigame: React.FC<LudumPreMinigameProps> = ({ game }) => {
         <div className={styles.roundNumber}>{game.roundNumber}</div>
       </div>
       <div>Next game: {game.currentMinigame}</div>
-      <LudumCharacter
-        id={currentPlayer.character.id}
-        type={CharacterType.ICON}
-      />
+      {game.players.map((player) => (
+        <LudumPlayerInfo
+          key={player.userId}
+          player={player}
+          className={styles.playerInfo}
+        />
+      ))}
       <div className={styles.footer}>
         <Button onClick={onStartClick}>start game</Button>
       </div>

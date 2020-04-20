@@ -22,6 +22,10 @@
   font-weight: 900;
 }
 
+.playerInfo {
+  margin-bottom: 16px;
+}
+
 .footer {
   flex: 1;
   display: flex;

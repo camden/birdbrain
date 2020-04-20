@@ -23,6 +23,7 @@ const createPlayerFromUser = (
     userId: user.id,
     name: user.name,
     character,
+    health: 3,
   };
 };
 
