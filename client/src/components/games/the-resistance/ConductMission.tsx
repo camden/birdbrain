@@ -14,7 +14,7 @@ import { rstCastMissionVote } from '@server/store/games/the-resistance/actions';
 import styles from './ConductMission.module.css';
 import User from 'components/shared/user/User';
 import { faClock, faCheck } from '@fortawesome/pro-solid-svg-icons';
-import WaitingMessage from './WaitingMessage';
+import WaitingMessage from 'components/shared/WaitingMessage';
 import { prop } from 'ramda';
 
 export interface ResistanceProps {
@@ -30,13 +30,13 @@ const TheResistanceConductMission: React.FC<ResistanceProps> = ({ game }) => {
     return null;
   }
 
-  const missionTeam = game.missionTeam.map(id =>
-    game.players.find(player => player.userId === id)
+  const missionTeam = game.missionTeam.map((id) =>
+    game.players.find((player) => player.userId === id)
   ) as ResistancePlayer[];
 
   const currentUserIsOnTeam = game.missionTeam.includes(user.id);
   const currentPlayer = game.players.find(
-    player => player.userId === user.id
+    (player) => player.userId === user.id
   ) as ResistancePlayer;
 
   const onVoteClick = (vote: ResistanceMissionVote) => {
@@ -75,7 +75,7 @@ const TheResistanceConductMission: React.FC<ResistanceProps> = ({ game }) => {
     game.missionSuccessVotes
   );
   const playersWhoStillNeedToVote = missionTeam.filter(
-    player => !allUsersWhoVoted.includes(player.userId)
+    (player) => !allUsersWhoVoted.includes(player.userId)
   );
 
   return (
@@ -84,13 +84,13 @@ const TheResistanceConductMission: React.FC<ResistanceProps> = ({ game }) => {
         The mission team is now conducting Mission {game.mission}.
       </h1>
       <section>
-        {missionTeam.map(player => (
+        {missionTeam.map((player) => (
           <User
             key={player.userId}
             user={{ id: player.userId, name: player.name }}
             icon={
               playersWhoStillNeedToVote
-                .map(p => p.userId)
+                .map((p) => p.userId)
                 .includes(player.userId)
                 ? faClock
                 : faCheck

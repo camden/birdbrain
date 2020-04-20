@@ -12,7 +12,7 @@ import TextInput from 'components/shared/form/TextInput';
 import Button from 'components/shared/button/Button';
 import { sendMessage } from 'store/websocket/actions';
 import { fshSubmitAnswer } from '@server/store/games/fishbowl/actions';
-import WaitingMessage from '../the-resistance/WaitingMessage';
+import WaitingMessage from 'components/shared/WaitingMessage';
 import { prop } from 'ramda';
 import answers from '@server/store/games/fishbowl/answers';
 import { pickRandomNumber } from '@server/utils/rng';
@@ -48,10 +48,10 @@ const InputAnswers: React.FC<InputAnswersProps> = ({ game }) => {
   const answersAlreadySubmitted = game.answersSubmitted[currentUser.id];
 
   const playersWhoAreNotDone: FishbowlPlayer[] = game.players.filter(
-    player => game.answersSubmitted[player.userId].length < ANSWERS_PER_PLAYER
+    (player) => game.answersSubmitted[player.userId].length < ANSWERS_PER_PLAYER
   );
 
-  const currentPlayer = game.players.find(p => p.userId === currentUser?.id);
+  const currentPlayer = game.players.find((p) => p.userId === currentUser?.id);
   if (!currentPlayer) {
     return (
       <div>
@@ -87,8 +87,8 @@ const InputAnswers: React.FC<InputAnswersProps> = ({ game }) => {
       <TextInput
         className={styles.input}
         value={curAnswer}
-        onChange={e => setCurAnswer(e.target.value)}
-        onKeyPress={event => event.key === 'Enter' && onSubmitAnswer()}
+        onChange={(e) => setCurAnswer(e.target.value)}
+        onKeyPress={(event) => event.key === 'Enter' && onSubmitAnswer()}
       />
       <Button
         className={styles.button}

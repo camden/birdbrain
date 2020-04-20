@@ -7,6 +7,7 @@ import { ludumAck } from '@server/store/games/ludum-dare/actions';
 import { useCurrentPlayer } from 'utils/ludum-dare-utils';
 import LudumCharacter, { CharacterType, CharacterAnimation } from './Character';
 import styles from './Intro.module.css';
+import WaitingMessage from 'components/shared/WaitingMessage';
 
 export interface LudumIntroProps {
   game: LudumGameState;
@@ -60,6 +61,11 @@ const LudumIntro: React.FC<LudumIntroProps> = ({ game }) => {
     characterType = CharacterType.NERVOUS;
   }
 
+  const currentPlayerAcked = game.acknowledged.includes(currentPlayer.userId);
+  const playersWhoNeedToAck = game.players.filter(
+    (p) => !game.acknowledged.includes(p.userId)
+  );
+
   return (
     <div className={styles.wrapper}>
       <h1>{topText}</h1>
@@ -74,9 +80,17 @@ const LudumIntro: React.FC<LudumIntroProps> = ({ game }) => {
       </div>
       <h1>{bottomText}</h1>
       <div className={styles.footer}>
-        <Button onClick={onContinueClick} secondary={buttonSecondary}>
-          {buttonText}
-        </Button>
+        {currentPlayerAcked && (
+          <WaitingMessage
+            playersThatNeedToAct={playersWhoNeedToAck.map((p) => p.name)}
+            verb={'move on'}
+          />
+        )}
+        {!currentPlayerAcked && (
+          <Button onClick={onContinueClick} secondary={buttonSecondary}>
+            {buttonText}
+          </Button>
+        )}
       </div>
     </div>
   );

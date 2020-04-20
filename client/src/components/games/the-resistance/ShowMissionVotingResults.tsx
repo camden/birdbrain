@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { sendMessage } from 'store/websocket/actions';
 import { rstAckMissionVoteResults } from '@server/store/games/the-resistance/actions';
 import Button from 'components/shared/button/Button';
-import WaitingMessage from './WaitingMessage';
+import WaitingMessage from 'components/shared/WaitingMessage';
 import styles from './ShowMissionVotingResults.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/pro-solid-svg-icons';
@@ -63,16 +63,17 @@ const TheResistanceShowMissionVotingResults: React.FC<ResistanceProps> = ({
 
   const allUsersWhoAcked = game.acknowledged;
   const playersWhoStillNeedToAck = game.players.filter(
-    player => !allUsersWhoAcked.includes(player.userId)
+    (player) => !allUsersWhoAcked.includes(player.userId)
   );
 
   const allResults = game.missionSuccessVotes
-    .map(x => ResistanceMissionVote.SUCCESS)
-    .concat(game.missionFailVotes.map(x => ResistanceMissionVote.FAIL));
+    .map((x) => ResistanceMissionVote.SUCCESS)
+    .concat(game.missionFailVotes.map((x) => ResistanceMissionVote.FAIL));
 
   const resultSummaryStyle = {
-    '--appear-delay': `${(allResults.length + 1) *
-      ANIMATION_DELAY_MULTIPLIER_MS}ms`,
+    '--appear-delay': `${
+      (allResults.length + 1) * ANIMATION_DELAY_MULTIPLIER_MS
+    }ms`,
   } as CSSProperties;
 
   return (

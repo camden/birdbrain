@@ -10,7 +10,7 @@ import { sendMessage } from 'store/websocket/actions';
 import { rstCastTeamVote } from '@server/store/games/the-resistance/actions';
 import styles from './VoteForTeam.module.css';
 import User from 'components/shared/user/User';
-import WaitingMessage from './WaitingMessage';
+import WaitingMessage from 'components/shared/WaitingMessage';
 import { prop } from 'ramda';
 
 export interface ResistanceProps {
@@ -25,8 +25,8 @@ const TheResistanceVoteForTeam: React.FC<ResistanceProps> = ({ game }) => {
     return null;
   }
 
-  const missionTeam = game.missionTeam.map(id =>
-    game.players.find(player => player.userId === id)
+  const missionTeam = game.missionTeam.map((id) =>
+    game.players.find((player) => player.userId === id)
   ) as ResistancePlayer[];
 
   const sendVote = (vote: ResistanceTeamVote) => {
@@ -47,14 +47,14 @@ const TheResistanceVoteForTeam: React.FC<ResistanceProps> = ({ game }) => {
 
   const allUsersWhoVoted = game.teamApprovalVotes.concat(game.teamRejectVotes);
   const playersWhoStillNeedToVote = game.players.filter(
-    player => !allUsersWhoVoted.includes(player.userId)
+    (player) => !allUsersWhoVoted.includes(player.userId)
   );
 
   return (
     <div>
       <h1 className={styles.title}>Cast your vote for this&nbsp;team:</h1>
       <section className={styles.players}>
-        {missionTeam.map(player => (
+        {missionTeam.map((player) => (
           <User
             key={player.userId}
             user={{ id: player.userId, name: player.name }}

@@ -13,7 +13,7 @@ import { sendMessage } from 'store/websocket/actions';
 import styles from './PreRound.module.css';
 import TeamBar from './TeamBar';
 import cx from 'classnames';
-import WaitingMessage from '../the-resistance/WaitingMessage';
+import WaitingMessage from 'components/shared/WaitingMessage';
 
 export interface PreRoundProps {
   game: FishbowlGameState;

@@ -6,7 +6,7 @@ import { sendMessage } from 'store/websocket/actions';
 import { rstAckTeamVoteResults } from '@server/store/games/the-resistance/actions';
 import User from 'components/shared/user/User';
 import { faThumbsUp, faThumbsDown } from '@fortawesome/pro-solid-svg-icons';
-import WaitingMessage from './WaitingMessage';
+import WaitingMessage from 'components/shared/WaitingMessage';
 import styles from './ShowTeamVotingResults.module.css';
 import { prop } from 'ramda';
 
@@ -46,14 +46,14 @@ const TheResistanceShowTeamVotingResults: React.FC<ResistanceProps> = ({
 
   const allUsersWhoAcked = game.acknowledged;
   const playersWhoStillNeedToAck = game.players.filter(
-    player => !allUsersWhoAcked.includes(player.userId)
+    (player) => !allUsersWhoAcked.includes(player.userId)
   );
 
   return (
     <div className={styles.wrapper}>
       <h1 className={styles.title}>The votes are in!</h1>
       <section className={styles.user_list}>
-        {game.players.map(player => (
+        {game.players.map((player) => (
           <User
             user={{ id: player.userId, name: player.name }}
             key={player.userId}

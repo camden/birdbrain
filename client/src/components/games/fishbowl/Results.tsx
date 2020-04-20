@@ -16,7 +16,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLongArrowRight, faCheck } from '@fortawesome/pro-solid-svg-icons';
 import TeamScore from './TeamScore';
-import WaitingMessage from '../the-resistance/WaitingMessage';
+import WaitingMessage from 'components/shared/WaitingMessage';
 import { prop } from 'ramda';
 import TeamBar from './TeamBar';
 import { getCurrentUser } from 'store/selectors';

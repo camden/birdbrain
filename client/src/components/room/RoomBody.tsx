@@ -5,7 +5,7 @@ import User from 'components/shared/user/User';
 import styles from './Room.module.css';
 import Button from 'components/shared/button/Button';
 import RoomWrapper from './RoomWrapper';
-import WaitingMessage from 'components/games/the-resistance/WaitingMessage';
+import WaitingMessage from 'components/shared/WaitingMessage';
 
 export interface RoomBodyProps {
   room: Room;
@@ -16,14 +16,14 @@ export interface RoomBodyProps {
   onChangeGameClick: () => void;
 }
 
-const RoomBody: React.FC<RoomBodyProps> = props => {
+const RoomBody: React.FC<RoomBodyProps> = (props) => {
   return (
     <RoomWrapper room={props.room}>
       <main className={styles.room_body}>
         <section className={styles.users_section}>
           <h2 className={styles.subtitle}>Who's Here</h2>
           <div className={styles.user_list}>
-            {props.usersInRoom.map(user => (
+            {props.usersInRoom.map((user) => (
               <User
                 key={user.id}
                 user={user}
