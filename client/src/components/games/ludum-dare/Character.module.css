@@ -14,6 +14,11 @@
   animation-play-state: running;
 }
 
+.wrapper.hoverSmall {
+  animation: hoverSmallAnimation 2s ease-in-out infinite alternate;
+  animation-play-state: running;
+}
+
 .wrapper.sway {
   animation: swayAnimation 0.75s ease-in-out infinite alternate;
   animation-play-state: running;
@@ -31,6 +36,16 @@
 
   100% {
     transform: translateY(-5px);
+  }
+}
+
+@keyframes hoverSmallAnimation {
+  0% {
+    transform: translateY(2px);
+  }
+
+  100% {
+    transform: translateY(-2px);
   }
 }
 

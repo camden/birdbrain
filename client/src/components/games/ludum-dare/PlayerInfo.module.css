@@ -6,17 +6,31 @@
 .character {
   width: 32px;
   height: 32px;
-  margin-right: 12px;
+  margin-right: 8px;
 }
 
 .character img {
   width: 100%;
 }
 
-.heartContainer {
+.heartsContainer {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 5px;
+}
+
+.heartWrapper {
+  animation: heartAnimation 2s ease-in-out infinite alternate;
+}
+
+@keyframes heartAnimation {
+  0% {
+    transform: translateY(2px);
+  }
+
+  100% {
+    transform: translateY(-2px);
+  }
 }
 
 .heart {

@@ -62,6 +62,7 @@ export enum CharacterType {
 
 export enum CharacterAnimation {
   HOVER,
+  HOVER_SMALL,
   SHAKE,
   SWAY,
 }
@@ -175,6 +176,7 @@ const LudumCharacter: React.FC<LudumCharacterProps> = ({
         [styles.hover]: animation === CharacterAnimation.HOVER,
         [styles.shake]: animation === CharacterAnimation.SHAKE,
         [styles.sway]: animation === CharacterAnimation.SWAY,
+        [styles.hoverSmall]: animation === CharacterAnimation.HOVER_SMALL,
       })}
     >
       <img

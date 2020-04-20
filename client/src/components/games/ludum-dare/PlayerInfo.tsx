@@ -1,6 +1,6 @@
 import React from 'react';
 import { LudumPlayer } from '@server/store/games/ludum-dare/types';
-import LudumCharacter, { CharacterType } from './Character';
+import LudumCharacter, { CharacterType, CharacterAnimation } from './Character';
 import { times, identity } from 'ramda';
 import LudumHeart from './Heart';
 import styles from './PlayerInfo.module.css';
@@ -22,10 +22,17 @@ const LudumPlayerInfo: React.FC<LudumPlayerInfoProps> = ({
           id={player.character.id}
           type={CharacterType.ICON}
           className={styles.character}
+          animation={CharacterAnimation.HOVER_SMALL}
         />
-        <div className={styles.heartContainer}>
+        <div className={styles.heartsContainer}>
           {times(identity, player.health).map((idx) => (
-            <LudumHeart key={idx} className={styles.heart} />
+            <div
+              key={idx}
+              style={{ animationDelay: idx * 800 + 800 + 'ms' }}
+              className={styles.heartWrapper}
+            >
+              <LudumHeart className={styles.heart} />
+            </div>
           ))}
         </div>
       </div>
