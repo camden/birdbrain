@@ -99,7 +99,7 @@ const LudumMinigameHydraulics: React.FC<LudumMinigameHydraulicsProps> = ({
     const value = button[0];
     const columns = button[1];
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < columns.length; i++) {
       const isAffected = columns[i];
       if (isAffected) {
         newPipes[i] = Math.min(
