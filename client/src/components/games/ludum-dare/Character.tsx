@@ -52,12 +52,12 @@ import walterWin from 'assets/images/ludum-dare/characters/walter/walterWin.png'
 import walterTime from 'assets/images/ludum-dare/characters/walter/walterTime.png';
 
 export enum CharacterType {
-  ICON,
-  IDLE,
-  LOSE,
-  PUZZLED,
-  WIN,
-  NERVOUS,
+  ICON = 'ICON',
+  IDLE = 'IDLE',
+  LOSE = 'LOSE',
+  PUZZLED = 'PUZZLED',
+  WIN = 'WIN',
+  NERVOUS = 'NERVOUS',
 }
 
 export enum CharacterAnimation {
@@ -139,6 +139,7 @@ export interface LudumCharacterProps {
   className?: string;
   animation?: CharacterAnimation;
   typeWhenPressed?: CharacterType;
+  disablePressChange?: boolean;
 }
 
 const LudumCharacter: React.FC<LudumCharacterProps> = ({
@@ -147,12 +148,19 @@ const LudumCharacter: React.FC<LudumCharacterProps> = ({
   className,
   animation,
   typeWhenPressed,
+  disablePressChange,
 }) => {
   const [isPressed, setIsPressed] = useState(false);
 
-  const finalType = isPressed
-    ? typeWhenPressed || CharacterType.WIN
-    : type || CharacterType.IDLE;
+  const pressedType = typeWhenPressed || CharacterType.WIN;
+  const unpressedType = type || CharacterType.IDLE;
+
+  const shouldChangeOnPress =
+    !disablePressChange && unpressedType !== CharacterType.ICON;
+
+  const finalType =
+    shouldChangeOnPress && isPressed ? pressedType : unpressedType;
+
   const url = characters[id] && characters[id][finalType];
 
   if (!url) {
