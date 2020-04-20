@@ -123,7 +123,7 @@ const LudumMinigameSimonSays: React.FC<LudumMinigameSimonSaysProps> = ({
       >
         {times(identity, minigame.phrase.length).map((idx) => (
           <div key={idx} className={styles.emptyGuessSpace}>
-            {getImageForShape(currentGuess[idx])}
+            {currentGuess[idx] && getImageForShape(currentGuess[idx])}
           </div>
         ))}
       </div>
