@@ -60,11 +60,11 @@
 
 @keyframes swayAnimation {
   0% {
-    transform: rotate(-5deg);
+    transform: rotate(-8deg);
   }
 
   100% {
-    transform: rotate(5deg);
+    transform: rotate(8deg);
   }
 }
 

@@ -5,6 +5,69 @@
   flex-direction: column;
 }
 
+.heartsContainer {
+  margin-top: 32px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 5px;
+}
+
+.heartWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heartWrapper.missingHeart {
+  animation: missingHeartAnimation 2s linear forwards;
+  animation-delay: 1s;
+  animation-play-state: running;
+}
+
+@keyframes missingHeartAnimation {
+  0% {
+    opacity: 1;
+  }
+
+  10% {
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  30% {
+    opacity: 0;
+  }
+
+  40% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  60% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.heart {
+  width: 64px;
+  height: 64px;
+}
+
 .footer {
   flex: 1;
   display: flex;
