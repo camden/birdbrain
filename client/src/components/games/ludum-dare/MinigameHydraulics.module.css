@@ -1,12 +1,22 @@
-.pipeWrapper {
+.pipeRowWrapper {
   display: grid;
   padding: 0 32px;
   grid-template-columns: 1fr 1fr 1fr;
+  justify-items: center stretch;
 }
 
-.pipe {
-  font-weight: bold;
-  text-align: center;
+.pipeWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.pipeImg {
+  width: 48px;
+  height: 96px;
+}
+
+.pipeButton {
+  margin-bottom: 8px;
 }
 
 .cols110 {

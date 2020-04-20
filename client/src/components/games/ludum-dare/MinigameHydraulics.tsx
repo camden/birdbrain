@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, ReactNode } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   LudumGameState,
@@ -10,6 +10,12 @@ import styles from './MinigameHydraulics.module.css';
 import Button from 'components/shared/button/Button';
 import { sendMessage } from 'store/websocket/actions';
 import { ludumCheckMinigameAnswer } from '@server/store/games/ludum-dare/actions';
+import pipe0 from 'assets/images/ludum-dare/gui/pipes/pipe0.png';
+import pipe1 from 'assets/images/ludum-dare/gui/pipes/pipe1.png';
+import pipe2 from 'assets/images/ludum-dare/gui/pipes/pipe2.png';
+import pipe3 from 'assets/images/ludum-dare/gui/pipes/pipe3.png';
+import pipe4 from 'assets/images/ludum-dare/gui/pipes/pipe4.png';
+import cx from 'classnames';
 
 export interface LudumMinigameHydraulicsProps {
   game: LudumGameState;
@@ -37,6 +43,34 @@ const getClassNameForButton = (
       console.error('Unexpected button config!' + buttonAsString);
       return '';
   }
+};
+
+const getPipeForValue = (value: number): ReactNode => {
+  let imgSrc;
+
+  switch (value) {
+    case 0:
+      imgSrc = pipe0;
+      break;
+    case 1:
+      imgSrc = pipe1;
+      break;
+    case 2:
+      imgSrc = pipe2;
+      break;
+    case 3:
+      imgSrc = pipe3;
+      break;
+    case 4:
+      imgSrc = pipe4;
+      break;
+  }
+
+  return (
+    <div className={styles.pipeWrapper}>
+      <img src={imgSrc} className={styles.pipeImg} />
+    </div>
+  );
 };
 
 const LudumMinigameHydraulics: React.FC<LudumMinigameHydraulicsProps> = ({
@@ -81,23 +115,25 @@ const LudumMinigameHydraulics: React.FC<LudumMinigameHydraulicsProps> = ({
   return (
     <div className={styles.wrapper}>
       {passedMinigame && <strong>Congrats! You got the right answer</strong>}
-      <h1>Goal:</h1>
-      <div className={styles.pipeWrapper}>
-        <div className={styles.pipe}>{minigame.correctResult[0]}</div>
-        <div className={styles.pipe}>{minigame.correctResult[1]}</div>
-        <div className={styles.pipe}>{minigame.correctResult[2]}</div>
+      <h3>Goal:</h3>
+      <div className={styles.pipeRowWrapper}>
+        {getPipeForValue(minigame.correctResult[0])}
+        {getPipeForValue(minigame.correctResult[1])}
+        {getPipeForValue(minigame.correctResult[2])}
       </div>
-      <h1>Current:</h1>
-      <div className={styles.pipeWrapper}>
-        <div className={styles.pipe}>{pipes[0]}</div>
-        <div className={styles.pipe}>{pipes[1]}</div>
-        <div className={styles.pipe}>{pipes[2]}</div>
+      <h3>Current:</h3>
+      <div className={styles.pipeRowWrapper}>
+        {getPipeForValue(pipes[0])}
+        {getPipeForValue(pipes[1])}
+        {getPipeForValue(pipes[2])}
       </div>
-      <div className={styles.pipeWrapper}>
+      <div className={styles.pipeRowWrapper}>
         {minigame.buttons.map((b) => (
           <Button
+            secondary
+            small
             key={b[0] + b[1].join()}
-            className={getClassNameForButton(b)}
+            className={cx(styles.pipeButton, getClassNameForButton(b))}
             onClick={() => onButtonPress(b)}
           >
             {b[0] > 0 ? '+' : ''}
@@ -105,6 +141,7 @@ const LudumMinigameHydraulics: React.FC<LudumMinigameHydraulicsProps> = ({
           </Button>
         ))}
         <Button
+          small
           className={styles.cols111}
           onClick={() => setPipes(minigame.startingResult)}
         >

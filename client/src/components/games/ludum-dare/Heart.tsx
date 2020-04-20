@@ -1,5 +1,5 @@
 import React from 'react';
-import fullHeart from 'assets/images/ludum-dare/gui/heatlh/heartFull.png';
+import fullHeart from 'assets/images/ludum-dare/gui/health/heartFull.png';
 
 export interface LudumHeartProps {
   className?: string;

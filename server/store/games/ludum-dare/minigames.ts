@@ -86,7 +86,7 @@ const allPossibleButtonPositions: LudumMinigameHydraulicsButtonPosition[] = [
 ];
 
 export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
-  const maxLevel = 5;
+  const maxLevel = 4;
   const iterations = 4; // difficulty, essentially
   const endGoal: LudumMinigameHydraulicsResult = [
     pickRandomNumber(0, maxLevel),
