@@ -17,10 +17,11 @@ import { pickElement, pickRandomNumber } from 'utils/rng';
 import shuffleArray from 'utils/shuffle-array';
 
 export const pickNextMinigame = (): LudumMinigame => {
-  return pickElement([
-    LudumMinigame.HYDRAULICS,
-    LudumMinigame.SIMON_SAYS,
-  ])[0] as LudumMinigame;
+  return LudumMinigame.HYDRAULICS;
+  // return pickElement([
+  //   LudumMinigame.HYDRAULICS,
+  //   LudumMinigame.SIMON_SAYS,
+  // ])[0] as LudumMinigame;
 };
 
 export const checkMinigameAnswer = (
