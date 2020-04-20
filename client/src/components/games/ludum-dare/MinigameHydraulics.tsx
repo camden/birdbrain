@@ -23,27 +23,27 @@ export interface LudumMinigameHydraulicsProps {
   minigame: LudumMinigameHydraulicsState;
 }
 
-const getClassNameForButton = (
+const getStyleForButton = (
   button: LudumMinigameHydraulicsButton
-): string => {
-  const buttonAsString = button[1].map((bool) => (bool ? 1 : 0)).join('');
-  switch (buttonAsString) {
-    case '111':
-      return styles.cols111;
-    case '110':
-      return styles.cols110;
-    case '011':
-      return styles.cols011;
-    case '100':
-      return styles.cols100;
-    case '010':
-      return styles.cols010;
-    case '001':
-      return styles.cols001;
-    default:
-      console.error('Unexpected button config!' + buttonAsString);
-      return '';
+): React.CSSProperties => {
+  let firstSeenIdx;
+  let lastSeenIdx = 0;
+
+  for (let i = 0; i < button[1].length; i++) {
+    const atIdx = button[1][i];
+    if (!!atIdx && firstSeenIdx === undefined) {
+      firstSeenIdx = i;
+    }
+
+    if (atIdx) {
+      lastSeenIdx = i;
+    }
   }
+
+  return {
+    gridColumnStart: (firstSeenIdx || 0) + 1,
+    gridColumnEnd: lastSeenIdx + 2,
+  };
 };
 
 const getPipeImgForValue = (
@@ -114,7 +114,6 @@ const LudumMinigameHydraulics: React.FC<LudumMinigameHydraulicsProps> = ({
     setPipes(newPipes);
   };
 
-  console.log(minigame.correctResult);
   return (
     <div className={styles.wrapper}>
       {passedMinigame && <strong>Congrats! You got the right answer</strong>}
@@ -134,7 +133,8 @@ const LudumMinigameHydraulics: React.FC<LudumMinigameHydraulicsProps> = ({
             secondary
             small
             key={b[0] + b[1].join()}
-            className={cx(styles.pipeButton, getClassNameForButton(b))}
+            className={styles.pipeButton}
+            style={getStyleForButton(b)}
             onClick={() => onButtonPress(b)}
           >
             {b[0] > 0 ? '+' : ''}
