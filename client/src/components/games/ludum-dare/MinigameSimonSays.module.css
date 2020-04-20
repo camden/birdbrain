@@ -16,6 +16,9 @@
 .shapeImg {
   width: 32px;
   height: 32px;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  user-select: none;
 }
 
 .currentShape {
@@ -26,6 +29,9 @@
 .currentShape img {
   height: 100%;
   width: 100%;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 
 .guessWrapper {

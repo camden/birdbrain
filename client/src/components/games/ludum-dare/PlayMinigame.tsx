@@ -17,6 +17,7 @@ import LudumMinigameReflexes from './MinigameReflexes';
 import styles from './PlayMinigame.module.css';
 import LudumCharacter, { CharacterType, CharacterAnimation } from './Character';
 import { useCurrentPlayer } from 'utils/ludum-dare-utils';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export interface LudumPlayMinigameProps {
   game: LudumGameState;
@@ -80,13 +81,16 @@ const LudumPlayMinigame: React.FC<LudumPlayMinigameProps> = ({ game }) => {
   );
 
   let characterType = CharacterType.IDLE;
+  let characterAnimation = CharacterAnimation.HOVER_SMALL;
 
   if (currentPlayerPassed) {
     characterType = CharacterType.WIN;
+    characterAnimation = CharacterAnimation.SWAY;
   } else if (sortaRunningOutOfTime) {
     characterType = CharacterType.PUZZLED;
   } else if (notMuchTimeLeft) {
     characterType = CharacterType.NERVOUS;
+    characterAnimation = CharacterAnimation.SHAKE;
   }
 
   return (
@@ -97,16 +101,34 @@ const LudumPlayMinigame: React.FC<LudumPlayMinigameProps> = ({ game }) => {
             id={currentPlayer.character.id}
             className={styles.character}
             type={characterType}
-            animation={
-              notMuchTimeLeft
-                ? CharacterAnimation.SHAKE
-                : CharacterAnimation.HOVER_SMALL
-            }
+            animation={characterAnimation}
           />
         </div>
         <div className={styles.timeLeft}>{timeLeft}</div>
       </section>
-      {minigame}
+      <AnimatePresence exitBeforeEnter>
+        {!currentPlayerPassed && (
+          <motion.div
+            className={styles.minigameWrapper}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ opacity: { duration: 1 } }}
+            exit={{ opacity: 0 }}
+          >
+            {minigame}
+          </motion.div>
+        )}
+        {currentPlayerPassed && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ opacity: { duration: 1 } }}
+          >
+            <h1>You did it!</h1>
+            <p>Hang tight while we wait for everyone else to finish.</p>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
