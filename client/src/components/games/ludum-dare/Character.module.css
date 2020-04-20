@@ -9,13 +9,20 @@
   transform: scale(1.1);
 }
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .wrapper.hover {
   animation: hoverAnimation 2s ease-in-out infinite alternate;
   animation-play-state: running;
 }
 
 .wrapper.hoverSmall {
-  animation: hoverSmallAnimation 2s ease-in-out infinite alternate;
+  animation: hoverSmallAnimation 1s ease-in-out infinite alternate;
   animation-play-state: running;
 }
 

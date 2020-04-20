@@ -28,7 +28,7 @@ const LudumPlayerInfo: React.FC<LudumPlayerInfoProps> = ({
           {times(identity, player.health).map((idx) => (
             <div
               key={idx}
-              style={{ animationDelay: idx * 800 + 800 + 'ms' }}
+              style={{ animationDelay: -(idx * 250 + 2250) + 'ms' }}
               className={styles.heartWrapper}
             >
               <LudumHeart className={styles.heart} />

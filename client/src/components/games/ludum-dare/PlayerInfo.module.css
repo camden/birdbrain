@@ -20,7 +20,7 @@
 }
 
 .heartWrapper {
-  animation: heartAnimation 2s ease-in-out infinite alternate;
+  animation: heartAnimation 1s ease-in-out infinite alternate;
 }
 
 @keyframes heartAnimation {
