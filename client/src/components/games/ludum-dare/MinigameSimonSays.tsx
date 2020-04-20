@@ -87,7 +87,9 @@ const LudumMinigameSimonSays: React.FC<LudumMinigameSimonSaysProps> = ({
   const onBackspace = () =>
     setCurrentGuess(currentGuess.splice(0, currentGuess.length - 1));
 
-  const [indexOfCurrentLetter, setIndexOfCurrentLetter] = useState(0);
+  const [indexOfCurrentLetter, setIndexOfCurrentLetter] = useState(
+    minigame.phrase.length
+  );
 
   useInterval(() => {
     const nextIdx =

@@ -8,12 +8,20 @@ import LudumPreMinigame from './PreMinigame';
 import LudumPlayMinigame from './PlayMinigame';
 import LudumMinigameResults from './MinigameResults';
 import styles from './Main.module.css';
+import LudumYouDied from './YouDied';
+import { useCurrentPlayer } from 'utils/ludum-dare-utils';
 
 export interface LudumMainProps {
   game: LudumGameState;
 }
 
 const Game: React.FC<LudumMainProps> = ({ game }) => {
+  const currentPlayer = useCurrentPlayer(game);
+
+  if (currentPlayer.health === 0) {
+    return <LudumYouDied game={game} />;
+  }
+
   switch (game.phase) {
     case LudumPhase.INTRO:
       return <LudumIntro game={game} />;
