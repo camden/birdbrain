@@ -52,7 +52,7 @@ export const createMinigameState = (
     case LudumMinigame.SIMON_SAYS:
       return createSimonSaysState(game);
     case LudumMinigame.HYDRAULICS:
-      return createHydraulicsState();
+      return createHydraulicsState(game);
     case LudumMinigame.REFLEXES:
       return createReflexesState();
   }
@@ -88,9 +88,17 @@ const createSimonSaysState = (
   };
 };
 
-export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
-  const numberOfPipes = 1;
-  let iterations = 4; // difficulty, essentially
+export const createHydraulicsState = (
+  game: LudumGameState
+): LudumMinigameHydraulicsState => {
+  const numberOfPipes = Math.min(
+    5,
+    Math.max(1, Math.floor((game.roundNumber + 5) * 0.3))
+  );
+  let iterations = Math.min(
+    5,
+    Math.max(2, Math.floor((game.roundNumber + 1) * 0.5))
+  );
 
   const pipeMaxLevel = 4;
   const endGoal: LudumMinigameHydraulicsResult = times(
