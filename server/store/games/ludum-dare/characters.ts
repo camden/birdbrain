@@ -6,7 +6,7 @@ const characters: LudumCharacter[] = [
   { name: 'Allen Alien', id: 'allen', color: 'forestgreen' },
   { name: 'Blocky Barney', id: 'barney', color: 'purple' },
   { name: 'Gamepad Gary', id: 'gary', color: 'blue' },
-  { name: 'Rocky Ron', id: 'ron', color: 'darkgrey' },
+  { name: 'Rocky Ron', id: 'ron', color: '#697181' },
   { name: 'Wiggly Walter', id: 'walter', color: 'yellow' },
 ];
 
