@@ -4,6 +4,7 @@ import {
   LudumGameState,
   LudumMinigameHydraulicsState,
   LudumMinigameHydraulicsButton,
+  LudumMinigameHydraulicsResult,
 } from '@server/store/games/ludum-dare/types';
 import { useCurrentPlayer } from 'utils/ludum-dare-utils';
 import styles from './MinigameHydraulics.module.css';
@@ -45,7 +46,10 @@ const getClassNameForButton = (
   }
 };
 
-const getPipeForValue = (value: number): ReactNode => {
+const getPipeImgForValue = (
+  value: number,
+  key?: string | number
+): ReactNode => {
   let imgSrc;
 
   switch (value) {
@@ -67,7 +71,7 @@ const getPipeForValue = (value: number): ReactNode => {
   }
 
   return (
-    <div className={styles.pipeWrapper}>
+    <div className={styles.pipeWrapper} key={key}>
       <img src={imgSrc} className={styles.pipeImg} />
     </div>
   );
@@ -79,7 +83,7 @@ const LudumMinigameHydraulics: React.FC<LudumMinigameHydraulicsProps> = ({
 }) => {
   const dispatch = useDispatch();
   const currentPlayer = useCurrentPlayer(game);
-  const [pipes, setPipes] = useState<[number, number, number]>(
+  const [pipes, setPipes] = useState<LudumMinigameHydraulicsResult>(
     minigame.startingResult
   );
 
@@ -88,11 +92,9 @@ const LudumMinigameHydraulics: React.FC<LudumMinigameHydraulicsProps> = ({
   );
 
   const onButtonPress = (button: LudumMinigameHydraulicsButton) => {
-    let newPipes: [number, number, number] = [...pipes] as [
-      number,
-      number,
-      number
-    ];
+    let newPipes: LudumMinigameHydraulicsResult = [
+      ...pipes,
+    ] as LudumMinigameHydraulicsResult;
 
     const value = button[0];
     const columns = button[1];
@@ -112,20 +114,19 @@ const LudumMinigameHydraulics: React.FC<LudumMinigameHydraulicsProps> = ({
     setPipes(newPipes);
   };
 
+  console.log(minigame.correctResult);
   return (
     <div className={styles.wrapper}>
       {passedMinigame && <strong>Congrats! You got the right answer</strong>}
       <h3>Goal:</h3>
       <div className={styles.pipeRowWrapper}>
-        {getPipeForValue(minigame.correctResult[0])}
-        {getPipeForValue(minigame.correctResult[1])}
-        {getPipeForValue(minigame.correctResult[2])}
+        {minigame.correctResult.map((pipe, idx) =>
+          getPipeImgForValue(pipe, pipe + ' ' + idx)
+        )}
       </div>
       <h3>Current:</h3>
       <div className={styles.pipeRowWrapper}>
-        {getPipeForValue(pipes[0])}
-        {getPipeForValue(pipes[1])}
-        {getPipeForValue(pipes[2])}
+        {pipes.map((pipe, idx) => getPipeImgForValue(pipe, pipe + ' ' + idx))}
       </div>
       <div className={styles.pipeRowWrapper}>
         {minigame.buttons.map((b) => (

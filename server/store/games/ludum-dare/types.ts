@@ -49,7 +49,7 @@ export type LudumMinigameHydraulicsButton = [
 ];
 
 export type LudumMinigameHydraulicsButtonPosition = [boolean, boolean, boolean];
-export type LudumMinigameHydraulicsResult = [number, number, number];
+export type LudumMinigameHydraulicsResult = number[];
 
 export interface LudumMinigameHydraulicsState {
   pipeMaxLevel: number;

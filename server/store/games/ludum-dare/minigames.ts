@@ -103,7 +103,7 @@ export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
     pickRandomNumber(0, pipeMaxLevel),
     pickRandomNumber(0, pipeMaxLevel),
     pickRandomNumber(0, pipeMaxLevel),
-  ]; // <-- this can be randomized, and probably should be @TODO
+  ];
   const startConfig: LudumMinigameHydraulicsResult = [
     ...endGoal,
   ] as LudumMinigameHydraulicsResult;
@@ -186,6 +186,8 @@ export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
     const bSize = b[1].reduce((acc, cur) => (cur ? acc + 1 : acc), 0);
     return aSize - bSize;
   });
+
+  // @TODO can we try to "fit" the buttons to save space? e.g. multiple in same row if possible
 
   return {
     pipeMaxLevel,
