@@ -86,12 +86,12 @@ const allPossibleButtonPositions: LudumMinigameHydraulicsButtonPosition[] = [
 ];
 
 export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
-  const maxLevel = 4;
-  const iterations = 4; // difficulty, essentially
+  const pipeMaxLevel = 4;
+  let iterations = 4; // difficulty, essentially
   const endGoal: LudumMinigameHydraulicsResult = [
-    pickRandomNumber(0, maxLevel),
-    pickRandomNumber(0, maxLevel),
-    pickRandomNumber(0, maxLevel),
+    pickRandomNumber(0, pipeMaxLevel),
+    pickRandomNumber(0, pipeMaxLevel),
+    pickRandomNumber(0, pipeMaxLevel),
   ]; // <-- this can be randomized, and probably should be @TODO
   const startConfig: LudumMinigameHydraulicsResult = [
     ...endGoal,
@@ -113,8 +113,8 @@ export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
         const startConfigValue = startConfig[j];
         const valuesForThisPosition = [];
         for (
-          let potentialValue = -maxLevel;
-          potentialValue <= maxLevel;
+          let potentialValue = -pipeMaxLevel;
+          potentialValue <= pipeMaxLevel;
           potentialValue++
         ) {
           if (potentialValue === 0) {
@@ -126,7 +126,7 @@ export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
           const resultOfPressingButton = startConfigValue - potentialValue;
           if (
             resultOfPressingButton >= 0 &&
-            resultOfPressingButton <= maxLevel
+            resultOfPressingButton <= pipeMaxLevel
           ) {
             valuesForThisPosition.push(potentialValue);
           }
@@ -141,6 +141,7 @@ export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
     }, valuesForEachPosition[0]);
 
     if (potentialValues.length === 0) {
+      iterations++;
       continue;
     }
 
@@ -151,7 +152,7 @@ export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
       const isAffected = buttonPos[j];
       if (isAffected) {
         startConfig[j] = Math.min(
-          maxLevel,
+          pipeMaxLevel,
           Math.max(0, startConfig[j] - buttonVal)
         );
       }
@@ -169,7 +170,7 @@ export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
   shuffleArray(buttons);
 
   return {
-    pipeMaxLevel: maxLevel,
+    pipeMaxLevel,
     correctResult: endGoal,
     startingResult: startConfig,
     buttons,
