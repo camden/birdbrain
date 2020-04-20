@@ -12,7 +12,7 @@ import {
   LudumMinigameHydraulicsResult,
   LudumMinigameReflexesState,
 } from './types';
-import { equals, uniq } from 'ramda';
+import { equals, uniq, intersection } from 'ramda';
 import { pickElement, pickRandomNumber } from 'utils/rng';
 import shuffleArray from 'utils/shuffle-array';
 
@@ -105,10 +105,12 @@ export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
 
     // for this position, calculate the possible button values for each position
     // and take the intersection of those values to get a valid value
-    let potentialValues = [];
+    let valuesForEachPosition: number[][] = [];
+
     for (let j = 0; j < 3; j++) {
       if (buttonPos[j]) {
         const startConfigValue = startConfig[j];
+        const valuesForThisPosition = [];
         for (
           let potentialValue = -maxLevel;
           potentialValue <= maxLevel;
@@ -125,10 +127,20 @@ export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
             resultOfPressingButton >= 0 &&
             resultOfPressingButton <= maxLevel
           ) {
-            potentialValues.push(potentialValue);
+            valuesForThisPosition.push(potentialValue);
           }
         }
+
+        valuesForEachPosition.push(valuesForThisPosition);
       }
+    }
+
+    let potentialValues: number[] = valuesForEachPosition.reduce((acc, cur) => {
+      return intersection(acc, cur);
+    }, valuesForEachPosition[0]);
+
+    if (potentialValues.length === 0) {
+      continue;
     }
 
     let buttonVal = pickElement(potentialValues)[0] as number;
