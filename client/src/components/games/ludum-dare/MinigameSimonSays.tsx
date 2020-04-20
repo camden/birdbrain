@@ -12,25 +12,59 @@ import { ludumCheckMinigameAnswer } from '@server/store/games/ludum-dare/actions
 import { useCurrentPlayer } from 'utils/ludum-dare-utils';
 import { equals, times, identity } from 'ramda';
 import styles from './MinigameSimonSays.module.css';
+import CircleShape from 'assets/images/ludum-dare/gui/shapes/circlePat1.png';
+import TriangleShape from 'assets/images/ludum-dare/gui/shapes/triPat2.png';
+import StarShape from 'assets/images/ludum-dare/gui/shapes/starPat3.png';
+import DiamondShape from 'assets/images/ludum-dare/gui/shapes/simpleDmnd.png';
+import SquareShape from 'assets/images/ludum-dare/gui/shapes/sqrPat4.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBackspace } from '@fortawesome/pro-solid-svg-icons';
 
 export interface LudumMinigameSimonSaysProps {
   game: LudumGameState;
   minigame: LudumMinigameSimonSaysState;
 }
 
-const getImageForShape = (shape: LudumShape): ReactNode => {
+const getImageForShape = (
+  shape: LudumShape,
+  noClassName?: boolean
+): ReactNode => {
+  let imgUrl;
   switch (shape) {
     case LudumShape.CIRCLE:
-      return '🟠';
-    case LudumShape.HEART:
-      return '💙';
+      imgUrl = CircleShape;
+      break;
+    case LudumShape.DIAMOND:
+      imgUrl = DiamondShape;
+      break;
+    case LudumShape.SQUARE:
+      imgUrl = SquareShape;
+      break;
+    case LudumShape.STAR:
+      imgUrl = StarShape;
+      break;
     case LudumShape.TRIANGLE:
-      return '🔺️';
+      imgUrl = TriangleShape;
+      break;
   }
+
+  const className = noClassName ? undefined : styles.shapeImg;
+  return <img src={imgUrl} className={className} />;
 };
 
-const NUM_TICKS_WITH_NO_SHAPE = 4;
+const NUM_TICKS_WITH_NO_SHAPE = 3;
 const TIME_BETWEEN_SHAPES_MS = 500;
+
+const buttonForShape = (
+  shape: LudumShape,
+  onPress: (shape: LudumShape) => void
+): ReactNode => {
+  return (
+    <Button secondary onClick={() => onPress(shape)}>
+      {getImageForShape(shape)}
+    </Button>
+  );
+};
 
 const LudumMinigameSimonSays: React.FC<LudumMinigameSimonSaysProps> = ({
   game,
@@ -65,7 +99,7 @@ const LudumMinigameSimonSays: React.FC<LudumMinigameSimonSaysProps> = ({
   const curShape: ReactNode =
     indexOfCurrentLetter >= minigame.phrase.length
       ? '⠀'
-      : getImageForShape(minigame.phrase[indexOfCurrentLetter]);
+      : getImageForShape(minigame.phrase[indexOfCurrentLetter], true);
 
   const passedMinigame = game.playersWhoPassedCurrentMinigame.includes(
     currentPlayer.userId
@@ -93,21 +127,19 @@ const LudumMinigameSimonSays: React.FC<LudumMinigameSimonSaysProps> = ({
           </div>
         ))}
       </div>
-      <Button secondary onClick={() => onPressGuessButton(LudumShape.HEART)}>
-        💙
-      </Button>
-      <Button secondary onClick={() => onPressGuessButton(LudumShape.TRIANGLE)}>
-        🔺️
-      </Button>
-      <Button secondary onClick={() => onPressGuessButton(LudumShape.CIRCLE)}>
-        🟠
-      </Button>
-      <Button
-        secondary={currentGuess.length < minigame.phrase.length}
-        onClick={() => onBackspace()}
-      >
-        Backspace
-      </Button>
+      <div className={styles.buttons}>
+        {buttonForShape(LudumShape.CIRCLE, onPressGuessButton)}
+        {buttonForShape(LudumShape.STAR, onPressGuessButton)}
+        {buttonForShape(LudumShape.DIAMOND, onPressGuessButton)}
+        {buttonForShape(LudumShape.SQUARE, onPressGuessButton)}
+        {buttonForShape(LudumShape.TRIANGLE, onPressGuessButton)}
+        <Button
+          secondary={currentGuess.length < minigame.phrase.length}
+          onClick={() => onBackspace()}
+        >
+          <FontAwesomeIcon icon={faBackspace} />
+        </Button>
+      </div>
     </div>
   );
 };

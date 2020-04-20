@@ -13,8 +13,19 @@
   align-items: center;
 }
 
+.shapeImg {
+  width: 16px;
+  height: 16px;
+}
+
 .currentShape {
-  font-size: 64px;
+  width: 64px;
+  height: 64px;
+}
+
+.currentShape img {
+  height: 100%;
+  width: 100%;
 }
 
 .guessWrapper {
@@ -30,4 +41,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }

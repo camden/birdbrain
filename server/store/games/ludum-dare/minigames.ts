@@ -18,7 +18,7 @@ import shuffleArray from 'utils/shuffle-array';
 
 export const pickNextMinigame = (): LudumMinigame => {
   return pickElement([
-    LudumMinigame.HYDRAULICS,
+    // LudumMinigame.HYDRAULICS,
     LudumMinigame.SIMON_SAYS,
   ])[0] as LudumMinigame;
 };
@@ -58,7 +58,13 @@ export const createMinigameState = (
 
 const createSimonSaysState = (): LudumMinigameSimonSaysState => {
   const targetLength = 5;
-  const elements = [LudumShape.CIRCLE, LudumShape.HEART, LudumShape.TRIANGLE];
+  const elements = [
+    LudumShape.CIRCLE,
+    LudumShape.STAR,
+    LudumShape.TRIANGLE,
+    LudumShape.SQUARE,
+    LudumShape.DIAMOND,
+  ];
   const phrase: LudumShape[] = [];
 
   let lastShape: LudumShape;

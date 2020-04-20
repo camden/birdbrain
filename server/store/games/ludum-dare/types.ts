@@ -32,8 +32,10 @@ export type LudumMinigameSimonSaysAnswer = LudumShape[];
 
 export enum LudumShape {
   CIRCLE = 'CIRCLE',
-  HEART = 'HEART',
+  SQUARE = 'SQUARE',
+  STAR = 'STAR',
   TRIANGLE = 'TRIANGLE',
+  DIAMOND = 'DIAMOND',
 }
 
 export interface LudumMinigameSimonSaysState {
