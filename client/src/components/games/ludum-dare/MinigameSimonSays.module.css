@@ -1,12 +1,15 @@
 .wrapper {
 }
 
+.instructions {
+  text-align: center;
+}
+
 .bubble {
   background-color: white;
   border: 2px solid black;
-  margin: 4px 16px;
   padding: 16px;
-  width: 50%;
+  width: 100%;
   border-radius: 8px;
   display: flex;
   justify-content: center;
@@ -14,8 +17,8 @@
 }
 
 .shapeImg {
-  width: 32px;
-  height: 32px;
+  width: 100%;
+  height: auto;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
   user-select: none;
@@ -37,7 +40,16 @@
 .guessWrapper {
   display: grid;
   column-gap: 8px;
+  margin-top: 16px;
   margin-bottom: 16px;
+}
+
+.hintIcon {
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
 }
 
 .emptyGuessSpace {
@@ -52,4 +64,6 @@
 .buttons {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  column-gap: 8px;
+  row-gap: 8px;
 }

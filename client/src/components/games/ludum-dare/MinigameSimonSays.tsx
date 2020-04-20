@@ -18,7 +18,11 @@ import StarShape from 'assets/images/ludum-dare/gui/shapes/starPat3.png';
 import DiamondShape from 'assets/images/ludum-dare/gui/shapes/simpleDmnd.png';
 import SquareShape from 'assets/images/ludum-dare/gui/shapes/sqrPat4.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBackspace } from '@fortawesome/pro-solid-svg-icons';
+import {
+  faBackspace,
+  faCheck,
+  faTimes,
+} from '@fortawesome/pro-solid-svg-icons';
 
 export interface LudumMinigameSimonSaysProps {
   game: LudumGameState;
@@ -108,11 +112,7 @@ const LudumMinigameSimonSays: React.FC<LudumMinigameSimonSaysProps> = ({
 
   return (
     <div className={styles.wrapper}>
-      {passedMinigame && <strong>Congrats! You got the right answer</strong>}
-      {currentGuess.length >= minigame.phrase.length &&
-        !equals(currentGuess, minigame.phrase) && (
-          <strong>Nope, try again</strong>
-        )}
+      <h1 className={styles.instructions}>Transcribe!</h1>
       <div className={styles.bubble}>
         <div className={styles.currentShape}>{curShape}</div>
       </div>
@@ -123,8 +123,17 @@ const LudumMinigameSimonSays: React.FC<LudumMinigameSimonSaysProps> = ({
         }}
       >
         {times(identity, minigame.phrase.length).map((idx) => (
-          <div key={idx} className={styles.emptyGuessSpace}>
-            {currentGuess[idx] && getImageForShape(currentGuess[idx])}
+          <div className={styles.guessSpaceWrapper} key={idx}>
+            <div key={idx} className={styles.emptyGuessSpace}>
+              {currentGuess[idx] && getImageForShape(currentGuess[idx])}
+            </div>
+            <div className={styles.hintIcon}>
+              {minigame.phrase[idx] === currentGuess[idx] ? (
+                <FontAwesomeIcon icon={faCheck} color="limegreen" />
+              ) : (
+                <FontAwesomeIcon icon={faTimes} color="red" />
+              )}
+            </div>
           </div>
         ))}
       </div>
@@ -134,11 +143,8 @@ const LudumMinigameSimonSays: React.FC<LudumMinigameSimonSaysProps> = ({
         {buttonForShape(LudumShape.DIAMOND, onPressGuessButton)}
         {buttonForShape(LudumShape.SQUARE, onPressGuessButton)}
         {buttonForShape(LudumShape.TRIANGLE, onPressGuessButton)}
-        <Button
-          secondary={currentGuess.length < minigame.phrase.length}
-          onClick={() => onBackspace()}
-        >
-          <FontAwesomeIcon icon={faBackspace} />
+        <Button onClick={() => onBackspace()}>
+          <FontAwesomeIcon icon={faBackspace} size="lg" />
         </Button>
       </div>
     </div>
