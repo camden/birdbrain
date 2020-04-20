@@ -1,0 +1,24 @@
+.wrapper {
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.characterWrapper {
+}
+
+.character {
+  width: 64px;
+  height: 64px;
+}
+
+.timeLeft {
+  font-weight: bold;
+  font-size: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

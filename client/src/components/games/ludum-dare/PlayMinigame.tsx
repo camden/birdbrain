@@ -14,6 +14,9 @@ import { ludumReportEndMinigame } from '@server/store/games/ludum-dare/actions';
 import LudumMinigameSimonSays from './MinigameSimonSays';
 import LudumMinigameHydraulics from './MinigameHydraulics';
 import LudumMinigameReflexes from './MinigameReflexes';
+import styles from './PlayMinigame.module.css';
+import LudumCharacter, { CharacterType, CharacterAnimation } from './Character';
+import { useCurrentPlayer } from 'utils/ludum-dare-utils';
 
 export interface LudumPlayMinigameProps {
   game: LudumGameState;
@@ -24,6 +27,7 @@ const LudumPlayMinigame: React.FC<LudumPlayMinigameProps> = ({ game }) => {
     Math.floor(MINIGAME_DURATION_MS / 1000)
   );
   const dispatch = useDispatch();
+  const currentPlayer = useCurrentPlayer(game);
 
   useInterval(() => {
     if (!game.minigameEndTime) {
@@ -68,10 +72,40 @@ const LudumPlayMinigame: React.FC<LudumPlayMinigameProps> = ({ game }) => {
       break;
   }
 
+  const sortaRunningOutOfTime = timeLeft <= 15;
+  const notMuchTimeLeft = timeLeft <= 5;
+
+  const currentPlayerPassed = game.playersWhoPassedCurrentMinigame.includes(
+    currentPlayer.userId
+  );
+
+  let characterType = CharacterType.IDLE;
+
+  if (currentPlayerPassed) {
+    characterType = CharacterType.WIN;
+  } else if (sortaRunningOutOfTime) {
+    characterType = CharacterType.PUZZLED;
+  } else if (notMuchTimeLeft) {
+    characterType = CharacterType.NERVOUS;
+  }
+
   return (
-    <div>
-      <div>playing the game {game.currentMinigame}</div>
-      <div>{timeLeft} seconds left</div>
+    <div className={styles.wrapper}>
+      <section className={styles.topBar}>
+        <div className={styles.characterWrapper}>
+          <LudumCharacter
+            id={currentPlayer.character.id}
+            className={styles.character}
+            type={characterType}
+            animation={
+              notMuchTimeLeft
+                ? CharacterAnimation.SHAKE
+                : CharacterAnimation.HOVER_SMALL
+            }
+          />
+        </div>
+        <div className={styles.timeLeft}>{timeLeft}</div>
+      </section>
       {minigame}
     </div>
   );
