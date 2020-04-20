@@ -61,10 +61,10 @@ export enum CharacterType {
 }
 
 export enum CharacterAnimation {
-  HOVER,
-  HOVER_SMALL,
-  SHAKE,
-  SWAY,
+  HOVER = 'HOVER',
+  HOVER_SMALL = 'HOVER_SMALL',
+  SHAKE = 'SHAKE',
+  SWAY = 'SWAY',
 }
 
 const characters: any = {

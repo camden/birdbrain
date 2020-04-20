@@ -86,11 +86,11 @@ const LudumPlayMinigame: React.FC<LudumPlayMinigameProps> = ({ game }) => {
   if (currentPlayerPassed) {
     characterType = CharacterType.WIN;
     characterAnimation = CharacterAnimation.SWAY;
-  } else if (sortaRunningOutOfTime) {
-    characterType = CharacterType.PUZZLED;
   } else if (notMuchTimeLeft) {
     characterType = CharacterType.NERVOUS;
     characterAnimation = CharacterAnimation.SHAKE;
+  } else if (sortaRunningOutOfTime) {
+    characterType = CharacterType.PUZZLED;
   }
 
   return (
@@ -104,7 +104,10 @@ const LudumPlayMinigame: React.FC<LudumPlayMinigameProps> = ({ game }) => {
             animation={characterAnimation}
           />
         </div>
-        <div className={styles.timeLeft}>{timeLeft}</div>
+        <div className={styles.timeLeftWrapper}>
+          <div className={styles.timeLeft}>{timeLeft}</div>
+          <div className={styles.timeLeftLabel}>seconds left</div>
+        </div>
       </section>
       <AnimatePresence exitBeforeEnter>
         {!currentPlayerPassed && (

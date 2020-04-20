@@ -8,6 +8,9 @@
 }
 
 .characterWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .character {
@@ -15,12 +18,22 @@
   height: 64px;
 }
 
-.timeLeft {
-  font-weight: bold;
-  font-size: 32px;
+.timeLeftWrapper {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.timeLeft {
+  font-weight: bold;
+  font-size: 48px;
+}
+
+.timeLeftLabel {
+  margin-top: -6px;
+  font-weight: normal;
+  font-size: 12px;
 }
 
 .minigameWrapper {
