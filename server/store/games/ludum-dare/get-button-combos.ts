@@ -1,11 +1,11 @@
 import { uniq } from 'ramda';
 import { LudumMinigameHydraulicsButtonPosition } from './types';
 
-const genCombo = (len) => {
+const genCombo = (len: number) => {
   return uniq(genComboHelper(len, []));
 };
 
-const genComboHelper = (len, acc) => {
+const genComboHelper = (len: number, acc: boolean[][]): boolean[][] => {
   if (len === 1) {
     return acc.concat([[true], [false]]);
   }
@@ -25,7 +25,7 @@ const genComboHelper = (len, acc) => {
   return suffixTrue.concat(suffixFalse).concat(prefixTrue).concat(prefixFalse);
 };
 
-const getValid = (parentArr) => {
+const getValid = (parentArr: boolean[][]) => {
   return parentArr.filter((arr) => {
     let lastOneFalse = false;
     let sawTrue = false;

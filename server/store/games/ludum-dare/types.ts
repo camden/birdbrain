@@ -48,7 +48,7 @@ export type LudumMinigameHydraulicsButton = [
   LudumMinigameHydraulicsButtonPosition
 ];
 
-export type LudumMinigameHydraulicsButtonPosition = [boolean, boolean, boolean];
+export type LudumMinigameHydraulicsButtonPosition = boolean[];
 export type LudumMinigameHydraulicsResult = number[];
 
 export interface LudumMinigameHydraulicsState {
