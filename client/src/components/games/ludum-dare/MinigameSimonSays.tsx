@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import { sendMessage } from 'store/websocket/actions';
 import { ludumCheckMinigameAnswer } from '@server/store/games/ludum-dare/actions';
 import { useCurrentPlayer } from 'utils/ludum-dare-utils';
-import { equals } from 'ramda';
+import { equals, times, identity } from 'ramda';
 import styles from './MinigameSimonSays.module.css';
 
 export interface LudumMinigameSimonSaysProps {
@@ -42,6 +42,10 @@ const LudumMinigameSimonSays: React.FC<LudumMinigameSimonSaysProps> = ({
 
   const onPressGuessButton = (guess: LudumShape) => {
     const nextGuess = currentGuess.concat([guess]);
+    if (nextGuess.length > minigame.phrase.length) {
+      return;
+    }
+
     setCurrentGuess(nextGuess);
     dispatch(sendMessage(ludumCheckMinigameAnswer(nextGuess)));
   };
@@ -77,16 +81,33 @@ const LudumMinigameSimonSays: React.FC<LudumMinigameSimonSaysProps> = ({
       <div className={styles.bubble}>
         <div className={styles.currentShape}>{curShape}</div>
       </div>
-      <div>
-        the answer has <strong>{minigame.phrase.length} shapes</strong>
+      <div
+        className={styles.guessWrapper}
+        style={{
+          gridTemplateColumns: `repeat(${minigame.phrase.length}, 1fr)`,
+        }}
+      >
+        {times(identity, minigame.phrase.length).map((idx) => (
+          <div key={idx} className={styles.emptyGuessSpace}>
+            {getImageForShape(currentGuess[idx])}
+          </div>
+        ))}
       </div>
-      <div>your guess: {currentGuess.map(getImageForShape)}</div>
-      <Button onClick={() => onPressGuessButton(LudumShape.HEART)}>💙</Button>
-      <Button onClick={() => onPressGuessButton(LudumShape.TRIANGLE)}>
+      <Button secondary onClick={() => onPressGuessButton(LudumShape.HEART)}>
+        💙
+      </Button>
+      <Button secondary onClick={() => onPressGuessButton(LudumShape.TRIANGLE)}>
         🔺️
       </Button>
-      <Button onClick={() => onPressGuessButton(LudumShape.CIRCLE)}>🟠</Button>
-      <Button onClick={() => onBackspace()}>Backspace</Button>
+      <Button secondary onClick={() => onPressGuessButton(LudumShape.CIRCLE)}>
+        🟠
+      </Button>
+      <Button
+        secondary={currentGuess.length < minigame.phrase.length}
+        onClick={() => onBackspace()}
+      >
+        Backspace
+      </Button>
     </div>
   );
 };

@@ -16,3 +16,18 @@
 .currentShape {
   font-size: 64px;
 }
+
+.guessWrapper {
+  display: grid;
+  column-gap: 8px;
+  margin-bottom: 16px;
+}
+
+.emptyGuessSpace {
+  height: 40px;
+  border-bottom: 2px solid black;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
