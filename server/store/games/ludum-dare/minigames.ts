@@ -18,8 +18,8 @@ import shuffleArray from 'utils/shuffle-array';
 
 export const pickNextMinigame = (): LudumMinigame => {
   return pickElement([
-    // LudumMinigame.HYDRAULICS,
-    LudumMinigame.SIMON_SAYS,
+    LudumMinigame.HYDRAULICS,
+    // LudumMinigame.SIMON_SAYS,
   ])[0] as LudumMinigame;
 };
 
@@ -177,8 +177,15 @@ export const createHydraulicsState = (): LudumMinigameHydraulicsState => {
   // remove duplicate buttons
   buttons = uniq(buttons);
 
-  // shuffle the list of buttons
+  // shuffle the buttons
   shuffleArray(buttons);
+
+  // and then sort by size (smallest at top)
+  buttons = buttons.sort((a, b) => {
+    const aSize = a[1].reduce((acc, cur) => (cur ? acc + 1 : acc), 0);
+    const bSize = b[1].reduce((acc, cur) => (cur ? acc + 1 : acc), 0);
+    return aSize - bSize;
+  });
 
   return {
     pipeMaxLevel,
