@@ -2,7 +2,7 @@ import React, { useState, ReactNode } from 'react';
 import {
   LudumGameState,
   LudumMinigameSimonSaysState,
-  LudumHydraulicsShape,
+  LudumShape,
 } from '@server/store/games/ludum-dare/types';
 import useInterval from 'use-interval';
 import Button from 'components/shared/button/Button';
@@ -30,24 +30,24 @@ export interface LudumMinigameSimonSaysProps {
 }
 
 const getImageForShape = (
-  shape: LudumHydraulicsShape,
+  shape: LudumShape,
   noClassName?: boolean
 ): ReactNode => {
   let imgUrl;
   switch (shape) {
-    case LudumHydraulicsShape.CIRCLE:
+    case LudumShape.CIRCLE:
       imgUrl = CircleShape;
       break;
-    case LudumHydraulicsShape.DIAMOND:
+    case LudumShape.DIAMOND:
       imgUrl = DiamondShape;
       break;
-    case LudumHydraulicsShape.SQUARE:
+    case LudumShape.SQUARE:
       imgUrl = SquareShape;
       break;
-    case LudumHydraulicsShape.STAR:
+    case LudumShape.STAR:
       imgUrl = StarShape;
       break;
-    case LudumHydraulicsShape.TRIANGLE:
+    case LudumShape.TRIANGLE:
       imgUrl = TriangleShape;
       break;
   }
@@ -59,8 +59,8 @@ const getImageForShape = (
 const NUM_TICKS_WITH_NO_SHAPE = 3;
 
 const buttonForShape = (
-  shape: LudumHydraulicsShape,
-  onPress: (shape: LudumHydraulicsShape) => void
+  shape: LudumShape,
+  onPress: (shape: LudumShape) => void
 ): ReactNode => {
   return (
     <Button
@@ -78,10 +78,10 @@ const LudumMinigameSimonSays: React.FC<LudumMinigameSimonSaysProps> = ({
   minigame,
 }) => {
   const dispatch = useDispatch();
-  const [currentGuess, setCurrentGuess] = useState<LudumHydraulicsShape[]>([]);
+  const [currentGuess, setCurrentGuess] = useState<LudumShape[]>([]);
   const currentPlayer = useCurrentPlayer(game);
 
-  const onPressGuessButton = (guess: LudumHydraulicsShape) => {
+  const onPressGuessButton = (guess: LudumShape) => {
     const nextGuess = currentGuess.concat([guess]);
     if (nextGuess.length > minigame.phrase.length) {
       return;
@@ -142,11 +142,11 @@ const LudumMinigameSimonSays: React.FC<LudumMinigameSimonSaysProps> = ({
         ))}
       </div>
       <div className={styles.buttons}>
-        {buttonForShape(LudumHydraulicsShape.CIRCLE, onPressGuessButton)}
-        {buttonForShape(LudumHydraulicsShape.STAR, onPressGuessButton)}
-        {buttonForShape(LudumHydraulicsShape.DIAMOND, onPressGuessButton)}
-        {buttonForShape(LudumHydraulicsShape.SQUARE, onPressGuessButton)}
-        {buttonForShape(LudumHydraulicsShape.TRIANGLE, onPressGuessButton)}
+        {buttonForShape(LudumShape.CIRCLE, onPressGuessButton)}
+        {buttonForShape(LudumShape.STAR, onPressGuessButton)}
+        {buttonForShape(LudumShape.DIAMOND, onPressGuessButton)}
+        {buttonForShape(LudumShape.SQUARE, onPressGuessButton)}
+        {buttonForShape(LudumShape.TRIANGLE, onPressGuessButton)}
         <Button onClick={() => onBackspace()}>
           <FontAwesomeIcon icon={faBackspace} size="lg" />
         </Button>

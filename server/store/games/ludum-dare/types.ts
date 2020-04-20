@@ -54,9 +54,9 @@ export type LudumMinigameAnswer =
   | LudumMinigameSimonSaysAnswer
   | LudumMinigameHydraulicsResult;
 
-export type LudumMinigameSimonSaysAnswer = LudumHydraulicsShape[];
+export type LudumMinigameSimonSaysAnswer = LudumShape[];
 
-export enum LudumHydraulicsShape {
+export enum LudumShape {
   CIRCLE = 'CIRCLE',
   SQUARE = 'SQUARE',
   STAR = 'STAR',
@@ -65,7 +65,7 @@ export enum LudumHydraulicsShape {
 }
 
 export interface LudumMinigameSimonSaysState {
-  phrase: LudumHydraulicsShape[];
+  phrase: LudumShape[];
   timeBetweenShapes: number;
 }
 

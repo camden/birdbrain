@@ -4,7 +4,7 @@ import {
   LudumGameState,
   LudumMinigame,
   LudumMinigameSimonSaysState,
-  LudumHydraulicsShape,
+  LudumShape,
   LudumMinigameHydraulicsState,
   LudumMinigameState,
   LudumMinigameHydraulicsButton,
@@ -65,21 +65,19 @@ const createSimonSaysState = (
   let timeBetweenShapes = Math.max(200, 1000 - game.roundNumber * 75);
 
   const elements = [
-    LudumHydraulicsShape.CIRCLE,
-    LudumHydraulicsShape.STAR,
-    LudumHydraulicsShape.TRIANGLE,
-    LudumHydraulicsShape.SQUARE,
-    LudumHydraulicsShape.DIAMOND,
+    LudumShape.CIRCLE,
+    LudumShape.STAR,
+    LudumShape.TRIANGLE,
+    LudumShape.SQUARE,
+    LudumShape.DIAMOND,
   ];
-  const phrase: LudumHydraulicsShape[] = [];
+  const phrase: LudumShape[] = [];
 
-  let lastShape: LudumHydraulicsShape;
+  let lastShape: LudumShape;
 
   for (let i = 0; i < targetLength; i++) {
     const elementsWithoutLastShape = elements.filter((e) => e !== lastShape);
-    const nextElement = pickElement(
-      elementsWithoutLastShape
-    )[0] as LudumHydraulicsShape;
+    const nextElement = pickElement(elementsWithoutLastShape)[0] as LudumShape;
     lastShape = nextElement;
     phrase.push(nextElement);
   }
