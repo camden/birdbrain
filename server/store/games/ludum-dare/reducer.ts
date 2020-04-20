@@ -49,7 +49,10 @@ const ludumReducer = (
           draftState.phase = LudumPhase.PRE_MINIGAME;
           const nextMinigame = pickNextMinigame();
           draftState.currentMinigame = nextMinigame;
-          draftState.currentMinigameState = createMinigameState(nextMinigame);
+          draftState.currentMinigameState = createMinigameState(
+            nextMinigame,
+            draftState
+          );
           draftState.acknowledged = [];
           draftState.roundNumber++;
           draftState.playersWhoPassedCurrentMinigame = [];

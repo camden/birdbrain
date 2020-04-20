@@ -44,11 +44,12 @@ export const checkMinigameAnswer = (
 };
 
 export const createMinigameState = (
-  minigame: LudumMinigame
+  minigame: LudumMinigame,
+  game: LudumGameState
 ): LudumMinigameState => {
   switch (minigame) {
     case LudumMinigame.SIMON_SAYS:
-      return createSimonSaysState();
+      return createSimonSaysState(game);
     case LudumMinigame.HYDRAULICS:
       return createHydraulicsState();
     case LudumMinigame.REFLEXES:
@@ -56,8 +57,12 @@ export const createMinigameState = (
   }
 };
 
-const createSimonSaysState = (): LudumMinigameSimonSaysState => {
-  const targetLength = 5;
+const createSimonSaysState = (
+  game: LudumGameState
+): LudumMinigameSimonSaysState => {
+  let targetLength = Math.max(3, Math.floor(0.8 * (game.roundNumber + 2)));
+  let timeBetweenShapes = Math.max(200, 1000 - game.roundNumber * 75);
+
   const elements = [
     LudumShape.CIRCLE,
     LudumShape.STAR,
@@ -78,6 +83,7 @@ const createSimonSaysState = (): LudumMinigameSimonSaysState => {
 
   return {
     phrase,
+    timeBetweenShapes,
   };
 };
 

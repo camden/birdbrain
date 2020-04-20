@@ -53,7 +53,6 @@ const getImageForShape = (
 };
 
 const NUM_TICKS_WITH_NO_SHAPE = 3;
-const TIME_BETWEEN_SHAPES_MS = 500;
 
 const buttonForShape = (
   shape: LudumShape,
@@ -88,7 +87,7 @@ const LudumMinigameSimonSays: React.FC<LudumMinigameSimonSaysProps> = ({
     setCurrentGuess(currentGuess.splice(0, currentGuess.length - 1));
 
   const [indexOfCurrentLetter, setIndexOfCurrentLetter] = useState(
-    minigame.phrase.length
+    minigame.phrase.length + NUM_TICKS_WITH_NO_SHAPE - 1
   );
 
   useInterval(() => {
@@ -96,7 +95,7 @@ const LudumMinigameSimonSays: React.FC<LudumMinigameSimonSaysProps> = ({
       (indexOfCurrentLetter + 1) %
       (minigame.phrase.length + NUM_TICKS_WITH_NO_SHAPE);
     setIndexOfCurrentLetter(nextIdx);
-  }, TIME_BETWEEN_SHAPES_MS);
+  }, minigame.timeBetweenShapes);
 
   const curShape: ReactNode =
     indexOfCurrentLetter >= minigame.phrase.length

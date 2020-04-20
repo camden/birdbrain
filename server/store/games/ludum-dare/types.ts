@@ -40,6 +40,7 @@ export enum LudumShape {
 
 export interface LudumMinigameSimonSaysState {
   phrase: LudumShape[];
+  timeBetweenShapes: number;
 }
 
 export type LudumMinigameHydraulicsButton = [
