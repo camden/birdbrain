@@ -5,6 +5,7 @@ import {
   LudumMinigameSimonSaysState,
   LudumMinigameHydraulicsState,
   LudumMinigameReflexesState,
+  LudumMinigameDropzoneState,
 } from '@server/store/games/ludum-dare/types';
 import useInterval from 'use-interval';
 import { MINIGAME_DURATION_MS } from '@server/store/games/ludum-dare';
@@ -18,6 +19,7 @@ import styles from './PlayMinigame.module.css';
 import LudumCharacter, { CharacterType, CharacterAnimation } from './Character';
 import { useCurrentPlayer } from 'utils/ludum-dare-utils';
 import { motion, AnimatePresence } from 'framer-motion';
+import LudumMinigameDropzone from './MinigameDropzone';
 
 export interface LudumPlayMinigameProps {
   game: LudumGameState;
@@ -68,6 +70,14 @@ const LudumPlayMinigame: React.FC<LudumPlayMinigameProps> = ({ game }) => {
         <LudumMinigameReflexes
           game={game}
           minigame={game.currentMinigameState as LudumMinigameReflexesState}
+        />
+      );
+      break;
+    case LudumMinigame.DROPZONE:
+      minigame = (
+        <LudumMinigameDropzone
+          game={game}
+          minigame={game.currentMinigameState as LudumMinigameDropzoneState}
         />
       );
       break;

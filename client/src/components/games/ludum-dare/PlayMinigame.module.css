@@ -1,4 +1,7 @@
 .wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .topBar {
@@ -37,4 +40,5 @@
 }
 
 .minigameWrapper {
+  flex: 1;
 }

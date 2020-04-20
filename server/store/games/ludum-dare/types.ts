@@ -34,8 +34,18 @@ export interface LudumPlayer {
   health: number;
 }
 
+export enum LudumShape {
+  CIRCLE = 'CIRCLE',
+  SQUARE = 'SQUARE',
+  STAR = 'STAR',
+  TRIANGLE = 'TRIANGLE',
+  DIAMOND = 'DIAMOND',
+}
+
 /**
+ * =========
  * Minigames
+ * =========
  */
 
 export enum LudumMinigame {
@@ -48,26 +58,27 @@ export enum LudumMinigame {
 export type LudumMinigameState =
   | LudumMinigameSimonSaysState
   | LudumMinigameHydraulicsState
-  | LudumMinigameReflexesState;
+  | LudumMinigameReflexesState
+  | LudumMinigameDropzoneState;
 
 export type LudumMinigameAnswer =
   | LudumMinigameSimonSaysAnswer
   | LudumMinigameHydraulicsResult;
 
-export type LudumMinigameSimonSaysAnswer = LudumShape[];
+/**
+ * Simon Says
+ */
 
-export enum LudumShape {
-  CIRCLE = 'CIRCLE',
-  SQUARE = 'SQUARE',
-  STAR = 'STAR',
-  TRIANGLE = 'TRIANGLE',
-  DIAMOND = 'DIAMOND',
-}
+export type LudumMinigameSimonSaysAnswer = LudumShape[];
 
 export interface LudumMinigameSimonSaysState {
   phrase: LudumShape[];
   timeBetweenShapes: number;
 }
+
+/**
+ * Hydraulics
+ */
 
 export type LudumMinigameHydraulicsButton = [
   number,
@@ -84,4 +95,14 @@ export interface LudumMinigameHydraulicsState {
   buttons: LudumMinigameHydraulicsButton[];
 }
 
+/**
+ * Reflexes
+ */
+
 export interface LudumMinigameReflexesState {}
+
+/**
+ * Dropzone
+ */
+
+export interface LudumMinigameDropzoneState {}

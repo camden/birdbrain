@@ -1,0 +1,42 @@
+.wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+  border-radius: 6px;
+  background-color: white;
+  width: 90%;
+  height: 90%;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.field {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.cardJudgment {
+  position: absolute;
+  font-weight: bold;
+  font-size: 75px;
+}
+
+.cardJudgmentTrue {
+  color: green;
+}
+
+.cardJudgmentFalse {
+  color: red;
+}

@@ -11,6 +11,7 @@ import {
   LudumMinigameHydraulicsButtonPosition,
   LudumMinigameHydraulicsResult,
   LudumMinigameReflexesState,
+  LudumMinigameDropzoneState,
 } from './types';
 import { equals, uniq, intersection, times, identity } from 'ramda';
 import { pickElement, pickRandomNumber } from 'utils/rng';
@@ -19,8 +20,9 @@ import getAllPossibleButtonPositions from './get-button-combos';
 
 export const pickNextMinigame = (): LudumMinigame => {
   return pickElement([
-    LudumMinigame.HYDRAULICS,
-    LudumMinigame.SIMON_SAYS,
+    LudumMinigame.DROPZONE,
+    // LudumMinigame.HYDRAULICS,
+    // LudumMinigame.SIMON_SAYS,
   ])[0] as LudumMinigame;
 };
 
@@ -55,6 +57,8 @@ export const createMinigameState = (
       return createHydraulicsState(game);
     case LudumMinigame.REFLEXES:
       return createReflexesState();
+    case LudumMinigame.DROPZONE:
+      return createDropzoneState(game);
   }
 };
 
@@ -203,6 +207,12 @@ export const createHydraulicsState = (
 };
 
 const createReflexesState = (): LudumMinigameReflexesState => {
+  return {};
+};
+
+const createDropzoneState = (
+  game: LudumGameState
+): LudumMinigameDropzoneState => {
   return {};
 };
 
