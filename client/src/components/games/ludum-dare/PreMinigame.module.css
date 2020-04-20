@@ -22,6 +22,15 @@
   font-weight: 900;
 }
 
+.nextGame {
+  margin: 32px 0;
+}
+
+.allPlayers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
 .playerInfo {
   margin-bottom: 16px;
 }

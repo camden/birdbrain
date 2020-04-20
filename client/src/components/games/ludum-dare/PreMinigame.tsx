@@ -33,14 +33,16 @@ const LudumPreMinigame: React.FC<LudumPreMinigameProps> = ({ game }) => {
         <div className={styles.roundLabel}>Round</div>
         <div className={styles.roundNumber}>{game.roundNumber}</div>
       </div>
-      <div>Next game: {game.currentMinigame}</div>
-      {game.players.map((player) => (
-        <LudumPlayerInfo
-          key={player.userId}
-          player={player}
-          className={styles.playerInfo}
-        />
-      ))}
+      <div className={styles.nextGame}>Next game: {game.currentMinigame}</div>
+      <div className={styles.allPlayers}>
+        {game.players.map((player) => (
+          <LudumPlayerInfo
+            key={player.userId}
+            player={player}
+            className={styles.playerInfo}
+          />
+        ))}
+      </div>
       <div className={styles.footer}>
         {currentPlayerAcked && (
           <WaitingMessage
