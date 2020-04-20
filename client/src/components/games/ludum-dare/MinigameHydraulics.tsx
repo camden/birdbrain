@@ -16,7 +16,6 @@ import pipe1 from 'assets/images/ludum-dare/gui/pipes/pipe1.png';
 import pipe2 from 'assets/images/ludum-dare/gui/pipes/pipe2.png';
 import pipe3 from 'assets/images/ludum-dare/gui/pipes/pipe3.png';
 import pipe4 from 'assets/images/ludum-dare/gui/pipes/pipe4.png';
-import cx from 'classnames';
 
 export interface LudumMinigameHydraulicsProps {
   game: LudumGameState;

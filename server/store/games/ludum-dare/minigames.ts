@@ -20,7 +20,7 @@ import getAllPossibleButtonPositions from './get-button-combos';
 export const pickNextMinigame = (): LudumMinigame => {
   return pickElement([
     LudumMinigame.HYDRAULICS,
-    // LudumMinigame.SIMON_SAYS,
+    LudumMinigame.SIMON_SAYS,
   ])[0] as LudumMinigame;
 };
 
