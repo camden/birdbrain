@@ -3,6 +3,8 @@
   width: 128px;
   transition: transform 150ms ease-in-out;
   user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 
 .characterImage.pressed {
