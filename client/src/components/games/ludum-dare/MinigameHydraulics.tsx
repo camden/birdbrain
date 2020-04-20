@@ -9,6 +9,7 @@ import {
 import { useCurrentPlayer } from 'utils/ludum-dare-utils';
 import styles from './MinigameHydraulics.module.css';
 import Button from 'components/shared/button/Button';
+import cx from 'classnames';
 import { sendMessage } from 'store/websocket/actions';
 import { ludumCheckMinigameAnswer } from '@server/store/games/ludum-dare/actions';
 import pipe0 from 'assets/images/ludum-dare/gui/pipes/pipe0.png';
@@ -16,6 +17,8 @@ import pipe1 from 'assets/images/ludum-dare/gui/pipes/pipe1.png';
 import pipe2 from 'assets/images/ludum-dare/gui/pipes/pipe2.png';
 import pipe3 from 'assets/images/ludum-dare/gui/pipes/pipe3.png';
 import pipe4 from 'assets/images/ludum-dare/gui/pipes/pipe4.png';
+import { faCheck, faTimes } from '@fortawesome/pro-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export interface LudumMinigameHydraulicsProps {
   game: LudumGameState;
@@ -119,18 +122,30 @@ const LudumMinigameHydraulics: React.FC<LudumMinigameHydraulicsProps> = ({
 
   return (
     <div className={styles.wrapper}>
-      {passedMinigame && <strong>Congrats! You got the right answer</strong>}
-      <h3>Goal:</h3>
+      <h1 className={styles.instructions}>Match!</h1>
       <div className={styles.pipeRowWrapper} style={pipeRowStyle}>
         {minigame.correctResult.map((pipe, idx) =>
           getPipeImgForValue(pipe, pipe + ' ' + idx)
         )}
       </div>
-      <h3>Current:</h3>
+      <div className={styles.pipeRowWrapper} style={pipeRowStyle}>
+        {pipes.map((pipe, idx) => (
+          <div className={styles.matchingHintWrapper}>
+            {pipe === minigame.correctResult[idx] ? (
+              <FontAwesomeIcon icon={faCheck} color="limegreen" />
+            ) : (
+              <FontAwesomeIcon icon={faTimes} color="red" />
+            )}
+          </div>
+        ))}
+      </div>
       <div className={styles.pipeRowWrapper} style={pipeRowStyle}>
         {pipes.map((pipe, idx) => getPipeImgForValue(pipe, pipe + ' ' + idx))}
       </div>
-      <div className={styles.pipeRowWrapper} style={pipeRowStyle}>
+      <div
+        className={cx(styles.pipeRowWrapper, styles.buttons)}
+        style={pipeRowStyle}
+      >
         {minigame.buttons.map((b) => (
           <Button
             secondary
