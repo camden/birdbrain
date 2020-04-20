@@ -17,11 +17,16 @@
 }
 
 .shapeImg {
-  width: 100%;
-  height: auto;
+  width: auto;
+  height: 100%;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
   user-select: none;
+}
+
+.inputButton img {
+  width: 100%;
+  height: auto;
 }
 
 .currentShape {
@@ -40,7 +45,7 @@
 .guessWrapper {
   display: grid;
   column-gap: 8px;
-  margin-top: 16px;
+  margin-top: 24px;
   margin-bottom: 16px;
 }
 
@@ -55,6 +60,8 @@
 .emptyGuessSpace {
   height: 40px;
   border-bottom: 2px solid black;
+
+  padding-bottom: 4px;
 
   display: flex;
   justify-content: center;

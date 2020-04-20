@@ -63,8 +63,12 @@ const buttonForShape = (
   onPress: (shape: LudumShape) => void
 ): ReactNode => {
   return (
-    <Button secondary onClick={() => onPress(shape)}>
-      {getImageForShape(shape)}
+    <Button
+      secondary
+      onClick={() => onPress(shape)}
+      className={styles.inputButton}
+    >
+      {getImageForShape(shape, true)}
     </Button>
   );
 };
@@ -119,7 +123,7 @@ const LudumMinigameSimonSays: React.FC<LudumMinigameSimonSaysProps> = ({
       <div
         className={styles.guessWrapper}
         style={{
-          gridTemplateColumns: `repeat(${minigame.phrase.length}, 1fr)`,
+          gridTemplateColumns: `repeat(${minigame.phrase.length}, minmax(0, 1fr))`,
         }}
       >
         {times(identity, minigame.phrase.length).map((idx) => (
