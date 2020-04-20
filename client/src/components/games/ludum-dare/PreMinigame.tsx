@@ -8,6 +8,7 @@ import styles from './PreMinigame.module.css';
 import LudumCharacter, { CharacterType } from './Character';
 import { useCurrentPlayer } from 'utils/ludum-dare-utils';
 import LudumPlayerInfo from './PlayerInfo';
+import WaitingMessage from 'components/shared/WaitingMessage';
 
 export interface LudumPreMinigameProps {
   game: LudumGameState;
@@ -21,6 +22,11 @@ const LudumPreMinigame: React.FC<LudumPreMinigameProps> = ({ game }) => {
     const currentTime = Date.now();
     dispatch(sendMessage(ludumStartMinigame(currentTime)));
   }, [dispatch]);
+
+  const currentPlayerAcked = game.acknowledged.includes(currentPlayer.userId);
+  const playersWhoNeedToAck = game.players.filter(
+    (p) => !game.acknowledged.includes(p.userId)
+  );
 
   return (
     <div className={styles.wrapper}>
@@ -37,7 +43,15 @@ const LudumPreMinigame: React.FC<LudumPreMinigameProps> = ({ game }) => {
         />
       ))}
       <div className={styles.footer}>
-        <Button onClick={onStartClick}>start game</Button>
+        {currentPlayerAcked && (
+          <WaitingMessage
+            playersThatNeedToAct={playersWhoNeedToAck.map((p) => p.name)}
+            verb={'start the game'}
+          />
+        )}
+        {!currentPlayerAcked && (
+          <Button onClick={onStartClick}>start game</Button>
+        )}
       </div>
     </div>
   );
