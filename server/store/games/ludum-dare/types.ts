@@ -19,6 +19,32 @@ export interface LudumCharacter {
   color: string;
 }
 
+export enum LudumPhase {
+  INTRO = 'INTRO',
+  PRE_MINIGAME = 'PRE_MINIGAME',
+  PLAY_MINIGAME = 'PLAY_MINIGAME',
+  MINIGAME_RESULTS = 'MINIGAME_RESULTS',
+  GAME_OVER = 'GAME_OVER',
+}
+
+export interface LudumPlayer {
+  userId: UserID;
+  name: string;
+  character: LudumCharacter;
+  health: number;
+}
+
+/**
+ * Minigames
+ */
+
+export enum LudumMinigame {
+  SIMON_SAYS = 'SIMON_SAYS',
+  HYDRAULICS = 'HYDRAULICS',
+  REFLEXES = 'REFLEXES',
+  DROPZONE = 'DROPZONE',
+}
+
 export type LudumMinigameState =
   | LudumMinigameSimonSaysState
   | LudumMinigameHydraulicsState
@@ -28,9 +54,9 @@ export type LudumMinigameAnswer =
   | LudumMinigameSimonSaysAnswer
   | LudumMinigameHydraulicsResult;
 
-export type LudumMinigameSimonSaysAnswer = LudumShape[];
+export type LudumMinigameSimonSaysAnswer = LudumHydraulicsShape[];
 
-export enum LudumShape {
+export enum LudumHydraulicsShape {
   CIRCLE = 'CIRCLE',
   SQUARE = 'SQUARE',
   STAR = 'STAR',
@@ -39,7 +65,7 @@ export enum LudumShape {
 }
 
 export interface LudumMinigameSimonSaysState {
-  phrase: LudumShape[];
+  phrase: LudumHydraulicsShape[];
   timeBetweenShapes: number;
 }
 
@@ -59,24 +85,3 @@ export interface LudumMinigameHydraulicsState {
 }
 
 export interface LudumMinigameReflexesState {}
-
-export enum LudumPhase {
-  INTRO = 'INTRO',
-  PRE_MINIGAME = 'PRE_MINIGAME',
-  PLAY_MINIGAME = 'PLAY_MINIGAME',
-  MINIGAME_RESULTS = 'MINIGAME_RESULTS',
-  GAME_OVER = 'GAME_OVER',
-}
-
-export enum LudumMinigame {
-  SIMON_SAYS = 'SIMON_SAYS',
-  HYDRAULICS = 'HYDRAULICS',
-  REFLEXES = 'REFLEXES',
-}
-
-export interface LudumPlayer {
-  userId: UserID;
-  name: string;
-  character: LudumCharacter;
-  health: number;
-}
