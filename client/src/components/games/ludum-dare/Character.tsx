@@ -10,7 +10,7 @@ import allenWin from 'assets/images/ludum-dare/characters/allen/allenWin.png';
 import allenTime from 'assets/images/ludum-dare/characters/allen/allenTime.png';
 import barneyIcon from 'assets/images/ludum-dare/characters/barney/barneyIcon.png';
 import barneyIdle from 'assets/images/ludum-dare/characters/barney/barneyIdle.png';
-import barneyLose from 'assets/images/ludum-dare/characters/barney/barneyLose.png';
+import barneyLose from 'assets/images/ludum-dare/characters/barney/barneyLoseAnim.gif';
 import barneyPuzzled from 'assets/images/ludum-dare/characters/barney/barneyPuzz.png';
 import barneyWin from 'assets/images/ludum-dare/characters/barney/barneyWin.png';
 import barneyTime from 'assets/images/ludum-dare/characters/barney/barneyTime.png';

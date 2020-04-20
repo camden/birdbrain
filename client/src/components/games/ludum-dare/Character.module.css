@@ -1,5 +1,6 @@
 .characterImage {
   max-width: 100%;
+  width: 128px;
   transition: transform 150ms ease-in-out;
   user-select: none;
 }
