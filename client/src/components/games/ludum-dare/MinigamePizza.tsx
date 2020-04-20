@@ -2,6 +2,7 @@ import React, { useRef, useState, ReactChildren, ReactNode } from 'react';
 import {
   LudumMinigamePizzaState,
   LudumGameState,
+  LudumMinigamePizzaCustomer,
 } from '@server/store/games/ludum-dare/types';
 import {
   motion,
@@ -58,8 +59,8 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
             }}
           >
             {minigame.customers[cardIndex + 1] && (
-              <LudumPizzaPie
-                toppings={minigame.customers[cardIndex + 1].pizza}
+              <LudumPizzaCardBody
+                customer={minigame.customers[cardIndex + 1]}
               />
             )}
           </Card>
@@ -77,35 +78,47 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
             setExitX={setExitX}
           >
             {minigame.customers[cardIndex] && (
-              <>
-                <div className={styles.speechBubble}>
-                  <div className={styles.dialogueLine}>
-                    <div>I like:</div>
-                    <div className={styles.listOfToppings}>
-                      {minigame.customers[cardIndex].likes.map((topping) => (
-                        <LudumPizzaTopping key={topping} kind={topping} />
-                      ))}
-                    </div>
-                  </div>
-                  <div className={styles.dialogueLine}>
-                    <div>I don't like:</div>
-                    <div className={styles.listOfToppings}>
-                      {minigame.customers[cardIndex].dislikes.map((topping) => (
-                        <LudumPizzaTopping key={topping} kind={topping} />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <LudumPizzaPie
-                  toppings={minigame.customers[cardIndex].pizza}
-                  style={{ transform: `rotate(${minigame.randomRotation}deg)` }}
-                />
-              </>
+              <LudumPizzaCardBody customer={minigame.customers[cardIndex]} />
             )}
           </Card>
         </AnimatePresence>
       </div>
     </div>
+  );
+};
+
+export interface LudumPizzaCardBodyProps {
+  customer: LudumMinigamePizzaCustomer;
+}
+
+const LudumPizzaCardBody: React.FC<LudumPizzaCardBodyProps> = ({
+  customer,
+}) => {
+  return (
+    <>
+      <div className={styles.speechBubble}>
+        <div className={styles.dialogueLine}>
+          <div>I like:</div>
+          <div className={styles.listOfToppings}>
+            {customer.likes.map((topping) => (
+              <LudumPizzaTopping key={topping} kind={topping} />
+            ))}
+          </div>
+        </div>
+        <div className={styles.dialogueLine}>
+          <div>I don't like:</div>
+          <div className={styles.listOfToppings}>
+            {customer.dislikes.map((topping) => (
+              <LudumPizzaTopping key={topping} kind={topping} />
+            ))}
+          </div>
+        </div>
+      </div>
+      <LudumPizzaPie
+        toppings={customer.pizza}
+        style={{ transform: `rotate(${customer.randomPizzaRotation}deg)` }}
+      />
+    </>
   );
 };
 

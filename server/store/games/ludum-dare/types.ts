@@ -136,9 +136,9 @@ export interface LudumMinigamePizzaCustomer {
   likes: LudumMinigamePizzaTopping[];
   dislikes: LudumMinigamePizzaTopping[];
   pizza: LudumMinigamePizzaTopping[];
+  randomPizzaRotation: number;
 }
 
 export interface LudumMinigamePizzaState {
   customers: LudumMinigamePizzaCustomer[];
-  randomRotation: number;
 }

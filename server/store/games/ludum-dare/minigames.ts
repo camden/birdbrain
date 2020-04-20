@@ -335,6 +335,7 @@ const generatePizzaCustomer = (config: PizzaCustomerConfig) => {
     likes: likes,
     dislikes: dislikes,
     pizza: allToppings,
+    randomPizzaRotation: pickRandomNumber(1, 360),
   };
 
   console.log('Generating a customer with config: ', config, customer);
@@ -382,7 +383,7 @@ const createPizzaState = (game: LudumGameState): LudumMinigamePizzaState => {
   const numberOfDislikesOnPizza = pickRandomNumber(1, 2);
   const numberOfExtrasOnPizza = pickRandomNumber(1, 3);
 
-  const numberOfCustomers = 1;
+  const numberOfCustomers = 50;
 
   let customers: LudumMinigamePizzaCustomer[] = [];
   for (let i = 0; i < numberOfCustomers; i++) {
@@ -398,7 +399,6 @@ const createPizzaState = (game: LudumGameState): LudumMinigamePizzaState => {
 
   return {
     customers,
-    randomRotation: pickRandomNumber(1, 360),
   };
 };
 
