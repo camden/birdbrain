@@ -22,3 +22,15 @@ export function pickElement<T>(arr: T[]): [T | undefined, number] {
   const element = arr[idx];
   return [element, idx];
 }
+
+/**
+ * Does not mutate the array.
+ * @param arr
+ */
+export function pickElementAndRemoveFromArr<T>(arr: T[]): [T | undefined, T[]] {
+  const [element, idx] = pickElement<T>(arr);
+
+  const newArr = [...arr];
+  newArr.splice(idx, 1);
+  return [element, newArr];
+}

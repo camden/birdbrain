@@ -15,10 +15,15 @@ import {
   LudumMinigamePizzaCustomer,
   LudumMinigamePizzaTopping,
 } from './types';
-import { equals, uniq, intersection, times, identity } from 'ramda';
-import { pickElement, pickRandomNumber } from 'utils/rng';
+import { equals, uniq, intersection, times, identity, without } from 'ramda';
+import {
+  pickElement,
+  pickRandomNumber,
+  pickElementAndRemoveFromArr,
+} from 'utils/rng';
 import shuffleArray from 'utils/shuffle-array';
 import getAllPossibleButtonPositions from './get-button-combos';
+import { log } from 'utils/log';
 
 export const pickNextMinigame = (): LudumMinigame => {
   return pickElement([
@@ -212,8 +217,132 @@ const createReflexesState = (): LudumMinigameReflexesState => {
   return {};
 };
 
+type PizzaCustomerConfig = {
+  numberOfLikes: number;
+  numberOfDislikes: number;
+  numberOfLikesOnPizza: number;
+  numberOfDislikesOnPizza: number;
+  numberOfExtrasOnPizza: number;
+};
+
+const generatePizzaCustomer = (config: PizzaCustomerConfig) => {
+  const {
+    numberOfLikes,
+    numberOfDislikes,
+    numberOfDislikesOnPizza,
+    numberOfExtrasOnPizza,
+    numberOfLikesOnPizza,
+  } = config;
+
+  // generate the likes and dislikes
+
+  // https://stackoverflow.com/a/59896324/2399208
+  // const allPossibleToppings = Object.entries(LudumMinigamePizzaTopping)
+  //   .filter((e) => !isNaN(e[0] as any))
+  //   .map((e) => e[0] as LudumMinigamePizzaTopping);
+  const allPossibleToppings = Object.values(LudumMinigamePizzaTopping);
+
+  let poolOfToppingOptions = [...allPossibleToppings];
+
+  let likes: LudumMinigamePizzaTopping[] = [];
+  let dislikes: LudumMinigamePizzaTopping[] = [];
+
+  for (let i = 0; i < numberOfLikes; i++) {
+    const [topping, newArr] = pickElementAndRemoveFromArr(poolOfToppingOptions);
+    log('generating topping for like: ' + topping);
+    if (!topping) {
+      log('Something went wrong picking a pizza topping (initial like)');
+      continue;
+    }
+
+    likes.push(LudumMinigamePizzaTopping[topping]);
+    poolOfToppingOptions = newArr;
+    log('new pool of options: ' + poolOfToppingOptions);
+  }
+
+  for (let i = 0; i < numberOfDislikes; i++) {
+    const [topping, newArr] = pickElementAndRemoveFromArr(poolOfToppingOptions);
+    if (!topping) {
+      log('Something went wrong picking a pizza topping (initial dislike)');
+      continue;
+    }
+
+    dislikes.push(LudumMinigamePizzaTopping[topping]);
+    poolOfToppingOptions = newArr;
+  }
+
+  // assign pizza toppings (pick WITH replacement)
+
+  let likesOnPizza: LudumMinigamePizzaTopping[] = [];
+  let dislikesOnPizza: LudumMinigamePizzaTopping[] = [];
+  let extrasOnPizza: LudumMinigamePizzaTopping[] = [];
+
+  let poolOfLikes: LudumMinigamePizzaTopping[] = [...likes];
+  for (let i = 0; i < numberOfLikesOnPizza; i++) {
+    // get a random liked pizza topping
+    const [topping] = pickElement(poolOfLikes);
+    if (!topping) {
+      log('Something went wrong picking a pizza topping (like)');
+      continue;
+    }
+
+    likesOnPizza.push(LudumMinigamePizzaTopping[topping]);
+  }
+
+  let poolOfDislikes: LudumMinigamePizzaTopping[] = [...dislikes];
+  for (let i = 0; i < numberOfDislikesOnPizza; i++) {
+    // get a random disliked pizza topping
+    const [topping] = pickElement(poolOfDislikes);
+    if (!topping) {
+      log('Something went wrong picking a pizza topping (dislike)');
+      continue;
+    }
+
+    dislikesOnPizza.push(LudumMinigamePizzaTopping[topping]);
+  }
+
+  // MINUS the likes & dislikes!
+  let poolOfExtras: LudumMinigamePizzaTopping[] = Object.values(
+    LudumMinigamePizzaTopping
+  );
+  poolOfExtras = without(likes, poolOfExtras);
+  poolOfExtras = without(dislikes, poolOfExtras);
+  for (let i = 0; i < numberOfExtrasOnPizza; i++) {
+    // get a random extra pizza topping
+    const [topping] = pickElement(poolOfExtras);
+    if (!topping) {
+      log('Something went wrong picking a pizza topping (extra)');
+      continue;
+    }
+
+    extrasOnPizza.push(LudumMinigamePizzaTopping[topping]);
+  }
+
+  log(
+    'ON PIZZA -> likes: ' +
+      likesOnPizza +
+      ' dislikes: ' +
+      dislikesOnPizza +
+      ' extras: ' +
+      extrasOnPizza
+  );
+
+  const allToppings = likesOnPizza
+    .concat(dislikesOnPizza)
+    .concat(extrasOnPizza);
+
+  const customer: LudumMinigamePizzaCustomer = {
+    likes: likes,
+    dislikes: dislikes,
+    pizza: allToppings,
+  };
+
+  console.log('Generating a customer with config: ', config, customer);
+  return customer;
+};
+
 const createPizzaState = (game: LudumGameState): LudumMinigamePizzaState => {
-  const customers: LudumMinigamePizzaCustomer[] = [
+  const exampleCustomers: LudumMinigamePizzaCustomer[] = [
     {
       likes: [
         LudumMinigamePizzaTopping.CIRCLE1,
@@ -246,6 +375,26 @@ const createPizzaState = (game: LudumGameState): LudumMinigamePizzaState => {
       ],
     },
   ];
+
+  const numberOfLikes = 2;
+  const numberOfDislikes = 2;
+  const numberOfLikesOnPizza = pickRandomNumber(1, 2);
+  const numberOfDislikesOnPizza = pickRandomNumber(1, 2);
+  const numberOfExtrasOnPizza = pickRandomNumber(1, 3);
+
+  const numberOfCustomers = 1;
+
+  let customers: LudumMinigamePizzaCustomer[] = [];
+  for (let i = 0; i < numberOfCustomers; i++) {
+    const newCustomer = generatePizzaCustomer({
+      numberOfLikes,
+      numberOfDislikes,
+      numberOfLikesOnPizza,
+      numberOfDislikesOnPizza,
+      numberOfExtrasOnPizza,
+    });
+    customers.push(newCustomer);
+  }
 
   return {
     customers,

@@ -1,4 +1,4 @@
-export const log = (message: string) => {
+export const log = (message: any) => {
   if (process.env.NODE_ENV === 'production') {
     return;
   }
