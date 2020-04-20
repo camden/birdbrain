@@ -5,7 +5,7 @@
 }
 
 .card {
-  border-radius: 6px;
+  border-radius: 18px;
   background-color: white;
   width: 90%;
   height: 90%;
@@ -41,6 +41,7 @@
   position: absolute;
   font-weight: bold;
   font-size: 75px;
+  z-index: 100;
 }
 
 .cardJudgmentTrue {
@@ -49,4 +50,38 @@
 
 .cardJudgmentFalse {
   color: red;
+}
+
+.speechBubble {
+  width: 80%;
+  border: 2px solid black;
+  border-radius: 8px;
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.dialogueLine {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialogueLine:first-of-type {
+  margin-bottom: 8px;
+}
+
+.listOfToppings {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.listOfToppings img {
+  margin-left: 4px;
 }

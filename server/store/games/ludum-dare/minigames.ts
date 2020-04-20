@@ -11,7 +11,9 @@ import {
   LudumMinigameHydraulicsButtonPosition,
   LudumMinigameHydraulicsResult,
   LudumMinigameReflexesState,
-  LudumMinigameDropzoneState,
+  LudumMinigamePizzaState,
+  LudumMinigamePizzaCustomer,
+  LudumMinigamePizzaTopping,
 } from './types';
 import { equals, uniq, intersection, times, identity } from 'ramda';
 import { pickElement, pickRandomNumber } from 'utils/rng';
@@ -20,7 +22,7 @@ import getAllPossibleButtonPositions from './get-button-combos';
 
 export const pickNextMinigame = (): LudumMinigame => {
   return pickElement([
-    LudumMinigame.DROPZONE,
+    LudumMinigame.PIZZA,
     // LudumMinigame.HYDRAULICS,
     // LudumMinigame.SIMON_SAYS,
   ])[0] as LudumMinigame;
@@ -57,8 +59,8 @@ export const createMinigameState = (
       return createHydraulicsState(game);
     case LudumMinigame.REFLEXES:
       return createReflexesState();
-    case LudumMinigame.DROPZONE:
-      return createDropzoneState(game);
+    case LudumMinigame.PIZZA:
+      return createPizzaState(game);
   }
 };
 
@@ -210,10 +212,45 @@ const createReflexesState = (): LudumMinigameReflexesState => {
   return {};
 };
 
-const createDropzoneState = (
-  game: LudumGameState
-): LudumMinigameDropzoneState => {
-  return {};
+const createPizzaState = (game: LudumGameState): LudumMinigamePizzaState => {
+  const customers: LudumMinigamePizzaCustomer[] = [
+    {
+      likes: [
+        LudumMinigamePizzaTopping.CIRCLE1,
+        LudumMinigamePizzaTopping.SQUARE3,
+      ],
+      dislikes: [
+        LudumMinigamePizzaTopping.DIAMOND2,
+        LudumMinigamePizzaTopping.STAR4,
+      ],
+      pizza: [
+        LudumMinigamePizzaTopping.CIRCLE1,
+        LudumMinigamePizzaTopping.SQUARE1,
+        LudumMinigamePizzaTopping.TRIANGLE3,
+        LudumMinigamePizzaTopping.SQUARE2,
+        LudumMinigamePizzaTopping.TRIANGLE3,
+        LudumMinigamePizzaTopping.SQUARE2,
+        LudumMinigamePizzaTopping.TRIANGLE3,
+        LudumMinigamePizzaTopping.SQUARE2,
+        LudumMinigamePizzaTopping.TRIANGLE3,
+      ],
+    },
+    {
+      likes: [LudumMinigamePizzaTopping.CIRCLE1],
+      dislikes: [LudumMinigamePizzaTopping.DIAMOND2],
+      pizza: [
+        LudumMinigamePizzaTopping.TRIANGLE3,
+        LudumMinigamePizzaTopping.SQUARE2,
+        LudumMinigamePizzaTopping.TRIANGLE3,
+        LudumMinigamePizzaTopping.SQUARE2,
+      ],
+    },
+  ];
+
+  return {
+    customers,
+    randomRotation: pickRandomNumber(1, 360),
+  };
 };
 
 const checkHydraulicsAnswer = (

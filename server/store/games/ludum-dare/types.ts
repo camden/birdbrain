@@ -52,14 +52,14 @@ export enum LudumMinigame {
   SIMON_SAYS = 'SIMON_SAYS',
   HYDRAULICS = 'HYDRAULICS',
   REFLEXES = 'REFLEXES',
-  DROPZONE = 'DROPZONE',
+  PIZZA = 'PIZZA',
 }
 
 export type LudumMinigameState =
   | LudumMinigameSimonSaysState
   | LudumMinigameHydraulicsState
   | LudumMinigameReflexesState
-  | LudumMinigameDropzoneState;
+  | LudumMinigamePizzaState;
 
 export type LudumMinigameAnswer =
   | LudumMinigameSimonSaysAnswer
@@ -102,7 +102,43 @@ export interface LudumMinigameHydraulicsState {
 export interface LudumMinigameReflexesState {}
 
 /**
- * Dropzone
+ * Pizza
  */
 
-export interface LudumMinigameDropzoneState {}
+export enum LudumMinigamePizzaTopping {
+  CIRCLE1,
+  CIRCLE2,
+  CIRCLE3,
+  CIRCLE4,
+  DIAMOND1,
+  DIAMOND2,
+  DIAMOND3,
+  DIAMOND4,
+  SQUARE1,
+  SQUARE2,
+  SQUARE3,
+  SQUARE4,
+  STAR1,
+  STAR2,
+  STAR3,
+  STAR4,
+  TEE1,
+  TEE2,
+  TEE3,
+  TEE4,
+  TRIANGLE1,
+  TRIANGLE2,
+  TRIANGLE3,
+  TRIANGLE4,
+}
+
+export interface LudumMinigamePizzaCustomer {
+  likes: LudumMinigamePizzaTopping[];
+  dislikes: LudumMinigamePizzaTopping[];
+  pizza: LudumMinigamePizzaTopping[];
+}
+
+export interface LudumMinigamePizzaState {
+  customers: LudumMinigamePizzaCustomer[];
+  randomRotation: number;
+}

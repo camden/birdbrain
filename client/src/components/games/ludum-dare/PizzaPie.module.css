@@ -1,0 +1,14 @@
+.wrapper {
+  position: relative;
+}
+
+.pizzaImg {
+  width: 200px;
+  height: 200px;
+}
+
+.topping {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+}

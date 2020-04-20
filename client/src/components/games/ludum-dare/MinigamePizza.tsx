@@ -1,6 +1,6 @@
 import React, { useRef, useState, ReactChildren, ReactNode } from 'react';
 import {
-  LudumMinigameDropzoneState,
+  LudumMinigamePizzaState,
   LudumGameState,
 } from '@server/store/games/ludum-dare/types';
 import {
@@ -14,16 +14,18 @@ import {
   AnimatePresence,
   MotionProps,
 } from 'framer-motion';
-import styles from './MinigameDropzone.module.css';
+import styles from './MinigamePizza.module.css';
 import cx from 'classnames';
+import LudumPizzaPie from './PizzaPie';
+import LudumPizzaTopping from './PizzaTopping';
 
-export interface LudumMinigameDropzoneProps {
+export interface LudumMinigamePizzaProps {
   game: LudumGameState;
-  minigame: LudumMinigameDropzoneState;
+  minigame: LudumMinigamePizzaState;
 }
 
 // thank you to https://framerbook.com/x/animation/example-animations/36-stack-3d/
-const LudumMinigameDropzone: React.FC<LudumMinigameDropzoneProps> = ({
+const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
   game,
   minigame,
 }) => {
@@ -31,11 +33,9 @@ const LudumMinigameDropzone: React.FC<LudumMinigameDropzoneProps> = ({
   const [exitX, setExitX] = React.useState<number | string>('100%');
   const [score, setScore] = useState(0);
 
-  const cards = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth'];
-
   return (
     <div className={styles.wrapper}>
-      <div>dropzone!!!</div>
+      <div>Pizza!!!</div>
       <div>score: {score}</div>
       <div className={styles.field}>
         <AnimatePresence initial={false}>
@@ -57,7 +57,11 @@ const LudumMinigameDropzone: React.FC<LudumMinigameDropzoneProps> = ({
               opacity: { duration: 0.4 },
             }}
           >
-            {cards[cardIndex + 1]}
+            {minigame.customers[cardIndex + 1] && (
+              <LudumPizzaPie
+                toppings={minigame.customers[cardIndex + 1].pizza}
+              />
+            )}
           </Card>
           <Card
             key={cardIndex}
@@ -72,7 +76,32 @@ const LudumMinigameDropzone: React.FC<LudumMinigameDropzoneProps> = ({
             exitX={exitX}
             setExitX={setExitX}
           >
-            {cards[cardIndex]}
+            {minigame.customers[cardIndex] && (
+              <>
+                <div className={styles.speechBubble}>
+                  <div className={styles.dialogueLine}>
+                    <div>I like:</div>
+                    <div className={styles.listOfToppings}>
+                      {minigame.customers[cardIndex].likes.map((topping) => (
+                        <LudumPizzaTopping key={topping} kind={topping} />
+                      ))}
+                    </div>
+                  </div>
+                  <div className={styles.dialogueLine}>
+                    <div>I don't like:</div>
+                    <div className={styles.listOfToppings}>
+                      {minigame.customers[cardIndex].dislikes.map((topping) => (
+                        <LudumPizzaTopping key={topping} kind={topping} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <LudumPizzaPie
+                  toppings={minigame.customers[cardIndex].pizza}
+                  style={{ transform: `rotate(${minigame.randomRotation}deg)` }}
+                />
+              </>
+            )}
           </Card>
         </AnimatePresence>
       </div>
@@ -103,11 +132,11 @@ const Card: React.FC<CardProps> = (props) => {
     event: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo
   ) => {
-    if (info.offset.x < -100) {
+    if (info.offset.x < -90) {
       props.setExitX(-350);
       props.setIndex(props.index + 1);
     }
-    if (info.offset.x > 100) {
+    if (info.offset.x > 90) {
       props.setExitX(350);
       props.setIndex(props.index + 1);
     }
@@ -153,4 +182,4 @@ const Card: React.FC<CardProps> = (props) => {
   );
 };
 
-export default LudumMinigameDropzone;
+export default LudumMinigamePizza;
