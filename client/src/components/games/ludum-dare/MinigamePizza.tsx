@@ -3,6 +3,7 @@ import {
   LudumMinigamePizzaState,
   LudumGameState,
   LudumMinigamePizzaCustomer,
+  LudumMinigamePizzaEvaluation,
 } from '@server/store/games/ludum-dare/types';
 import {
   motion,
@@ -40,9 +41,13 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
   const [score, setScore] = useState(0);
   const topCardAnimationControls = useAnimation();
 
-  const onCorrectEval = () => {};
+  const onCorrectEval = () => {
+    setScore(score + 1);
+  };
 
-  const onWrongEval = () => {};
+  const onWrongEval = () => {
+    setScore(score - 1);
+  };
 
   const currentCustomer = minigame.customers[cardIndex];
   if (!currentCustomer) {
@@ -54,18 +59,30 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
   }
 
   const onThumbsUp = async () => {
+    currentCustomer.customerEvaluation === LudumMinigamePizzaEvaluation.LIKE
+      ? onCorrectEval()
+      : onWrongEval();
+
     setExitX(EXIT_X);
     await new Promise((resolve) => setTimeout(() => resolve(), 10));
     setCardIndex(cardIndex + 1);
   };
 
   const onThumbsDown = async () => {
+    currentCustomer.customerEvaluation === LudumMinigamePizzaEvaluation.DISLIKE
+      ? onCorrectEval()
+      : onWrongEval();
+
     setExitX(-EXIT_X);
     await new Promise((resolve) => setTimeout(() => resolve(), 10));
     setCardIndex(cardIndex + 1);
   };
 
   const onSkip = async () => {
+    currentCustomer.customerEvaluation === LudumMinigamePizzaEvaluation.SKIP
+      ? onCorrectEval()
+      : onWrongEval();
+
     setExitX(0);
     await new Promise((resolve) => setTimeout(() => resolve(), 10));
     setCardIndex(cardIndex + 1);
@@ -117,6 +134,8 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
             drag={'x'}
             exitX={exitX}
             setExitX={setExitX}
+            onSwipeLeft={onThumbsDown}
+            onSwipeRight={onThumbsUp}
           >
             {minigame.customers[cardIndex] && (
               <LudumPizzaCardBody customer={minigame.customers[cardIndex]} />
@@ -185,6 +204,8 @@ export interface CardProps {
   animate?: MotionProps['animate'];
   transition?: MotionProps['transition'];
   variants?: MotionProps['variants'];
+  onSwipeRight?: () => void;
+  onSwipeLeft?: () => void;
 }
 
 const Card: React.FC<CardProps> = (props) => {
@@ -199,12 +220,14 @@ const Card: React.FC<CardProps> = (props) => {
     info: PanInfo
   ) => {
     if (info.offset.x < -90) {
-      props.setExitX(-EXIT_X);
-      props.setIndex(props.index + 1);
+      // props.setExitX(-EXIT_X);
+      // props.setIndex(props.index + 1);
+      props.onSwipeLeft && props.onSwipeLeft();
     }
     if (info.offset.x > 90) {
-      props.setExitX(EXIT_X);
-      props.setIndex(props.index + 1);
+      // props.setExitX(EXIT_X);
+      // props.setIndex(props.index + 1);
+      props.onSwipeRight && props.onSwipeRight();
     }
   };
 
