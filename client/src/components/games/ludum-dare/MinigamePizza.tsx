@@ -28,7 +28,7 @@ export interface LudumMinigamePizzaProps {
   minigame: LudumMinigamePizzaState;
 }
 
-const EXIT_X = 350;
+const EXIT_X = 450;
 
 // thank you to https://framerbook.com/x/animation/example-animations/36-stack-3d/
 const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
@@ -88,8 +88,8 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
               opacity: 0,
             }}
             animate={{
-              scale: 0.9,
-              opacity: 0.5,
+              scale: 0.95,
+              opacity: 0.75,
             }}
             transition={{
               scale: { duration: 0.2 },
@@ -111,9 +111,9 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
               y: 0,
               opacity: 1,
             }}
-            // transition={{
-            //   opacity: { duration: 0.2 },
-            // }}
+            transition={{
+              opacity: { duration: 0.2 },
+            }}
             drag={'x'}
             exitX={exitX}
             setExitX={setExitX}
@@ -229,7 +229,7 @@ const Card: React.FC<CardProps> = (props) => {
         x: props.exitX,
         opacity: 0,
         scale: 1,
-        transition: { duration: 0.2 },
+        transition: { duration: 0.6 },
       }}
     >
       <motion.div
