@@ -403,40 +403,6 @@ const generatePizzaCustomerConfig = (): PizzaCustomerConfig => {
 };
 
 const createPizzaState = (game: LudumGameState): LudumMinigamePizzaState => {
-  const exampleCustomers: LudumMinigamePizzaCustomer[] = [
-    {
-      likes: [
-        LudumMinigamePizzaTopping.CIRCLE1,
-        LudumMinigamePizzaTopping.SQUARE3,
-      ],
-      dislikes: [
-        LudumMinigamePizzaTopping.DIAMOND2,
-        LudumMinigamePizzaTopping.STAR4,
-      ],
-      pizza: [
-        LudumMinigamePizzaTopping.CIRCLE1,
-        LudumMinigamePizzaTopping.SQUARE1,
-        LudumMinigamePizzaTopping.TRIANGLE3,
-        LudumMinigamePizzaTopping.SQUARE2,
-        LudumMinigamePizzaTopping.TRIANGLE3,
-        LudumMinigamePizzaTopping.SQUARE2,
-        LudumMinigamePizzaTopping.TRIANGLE3,
-        LudumMinigamePizzaTopping.SQUARE2,
-        LudumMinigamePizzaTopping.TRIANGLE3,
-      ],
-    },
-    {
-      likes: [LudumMinigamePizzaTopping.CIRCLE1],
-      dislikes: [LudumMinigamePizzaTopping.DIAMOND2],
-      pizza: [
-        LudumMinigamePizzaTopping.TRIANGLE3,
-        LudumMinigamePizzaTopping.SQUARE2,
-        LudumMinigamePizzaTopping.TRIANGLE3,
-        LudumMinigamePizzaTopping.SQUARE2,
-      ],
-    },
-  ];
-
   const numberOfCustomers = 50;
 
   let customers: LudumMinigamePizzaCustomer[] = [];

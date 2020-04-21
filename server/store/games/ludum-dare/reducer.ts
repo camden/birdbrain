@@ -41,11 +41,25 @@ const ludumReducer = (
 
         draftState.acknowledged.push(player.userId);
 
-        const everyoneAcked = game.players.every((p) =>
+        const livingPlayers = game.players.filter((p) => p.health > 0);
+        const everyoneAcked = livingPlayers.every((p) =>
           draftState.acknowledged.includes(p.userId)
         );
 
         if (everyoneAcked) {
+          const onlyOnePlayerLeft =
+            livingPlayers.filter((p) => p.health > 0).length === 1;
+          const playingWithMoreThanOnePlayer = game.players.length > 1;
+          if (
+            draftState.phase === LudumPhase.MINIGAME_RESULTS &&
+            onlyOnePlayerLeft &&
+            playingWithMoreThanOnePlayer
+          ) {
+            draftState.phase = LudumPhase.GAME_OVER;
+            draftState.acknowledged = [];
+            return;
+          }
+
           draftState.phase = LudumPhase.PRE_MINIGAME;
           const nextMinigame = pickNextMinigame();
           draftState.currentMinigame = nextMinigame;
@@ -56,7 +70,6 @@ const ludumReducer = (
           draftState.acknowledged = [];
           draftState.roundNumber++;
           draftState.playersWhoPassedCurrentMinigame = [];
-          return;
         }
       });
     case LD_START_MINIGAME:
@@ -73,7 +86,8 @@ const ludumReducer = (
 
         draftState.acknowledged.push(player.userId);
 
-        const everyoneAcked = game.players.every((p) =>
+        const livingPlayers = game.players.filter((p) => p.health > 0);
+        const everyoneAcked = livingPlayers.every((p) =>
           draftState.acknowledged.includes(p.userId)
         );
 

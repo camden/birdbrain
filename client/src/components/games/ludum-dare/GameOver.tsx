@@ -7,7 +7,7 @@ import Button from 'components/shared/button/Button';
 import { useDispatch } from 'react-redux';
 import { sendMessage } from 'store/websocket/actions';
 import { ludumAck } from '@server/store/games/ludum-dare/actions';
-import styles from './MinigameResults.module.css';
+import styles from './GameOver.module.css';
 import { useCurrentPlayer } from 'utils/ludum-dare-utils';
 import LudumCharacter, { CharacterType, CharacterAnimation } from './Character';
 import { identity, times } from 'ramda';
@@ -15,13 +15,11 @@ import LudumHeart from './Heart';
 import cx from 'classnames';
 import WaitingMessage from 'components/shared/WaitingMessage';
 
-export interface LudumMinigameResultsProps {
+export interface LudumGameOverProps {
   game: LudumGameState;
 }
 
-const LudumMinigameResults: React.FC<LudumMinigameResultsProps> = ({
-  game,
-}) => {
+const LudumGameOver: React.FC<LudumGameOverProps> = ({ game }) => {
   const dispatch = useDispatch();
   const currentPlayer = useCurrentPlayer(game);
 
@@ -32,59 +30,64 @@ const LudumMinigameResults: React.FC<LudumMinigameResultsProps> = ({
   const playersWhoPassed: LudumPlayer[] = game.players.filter((p) =>
     game.playersWhoPassedCurrentMinigame.includes(p.userId)
   );
-  const currentPlayerPassed = game.playersWhoPassedCurrentMinigame.includes(
-    currentPlayer.userId
-  );
-  const currentPlayerAcked = game.acknowledged.includes(currentPlayer.userId);
-  const playersWhoNeedToAck = game.players
-    .filter((p) => !game.acknowledged.includes(p.userId))
-    .filter((p) => p.health > 0);
 
-  const playerHealth = currentPlayerPassed
-    ? currentPlayer.health
-    : currentPlayer.health + 1;
+  const currentPlayerAcked = game.acknowledged.includes(currentPlayer.userId);
+  const playersWhoNeedToAck = game.players.filter(
+    (p) => !game.acknowledged.includes(p.userId)
+  );
+
+  const winningPlayer = game.players.find((p) => p.health > 0);
+  if (!winningPlayer) {
+    return (
+      <div>
+        something went wrong, expected to find a winning player. contact
+        @camdenbickel
+      </div>
+    );
+  }
+
+  const playerHealth = winningPlayer.health;
+
+  const characterName = (
+    <span style={{ color: winningPlayer.character.color }}>
+      {winningPlayer.character.name}
+    </span>
+  );
 
   return (
     <div className={styles.wrapper}>
-      <h1>{currentPlayerPassed ? 'You did it!' : 'You failed.'}</h1>
+      <h1 className={styles.title}>Game Over!</h1>
+      <h2>
+        {winningPlayer.name} and {characterName} won!
+      </h2>
       <LudumCharacter
-        id={currentPlayer.character.id}
-        type={currentPlayerPassed ? CharacterType.WIN : CharacterType.LOSE}
-        typeWhenPressed={
-          currentPlayerPassed ? CharacterType.WIN : CharacterType.NERVOUS
-        }
-        animation={
-          currentPlayerPassed
-            ? CharacterAnimation.SWAY
-            : CharacterAnimation.SHAKE
-        }
+        id={winningPlayer.character.id}
+        type={CharacterType.WIN}
+        animation={CharacterAnimation.SWAY}
       />
       <div className={styles.heartsContainer}>
-        {times(identity, playerHealth).map((idx) => (
-          <div
-            key={idx}
-            className={cx(styles.heartWrapper, {
-              [styles.missingHeart]:
-                !currentPlayerPassed && idx === playerHealth - 1,
-            })}
-          >
-            <LudumHeart className={styles.heart} />
+        {times(identity, 3).map((idx) => (
+          <div key={idx} className={cx(styles.heartWrapper)}>
+            <LudumHeart className={styles.heart} empty={idx >= playerHealth} />
           </div>
         ))}
       </div>
+      <p className={styles.roundNumberAnnouncement}>
+        You made it to <strong>Round {game.roundNumber}</strong>!
+      </p>
       <div className={styles.footer}>
         {currentPlayerAcked && (
           <WaitingMessage
             playersThatNeedToAct={playersWhoNeedToAck.map((p) => p.name)}
-            verb={'move on'}
+            verb={'continue'}
           />
         )}
         {!currentPlayerAcked && (
-          <Button onClick={onContinueClick}>Continue</Button>
+          <Button onClick={onContinueClick}>Return to Room</Button>
         )}
       </div>
     </div>
   );
 };
 
-export default LudumMinigameResults;
+export default LudumGameOver;

@@ -10,6 +10,7 @@ import LudumMinigameResults from './MinigameResults';
 import styles from './Main.module.css';
 import LudumYouDied from './YouDied';
 import { useCurrentPlayer } from 'utils/ludum-dare-utils';
+import LudumGameOver from './GameOver';
 
 export interface LudumMainProps {
   game: LudumGameState;
@@ -18,7 +19,7 @@ export interface LudumMainProps {
 const Game: React.FC<LudumMainProps> = ({ game }) => {
   const currentPlayer = useCurrentPlayer(game);
 
-  if (currentPlayer.health === 0) {
+  if (currentPlayer.health === 0 && game.phase !== LudumPhase.GAME_OVER) {
     return <LudumYouDied game={game} />;
   }
 
@@ -31,6 +32,8 @@ const Game: React.FC<LudumMainProps> = ({ game }) => {
       return <LudumPlayMinigame game={game} />;
     case LudumPhase.MINIGAME_RESULTS:
       return <LudumMinigameResults game={game} />;
+    case LudumPhase.GAME_OVER:
+      return <LudumGameOver game={game} />;
     default:
       return <div>no state found for phase {game.phase}</div>;
   }

@@ -60,10 +60,10 @@ const getGameMetadata = (gameType: GameType): GameMetadata => {
       };
     case GameType.LUDUM:
       return {
-        title: 'Ludum Dare Game',
-        playerCount: '2-8',
+        title: `Win or Your Totobee WILL Die`,
+        playerCount: '2-12',
         time: '10 min',
-        description: 'LD46 Game',
+        description: 'Play games to keep your virtual pet alive!',
       };
   }
 };

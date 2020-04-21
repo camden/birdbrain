@@ -39,9 +39,9 @@ const LudumPreMinigame: React.FC<LudumPreMinigameProps> = ({ game }) => {
   }, [dispatch]);
 
   const currentPlayerAcked = game.acknowledged.includes(currentPlayer.userId);
-  const playersWhoNeedToAck = game.players.filter(
-    (p) => !game.acknowledged.includes(p.userId)
-  );
+  const playersWhoNeedToAck = game.players
+    .filter((p) => !game.acknowledged.includes(p.userId))
+    .filter((p) => p.health > 0);
 
   if (!game.currentMinigame) {
     return <div>expected minigame to exist. please contact @camdenbickel</div>;
