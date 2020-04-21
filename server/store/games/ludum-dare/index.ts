@@ -9,7 +9,7 @@ import { User } from 'store/general/types';
 import characters from './characters';
 import shuffleArray from '../../../utils/shuffle-array';
 
-export const DEBUG_DURATION = 20500;
+export const DEBUG_DURATION = 2050000;
 export const DEFAULT_DURATION = 20500;
 
 export const MINIGAME_DURATION_MS =

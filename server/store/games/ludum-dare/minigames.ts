@@ -377,22 +377,25 @@ const generatePizzaCustomerConfig = (
 
   const numberOfLikes = pickRandomNumber(
     1,
-    Math.max(1, Math.min(6, Math.floor(roundNumber * 0.6)))
+    Math.max(1, Math.min(6, Math.floor(roundNumber * 0.7)))
   );
   const numberOfDislikes = pickRandomNumber(
     1,
-    Math.max(1, Math.min(6, Math.floor(roundNumber * 0.6)))
+    Math.max(1, Math.min(6, Math.floor(roundNumber * 0.8)))
   );
   const numberOfLikesOnPizza =
     intendedCustomerEval === LudumMinigamePizzaEvaluation.LIKE
       ? // intended = like
         pickRandomNumber(
           1,
-          Math.max(1, Math.min(7, Math.floor(roundNumber * 0.3)))
+          Math.max(1, Math.min(7, Math.floor(roundNumber * 0.5)))
         )
       : intendedCustomerEval === LudumMinigamePizzaEvaluation.DISLIKE
       ? // intended = dislike
-        0
+        pickRandomNumber(
+          1,
+          Math.max(0, Math.min(6, Math.floor(roundNumber - 1 * 0.5)))
+        )
       : // intended = skip
         0;
   const numberOfDislikesOnPizza =
@@ -407,7 +410,10 @@ const generatePizzaCustomerConfig = (
         )
       : // intended = skip
         0;
-  const numberOfExtrasOnPizza = pickRandomNumber(1, 3);
+  const numberOfExtrasOnPizza = pickRandomNumber(
+    1,
+    Math.max(1, Math.min(8, Math.floor(roundNumber * 0.9)))
+  );
 
   return {
     numberOfLikes,
@@ -432,7 +438,7 @@ const createPizzaState = (game: LudumGameState): LudumMinigamePizzaState => {
 
   return {
     customers,
-    targetScore: Math.max(3, Math.min(15, Math.floor(game.roundNumber * 0.6))),
+    targetScore: Math.max(3, Math.min(15, Math.floor(game.roundNumber * 0.9))),
   };
 };
 
