@@ -377,11 +377,11 @@ const generatePizzaCustomerConfig = (
 
   const numberOfLikes = pickRandomNumber(
     1,
-    Math.max(1, Math.min(6, Math.floor(roundNumber * 0.7)))
+    Math.max(1, Math.min(6, Math.floor(roundNumber * 0.6)))
   );
   const numberOfDislikes = pickRandomNumber(
     1,
-    Math.max(1, Math.min(6, Math.floor(roundNumber * 0.8)))
+    Math.max(1, Math.min(6, Math.floor(roundNumber * 0.6)))
   );
   const numberOfLikesOnPizza =
     intendedCustomerEval === LudumMinigamePizzaEvaluation.LIKE
@@ -412,7 +412,7 @@ const generatePizzaCustomerConfig = (
         0;
   const numberOfExtrasOnPizza = pickRandomNumber(
     1,
-    Math.max(1, Math.min(8, Math.floor(roundNumber * 0.9)))
+    Math.max(1, Math.min(8, Math.floor(roundNumber * 0.7)))
   );
 
   return {
