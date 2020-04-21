@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { LudumMinigamePizzaTopping } from '@server/store/games/ludum-dare/types';
 import styles from './PizzaPie.module.css';
 
 import PizzaBase from 'assets/images/ludum-dare/gui/pizza/pizzaBase.png';
 import LudumPizzaTopping from './PizzaTopping';
 import { pickRandomNumber } from '@server/utils/rng';
+import { setPointerCapture } from 'konva/types/PointerEvents';
+import shuffleArray from '@server/utils/shuffle-array';
 
 export interface LudumPizzaPieProps {
   toppings: LudumMinigamePizzaTopping[];
@@ -34,9 +36,10 @@ const toppingPositions = [
 ];
 
 const getToppingPositionForIndex = (
-  index: number
+  index: number,
+  positions: number[][]
 ): { x: number; y: number } => {
-  const result = toppingPositions[index];
+  const result = positions[index];
   if (!result) {
     return { x: 0, y: 0 };
   }
@@ -45,6 +48,12 @@ const getToppingPositionForIndex = (
 };
 
 const LudumPizzaPie: React.FC<LudumPizzaPieProps> = ({ toppings, style }) => {
+  const [positions, setPositions] = useState<number[][]>([]);
+
+  useEffect(() => {
+    setPositions(shuffleArray([...toppingPositions]));
+  }, []);
+
   return (
     <div className={styles.wrapper} style={style}>
       <img src={PizzaBase} className={styles.pizzaImg} alt="pizza base" />
@@ -55,8 +64,8 @@ const LudumPizzaPie: React.FC<LudumPizzaPieProps> = ({ toppings, style }) => {
           className={styles.topping}
           style={{
             transform: `rotate(${pickRandomNumber(1, 360)}deg)`,
-            left: getToppingPositionForIndex(idx).x,
-            top: getToppingPositionForIndex(idx).y,
+            left: getToppingPositionForIndex(idx, positions).x,
+            top: getToppingPositionForIndex(idx, positions).y,
           }}
         />
       ))}

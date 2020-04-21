@@ -250,13 +250,13 @@ const Card: React.FC<CardProps> = (props) => {
         style={{ opacity: yesOpacity }}
         className={cx(styles.cardJudgment, styles.cardJudgmentTrue)}
       >
-        TRUE
+        LIKES
       </motion.div>
       <motion.div
         style={{ opacity: noOpacity }}
         className={cx(styles.cardJudgment, styles.cardJudgmentFalse)}
       >
-        FALSE
+        DISLIKES
       </motion.div>
       {props.children}
     </motion.div>

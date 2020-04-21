@@ -40,16 +40,17 @@
 .cardJudgment {
   position: absolute;
   font-weight: bold;
-  font-size: 75px;
+  font-size: 72px;
   z-index: 100;
 }
 
-.cardJudgmentTrue {
-  color: green;
+.cardJudgment.cardJudgmentTrue {
+  color: limegreen;
 }
 
-.cardJudgmentFalse {
+.cardJudgment.cardJudgmentFalse {
   color: red;
+  font-size: 56px;
 }
 
 .speechBubble {
