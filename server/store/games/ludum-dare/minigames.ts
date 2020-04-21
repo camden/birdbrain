@@ -79,8 +79,8 @@ export const createMinigameState = (
 const createSimonSaysState = (
   game: LudumGameState
 ): LudumMinigameSimonSaysState => {
-  let targetLength = Math.max(3, Math.floor(0.8 * (game.roundNumber + 2)));
-  let timeBetweenShapes = Math.max(200, 1000 - game.roundNumber * 75);
+  let targetLength = Math.max(3, Math.floor(0.6 * (game.roundNumber + 2)));
+  let timeBetweenShapes = Math.max(200, 1000 - game.roundNumber * 50);
 
   const elements = [
     LudumShape.CIRCLE,
@@ -111,7 +111,7 @@ export const createHydraulicsState = (
 ): LudumMinigameHydraulicsState => {
   const numberOfPipes = Math.min(
     5,
-    Math.max(1, Math.floor((game.roundNumber + 5) * 0.3))
+    Math.max(1, Math.floor((game.roundNumber + 3) * 0.4))
   );
   let iterations = Math.min(
     5,
