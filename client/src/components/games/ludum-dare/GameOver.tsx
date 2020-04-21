@@ -14,6 +14,7 @@ import { identity, times } from 'ramda';
 import LudumHeart from './Heart';
 import cx from 'classnames';
 import WaitingMessage from 'components/shared/WaitingMessage';
+import { endCurrentGame } from '@server/store/general/actions';
 
 export interface LudumGameOverProps {
   game: LudumGameState;
@@ -24,7 +25,7 @@ const LudumGameOver: React.FC<LudumGameOverProps> = ({ game }) => {
   const currentPlayer = useCurrentPlayer(game);
 
   const onContinueClick = useCallback(() => {
-    dispatch(sendMessage(ludumAck()));
+    dispatch(sendMessage(endCurrentGame()));
   }, [dispatch]);
 
   const playersWhoPassed: LudumPlayer[] = game.players.filter((p) =>
@@ -73,7 +74,7 @@ const LudumGameOver: React.FC<LudumGameOverProps> = ({ game }) => {
         ))}
       </div>
       <p className={styles.roundNumberAnnouncement}>
-        You made it to <strong>Round {game.roundNumber}</strong>!
+        You reached <strong>Round {game.roundNumber}</strong>!
       </p>
       <div className={styles.footer}>
         {currentPlayerAcked && (

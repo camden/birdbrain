@@ -9,7 +9,7 @@ import { User } from 'store/general/types';
 import characters from './characters';
 import shuffleArray from '../../../utils/shuffle-array';
 
-export const DEBUG_DURATION = 10050;
+export const DEBUG_DURATION = 5005;
 export const DEFAULT_DURATION = 30500;
 
 export const MINIGAME_DURATION_MS =
@@ -23,7 +23,7 @@ const createPlayerFromUser = (
     userId: user.id,
     name: user.name,
     character,
-    health: 3,
+    health: 1,
   };
 };
 
