@@ -23,6 +23,10 @@ import LudumPizzaTopping from './PizzaTopping';
 import Button from 'components/shared/button/Button';
 import { faThumbsDown, faThumbsUp } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useDispatch } from 'react-redux';
+import { sendMessage } from 'store/websocket/actions';
+import { checkMinigameAnswer } from '@server/store/games/ludum-dare/minigames';
+import { ludumCheckMinigameAnswer } from '@server/store/games/ludum-dare/actions';
 
 export interface LudumMinigamePizzaProps {
   game: LudumGameState;
@@ -36,13 +40,16 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
   game,
   minigame,
 }) => {
+  const dispatch = useDispatch();
   const [cardIndex, setCardIndex] = useState(0);
   const [exitX, setExitX] = React.useState<number | string>('100%');
   const [score, setScore] = useState(0);
-  const topCardAnimationControls = useAnimation();
 
   const onCorrectEval = () => {
     setScore(score + 1);
+    if (score + 1 >= minigame.targetScore) {
+      dispatch(sendMessage(ludumCheckMinigameAnswer(score)));
+    }
   };
 
   const onWrongEval = () => {

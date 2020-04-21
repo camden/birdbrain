@@ -63,7 +63,8 @@ export type LudumMinigameState =
 
 export type LudumMinigameAnswer =
   | LudumMinigameSimonSaysAnswer
-  | LudumMinigameHydraulicsResult;
+  | LudumMinigameHydraulicsResult
+  | LudumMinigamePizzaAnswer;
 
 /**
  * Simon Says
@@ -150,3 +151,5 @@ export interface LudumMinigamePizzaState {
   customers: LudumMinigamePizzaCustomer[];
   targetScore: number;
 }
+
+export type LudumMinigamePizzaAnswer = number;

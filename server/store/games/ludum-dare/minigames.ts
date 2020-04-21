@@ -15,6 +15,7 @@ import {
   LudumMinigamePizzaCustomer,
   LudumMinigamePizzaTopping,
   LudumMinigamePizzaEvaluation,
+  LudumMinigamePizzaAnswer,
 } from './types';
 import { equals, uniq, intersection, times, identity, without } from 'ramda';
 import {
@@ -48,6 +49,11 @@ export const checkMinigameAnswer = (
       return checkHydraulicsAnswer(
         game.currentMinigameState as LudumMinigameHydraulicsState,
         answer as LudumMinigameHydraulicsResult
+      );
+    case LudumMinigame.PIZZA:
+      return checkPizzaAnswer(
+        game.currentMinigameState as LudumMinigamePizzaState,
+        answer as LudumMinigamePizzaAnswer
       );
     default:
       return false;
@@ -359,16 +365,32 @@ const generatePizzaCustomer = (config: PizzaCustomerConfig) => {
 };
 
 const generatePizzaCustomerConfig = (): PizzaCustomerConfig => {
-  const willCustomerLikePizza = pickRandomNumber(1, 2) === 1;
+  const intendedCustomerEval: LudumMinigamePizzaEvaluation = pickElement([
+    LudumMinigamePizzaEvaluation.DISLIKE,
+    LudumMinigamePizzaEvaluation.LIKE,
+    LudumMinigamePizzaEvaluation.SKIP,
+  ])[0] as LudumMinigamePizzaEvaluation;
 
   const numberOfLikes = pickRandomNumber(1, 3);
   const numberOfDislikes = pickRandomNumber(1, 3);
-  const numberOfLikesOnPizza = willCustomerLikePizza
-    ? pickRandomNumber(1, 2)
-    : pickRandomNumber(0, 1);
-  const numberOfDislikesOnPizza = willCustomerLikePizza
-    ? pickRandomNumber(0, 1)
-    : pickRandomNumber(1, 2);
+  const numberOfLikesOnPizza =
+    intendedCustomerEval === LudumMinigamePizzaEvaluation.LIKE
+      ? // intended = like
+        pickRandomNumber(1, 3)
+      : intendedCustomerEval === LudumMinigamePizzaEvaluation.DISLIKE
+      ? // intended = dislike
+        0
+      : // intended = skip
+        0;
+  const numberOfDislikesOnPizza =
+    intendedCustomerEval === LudumMinigamePizzaEvaluation.LIKE
+      ? // intended = like
+        0
+      : intendedCustomerEval === LudumMinigamePizzaEvaluation.DISLIKE
+      ? // intended = dislike
+        pickRandomNumber(1, 3)
+      : // intended = skip
+        0;
   const numberOfExtrasOnPizza = pickRandomNumber(1, 3);
 
   return {
@@ -428,6 +450,13 @@ const createPizzaState = (game: LudumGameState): LudumMinigamePizzaState => {
     customers,
     targetScore: 3,
   };
+};
+
+const checkPizzaAnswer = (
+  minigame: LudumMinigamePizzaState,
+  answer: LudumMinigamePizzaAnswer
+): boolean => {
+  return minigame.targetScore === answer;
 };
 
 const checkHydraulicsAnswer = (
