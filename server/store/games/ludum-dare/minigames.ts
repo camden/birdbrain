@@ -30,8 +30,8 @@ import { log } from 'utils/log';
 export const pickNextMinigame = (): LudumMinigame => {
   return pickElement([
     LudumMinigame.PIZZA,
-    // LudumMinigame.HYDRAULICS,
-    // LudumMinigame.SIMON_SAYS,
+    LudumMinigame.HYDRAULICS,
+    LudumMinigame.SIMON_SAYS,
   ])[0] as LudumMinigame;
 };
 

@@ -1,5 +1,8 @@
 import React, { useCallback } from 'react';
-import { LudumGameState } from '@server/store/games/ludum-dare/types';
+import {
+  LudumGameState,
+  LudumMinigame,
+} from '@server/store/games/ludum-dare/types';
 import Button from 'components/shared/button/Button';
 import { useDispatch } from 'react-redux';
 import { sendMessage } from 'store/websocket/actions';
@@ -12,6 +15,19 @@ import WaitingMessage from 'components/shared/WaitingMessage';
 export interface LudumPreMinigameProps {
   game: LudumGameState;
 }
+
+const getNameOfMinigame = (minigame: LudumMinigame): string => {
+  switch (minigame) {
+    case LudumMinigame.PIZZA:
+      return 'Pizza Perfection';
+    case LudumMinigame.HYDRAULICS:
+      return 'Measure Up';
+    case LudumMinigame.SIMON_SAYS:
+      return 'Copycat';
+    default:
+      return '';
+  }
+};
 
 const LudumPreMinigame: React.FC<LudumPreMinigameProps> = ({ game }) => {
   const dispatch = useDispatch();
@@ -27,13 +43,19 @@ const LudumPreMinigame: React.FC<LudumPreMinigameProps> = ({ game }) => {
     (p) => !game.acknowledged.includes(p.userId)
   );
 
+  if (!game.currentMinigame) {
+    return <div>expected minigame to exist. please contact @camdenbickel</div>;
+  }
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.roundInfo}>
         <div className={styles.roundLabel}>Round</div>
         <div className={styles.roundNumber}>{game.roundNumber}</div>
       </div>
-      <div className={styles.nextGame}>Next game: {game.currentMinigame}</div>
+      <div className={styles.nextGame}>
+        Next game: {getNameOfMinigame(game.currentMinigame)}!
+      </div>
       <div className={styles.allPlayers}>
         {game.players.map((player) => (
           <LudumPlayerInfo
