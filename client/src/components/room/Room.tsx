@@ -20,6 +20,8 @@ import { GameType } from '@server/store/games/types';
 import { faSpinnerThird } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from 'components/shared/button/Button';
+import { AnalyticsCategory } from 'analytics';
+import ReactGA from 'react-ga';
 
 const LOADING_TIMEOUT_MS = process.env.NODE_ENV === 'production' ? 1000 : 250;
 
@@ -125,7 +127,15 @@ const Room: React.FC = () => {
       <RoomBody
         room={room}
         isCurrentUserRoomLeader={isRoomLeader}
-        onStartGameClick={() => dispatch(sendStartGame())}
+        onStartGameClick={() => {
+          ReactGA.event({
+            category: AnalyticsCategory.ROOM,
+            action: 'Clicked Start Game',
+            label: String(room.selectedGameType),
+            value: room.users.length,
+          });
+          dispatch(sendStartGame());
+        }}
         onChangeGameClick={() => setIsPickingGame(true)}
         roomLeader={roomLeader}
         usersInRoom={usersInRoom}
