@@ -364,19 +364,32 @@ const generatePizzaCustomer = (config: PizzaCustomerConfig) => {
   return customer;
 };
 
-const generatePizzaCustomerConfig = (): PizzaCustomerConfig => {
+const generatePizzaCustomerConfig = (
+  game: LudumGameState
+): PizzaCustomerConfig => {
   const intendedCustomerEval: LudumMinigamePizzaEvaluation = pickElement([
     LudumMinigamePizzaEvaluation.DISLIKE,
     LudumMinigamePizzaEvaluation.LIKE,
     LudumMinigamePizzaEvaluation.SKIP,
   ])[0] as LudumMinigamePizzaEvaluation;
 
-  const numberOfLikes = pickRandomNumber(1, 3);
-  const numberOfDislikes = pickRandomNumber(1, 3);
+  const roundNumber = game.roundNumber;
+
+  const numberOfLikes = pickRandomNumber(
+    1,
+    Math.max(1, Math.min(6, Math.floor(roundNumber * 0.6)))
+  );
+  const numberOfDislikes = pickRandomNumber(
+    1,
+    Math.max(1, Math.min(6, Math.floor(roundNumber * 0.6)))
+  );
   const numberOfLikesOnPizza =
     intendedCustomerEval === LudumMinigamePizzaEvaluation.LIKE
       ? // intended = like
-        pickRandomNumber(1, 3)
+        pickRandomNumber(
+          1,
+          Math.max(1, Math.min(7, Math.floor(roundNumber * 0.3)))
+        )
       : intendedCustomerEval === LudumMinigamePizzaEvaluation.DISLIKE
       ? // intended = dislike
         0
@@ -388,7 +401,10 @@ const generatePizzaCustomerConfig = (): PizzaCustomerConfig => {
         0
       : intendedCustomerEval === LudumMinigamePizzaEvaluation.DISLIKE
       ? // intended = dislike
-        pickRandomNumber(1, 3)
+        pickRandomNumber(
+          1,
+          Math.max(1, Math.min(6, Math.floor(roundNumber * 0.6)))
+        )
       : // intended = skip
         0;
   const numberOfExtrasOnPizza = pickRandomNumber(1, 3);
@@ -408,7 +424,9 @@ const createPizzaState = (game: LudumGameState): LudumMinigamePizzaState => {
   let customers: LudumMinigamePizzaCustomer[] = [];
 
   for (let i = 0; i < numberOfCustomers; i++) {
-    const newCustomer = generatePizzaCustomer(generatePizzaCustomerConfig());
+    const newCustomer = generatePizzaCustomer(
+      generatePizzaCustomerConfig(game)
+    );
     customers.push(newCustomer);
   }
 
