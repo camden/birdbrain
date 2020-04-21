@@ -426,6 +426,7 @@ const createPizzaState = (game: LudumGameState): LudumMinigamePizzaState => {
 
   return {
     customers,
+    targetScore: 3,
   };
 };
 

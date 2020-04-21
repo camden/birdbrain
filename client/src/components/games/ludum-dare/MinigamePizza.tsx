@@ -40,6 +40,19 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
   const [score, setScore] = useState(0);
   const topCardAnimationControls = useAnimation();
 
+  const onCorrectEval = () => {};
+
+  const onWrongEval = () => {};
+
+  const currentCustomer = minigame.customers[cardIndex];
+  if (!currentCustomer) {
+    if (cardIndex === 0) {
+      console.error('something went wrong, expected current customer to exist');
+      return null;
+    }
+    setCardIndex(0);
+  }
+
   const onThumbsUp = async () => {
     setExitX(EXIT_X);
     await new Promise((resolve) => setTimeout(() => resolve(), 10));
@@ -58,32 +71,10 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
     setCardIndex(cardIndex + 1);
   };
 
-  const bottomCardVariants = {
-    initial: {
-      scale: 0,
-      opacity: 0,
-    },
-    animate: {
-      scale: 0.9,
-      opacity: 0.5,
-    },
-  };
-
-  const topCardVariants = {
-    animate: {
-      scale: 1,
-      y: 0,
-      opacity: 1,
-    },
-    skip: {
-      y: -100,
-      opacity: 0,
-    },
-  };
-
   return (
     <div className={styles.wrapper}>
       <div>Pizza!!!</div>
+      <div>target score: {minigame.targetScore}</div>
       <div>score: {score}</div>
       <div className={styles.field}>
         <AnimatePresence initial={false}>
@@ -92,7 +83,6 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
             index={cardIndex + 1}
             setIndex={setCardIndex}
             setExitX={setExitX}
-            // initial={'initial'}
             initial={{
               scale: 0,
               opacity: 0,
@@ -101,12 +91,10 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
               scale: 0.9,
               opacity: 0.5,
             }}
-            // animate={'animate'}
             transition={{
               scale: { duration: 0.2 },
               opacity: { duration: 0.4 },
             }}
-            // variants={bottomCardVariants}
           >
             {minigame.customers[cardIndex + 1] && (
               <LudumPizzaCardBody
@@ -118,19 +106,17 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
             key={cardIndex}
             index={cardIndex}
             setIndex={setCardIndex}
-            // animate={{
-            //   scale: 1,
-            //   y: 0,
-            //   opacity: 1,
-            // }}
-            animate="animate"
-            transition={{
-              opacity: { duration: 0.2 },
+            animate={{
+              scale: 1,
+              y: 0,
+              opacity: 1,
             }}
+            // transition={{
+            //   opacity: { duration: 0.2 },
+            // }}
             drag={'x'}
             exitX={exitX}
             setExitX={setExitX}
-            variants={topCardVariants}
           >
             {minigame.customers[cardIndex] && (
               <LudumPizzaCardBody customer={minigame.customers[cardIndex]} />

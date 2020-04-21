@@ -148,4 +148,5 @@ export interface LudumMinigamePizzaCustomer {
 
 export interface LudumMinigamePizzaState {
   customers: LudumMinigamePizzaCustomer[];
+  targetScore: number;
 }
