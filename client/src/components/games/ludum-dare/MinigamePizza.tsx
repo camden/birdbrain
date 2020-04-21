@@ -46,9 +46,10 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
   const [score, setScore] = useState(0);
 
   const onCorrectEval = () => {
-    setScore(score + 1);
-    if (score + 1 >= minigame.targetScore) {
-      dispatch(sendMessage(ludumCheckMinigameAnswer(score)));
+    const nextScore = score + 1;
+    setScore(nextScore);
+    if (nextScore >= minigame.targetScore) {
+      dispatch(sendMessage(ludumCheckMinigameAnswer(nextScore)));
     }
   };
 
@@ -97,9 +98,11 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
 
   return (
     <div className={styles.wrapper}>
-      <div>Pizza!!!</div>
-      <div>target score: {minigame.targetScore}</div>
-      <div>score: {score}</div>
+      <div className={styles.scoreWrapper}>
+        <div>Your Score: {score}</div>
+        <div>Goal: {minigame.targetScore}</div>
+      </div>
+      <h1 className={styles.instructions}>Evaluate!</h1>
       <div className={styles.field}>
         <AnimatePresence initial={false}>
           <Card
@@ -151,13 +154,13 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
         </AnimatePresence>
       </div>
       <div className={styles.buttons}>
-        <Button secondary onClick={onThumbsDown}>
+        <Button secondary small onClick={onThumbsDown}>
           <FontAwesomeIcon icon={faThumbsDown} size={'lg'} color="red" />
         </Button>
-        <Button secondary onClick={onSkip}>
+        <Button secondary small onClick={onSkip}>
           Skip Pizza
         </Button>
-        <Button secondary onClick={onThumbsUp}>
+        <Button secondary small onClick={onThumbsUp}>
           <FontAwesomeIcon icon={faThumbsUp} size={'lg'} color="green" />
         </Button>
       </div>
@@ -192,10 +195,12 @@ const LudumPizzaCardBody: React.FC<LudumPizzaCardBodyProps> = ({
           </div>
         </div>
       </div>
-      <LudumPizzaPie
-        toppings={customer.pizza}
-        style={{ transform: `rotate(${customer.randomPizzaRotation}deg)` }}
-      />
+      <div className={styles.pizzaBox}>
+        <LudumPizzaPie
+          toppings={customer.pizza}
+          style={{ transform: `rotate(${customer.randomPizzaRotation}deg)` }}
+        />
+      </div>
     </>
   );
 };

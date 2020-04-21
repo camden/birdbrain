@@ -23,16 +23,16 @@ const getRandomPointOnCircle = (radius: number): { x: number; y: number } => {
 
 const toppingPositions = [
   [40, 67],
-  [42, 120],
-  [80, 150],
-  [100, 80],
-  [120, 45],
+  [42, 60],
+  [80, 110],
+  [56, 80],
+  [100, 45],
   [70, 50],
   [50, 90],
-  [70, 110],
-  [90, 130],
-  [120, 125],
-  [130, 95],
+  [74, 110],
+  [90, 88],
+  [60, 78],
+  [50, 95],
 ];
 
 const getToppingPositionForIndex = (
