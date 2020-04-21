@@ -132,11 +132,18 @@ export enum LudumMinigamePizzaTopping {
   TRIANGLE4 = 'TRIANGLE4',
 }
 
+export enum LudumMinigamePizzaEvaluation {
+  LIKE = 'LIKE',
+  DISLIKE = 'DISLIKE',
+  SKIP = 'SKIP',
+}
+
 export interface LudumMinigamePizzaCustomer {
   likes: LudumMinigamePizzaTopping[];
   dislikes: LudumMinigamePizzaTopping[];
   pizza: LudumMinigamePizzaTopping[];
   randomPizzaRotation: number;
+  customerEvaluation: LudumMinigamePizzaEvaluation;
 }
 
 export interface LudumMinigamePizzaState {

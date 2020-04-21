@@ -14,6 +14,7 @@ import {
   LudumMinigamePizzaState,
   LudumMinigamePizzaCustomer,
   LudumMinigamePizzaTopping,
+  LudumMinigamePizzaEvaluation,
 } from './types';
 import { equals, uniq, intersection, times, identity, without } from 'ramda';
 import {
@@ -327,19 +328,56 @@ const generatePizzaCustomer = (config: PizzaCustomerConfig) => {
       extrasOnPizza
   );
 
-  const allToppings = likesOnPizza
+  const allToppingsOnPizza = likesOnPizza
     .concat(dislikesOnPizza)
     .concat(extrasOnPizza);
+
+  let customerEvaluation = LudumMinigamePizzaEvaluation.SKIP;
+  const customerLikesSomethingOnPizza =
+    intersection(allToppingsOnPizza, likesOnPizza).length > 0;
+  const customerDislikesSomethingOnPizza =
+    intersection(allToppingsOnPizza, dislikesOnPizza).length > 0;
+
+  if (customerDislikesSomethingOnPizza) {
+    customerEvaluation = LudumMinigamePizzaEvaluation.DISLIKE;
+  } else if (customerLikesSomethingOnPizza) {
+    customerEvaluation = LudumMinigamePizzaEvaluation.LIKE;
+  } else {
+    customerEvaluation = LudumMinigamePizzaEvaluation.SKIP;
+  }
 
   const customer: LudumMinigamePizzaCustomer = {
     likes: likes,
     dislikes: dislikes,
-    pizza: allToppings,
+    pizza: allToppingsOnPizza,
     randomPizzaRotation: pickRandomNumber(1, 360),
+    customerEvaluation,
   };
 
   console.log('Generating a customer with config: ', config, customer);
   return customer;
+};
+
+const generatePizzaCustomerConfig = (): PizzaCustomerConfig => {
+  const willCustomerLikePizza = pickRandomNumber(1, 2) === 1;
+
+  const numberOfLikes = pickRandomNumber(1, 3);
+  const numberOfDislikes = pickRandomNumber(1, 3);
+  const numberOfLikesOnPizza = willCustomerLikePizza
+    ? pickRandomNumber(1, 2)
+    : pickRandomNumber(0, 1);
+  const numberOfDislikesOnPizza = willCustomerLikePizza
+    ? pickRandomNumber(0, 1)
+    : pickRandomNumber(1, 2);
+  const numberOfExtrasOnPizza = pickRandomNumber(1, 3);
+
+  return {
+    numberOfLikes,
+    numberOfDislikes,
+    numberOfLikesOnPizza,
+    numberOfDislikesOnPizza,
+    numberOfExtrasOnPizza,
+  };
 };
 
 const createPizzaState = (game: LudumGameState): LudumMinigamePizzaState => {
@@ -377,23 +415,12 @@ const createPizzaState = (game: LudumGameState): LudumMinigamePizzaState => {
     },
   ];
 
-  const numberOfLikes = 2;
-  const numberOfDislikes = 2;
-  const numberOfLikesOnPizza = pickRandomNumber(1, 2);
-  const numberOfDislikesOnPizza = pickRandomNumber(1, 2);
-  const numberOfExtrasOnPizza = pickRandomNumber(1, 3);
-
   const numberOfCustomers = 50;
 
   let customers: LudumMinigamePizzaCustomer[] = [];
+
   for (let i = 0; i < numberOfCustomers; i++) {
-    const newCustomer = generatePizzaCustomer({
-      numberOfLikes,
-      numberOfDislikes,
-      numberOfLikesOnPizza,
-      numberOfDislikesOnPizza,
-      numberOfExtrasOnPizza,
-    });
+    const newCustomer = generatePizzaCustomer(generatePizzaCustomerConfig());
     customers.push(newCustomer);
   }
 

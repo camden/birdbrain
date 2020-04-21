@@ -19,11 +19,16 @@ import styles from './MinigamePizza.module.css';
 import cx from 'classnames';
 import LudumPizzaPie from './PizzaPie';
 import LudumPizzaTopping from './PizzaTopping';
+import Button from 'components/shared/button/Button';
+import { faThumbsDown, faThumbsUp } from '@fortawesome/pro-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export interface LudumMinigamePizzaProps {
   game: LudumGameState;
   minigame: LudumMinigamePizzaState;
 }
+
+const EXIT_X = 350;
 
 // thank you to https://framerbook.com/x/animation/example-animations/36-stack-3d/
 const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
@@ -33,6 +38,48 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
   const [cardIndex, setCardIndex] = useState(0);
   const [exitX, setExitX] = React.useState<number | string>('100%');
   const [score, setScore] = useState(0);
+  const topCardAnimationControls = useAnimation();
+
+  const onThumbsUp = async () => {
+    setExitX(EXIT_X);
+    await new Promise((resolve) => setTimeout(() => resolve(), 10));
+    setCardIndex(cardIndex + 1);
+  };
+
+  const onThumbsDown = async () => {
+    setExitX(-EXIT_X);
+    await new Promise((resolve) => setTimeout(() => resolve(), 10));
+    setCardIndex(cardIndex + 1);
+  };
+
+  const onSkip = async () => {
+    setExitX(0);
+    await new Promise((resolve) => setTimeout(() => resolve(), 10));
+    setCardIndex(cardIndex + 1);
+  };
+
+  const bottomCardVariants = {
+    initial: {
+      scale: 0,
+      opacity: 0,
+    },
+    animate: {
+      scale: 0.9,
+      opacity: 0.5,
+    },
+  };
+
+  const topCardVariants = {
+    animate: {
+      scale: 1,
+      y: 0,
+      opacity: 1,
+    },
+    skip: {
+      y: -100,
+      opacity: 0,
+    },
+  };
 
   return (
     <div className={styles.wrapper}>
@@ -45,6 +92,7 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
             index={cardIndex + 1}
             setIndex={setCardIndex}
             setExitX={setExitX}
+            // initial={'initial'}
             initial={{
               scale: 0,
               opacity: 0,
@@ -53,10 +101,12 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
               scale: 0.9,
               opacity: 0.5,
             }}
+            // animate={'animate'}
             transition={{
               scale: { duration: 0.2 },
               opacity: { duration: 0.4 },
             }}
+            // variants={bottomCardVariants}
           >
             {minigame.customers[cardIndex + 1] && (
               <LudumPizzaCardBody
@@ -68,20 +118,36 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
             key={cardIndex}
             index={cardIndex}
             setIndex={setCardIndex}
-            animate={{
-              scale: 1,
-              y: 0,
-              opacity: 1,
+            // animate={{
+            //   scale: 1,
+            //   y: 0,
+            //   opacity: 1,
+            // }}
+            animate="animate"
+            transition={{
+              opacity: { duration: 0.2 },
             }}
             drag={'x'}
             exitX={exitX}
             setExitX={setExitX}
+            variants={topCardVariants}
           >
             {minigame.customers[cardIndex] && (
               <LudumPizzaCardBody customer={minigame.customers[cardIndex]} />
             )}
           </Card>
         </AnimatePresence>
+      </div>
+      <div className={styles.buttons}>
+        <Button secondary onClick={onThumbsDown}>
+          <FontAwesomeIcon icon={faThumbsDown} size={'lg'} color="red" />
+        </Button>
+        <Button secondary onClick={onSkip}>
+          Skip Pizza
+        </Button>
+        <Button secondary onClick={onThumbsUp}>
+          <FontAwesomeIcon icon={faThumbsUp} size={'lg'} color="green" />
+        </Button>
       </div>
     </div>
   );
@@ -132,6 +198,7 @@ export interface CardProps {
   initial?: MotionProps['initial'];
   animate?: MotionProps['animate'];
   transition?: MotionProps['transition'];
+  variants?: MotionProps['variants'];
 }
 
 const Card: React.FC<CardProps> = (props) => {
@@ -146,11 +213,11 @@ const Card: React.FC<CardProps> = (props) => {
     info: PanInfo
   ) => {
     if (info.offset.x < -90) {
-      props.setExitX(-350);
+      props.setExitX(-EXIT_X);
       props.setIndex(props.index + 1);
     }
     if (info.offset.x > 90) {
-      props.setExitX(350);
+      props.setExitX(EXIT_X);
       props.setIndex(props.index + 1);
     }
   };
@@ -167,6 +234,7 @@ const Card: React.FC<CardProps> = (props) => {
       initial={props.initial}
       animate={props.animate}
       transition={props.transition}
+      variants={props.variants}
       style={{
         x: cardX,
         rotate: cardRotation,
