@@ -70,7 +70,24 @@ const Home: React.FC = () => {
   return (
     <div className={styles.home}>
       <LogoHeader />
+      <h1 className={styles.title}>Birdbrain Games</h1>
       <section className={styles.body}>
+        {showCreateRoomOption && (
+          <>
+            <section className={styles.input_section}>
+              <LinkButton
+                onClick={onCreateRoomButtonClick}
+                to={'/create-room'}
+                className={styles.button}
+                disabled={isLoadingJoin}
+                secondary
+              >
+                {isLoadingJoin ? <div>loading...</div> : 'Create New Room'}
+              </LinkButton>
+            </section>
+            <div className={styles.input_section_divider}>OR</div>
+          </>
+        )}
         <section className={styles.input_section}>
           <label htmlFor="room-code" className={styles.label}>
             <FontAwesomeIcon icon={faKey} className={styles.label_icon} />
@@ -110,22 +127,6 @@ const Home: React.FC = () => {
             {isLoadingJoin ? <div>loading...</div> : 'Join Room'}
           </Button>
         </section>
-        {showCreateRoomOption && (
-          <>
-            <div className={styles.input_section_divider}>OR</div>
-            <section className={styles.input_section}>
-              <LinkButton
-                onClick={onCreateRoomButtonClick}
-                to={'/create-room'}
-                className={styles.button}
-                disabled={isLoadingJoin}
-                secondary
-              >
-                {isLoadingJoin ? <div>loading...</div> : 'Create New Room'}
-              </LinkButton>
-            </section>
-          </>
-        )}
       </section>
       <section className={styles.footer}>
         <p>
