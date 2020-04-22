@@ -438,7 +438,7 @@ const createPizzaState = (game: LudumGameState): LudumMinigamePizzaState => {
 
   return {
     customers,
-    targetScore: Math.max(3, Math.min(15, Math.floor(game.roundNumber * 0.9))),
+    targetScore: Math.max(3, Math.min(6, Math.floor(game.roundNumber * 0.3))),
   };
 };
 
