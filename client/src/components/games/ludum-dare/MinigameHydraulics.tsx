@@ -130,7 +130,8 @@ const LudumMinigameHydraulics: React.FC<LudumMinigameHydraulicsProps> = ({
       <h1 className={styles.instructions}>Match!</h1>
       {isFirstTimePlaying && (
         <small className={styles.firstTimeInstructions}>
-          Use the buttons to make the bottom pipe match the top pipe.
+          Use the buttons to make the bottom pipe match the top pipe. You can
+          reset if you need to.
         </small>
       )}
       <div className={styles.pipeRowWrapper} style={pipeRowStyle}>
