@@ -5,6 +5,11 @@
   margin-bottom: 8px;
 }
 
+.firstTimeInstructions {
+  display: block;
+  margin-bottom: 16px;
+}
+
 .pipeRowWrapper {
   display: grid;
   padding: 0 32px;

@@ -4,6 +4,7 @@ import {
   LudumGameState,
   LudumMinigamePizzaCustomer,
   LudumMinigamePizzaEvaluation,
+  LudumMinigame,
 } from '@server/store/games/ludum-dare/types';
 import {
   motion,
@@ -96,6 +97,10 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
     setCardIndex(cardIndex + 1);
   };
 
+  const isFirstTimePlaying = !game.minigamesPlayedSoFar.includes(
+    LudumMinigame.PIZZA
+  );
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.scoreWrapper}>
@@ -103,6 +108,24 @@ const LudumMinigamePizza: React.FC<LudumMinigamePizzaProps> = ({
         <div>Goal: {minigame.targetScore}</div>
       </div>
       <h1 className={styles.instructions}>Evaluate!</h1>
+      {isFirstTimePlaying && (
+        <small className={styles.firstTimeInstructions}>
+          Press{' '}
+          <FontAwesomeIcon
+            icon={faThumbsDown}
+            color="red"
+            style={{ marginRight: 4 }}
+          />{' '}
+          if there are ANY disliked items. Press{' '}
+          <FontAwesomeIcon
+            icon={faThumbsUp}
+            color="green"
+            style={{ marginRight: 4 }}
+          />
+          if there are liked items and no disliked items. Otherwise press{' '}
+          <strong>Skip Pizza</strong>.
+        </small>
+      )}
       <div className={styles.field}>
         <AnimatePresence initial={false}>
           <Card
@@ -179,7 +202,7 @@ const LudumPizzaCardBody: React.FC<LudumPizzaCardBodyProps> = ({
     <>
       <div className={styles.speechBubble}>
         <div className={styles.dialogueLine}>
-          <div>I like:</div>
+          <div>LIKES:</div>
           <div className={styles.listOfToppings}>
             {customer.likes.map((topping) => (
               <LudumPizzaTopping key={topping} kind={topping} />
@@ -187,7 +210,7 @@ const LudumPizzaCardBody: React.FC<LudumPizzaCardBodyProps> = ({
           </div>
         </div>
         <div className={styles.dialogueLine}>
-          <div>I don't like:</div>
+          <div>DISLIKES:</div>
           <div className={styles.listOfToppings}>
             {customer.dislikes.map((topping) => (
               <LudumPizzaTopping key={topping} kind={topping} />

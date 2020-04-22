@@ -56,5 +56,6 @@ export const createNewGameOfLudum = (
     currentMinigameState: null,
     playersWhoPassedCurrentMinigame: [],
     roundNumber: 0,
+    minigamesPlayedSoFar: [],
   };
 };

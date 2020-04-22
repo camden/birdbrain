@@ -11,6 +11,7 @@ export interface LudumGameState extends Game {
   currentMinigameState: LudumMinigameState | null;
   playersWhoPassedCurrentMinigame: UserID[];
   roundNumber: number;
+  minigamesPlayedSoFar: LudumMinigame[];
 }
 
 export interface LudumCharacter {

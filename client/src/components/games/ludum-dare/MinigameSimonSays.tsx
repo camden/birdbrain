@@ -3,6 +3,7 @@ import {
   LudumGameState,
   LudumMinigameSimonSaysState,
   LudumShape,
+  LudumMinigame,
 } from '@server/store/games/ludum-dare/types';
 import useInterval from 'use-interval';
 import Button from 'components/shared/button/Button';
@@ -114,9 +115,21 @@ const LudumMinigameSimonSays: React.FC<LudumMinigameSimonSaysProps> = ({
     currentPlayer.userId
   );
 
+  const isFirstTimePlaying = !game.minigamesPlayedSoFar.includes(
+    LudumMinigame.SIMON_SAYS
+  );
+
   return (
     <div className={styles.wrapper}>
       <h1 className={styles.instructions}>Transcribe!</h1>
+      {isFirstTimePlaying && (
+        <small className={styles.firstTimeInstructions}>
+          Copy the phrase using the buttons below. Hit{' '}
+          <strong>Backspace</strong>{' '}
+          <FontAwesomeIcon icon={faBackspace} style={{ marginRight: 4 }} /> if
+          you make a mistake.
+        </small>
+      )}
       <div className={styles.bubble}>
         <div className={styles.currentShape}>{curShape}</div>
       </div>

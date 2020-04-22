@@ -5,6 +5,7 @@ import {
   LudumMinigameHydraulicsState,
   LudumMinigameHydraulicsButton,
   LudumMinigameHydraulicsResult,
+  LudumMinigame,
 } from '@server/store/games/ludum-dare/types';
 import { useCurrentPlayer } from 'utils/ludum-dare-utils';
 import styles from './MinigameHydraulics.module.css';
@@ -120,9 +121,18 @@ const LudumMinigameHydraulics: React.FC<LudumMinigameHydraulicsProps> = ({
     gridTemplateColumns: `repeat(${minigame.correctResult.length}, 1fr)`,
   };
 
+  const isFirstTimePlaying = !game.minigamesPlayedSoFar.includes(
+    LudumMinigame.HYDRAULICS
+  );
+
   return (
     <div className={styles.wrapper}>
       <h1 className={styles.instructions}>Match!</h1>
+      {isFirstTimePlaying && (
+        <small className={styles.firstTimeInstructions}>
+          Use the buttons to make the bottom pipe match the top pipe.
+        </small>
+      )}
       <div className={styles.pipeRowWrapper} style={pipeRowStyle}>
         {minigame.correctResult.map((pipe, idx) =>
           getPipeImgForValue(pipe, pipe + ' ' + idx)

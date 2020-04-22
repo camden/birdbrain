@@ -6,6 +6,11 @@
   margin: 0;
 }
 
+.firstTimeInstructions {
+  display: block;
+  margin-bottom: 16px;
+}
+
 .bubble {
   background-color: white;
   border: 2px solid black;

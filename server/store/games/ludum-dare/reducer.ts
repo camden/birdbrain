@@ -108,6 +108,15 @@ const ludumReducer = (
         draftState.currentMinigame = null;
         draftState.phase = LudumPhase.MINIGAME_RESULTS;
 
+        // @TODO this code is duplicated
+        const lastMinigamePlayed = game.currentMinigame;
+        if (
+          !!lastMinigamePlayed &&
+          !draftState.minigamesPlayedSoFar.includes(lastMinigamePlayed)
+        ) {
+          draftState.minigamesPlayedSoFar.push(lastMinigamePlayed);
+        }
+
         const playersWhoFailed = draftState.players.filter(
           (p) => !game.playersWhoPassedCurrentMinigame.includes(p.userId)
         );
@@ -145,6 +154,14 @@ const ludumReducer = (
           draftState.minigameEndTime = null;
           draftState.currentMinigame = null;
           draftState.phase = LudumPhase.MINIGAME_RESULTS;
+
+          const lastMinigamePlayed = game.currentMinigame;
+          if (
+            !!lastMinigamePlayed &&
+            !draftState.minigamesPlayedSoFar.includes(lastMinigamePlayed)
+          ) {
+            draftState.minigamesPlayedSoFar.push(lastMinigamePlayed);
+          }
         }
       });
   }

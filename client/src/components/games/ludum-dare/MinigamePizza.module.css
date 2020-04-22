@@ -10,6 +10,11 @@
   margin-bottom: 0;
 }
 
+.firstTimeInstructions {
+  display: block;
+  margin-bottom: 16px;
+}
+
 .card {
   border-radius: 18px;
   background-color: white;
