@@ -79,8 +79,8 @@ export const createMinigameState = (
 const createSimonSaysState = (
   game: LudumGameState
 ): LudumMinigameSimonSaysState => {
-  let targetLength = Math.max(3, Math.floor(0.6 * (game.roundNumber + 2)));
-  let timeBetweenShapes = Math.max(200, 1000 - game.roundNumber * 50);
+  let targetLength = Math.max(3, Math.floor(0.5 * (game.roundNumber + 4)));
+  let timeBetweenShapes = Math.max(200, 1000 - game.roundNumber * 25);
 
   const elements = [
     LudumShape.CIRCLE,
