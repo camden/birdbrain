@@ -54,7 +54,7 @@ const getImageForShape = (
   }
 
   const className = noClassName ? undefined : styles.shapeImg;
-  return <img src={imgUrl} className={className} />;
+  return <img src={imgUrl} className={className} draggable={false} />;
 };
 
 const NUM_TICKS_WITH_NO_SHAPE = 3;
