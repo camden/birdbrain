@@ -8,6 +8,7 @@ import Demo from 'components/demo/Demo';
 import CreateRoom from 'components/home/CreateRoom';
 import Meta from 'components/shared/meta/Meta';
 import { TrackedRoute } from 'analytics';
+import PingPong from 'components/games/ping-pong/PingPong';
 
 const App: React.FC = () => {
   return (
@@ -24,6 +25,9 @@ const App: React.FC = () => {
             </TrackedRoute>
             <TrackedRoute path="/room/:id">
               <Room />
+            </TrackedRoute>
+            <TrackedRoute path="/pingpong">
+              {process.env.NODE_ENV === 'development' && <PingPong />}
             </TrackedRoute>
             <TrackedRoute path="/">
               <Home />

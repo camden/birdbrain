@@ -11,7 +11,7 @@ import { useDispatch } from 'react-redux';
 import { sendMessage } from 'store/websocket/actions';
 import { ludumCheckMinigameAnswer } from '@server/store/games/ludum-dare/actions';
 import { useCurrentPlayer } from 'utils/ludum-dare-utils';
-import { equals, times, identity } from 'ramda';
+import { times, identity } from 'ramda';
 import styles from './MinigameSimonSays.module.css';
 import CircleShape from 'assets/images/ludum-dare/gui/shapes/circlePat1.png';
 import TriangleShape from 'assets/images/ludum-dare/gui/shapes/triPat2.png';
