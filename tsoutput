@@ -1,0 +1,192 @@
+yarn run v1.21.1
+$ /Users/camden/Documents/dev/web/birdbrain/node_modules/.bin/eslint . --ext .js,.jsx,.ts,.tsx
+
+/Users/camden/Documents/dev/web/birdbrain/client/config-overrides.js
+  5:3  warning  'overrideDevServer' is assigned a value but never used  no-unused-vars
+
+/Users/camden/Documents/dev/web/birdbrain/client/src/components/games/ludum-dare/GameOver.tsx
+   9:10  warning  'ludumAck' is defined but never used                   @typescript-eslint/no-unused-vars
+  31:9   warning  'playersWhoPassed' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Users/camden/Documents/dev/web/birdbrain/client/src/components/games/ludum-dare/Heart.tsx
+  12:10  warning  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images  jsx-a11y/alt-text
+
+/Users/camden/Documents/dev/web/birdbrain/client/src/components/games/ludum-dare/MinigameHydraulics.tsx
+  78:7  warning  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images  jsx-a11y/alt-text
+  93:9  warning  'passedMinigame' is assigned a value but never used                                                        @typescript-eslint/no-unused-vars
+
+/Users/camden/Documents/dev/web/birdbrain/client/src/components/games/ludum-dare/MinigamePizza.tsx
+   1:17  warning  'useRef' is defined but never used               @typescript-eslint/no-unused-vars
+   1:35  warning  'ReactChildren' is defined but never used        @typescript-eslint/no-unused-vars
+  11:3   warning  'DraggableProps' is defined but never used       @typescript-eslint/no-unused-vars
+  16:3   warning  'useAnimation' is defined but never used         @typescript-eslint/no-unused-vars
+  29:10  warning  'checkMinigameAnswer' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/camden/Documents/dev/web/birdbrain/client/src/components/games/ludum-dare/MinigameReflexes.tsx
+  24:9  warning  'timer' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Users/camden/Documents/dev/web/birdbrain/client/src/components/games/ludum-dare/MinigameResults.tsx
+  32:9  warning  'playersWhoPassed' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Users/camden/Documents/dev/web/birdbrain/client/src/components/games/ludum-dare/MinigameSimonSays.tsx
+   57:10  warning  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images  jsx-a11y/alt-text
+  114:9   warning  'passedMinigame' is assigned a value but never used                                                        @typescript-eslint/no-unused-vars
+
+/Users/camden/Documents/dev/web/birdbrain/client/src/components/games/ludum-dare/PizzaPie.tsx
+   8:10  warning  'setPointerCapture' is defined but never used                @typescript-eslint/no-unused-vars
+  16:7   warning  'getRandomPointOnCircle' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Users/camden/Documents/dev/web/birdbrain/client/src/components/games/ludum-dare/PizzaTopping.tsx
+  74:5  warning  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images  jsx-a11y/alt-text
+
+/Users/camden/Documents/dev/web/birdbrain/server/app.ts
+  38:3  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  47:3  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  55:3  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+
+/Users/camden/Documents/dev/web/birdbrain/server/middleware/error-handler.ts
+  4:32  warning  Missing return type on function   @typescript-eslint/explicit-function-return-type
+  8:3   warning  'next' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/camden/Documents/dev/web/birdbrain/server/middleware/static-files.ts
+  1:19  warning  'NextFunction' is defined but never used  @typescript-eslint/no-unused-vars
+  1:33  warning  'Request' is defined but never used       @typescript-eslint/no-unused-vars
+  1:42  warning  'Response' is defined but never used      @typescript-eslint/no-unused-vars
+
+/Users/camden/Documents/dev/web/birdbrain/server/routes/api.ts
+  11:41  warning  'next' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/camden/Documents/dev/web/birdbrain/server/socket-listeners.ts
+  12:25  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/client/types.ts
+   2:38  warning  'Timestamp' is defined but never used     @typescript-eslint/no-unused-vars
+  22:13  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/games/chat/actions.ts
+  20:32  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/games/chat/reducers.ts
+  11:7  error  Unexpected lexical declaration in case block  no-case-declarations
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/games/fishbowl/actions.ts
+  22:32  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  38:30  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  51:36  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  61:29  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  71:30  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  81:30  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/games/fishbowl/pick-next-answer.ts
+  6:25  warning  'alreadySeen' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/games/index.ts
+  12:32  warning  'type' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/games/ludum-dare/actions.ts
+   1:10  warning  'UserID' is defined but never used         @typescript-eslint/no-unused-vars
+   2:8   warning  'uuid' is defined but never used           @typescript-eslint/no-unused-vars
+   3:31  warning  'LudumMinigame' is defined but never used  @typescript-eslint/no-unused-vars
+  18:25  warning  Missing return type on function            @typescript-eslint/explicit-function-return-type
+  31:35  warning  Missing return type on function            @typescript-eslint/explicit-function-return-type
+  44:39  warning  Missing return type on function            @typescript-eslint/explicit-function-return-type
+  57:41  warning  Missing return type on function            @typescript-eslint/explicit-function-return-type
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/games/ludum-dare/get-button-combos.ts
+   4:7   warning  'genCombo' is assigned a value but never used    @typescript-eslint/no-unused-vars
+   4:18  warning  Missing return type on function                  @typescript-eslint/explicit-function-return-type
+   5:15  error    'genComboHelper' was used before it was defined  @typescript-eslint/no-use-before-define
+  28:7   warning  'getValid' is assigned a value but never used    @typescript-eslint/no-unused-vars
+  28:18  warning  Missing return type on function                  @typescript-eslint/explicit-function-return-type
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/games/ludum-dare/minigames.ts
+   44:14  error    'checkSimonSaysAnswer' was used before it was defined   @typescript-eslint/no-use-before-define
+   49:14  error    'checkHydraulicsAnswer' was used before it was defined  @typescript-eslint/no-use-before-define
+   54:14  error    'checkPizzaAnswer' was used before it was defined       @typescript-eslint/no-use-before-define
+   69:14  error    'createSimonSaysState' was used before it was defined   @typescript-eslint/no-use-before-define
+   71:14  error    'createHydraulicsState' was used before it was defined  @typescript-eslint/no-use-before-define
+   73:14  error    'createReflexesState' was used before it was defined    @typescript-eslint/no-use-before-define
+   75:14  error    'createPizzaState' was used before it was defined       @typescript-eslint/no-use-before-define
+  125:10  warning  'i' is defined but never used                           @typescript-eslint/no-unused-vars
+  235:31  warning  Missing return type on function                         @typescript-eslint/explicit-function-return-type
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/games/ludum-dare/types.ts
+  104:18  error  An empty interface is equivalent to `{}`  @typescript-eslint/no-empty-interface
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/games/minidom/actions.ts
+  19:28  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  32:36  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  48:32  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  64:28  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  77:28  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/games/minidom/index.ts
+  13:10  warning  'pickRandomNumber' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/games/minidom/reducer.ts
+   18:19  warning  'setUseProxies' is defined but never used      @typescript-eslint/no-unused-vars
+  100:5   error    Expected a 'break' statement before 'default'  no-fallthrough
+  109:24  warning  Missing return type on function                @typescript-eslint/explicit-function-return-type
+  138:31  warning  Missing return type on function                @typescript-eslint/explicit-function-return-type
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/games/pong/actions.ts
+   1:10  warning  'UserID' is defined but never used  @typescript-eslint/no-unused-vars
+   2:8   warning  'uuid' is defined but never used    @typescript-eslint/no-unused-vars
+  18:35  warning  Missing return type on function     @typescript-eslint/explicit-function-return-type
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/games/pong/types.ts
+  2:10  warning  'UserID' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/games/skull/index.ts
+  7:3  warning  'usersInRoom' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/games/the-resistance/actions.ts
+   2:3   warning  'ResistancePlayer' is defined but never used  @typescript-eslint/no-unused-vars
+  34:35  warning  Missing return type on function               @typescript-eslint/explicit-function-return-type
+  50:32  warning  Missing return type on function               @typescript-eslint/explicit-function-return-type
+  63:38  warning  Missing return type on function               @typescript-eslint/explicit-function-return-type
+  76:35  warning  Missing return type on function               @typescript-eslint/explicit-function-return-type
+  89:41  warning  Missing return type on function               @typescript-eslint/explicit-function-return-type
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/general/actions.ts
+  10:3   warning  'EndCurrentGameAction' is defined but never used  @typescript-eslint/no-unused-vars
+  50:38  warning  Missing return type on function                   @typescript-eslint/explicit-function-return-type
+  72:31  warning  Missing return type on function                   @typescript-eslint/explicit-function-return-type
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/general/reducers.ts
+   32:26  warning  'LudumPhase' is defined but never used        @typescript-eslint/no-unused-vars
+   35:3   warning  'LudumBaseAction' is defined but never used   @typescript-eslint/no-unused-vars
+   68:1   warning  Missing return type on function               @typescript-eslint/explicit-function-return-type
+   99:31  warning  Missing return type on function               @typescript-eslint/explicit-function-return-type
+  153:7   error    Unexpected lexical declaration in case block  no-case-declarations
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/general/selectors.ts
+   7:23  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  22:51  warning  Missing return type on function           @typescript-eslint/explicit-function-return-type
+  32:24  warning  Missing return type on function           @typescript-eslint/explicit-function-return-type
+  51:39  warning  Missing return type on function           @typescript-eslint/explicit-function-return-type
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/index.ts
+  31:3  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  35:3  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+
+/Users/camden/Documents/dev/web/birdbrain/server/store/middleware/server-socket-middleware.ts
+   7:25  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  11:32  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  12:28  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  30:77  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+
+/Users/camden/Documents/dev/web/birdbrain/server/utils/generate-room-id.ts
+   5:30  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+  12:24  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+
+/Users/camden/Documents/dev/web/birdbrain/server/utils/log.ts
+  1:20  warning  Missing return type on function           @typescript-eslint/explicit-function-return-type
+  1:30  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/camden/Documents/dev/web/birdbrain/server/utils/rng.ts
+  6:33  warning  Missing return type on function  @typescript-eslint/explicit-function-return-type
+
+✖ 106 problems (12 errors, 94 warnings)
+
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.

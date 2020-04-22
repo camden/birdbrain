@@ -90,7 +90,7 @@ export const createNewGameOfTheResistance = (
 
   const missionLeader = players[pickRandomNumber(0, players.length - 1)];
 
-  let missionHistory: ResistanceMission[] = [
+  const missionHistory: ResistanceMission[] = [
     { number: 1, status: ResistanceMissionStatus.IN_PROGRESS },
     { number: 2, status: ResistanceMissionStatus.NOT_STARTED },
     { number: 3, status: ResistanceMissionStatus.NOT_STARTED },

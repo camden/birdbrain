@@ -65,4 +65,9 @@ router.use(
   express.static(path.join(pathToClientBuildDir, '/meta-tile-1200x628.png'))
 );
 
+router.use(
+  '/scripts/tracking.js',
+  express.static(path.join(pathToClientBuildDir, '/scripts/tracking.js'))
+);
+
 export default router;

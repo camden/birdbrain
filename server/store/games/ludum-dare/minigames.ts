@@ -79,8 +79,8 @@ export const createMinigameState = (
 const createSimonSaysState = (
   game: LudumGameState
 ): LudumMinigameSimonSaysState => {
-  let targetLength = Math.max(3, Math.floor(0.5 * (game.roundNumber + 4)));
-  let timeBetweenShapes = Math.max(200, 1000 - game.roundNumber * 25);
+  const targetLength = Math.max(3, Math.floor(0.5 * (game.roundNumber + 4)));
+  const timeBetweenShapes = Math.max(200, 1000 - game.roundNumber * 25);
 
   const elements = [
     LudumShape.CIRCLE,
@@ -140,7 +140,7 @@ export const createHydraulicsState = (
 
     // for this position, calculate the possible button values for each position
     // and take the intersection of those values to get a valid value
-    let valuesForEachPosition: number[][] = [];
+    const valuesForEachPosition: number[][] = [];
 
     for (let j = 0; j < startConfig.length; j++) {
       if (buttonPos[j]) {
@@ -170,7 +170,7 @@ export const createHydraulicsState = (
       }
     }
 
-    let potentialValues: number[] = valuesForEachPosition.reduce((acc, cur) => {
+    const potentialValues: number[] = valuesForEachPosition.reduce((acc, cur) => {
       return intersection(acc, cur);
     }, valuesForEachPosition[0]);
 
@@ -179,7 +179,7 @@ export const createHydraulicsState = (
       continue;
     }
 
-    let buttonVal = pickElement(potentialValues)[0] as number;
+    const buttonVal = pickElement(potentialValues)[0] as number;
 
     // add the inverse of that value to all of the affected values
     for (let j = 0; j < startConfig.length; j++) {
@@ -251,8 +251,8 @@ const generatePizzaCustomer = (config: PizzaCustomerConfig) => {
 
   let poolOfToppingOptions = [...allPossibleToppings];
 
-  let likes: LudumMinigamePizzaTopping[] = [];
-  let dislikes: LudumMinigamePizzaTopping[] = [];
+  const likes: LudumMinigamePizzaTopping[] = [];
+  const dislikes: LudumMinigamePizzaTopping[] = [];
 
   for (let i = 0; i < numberOfLikes; i++) {
     const [topping, newArr] = pickElementAndRemoveFromArr(poolOfToppingOptions);
@@ -280,11 +280,11 @@ const generatePizzaCustomer = (config: PizzaCustomerConfig) => {
 
   // assign pizza toppings (pick WITH replacement)
 
-  let likesOnPizza: LudumMinigamePizzaTopping[] = [];
-  let dislikesOnPizza: LudumMinigamePizzaTopping[] = [];
-  let extrasOnPizza: LudumMinigamePizzaTopping[] = [];
+  const likesOnPizza: LudumMinigamePizzaTopping[] = [];
+  const dislikesOnPizza: LudumMinigamePizzaTopping[] = [];
+  const extrasOnPizza: LudumMinigamePizzaTopping[] = [];
 
-  let poolOfLikes: LudumMinigamePizzaTopping[] = [...likes];
+  const poolOfLikes: LudumMinigamePizzaTopping[] = [...likes];
   for (let i = 0; i < numberOfLikesOnPizza; i++) {
     // get a random liked pizza topping
     const [topping] = pickElement(poolOfLikes);
@@ -296,7 +296,7 @@ const generatePizzaCustomer = (config: PizzaCustomerConfig) => {
     likesOnPizza.push(LudumMinigamePizzaTopping[topping]);
   }
 
-  let poolOfDislikes: LudumMinigamePizzaTopping[] = [...dislikes];
+  const poolOfDislikes: LudumMinigamePizzaTopping[] = [...dislikes];
   for (let i = 0; i < numberOfDislikesOnPizza; i++) {
     // get a random disliked pizza topping
     const [topping] = pickElement(poolOfDislikes);
@@ -427,7 +427,7 @@ const generatePizzaCustomerConfig = (
 const createPizzaState = (game: LudumGameState): LudumMinigamePizzaState => {
   const numberOfCustomers = 50;
 
-  let customers: LudumMinigamePizzaCustomer[] = [];
+  const customers: LudumMinigamePizzaCustomer[] = [];
 
   for (let i = 0; i < numberOfCustomers; i++) {
     const newCustomer = generatePizzaCustomer(
