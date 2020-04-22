@@ -146,9 +146,11 @@ const ludumReducer = (
           draftState.playersWhoPassedCurrentMinigame.push(currentPlayer.userId);
         }
 
-        const everyonePassed = game.players.every((p) =>
-          draftState.playersWhoPassedCurrentMinigame.includes(p.userId)
-        );
+        const everyonePassed = game.players
+          .filter((p) => p.health > 0)
+          .every((p) =>
+            draftState.playersWhoPassedCurrentMinigame.includes(p.userId)
+          );
 
         if (everyonePassed) {
           draftState.minigameEndTime = null;
