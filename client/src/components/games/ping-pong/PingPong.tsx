@@ -4,7 +4,7 @@ import styles from './PingPong.module.css';
 import Button from 'components/shared/button/Button';
 import useInterval from 'use-interval';
 import useSound from 'hooks/use-sound';
-const PopSoundEffect = require('assets/sounds/pop_clicklo.wav');
+const ScoreSoundEffect = require('assets/sounds/chime_bell_ding.wav');
 
 export interface PingPongProps {}
 
@@ -23,27 +23,22 @@ const HEIGHT = 450;
 const WIDTH = 600;
 
 const NUMBER_OF_RECENTS = 15;
-const TABLE_EDGE_OFFSET_RIGHT = 50;
-const TABLE_EDGE_OFFSET_LEFT = 50; //offset from left side of screen
+const TABLE_EDGE_OFFSET_LEFT = 100;
+const TABLE_EDGE_OFFSET_RIGHT = 100; //offset from left side of screen
 
-const Ball: React.FC<{ loc: ScreenPosition }> = ({ loc }) => {
-  const transform = `translateX(${loc.x}px) translateY(${loc.y}px)`;
-  return (
-    <div
-      className={styles.ball}
-      style={{
-        transform,
-      }}
-    ></div>
-  );
-};
+export enum Team {
+  LEFT = 'LEFT',
+  RIGHT = 'RIGHT',
+}
 
 const PingPong: React.FC<PingPongProps> = () => {
-  const playPopSound = useSound(PopSoundEffect);
+  const playPopSound = useSound(ScoreSoundEffect);
   const canvasElement = useRef<HTMLCanvasElement>(null);
   const videoElement = useRef<HTMLVideoElement>(null);
   const [ballLocState, setBallLoc] = useState<ScreenPosition>({ x: 0, y: 0 });
   const ballLoc = useRef<ScreenPosition>({ x: 0, y: 0 });
+  const ballLastSeenTime = useRef<number>(0);
+  const isBallActive = useRef<boolean>(false);
   const ballVector = useRef<Vector2D>({ magnitude: 0, direction: 0 });
   const recentBallLocs = useRef<ScreenPosition[]>([
     { x: 0, y: 0 },
@@ -53,13 +48,39 @@ const PingPong: React.FC<PingPongProps> = () => {
     return 20;
   };
 
+  const handleScore = (team: Team) => {
+    playPopSound();
+    isBallActive.current = false;
+    alert();
+  };
+
   useInterval(() => {
     const { direction, magnitude } = ballVector.current;
-    const maybeWentOffscreenToTheRight =
-      direction > 90 && direction < 110 && magnitude > 10;
-    if (maybeWentOffscreenToTheRight) {
-      playPopSound();
+
+    const timeSinceBallLastSeen = Date.now() - ballLastSeenTime.current;
+
+    if (timeSinceBallLastSeen > 1000 && isBallActive) {
+      const maybeWentOffscreenToTheLeft =
+        direction < 0 &&
+        ballLoc.current.x < TABLE_EDGE_OFFSET_LEFT &&
+        magnitude > 10;
+
+      if (maybeWentOffscreenToTheLeft) {
+        handleScore(Team.LEFT);
+        return;
+      }
+
+      const maybeWentOffscreenToTheRight =
+        direction > 0 &&
+        ballLoc.current.x < TABLE_EDGE_OFFSET_RIGHT &&
+        magnitude > 10;
+
+      if (maybeWentOffscreenToTheRight) {
+        handleScore(Team.RIGHT);
+        return;
+      }
     }
+
     // take average of y values
     // setBallLoc(ballLoc.current);
   }, 100);
@@ -105,6 +126,8 @@ const PingPong: React.FC<PingPongProps> = () => {
         const lastBallLoc = recentBallLocs.current[1];
         if (lastBallLoc.x !== nextLoc.x && lastBallLoc.y !== nextLoc.y) {
           recentBallLocs.current.unshift(nextLoc);
+          ballLastSeenTime.current = Date.now();
+          isBallActive.current = true;
         }
         if (recentBallLocs.current.length > NUMBER_OF_RECENTS) {
           recentBallLocs.current.pop();
@@ -166,7 +189,11 @@ const PingPong: React.FC<PingPongProps> = () => {
       });
       ctx.globalAlpha = 1;
 
-      //draw "compass"
+      /**
+       * -----------
+       * DRAW COMPASS
+       * ------------
+       */
       const compassOrigin: ScreenPosition = {
         x: ballLoc.current.x,
         y: ballLoc.current.y,
@@ -179,8 +206,8 @@ const PingPong: React.FC<PingPongProps> = () => {
       // adjust degrees for mirrored screen and so 0 deg is pointing up
       // const theta = ((270 - angleDegrees) * Math.PI) / 180;
       const theta = (angleDegrees * Math.PI) / 180;
-      // const radius = ballVector.current.magnitude * 10;
-      const radius = 100;
+      const radius = ballVector.current.magnitude * 10;
+      // const radius = 100;
       ctx.strokeStyle = 'limegreen';
       ctx.beginPath();
       ctx.moveTo(x1, y1);
@@ -189,9 +216,16 @@ const PingPong: React.FC<PingPongProps> = () => {
 
       ctx.beginPath();
       ctx.strokeStyle = 'red';
-      ctx.lineWidth = 5;
-      ctx.moveTo(TABLE_EDGE_OFFSET_RIGHT, 0);
-      ctx.lineTo(TABLE_EDGE_OFFSET_RIGHT, HEIGHT);
+      ctx.lineWidth = 2;
+      ctx.moveTo(TABLE_EDGE_OFFSET_LEFT, 0);
+      ctx.lineTo(TABLE_EDGE_OFFSET_LEFT, HEIGHT);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.strokeStyle = 'red';
+      ctx.lineWidth = 2;
+      ctx.moveTo(WIDTH - TABLE_EDGE_OFFSET_RIGHT, 0);
+      ctx.lineTo(WIDTH - TABLE_EDGE_OFFSET_RIGHT, HEIGHT);
       ctx.stroke();
 
       event.data.forEach(function (rect, index) {
