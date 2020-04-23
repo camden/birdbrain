@@ -16,6 +16,7 @@ export interface ScreenPosition {
 export interface Vector2D {
   direction: number;
   magnitude: number;
+  points?: ScreenPosition[];
 }
 
 const HEIGHT = 450;
@@ -59,9 +60,9 @@ const PingPong: React.FC<PingPongProps> = () => {
     if (maybeWentOffscreenToTheRight) {
       playPopSound();
     }
-    console.log(ballVector.current);
+    // console.log(ballVector.current);
     // take average of y values
-    console.log(recentBallLocs.current);
+    // console.log(recentBallLocs.current);
     // setBallLoc(ballLoc.current);
   }, 100);
 
@@ -91,13 +92,13 @@ const PingPong: React.FC<PingPongProps> = () => {
 
         const sumOfX = event.data
           .map((rect) => rect.x)
-          .filter((x) => Math.abs(x - firstX) < 50)
+          .filter((x) => Math.abs(x - firstX) < 100)
           .reduce((acc, cur) => acc + cur, 0);
         const averageX = sumOfX / event.data.length;
 
         const sumOfY = event.data
           .map((rect) => rect.y)
-          .filter((y) => Math.abs(y - firstY) < 50)
+          .filter((y) => Math.abs(y - firstY) < 100)
           .reduce((acc, cur) => acc + cur, 0);
         const averageY = sumOfY / event.data.length;
 
@@ -121,16 +122,21 @@ const PingPong: React.FC<PingPongProps> = () => {
           const a = recentBallLocs.current[i + 1];
           const b = recentBallLocs.current[i];
 
-          const direction = (Math.atan2(a.x - b.x, a.y - b.y) * 180) / Math.PI;
+          let direction = (Math.atan2(a.y - b.y, a.x - b.x) * 180) / Math.PI; // degrees
+          // console.log('from a: ', a, 'to b: ', b, ' result: ', direction);
           const magnitude = Math.hypot(a.x - b.x, a.y - b.y);
 
           const vec: Vector2D = {
             direction,
             magnitude,
+            points: [b, a],
           };
-          vectors.push(vec);
+          if (magnitude > 0) {
+            vectors.push(vec);
+          }
         }
 
+        console.log(vectors);
         let totalDir = 0;
         let totalMag = 0;
         for (let i = 0; i < vectors.length; i++) {
@@ -139,6 +145,7 @@ const PingPong: React.FC<PingPongProps> = () => {
           totalMag += vec.magnitude;
         }
         const avgDir = totalDir / vectors.length;
+        console.log(avgDir);
         const avgMag = totalMag / vectors.length;
 
         ballVector.current = {
@@ -168,8 +175,8 @@ const PingPong: React.FC<PingPongProps> = () => {
 
       const x1 = compassOrigin.x;
       const y1 = compassOrigin.y;
-      // const angleDegrees =ballVector.current.direction
-      const angleDegrees = 20;
+      const angleDegrees = ballVector.current.direction;
+      // const angleDegrees = 20;
       // adjust degrees for mirrored screen and so 0 deg is pointing up
       const theta = ((270 - angleDegrees) * Math.PI) / 180;
       // const radius = ballVector.current.magnitude * 10;
