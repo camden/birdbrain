@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import path from 'path';
 import http from 'http';
+import https from 'https';
 import io from 'socket.io';
 import compression from 'compression';
 import * as Sentry from '@sentry/node';
@@ -11,23 +12,45 @@ import { Store } from './store';
 import staticFilesMiddleware from './middleware/static-files';
 import errorHandlerMiddleware from './middleware/error-handler';
 import attachSocketListeners from './socket-listeners';
+import fs from 'fs';
+
+const USE_DEV_HTTPS = false;
 
 class App {
   public app: Application;
   public store: Store;
 
-  private httpServer: http.Server;
+  private server: http.Server | https.Server;
 
   constructor() {
     this.app = express();
 
-    this.httpServer = http.createServer(this.app);
+    if (process.env.NODE_ENV === 'development' && USE_DEV_HTTPS) {
+      const options = {
+        key: fs.readFileSync(
+          path.join(__dirname, '../localhost+2-key.pem'),
+          'utf8'
+        ),
+        cert: fs.readFileSync(
+          path.join(__dirname, '../localhost+2.pem'),
+          'utf8'
+        ),
+        requestCert: false,
+        rejectUnauthorized: false,
+      };
+
+      log('Creating https server...');
+      this.server = https.createServer(options, this.app);
+    } else {
+      log('Creating http server...');
+      this.server = http.createServer(this.app);
+    }
 
     if (process.env.NODE_ENV === 'production') {
       this.initializeSentry();
     }
 
-    const socketServer = io(this.httpServer);
+    const socketServer = io(this.server);
     this.store = new Store(socketServer);
     attachSocketListeners(socketServer, this.store);
 
@@ -36,10 +59,11 @@ class App {
   }
 
   public listen() {
-    this.httpServer.listen(process.env.PORT || 8080, function() {
+    this.server.listen(process.env.PORT || 8080, function () {
       log(
-        `Birdbrain Games server is listening on port ${process.env.PORT ||
-          8080}!`
+        `Birdbrain Games server is listening on port ${
+          process.env.PORT || 8080
+        }!`
       );
     });
   }

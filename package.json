@@ -12,7 +12,7 @@
     "build-server": "tsc -p tsconfig.json",
     "build": "yarn build-client && yarn build-server",
     "dev-server": "NODE_PATH=server ts-node-dev --respawn --transpileOnly ./server/server.ts",
-    "dev-client": "REACT_APP_EXTERNAL_CLIENT=true yarn --cwd client start",
+    "dev-client": "HTTPS=false SSL_CRT_FILE=localhost+2.pem SSL_KEY_FILE=localhost+2-key.pem REACT_APP_EXTERNAL_CLIENT=true yarn --cwd client start",
     "dev": "concurrently \"yarn dev-server\" \"yarn dev-client\"",
     "start": "NODE_PATH=build/ node ./build/server.js",
     "postinstall": "yarn build-server"
