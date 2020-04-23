@@ -49,10 +49,28 @@ export const useTracker = (
         //   g: 100,
         //   b: 11,
         // };
-        const colorOfBallOutside = {
+        const colorOfBallOutsideNight = {
           r: 148,
           g: 96,
           b: 40,
+        };
+
+        const colorOfBallOutsideDaytime = {
+          r: 96,
+          g: 32,
+          b: 14,
+        };
+
+        const colorOfBallOutsideDaytime2 = {
+          r: 231,
+          g: 161,
+          b: 115,
+        };
+
+        const colorOfBallOutsideDaytime3 = {
+          r: 173,
+          g: 115,
+          b: 76,
         };
 
         const colorOfBallInMyRoom = {
@@ -61,7 +79,7 @@ export const useTracker = (
           b: 102,
         };
 
-        const dist = getColorDistance(colorOfBallInMyRoom, { r, g, b });
+        const dist = getColorDistance(colorOfBallOutsideDaytime3, { r, g, b });
         if (dist < 10) {
           // console.log(`color: ${r},${g},${b} --- distance: ${dist}`);
         }
@@ -74,8 +92,8 @@ export const useTracker = (
       });
 
       const colorTracker = new tracking.ColorTracker(['pingpong']);
-      colorTracker.setMinGroupSize(20);
-      colorTracker.setMinDimension(2);
+      colorTracker.setMinGroupSize(10);
+      colorTracker.setMinDimension(1);
 
       tracking.track(videoElementID, colorTracker, { camera: true });
 

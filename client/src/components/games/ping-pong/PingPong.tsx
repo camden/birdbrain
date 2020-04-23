@@ -26,7 +26,7 @@ const NUMBER_OF_RECENTS = 15;
 const TABLE_EDGE_OFFSET_LEFT = 270;
 const TABLE_EDGE_OFFSET_RIGHT = 270; //offset from left side of screen
 const TABLE_Y = 30;
-const BOUNCE_TOLERANCE = 30;
+const BOUNCE_TOLERANCE = 40;
 
 const TEAM_LEFT_NAME = 'Cam';
 const TEAM_RIGHT_NAME = 'Dad';
@@ -47,6 +47,7 @@ const PingPong: React.FC<PingPongProps> = () => {
   const ballVector = useRef<Vector2D>({ magnitude: 0, direction: 0 });
   const sideOfTableBallIsOn = useRef<Team>(Team.LEFT);
   const isBallNearTable = useRef<boolean>(false);
+  const didBallBounceOnCurrentSide = useRef<boolean>(false);
   const [side, setSide] = useState<Team>(Team.LEFT);
   const recentBallLocs = useRef<ScreenPosition[]>([
     { x: 0, y: 0 },
@@ -144,16 +145,21 @@ const PingPong: React.FC<PingPongProps> = () => {
         if (lastBallLoc.x !== nextLoc.x && lastBallLoc.y !== nextLoc.y) {
           recentBallLocs.current.unshift(nextLoc);
           ballLastSeenTime.current = Date.now();
+          const lastBallSide = sideOfTableBallIsOn.current;
           if (nextLoc.x > WIDTH / 2) {
             sideOfTableBallIsOn.current = Team.RIGHT;
           } else {
             sideOfTableBallIsOn.current = Team.LEFT;
+          }
+          if (lastBallSide !== sideOfTableBallIsOn.current) {
+            didBallBounceOnCurrentSide.current = false;
           }
           if (
             nextLoc.y > HEIGHT - TABLE_Y - BOUNCE_TOLERANCE &&
             nextLoc.y < HEIGHT - TABLE_Y + BOUNCE_TOLERANCE
           ) {
             isBallNearTable.current = true;
+            didBallBounceOnCurrentSide.current = true;
           } else {
             isBallNearTable.current = false;
           }
@@ -258,6 +264,9 @@ const PingPong: React.FC<PingPongProps> = () => {
       ctx.lineTo(WIDTH - TABLE_EDGE_OFFSET_RIGHT, HEIGHT);
       ctx.stroke();
 
+      const yStartOfBounceArea = HEIGHT - TABLE_Y - BOUNCE_TOLERANCE;
+      const yEndOfBounceArea = HEIGHT - TABLE_Y + BOUNCE_TOLERANCE;
+
       ctx.beginPath();
       ctx.strokeStyle = 'red';
       ctx.lineWidth = 2;
@@ -265,29 +274,45 @@ const PingPong: React.FC<PingPongProps> = () => {
       ctx.lineTo(WIDTH, HEIGHT - TABLE_Y);
       ctx.stroke();
       ctx.setLineDash([5, 10]);
-      ctx.moveTo(0, HEIGHT - TABLE_Y - BOUNCE_TOLERANCE);
-      ctx.lineTo(WIDTH, HEIGHT - TABLE_Y - BOUNCE_TOLERANCE);
-      ctx.moveTo(0, HEIGHT - TABLE_Y + BOUNCE_TOLERANCE);
-      ctx.lineTo(WIDTH, HEIGHT - TABLE_Y + BOUNCE_TOLERANCE);
+      ctx.moveTo(0, yStartOfBounceArea);
+      ctx.lineTo(WIDTH, yStartOfBounceArea);
+      ctx.moveTo(0, yEndOfBounceArea);
+      ctx.lineTo(WIDTH, yEndOfBounceArea);
       ctx.stroke();
       ctx.setLineDash([]);
 
-      ctx.globalAlpha = 0.5;
+      /**
+       * DRAW SIDES
+       */
+      const heightOfSideBar = 40;
+      const heightOfDidBounceBar = 10;
+      ctx.globalAlpha = 0.8;
       if (sideOfTableBallIsOn.current === Team.LEFT) {
         ctx.fillStyle = 'red';
-        ctx.fillRect(0, 0, WIDTH / 2, HEIGHT);
+        ctx.fillRect(0, 0, WIDTH / 2, heightOfSideBar);
+        if (didBallBounceOnCurrentSide.current) {
+          ctx.fillRect(
+            0,
+            yStartOfBounceArea - heightOfDidBounceBar,
+            WIDTH / 2,
+            heightOfDidBounceBar
+          );
+        }
       } else {
         ctx.fillStyle = 'blue';
-        ctx.fillRect(WIDTH / 2, 0, WIDTH, HEIGHT);
+        ctx.fillRect(WIDTH / 2, 0, WIDTH, heightOfSideBar);
+        if (didBallBounceOnCurrentSide.current) {
+          ctx.fillRect(
+            WIDTH / 2,
+            yStartOfBounceArea - heightOfDidBounceBar,
+            WIDTH / 2,
+            heightOfDidBounceBar
+          );
+        }
       }
       if (isBallNearTable.current) {
         ctx.fillStyle = 'purple';
-        ctx.fillRect(
-          0,
-          HEIGHT - TABLE_Y - BOUNCE_TOLERANCE,
-          WIDTH,
-          HEIGHT - TABLE_Y + BOUNCE_TOLERANCE
-        );
+        ctx.fillRect(0, yStartOfBounceArea, WIDTH, yEndOfBounceArea);
       }
       ctx.globalAlpha = 1;
 
