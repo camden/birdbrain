@@ -25,6 +25,8 @@ const WIDTH = 600;
 const NUMBER_OF_RECENTS = 15;
 const TABLE_EDGE_OFFSET_LEFT = 270;
 const TABLE_EDGE_OFFSET_RIGHT = 270; //offset from left side of screen
+const TABLE_Y = 30;
+const BOUNCE_TOLERANCE = 30;
 
 const TEAM_LEFT_NAME = 'Cam';
 const TEAM_RIGHT_NAME = 'Dad';
@@ -44,6 +46,7 @@ const PingPong: React.FC<PingPongProps> = () => {
   const isBallActive = useRef<boolean>(false);
   const ballVector = useRef<Vector2D>({ magnitude: 0, direction: 0 });
   const sideOfTableBallIsOn = useRef<Team>(Team.LEFT);
+  const isBallNearTable = useRef<boolean>(false);
   const [side, setSide] = useState<Team>(Team.LEFT);
   const recentBallLocs = useRef<ScreenPosition[]>([
     { x: 0, y: 0 },
@@ -146,6 +149,14 @@ const PingPong: React.FC<PingPongProps> = () => {
           } else {
             sideOfTableBallIsOn.current = Team.LEFT;
           }
+          if (
+            nextLoc.y > HEIGHT - TABLE_Y - BOUNCE_TOLERANCE &&
+            nextLoc.y < HEIGHT - TABLE_Y + BOUNCE_TOLERANCE
+          ) {
+            isBallNearTable.current = true;
+          } else {
+            isBallNearTable.current = false;
+          }
           isBallActive.current = true;
         }
         if (recentBallLocs.current.length > NUMBER_OF_RECENTS) {
@@ -247,6 +258,20 @@ const PingPong: React.FC<PingPongProps> = () => {
       ctx.lineTo(WIDTH - TABLE_EDGE_OFFSET_RIGHT, HEIGHT);
       ctx.stroke();
 
+      ctx.beginPath();
+      ctx.strokeStyle = 'red';
+      ctx.lineWidth = 2;
+      ctx.moveTo(0, HEIGHT - TABLE_Y);
+      ctx.lineTo(WIDTH, HEIGHT - TABLE_Y);
+      ctx.stroke();
+      ctx.setLineDash([5, 10]);
+      ctx.moveTo(0, HEIGHT - TABLE_Y - BOUNCE_TOLERANCE);
+      ctx.lineTo(WIDTH, HEIGHT - TABLE_Y - BOUNCE_TOLERANCE);
+      ctx.moveTo(0, HEIGHT - TABLE_Y + BOUNCE_TOLERANCE);
+      ctx.lineTo(WIDTH, HEIGHT - TABLE_Y + BOUNCE_TOLERANCE);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
       ctx.globalAlpha = 0.5;
       if (sideOfTableBallIsOn.current === Team.LEFT) {
         ctx.fillStyle = 'red';
@@ -254,6 +279,15 @@ const PingPong: React.FC<PingPongProps> = () => {
       } else {
         ctx.fillStyle = 'blue';
         ctx.fillRect(WIDTH / 2, 0, WIDTH, HEIGHT);
+      }
+      if (isBallNearTable.current) {
+        ctx.fillStyle = 'purple';
+        ctx.fillRect(
+          0,
+          HEIGHT - TABLE_Y - BOUNCE_TOLERANCE,
+          WIDTH,
+          HEIGHT - TABLE_Y + BOUNCE_TOLERANCE
+        );
       }
       ctx.globalAlpha = 1;
 
