@@ -23,8 +23,8 @@ const HEIGHT = 450;
 const WIDTH = 600;
 
 const NUMBER_OF_RECENTS = 15;
-const TABLE_EDGE_OFFSET_LEFT = 100;
-const TABLE_EDGE_OFFSET_RIGHT = 100; //offset from left side of screen
+const TABLE_EDGE_OFFSET_LEFT = 270;
+const TABLE_EDGE_OFFSET_RIGHT = 270; //offset from left side of screen
 
 export enum Team {
   LEFT = 'LEFT',
@@ -40,18 +40,24 @@ const PingPong: React.FC<PingPongProps> = () => {
   const ballLastSeenTime = useRef<number>(0);
   const isBallActive = useRef<boolean>(false);
   const ballVector = useRef<Vector2D>({ magnitude: 0, direction: 0 });
+  const sideOfTableBallIsOn = useRef<Team>(Team.LEFT);
   const recentBallLocs = useRef<ScreenPosition[]>([
     { x: 0, y: 0 },
     { x: 0, y: 0 },
   ]);
   const getTolerance = () => {
-    return 20;
+    return 10;
   };
 
   const handleScore = (team: Team) => {
     playPopSound();
     isBallActive.current = false;
-    alert();
+
+    const text = team === Team.LEFT ? 'Point for Cam' : 'Point for Dad';
+
+    const synth = window.speechSynthesis;
+    const phrase = new SpeechSynthesisUtterance(text);
+    synth.speak(phrase);
   };
 
   useInterval(() => {
@@ -59,10 +65,10 @@ const PingPong: React.FC<PingPongProps> = () => {
 
     const timeSinceBallLastSeen = Date.now() - ballLastSeenTime.current;
 
-    if (timeSinceBallLastSeen > 1000 && isBallActive) {
+    if (timeSinceBallLastSeen > 2000 && isBallActive.current) {
       const maybeWentOffscreenToTheLeft =
-        direction < 0 &&
         ballLoc.current.x < TABLE_EDGE_OFFSET_LEFT &&
+        direction < 0 &&
         magnitude > 10;
 
       if (maybeWentOffscreenToTheLeft) {
@@ -71,8 +77,8 @@ const PingPong: React.FC<PingPongProps> = () => {
       }
 
       const maybeWentOffscreenToTheRight =
+        ballLoc.current.x > WIDTH - TABLE_EDGE_OFFSET_RIGHT &&
         direction > 0 &&
-        ballLoc.current.x < TABLE_EDGE_OFFSET_RIGHT &&
         magnitude > 10;
 
       if (maybeWentOffscreenToTheRight) {
@@ -83,7 +89,7 @@ const PingPong: React.FC<PingPongProps> = () => {
 
     // take average of y values
     // setBallLoc(ballLoc.current);
-  }, 100);
+  }, 10);
 
   useTracker(
     '#video',
@@ -127,6 +133,11 @@ const PingPong: React.FC<PingPongProps> = () => {
         if (lastBallLoc.x !== nextLoc.x && lastBallLoc.y !== nextLoc.y) {
           recentBallLocs.current.unshift(nextLoc);
           ballLastSeenTime.current = Date.now();
+          if (nextLoc.x > WIDTH / 2) {
+            sideOfTableBallIsOn.current = Team.RIGHT;
+          } else {
+            sideOfTableBallIsOn.current = Team.LEFT;
+          }
           isBallActive.current = true;
         }
         if (recentBallLocs.current.length > NUMBER_OF_RECENTS) {

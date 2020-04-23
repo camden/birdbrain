@@ -44,10 +44,15 @@ export const useTracker = (
         // 200 141 108
         // 159 85 60
         // 195 107 78
+        // const colorOfBallOutside = {
+        //   r: 190,
+        //   g: 100,
+        //   b: 11,
+        // };
         const colorOfBallOutside = {
-          r: 195,
-          g: 107,
-          b: 78,
+          r: 148,
+          g: 96,
+          b: 40,
         };
 
         const colorOfBallInMyRoom = {
@@ -56,7 +61,7 @@ export const useTracker = (
           b: 102,
         };
 
-        const dist = getColorDistance(colorOfBallInMyRoom, { r, g, b });
+        const dist = getColorDistance(colorOfBallOutside, { r, g, b });
         if (dist < 10) {
           // console.log(`color: ${r},${g},${b} --- distance: ${dist}`);
         }
@@ -70,7 +75,7 @@ export const useTracker = (
 
       const colorTracker = new tracking.ColorTracker(['pingpong']);
       colorTracker.setMinGroupSize(20);
-      colorTracker.setMinDimension(5);
+      colorTracker.setMinDimension(2);
 
       tracking.track(videoElementID, colorTracker, { camera: true });
 
