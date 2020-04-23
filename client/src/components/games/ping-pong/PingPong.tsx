@@ -60,9 +60,7 @@ const PingPong: React.FC<PingPongProps> = () => {
     if (maybeWentOffscreenToTheRight) {
       playPopSound();
     }
-    // console.log(ballVector.current);
     // take average of y values
-    // console.log(recentBallLocs.current);
     // setBallLoc(ballLoc.current);
   }, 100);
 
@@ -119,24 +117,22 @@ const PingPong: React.FC<PingPongProps> = () => {
         const startIndex = 1;
         const vectors: Vector2D[] = [];
         for (let i = 1; i < iterations + startIndex; i++) {
-          const a = recentBallLocs.current[i + 1];
-          const b = recentBallLocs.current[i];
+          const a = recentBallLocs.current[i];
+          const b = recentBallLocs.current[i + 1];
 
           let direction = (Math.atan2(a.y - b.y, a.x - b.x) * 180) / Math.PI; // degrees
-          // console.log('from a: ', a, 'to b: ', b, ' result: ', direction);
           const magnitude = Math.hypot(a.x - b.x, a.y - b.y);
 
           const vec: Vector2D = {
             direction,
             magnitude,
-            points: [b, a],
+            points: [a, b],
           };
           if (magnitude > 0) {
             vectors.push(vec);
           }
         }
 
-        console.log(vectors);
         let totalDir = 0;
         let totalMag = 0;
         for (let i = 0; i < vectors.length; i++) {
@@ -145,7 +141,6 @@ const PingPong: React.FC<PingPongProps> = () => {
           totalMag += vec.magnitude;
         }
         const avgDir = totalDir / vectors.length;
-        console.log(avgDir);
         const avgMag = totalMag / vectors.length;
 
         ballVector.current = {
@@ -164,6 +159,10 @@ const PingPong: React.FC<PingPongProps> = () => {
         ctx.beginPath();
         ctx.arc(loc.x, loc.y, 10, 0, 2 * Math.PI);
         ctx.stroke();
+
+        ctx.font = '11px Helvetica';
+        ctx.fillStyle = '#fff';
+        ctx.fillText(`${loc.x}, ${loc.y}`, loc.x, loc.y + 10);
       });
       ctx.globalAlpha = 1;
 
@@ -178,7 +177,8 @@ const PingPong: React.FC<PingPongProps> = () => {
       const angleDegrees = ballVector.current.direction;
       // const angleDegrees = 20;
       // adjust degrees for mirrored screen and so 0 deg is pointing up
-      const theta = ((270 - angleDegrees) * Math.PI) / 180;
+      // const theta = ((270 - angleDegrees) * Math.PI) / 180;
+      const theta = (angleDegrees * Math.PI) / 180;
       // const radius = ballVector.current.magnitude * 10;
       const radius = 100;
       ctx.strokeStyle = 'limegreen';
