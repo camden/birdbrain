@@ -18,9 +18,12 @@ export interface Vector2D {
   magnitude: number;
 }
 
-const NUMBER_OF_RECENTS = 25;
-const TABLE_EDGE_LEFT_OFFSET = 0;
-const TABLE_EDGE_RIGHT_OFFSET = 0; //offset from left side of screen
+const HEIGHT = 450;
+const WIDTH = 600;
+
+const NUMBER_OF_RECENTS = 15;
+const TABLE_EDGE_OFFSET_RIGHT = 50;
+const TABLE_EDGE_OFFSET_LEFT = 50; //offset from left side of screen
 
 const Ball: React.FC<{ loc: ScreenPosition }> = ({ loc }) => {
   const transform = `translateX(${loc.x}px) translateY(${loc.y}px)`;
@@ -41,7 +44,10 @@ const PingPong: React.FC<PingPongProps> = () => {
   const [ballLocState, setBallLoc] = useState<ScreenPosition>({ x: 0, y: 0 });
   const ballLoc = useRef<ScreenPosition>({ x: 0, y: 0 });
   const ballVector = useRef<Vector2D>({ magnitude: 0, direction: 0 });
-  const recentBallLocs = useRef<ScreenPosition[]>([{ x: 0, y: 0 }]);
+  const recentBallLocs = useRef<ScreenPosition[]>([
+    { x: 0, y: 0 },
+    { x: 0, y: 0 },
+  ]);
   const getTolerance = () => {
     return 20;
   };
@@ -55,6 +61,7 @@ const PingPong: React.FC<PingPongProps> = () => {
     }
     console.log(ballVector.current);
     // take average of y values
+    console.log(recentBallLocs.current);
     // setBallLoc(ballLoc.current);
   }, 100);
 
@@ -96,9 +103,8 @@ const PingPong: React.FC<PingPongProps> = () => {
 
         const nextLoc = { x: averageX, y: averageY };
         ballLoc.current = nextLoc;
-        const lastBallLoc =
-          recentBallLocs.current[recentBallLocs.current.length - 1];
-        if (lastBallLoc.x !== nextLoc.x) {
+        const lastBallLoc = recentBallLocs.current[1];
+        if (lastBallLoc.x !== nextLoc.x && lastBallLoc.y !== nextLoc.y) {
           recentBallLocs.current.unshift(nextLoc);
         }
         if (recentBallLocs.current.length > NUMBER_OF_RECENTS) {
@@ -108,14 +114,14 @@ const PingPong: React.FC<PingPongProps> = () => {
 
       // CALCULATE VECTORS
       if (recentBallLocs.current.length > 10) {
-        const iterations = 4;
-        const startIndex = 2;
+        const iterations = 8;
+        const startIndex = 1;
         const vectors: Vector2D[] = [];
         for (let i = 1; i < iterations + startIndex; i++) {
           const a = recentBallLocs.current[i + 1];
           const b = recentBallLocs.current[i];
 
-          const direction = Math.atan2(a.x - b.x, a.y - b.y);
+          const direction = (Math.atan2(a.x - b.x, a.y - b.y) * 180) / Math.PI;
           const magnitude = Math.hypot(a.x - b.x, a.y - b.y);
 
           const vec: Vector2D = {
@@ -156,15 +162,30 @@ const PingPong: React.FC<PingPongProps> = () => {
 
       //draw "compass"
       const compassOrigin: ScreenPosition = {
-        x: 100,
-        y: 100,
+        x: ballLoc.current.x,
+        y: ballLoc.current.y,
       };
 
-      // const x1 = compassOrigin.x
-      // const y1 = compassOrigin.y
-      // ctx.moveTo(x1, y1);
-      // ctx.lineTo(x1 + r * Math.cos(theta), y1 + r * Math.sin(theta));
-      // ctx.stroke();
+      const x1 = compassOrigin.x;
+      const y1 = compassOrigin.y;
+      // const angleDegrees =ballVector.current.direction
+      const angleDegrees = 20;
+      // adjust degrees for mirrored screen and so 0 deg is pointing up
+      const theta = ((270 - angleDegrees) * Math.PI) / 180;
+      // const radius = ballVector.current.magnitude * 10;
+      const radius = 100;
+      ctx.strokeStyle = 'limegreen';
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x1 + radius * Math.cos(theta), y1 + radius * Math.sin(theta));
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.strokeStyle = 'red';
+      ctx.lineWidth = 5;
+      ctx.moveTo(TABLE_EDGE_OFFSET_RIGHT, 0);
+      ctx.lineTo(TABLE_EDGE_OFFSET_RIGHT, HEIGHT);
+      ctx.stroke();
 
       event.data.forEach(function (rect, index) {
         if (rect.color === 'pingpong') {
@@ -196,8 +217,8 @@ const PingPong: React.FC<PingPongProps> = () => {
         <video
           ref={videoElement}
           id="video"
-          width="600"
-          height="450"
+          width={WIDTH}
+          height={HEIGHT}
           autoPlay
           loop
           muted
@@ -205,8 +226,8 @@ const PingPong: React.FC<PingPongProps> = () => {
         ></video>
         <canvas
           id="canvas"
-          width="600"
-          height="450"
+          width={WIDTH}
+          height={HEIGHT}
           ref={canvasElement}
         ></canvas>
       </div>
