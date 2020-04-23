@@ -26,7 +26,7 @@ const NUMBER_OF_RECENTS = 15;
 const TABLE_EDGE_OFFSET_LEFT = 270;
 const TABLE_EDGE_OFFSET_RIGHT = 270; //offset from left side of screen
 const TABLE_Y = 30;
-const BOUNCE_TOLERANCE = 40;
+const BOUNCE_TOLERANCE = 50;
 
 const TEAM_LEFT_NAME = 'Cam';
 const TEAM_RIGHT_NAME = 'Dad';
@@ -41,6 +41,10 @@ const PingPong: React.FC<PingPongProps> = () => {
   const canvasElement = useRef<HTMLCanvasElement>(null);
   const videoElement = useRef<HTMLVideoElement>(null);
   const [ballLocState, setBallLoc] = useState<ScreenPosition>({ x: 0, y: 0 });
+  const [score, setScore] = useState<{
+    [Team.LEFT]: number;
+    [Team.RIGHT]: number;
+  }>({ [Team.LEFT]: 0, [Team.RIGHT]: 0 });
   const ballLoc = useRef<ScreenPosition>({ x: 0, y: 0 });
   const ballLastSeenTime = useRef<number>(0);
   const isBallActive = useRef<boolean>(false);
@@ -69,6 +73,18 @@ const PingPong: React.FC<PingPongProps> = () => {
     const synth = window.speechSynthesis;
     const phrase = new SpeechSynthesisUtterance(text);
     synth.speak(phrase);
+
+    if (team === Team.RIGHT) {
+      setScore({
+        ...score,
+        RIGHT: score.RIGHT + 1,
+      });
+    } else {
+      setScore({
+        ...score,
+        LEFT: score.LEFT + 1,
+      });
+    }
   };
 
   useInterval(() => {
@@ -84,7 +100,11 @@ const PingPong: React.FC<PingPongProps> = () => {
         magnitude > 5;
 
       if (maybeWentOffscreenToTheLeft) {
-        handleScore(Team.LEFT);
+        if (didBallBounceOnCurrentSide) {
+          handleScore(Team.RIGHT);
+        } else {
+          handleScore(Team.LEFT);
+        }
         return;
       }
 
@@ -94,7 +114,11 @@ const PingPong: React.FC<PingPongProps> = () => {
         magnitude > 5;
 
       if (maybeWentOffscreenToTheRight) {
-        handleScore(Team.RIGHT);
+        if (didBallBounceOnCurrentSide) {
+          handleScore(Team.LEFT);
+        } else {
+          handleScore(Team.RIGHT);
+        }
         return;
       }
     }
@@ -286,7 +310,7 @@ const PingPong: React.FC<PingPongProps> = () => {
        */
       const heightOfSideBar = 40;
       const heightOfDidBounceBar = 10;
-      ctx.globalAlpha = 0.8;
+      ctx.globalAlpha = 0.4;
       if (sideOfTableBallIsOn.current === Team.LEFT) {
         ctx.fillStyle = 'red';
         ctx.fillRect(0, 0, WIDTH / 2, heightOfSideBar);
@@ -349,6 +373,10 @@ const PingPong: React.FC<PingPongProps> = () => {
       >
         {side === Team.LEFT ? TEAM_LEFT_NAME : TEAM_RIGHT_NAME}
       </h1>
+      <div className={styles.scores}>
+        <h1>{score.LEFT}</h1>
+        <h1>{score.RIGHT}</h1>
+      </div>
       <div className={styles.videoWrapper}>
         <video
           ref={videoElement}

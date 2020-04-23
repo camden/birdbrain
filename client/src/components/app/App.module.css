@@ -19,3 +19,9 @@
     max-width: 460px;
   }
 }
+
+@media (width: 1393px) {
+  .app_inner {
+    max-width: 100%;
+  }
+}
