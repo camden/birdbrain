@@ -61,7 +61,7 @@ export const useTracker = (
           b: 102,
         };
 
-        const dist = getColorDistance(colorOfBallOutside, { r, g, b });
+        const dist = getColorDistance(colorOfBallInMyRoom, { r, g, b });
         if (dist < 10) {
           // console.log(`color: ${r},${g},${b} --- distance: ${dist}`);
         }

@@ -26,6 +26,9 @@ const NUMBER_OF_RECENTS = 15;
 const TABLE_EDGE_OFFSET_LEFT = 270;
 const TABLE_EDGE_OFFSET_RIGHT = 270; //offset from left side of screen
 
+const TEAM_LEFT_NAME = 'Cam';
+const TEAM_RIGHT_NAME = 'Dad';
+
 export enum Team {
   LEFT = 'LEFT',
   RIGHT = 'RIGHT',
@@ -41,19 +44,23 @@ const PingPong: React.FC<PingPongProps> = () => {
   const isBallActive = useRef<boolean>(false);
   const ballVector = useRef<Vector2D>({ magnitude: 0, direction: 0 });
   const sideOfTableBallIsOn = useRef<Team>(Team.LEFT);
+  const [side, setSide] = useState<Team>(Team.LEFT);
   const recentBallLocs = useRef<ScreenPosition[]>([
     { x: 0, y: 0 },
     { x: 0, y: 0 },
   ]);
   const getTolerance = () => {
-    return 10;
+    return 20;
   };
 
   const handleScore = (team: Team) => {
     playPopSound();
     isBallActive.current = false;
 
-    const text = team === Team.LEFT ? 'Point for Cam' : 'Point for Dad';
+    const text =
+      team === Team.LEFT
+        ? `Point for ${TEAM_LEFT_NAME}`
+        : `Point for ${TEAM_RIGHT_NAME}`;
 
     const synth = window.speechSynthesis;
     const phrase = new SpeechSynthesisUtterance(text);
@@ -62,14 +69,15 @@ const PingPong: React.FC<PingPongProps> = () => {
 
   useInterval(() => {
     const { direction, magnitude } = ballVector.current;
+    // setSide(sideOfTableBallIsOn.current);
 
     const timeSinceBallLastSeen = Date.now() - ballLastSeenTime.current;
 
     if (timeSinceBallLastSeen > 2000 && isBallActive.current) {
       const maybeWentOffscreenToTheLeft =
-        ballLoc.current.x < TABLE_EDGE_OFFSET_LEFT &&
-        direction < 0 &&
-        magnitude > 10;
+        sideOfTableBallIsOn.current === Team.LEFT &&
+        // direction < 0 &&
+        magnitude > 5;
 
       if (maybeWentOffscreenToTheLeft) {
         handleScore(Team.LEFT);
@@ -77,9 +85,9 @@ const PingPong: React.FC<PingPongProps> = () => {
       }
 
       const maybeWentOffscreenToTheRight =
-        ballLoc.current.x > WIDTH - TABLE_EDGE_OFFSET_RIGHT &&
-        direction > 0 &&
-        magnitude > 10;
+        sideOfTableBallIsOn.current === Team.RIGHT &&
+        // direction > 0 &&
+        magnitude > 5;
 
       if (maybeWentOffscreenToTheRight) {
         handleScore(Team.RIGHT);
@@ -89,7 +97,7 @@ const PingPong: React.FC<PingPongProps> = () => {
 
     // take average of y values
     // setBallLoc(ballLoc.current);
-  }, 10);
+  }, 50);
 
   useTracker(
     '#video',
@@ -239,6 +247,16 @@ const PingPong: React.FC<PingPongProps> = () => {
       ctx.lineTo(WIDTH - TABLE_EDGE_OFFSET_RIGHT, HEIGHT);
       ctx.stroke();
 
+      ctx.globalAlpha = 0.5;
+      if (sideOfTableBallIsOn.current === Team.LEFT) {
+        ctx.fillStyle = 'red';
+        ctx.fillRect(0, 0, WIDTH / 2, HEIGHT);
+      } else {
+        ctx.fillStyle = 'blue';
+        ctx.fillRect(WIDTH / 2, 0, WIDTH, HEIGHT);
+      }
+      ctx.globalAlpha = 1;
+
       event.data.forEach(function (rect, index) {
         if (rect.color === 'pingpong') {
           rect.color = 'hotpink';
@@ -265,6 +283,13 @@ const PingPong: React.FC<PingPongProps> = () => {
 
   return (
     <div className={styles.wrapper}>
+      <h1
+        style={{
+          textAlign: side === Team.LEFT ? 'left' : 'right',
+        }}
+      >
+        {side === Team.LEFT ? TEAM_LEFT_NAME : TEAM_RIGHT_NAME}
+      </h1>
       <div className={styles.videoWrapper}>
         <video
           ref={videoElement}
