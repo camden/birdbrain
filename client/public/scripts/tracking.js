@@ -2537,6 +2537,10 @@
       }
     }
 
+    if (results.length > 0) {
+      // console.log(results);
+    }
+
     return this.mergeRectangles_(results);
   };
 

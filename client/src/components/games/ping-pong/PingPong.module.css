@@ -1,0 +1,21 @@
+.videoWrapper {
+  position: relative;
+  height: 450px;
+}
+
+.videoWrapper video,
+.videoWrapper canvas {
+  position: absolute;
+  transform: rotateY(180deg);
+}
+
+.ball {
+  border-radius: 100px;
+  background-color: orange;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
