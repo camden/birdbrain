@@ -15,7 +15,11 @@ import TextInput from 'components/shared/form/TextInput';
 import { curry, mathMod } from 'ramda';
 import useSound from 'hooks/use-sound';
 import Button from 'components/shared/button/Button';
-import { pickElementAndRemoveFromArr, pickElement } from '@server/utils/rng';
+import {
+  pickElementAndRemoveFromArr,
+  pickElement,
+  pickRandomNumber,
+} from '@server/utils/rng';
 const ScoreSoundEffect = require('assets/sounds/chime_bell_ding.wav');
 const UndoSoundEffect = require('assets/sounds/chime_short_cancel.wav');
 const SwitchServeSoundEffect = require('assets/sounds/music_marimba_logo.wav');
@@ -58,13 +62,45 @@ const possiblePlayerNames = [
   'Bravo',
   'Delta',
   'Charlie',
-  'Hotshot',
+  'Dude',
   'Rambo',
   'King',
   'Queen',
   'Dumbo',
   'Yeet',
 ];
+
+const checkNums = curry(
+  (a: number, b: number, c: number, d: number): boolean => {
+    return a === c && b === d;
+  }
+);
+
+const getCatchphrases = (firstScore: number, secondScore: number): string[] => {
+  const match = checkNums(firstScore, secondScore);
+
+  if (match(6, 9)) {
+    return ['ha ha 69', 'ha ha sex number'];
+  }
+
+  if (match(7, 6)) {
+    return ['76 trombones'];
+  }
+
+  if (match(10, 4)) {
+    return ['10-4 good buddy', '10-4, over and out'];
+  }
+
+  if (match(7, 7)) {
+    return ['7 up!'];
+  }
+
+  if (match(7, 0) || match(0, 7)) {
+    return [`that's a shut out!`, 'oof', 'G G game over'];
+  }
+
+  return [];
+};
 
 const ClapScore: React.FC<ClapScoreProps> = () => {
   const [leftScore, setLeftScore] = useState(0);
@@ -94,6 +130,19 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
     setRightName(name2);
   }, []);
 
+  const getServer = (nextLeftScore?: number, nextRightScore?: number): Team => {
+    const l = nextLeftScore || leftScore;
+    const r = nextRightScore || rightScore;
+
+    const serverIsSameAsFirstServer = Math.floor((l + r) / 2) % 2 === 0;
+
+    const server: Team = serverIsSameAsFirstServer
+      ? firstServer
+      : getOppositeTeam(firstServer);
+
+    return server;
+  };
+
   const onSpeechRealtime = useCallback(
     (event: any, transcript: string) => {
       if (isSystemTalking) {
@@ -107,6 +156,23 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
     },
     [isSystemTalking]
   );
+
+  const maybePlayCatchphrase = (
+    firstScore: number,
+    secondScore: number
+  ): void => {
+    const possiblePhrases = getCatchphrases(firstScore, secondScore);
+    if (possiblePhrases.length === 0) {
+      return;
+    }
+
+    if (pickRandomNumber(1, 1) === 1) {
+      const catchphrase = pickElement(possiblePhrases)[0] as string;
+      setTimeout(() => {
+        say(catchphrase);
+      }, 500);
+    }
+  };
 
   const handlePointScored = useCallback(
     (team: Team) => {
@@ -129,6 +195,19 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
       if (serveChange) {
         playSwitchServeSound();
       }
+
+      let firstScore;
+      let secondScore;
+
+      if (getServer(nextLeftScore, nextRightScore) === Team.LEFT) {
+        firstScore = nextLeftScore;
+        secondScore = nextRightScore;
+      } else {
+        firstScore = nextRightScore;
+        secondScore = nextLeftScore;
+      }
+
+      maybePlayCatchphrase(firstScore, secondScore);
     },
     [playScoreSoundEffect, playSwitchServeSound, leftScore, rightScore]
   );
@@ -144,6 +223,18 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
       setRightScore((r) => r - 1);
     }
   };
+
+  const say = useCallback((phrase: string) => {
+    const synth = window.speechSynthesis;
+    const utterance = new SpeechSynthesisUtterance(phrase);
+
+    setIsSystemTalking(true);
+    setTimeout(() => {
+      setIsSystemTalking(false);
+    }, 3000);
+
+    synth.speak(utterance);
+  }, []);
 
   const onSpeech = (event: any, transcript: string) => {
     if (isSystemTalking) {
@@ -167,12 +258,12 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
       const leftIsWinning = leftScore > rightScore;
       const isTied = leftScore === rightScore;
 
+      const biggerScore = Math.max(leftScore, rightScore);
+      const smallerScore = Math.min(leftScore, rightScore);
+
       let conclusion = isTied
         ? 'The game is tied.'
         : `${leftIsWinning ? leftName : rightName} is winning.`;
-
-      const biggerScore = Math.max(leftScore, rightScore);
-      const smallerScore = Math.min(leftScore, rightScore);
 
       if (smallerScore === 0) {
         if (Math.random() > 0.5) {
@@ -180,17 +271,10 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
         }
       }
 
-      const synth = window.speechSynthesis;
-      const phrase = new SpeechSynthesisUtterance(
-        `${biggerScore} to ${smallerScore}. ${conclusion}`
-      );
+      let phrase = `${biggerScore} to ${smallerScore}. ${conclusion}`;
 
-      setIsSystemTalking(true);
-      setTimeout(() => {
-        setIsSystemTalking(false);
-      }, 3000);
+      say(phrase);
 
-      synth.speak(phrase);
       return;
     }
 
@@ -248,13 +332,6 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
     onSpeech,
   });
 
-  const serverIsSameAsFirstServer =
-    Math.floor((leftScore + rightScore) / 2) % 2 === 0;
-
-  const server: Team = serverIsSameAsFirstServer
-    ? firstServer
-    : getOppositeTeam(firstServer);
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.status}>
@@ -262,7 +339,7 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
           icon={faTableTennis}
           size="10x"
           className={cx(styles.statusIcon, {
-            [styles.isServing]: server === Team.LEFT,
+            [styles.isServing]: getServer() === Team.LEFT,
           })}
         />
         <FontAwesomeIcon
@@ -276,7 +353,7 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
           icon={faTableTennis}
           size="10x"
           className={cx(styles.statusIcon, {
-            [styles.isServing]: server === Team.RIGHT,
+            [styles.isServing]: getServer() === Team.RIGHT,
           })}
         />
       </div>
