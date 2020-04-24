@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import ClapDetectorProcessor from './clap-detector-processor';
 
-const useClapDetection = () => {
+const useClapDetectionOld = () => {
   useEffect(() => {
     async function init() {
       let stream = null;
@@ -24,4 +24,4 @@ const useClapDetection = () => {
   });
 };
 
-export default useClapDetection;
+export default useClapDetectionOld;

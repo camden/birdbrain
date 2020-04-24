@@ -20,6 +20,10 @@
   }
 }
 
+.app_inner.desktop {
+  max-width: 100%;
+}
+
 @media (width: 1393px) {
   .app_inner {
     max-width: 100%;

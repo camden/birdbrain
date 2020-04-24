@@ -10,12 +10,19 @@ import Meta from 'components/shared/meta/Meta';
 import { TrackedRoute } from 'analytics';
 import PingPong from 'components/games/ping-pong/PingPong';
 import ClapScore from 'components/games/clapscore/ClapScore';
+import QueryString from 'query-string';
+import cx from 'classnames';
 
 const App: React.FC = () => {
+  const query = QueryString.parse(window.location.search);
+  const hasDesktopQuery = query && !!query.desktop;
+
   return (
     <Div100vh className={styles.app}>
       <Meta />
-      <div className={styles.app_inner}>
+      <div
+        className={cx(styles.app_inner, { [styles.desktop]: hasDesktopQuery })}
+      >
         <Router>
           <Switch>
             <TrackedRoute path="/create-room">
