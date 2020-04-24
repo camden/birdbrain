@@ -88,11 +88,55 @@ const getCatchphrases = (firstScore: number, secondScore: number): string[] => {
   }
 
   if (match(10, 4)) {
-    return ['10-4 good buddy', '10-4, over and out'];
+    return ['10 4 good buddy', '10 4, over and out'];
   }
 
   if (match(7, 7)) {
-    return ['7 up!'];
+    return ['7 up the uncola!'];
+  }
+
+  if (match(9, 11)) {
+    return ['9 11 oh oh'];
+  }
+
+  if (match(8, 8)) {
+    return ['loko oh chose'];
+  }
+
+  if (match(2, 1)) {
+    return ['21 jump street'];
+  }
+
+  if (match(2, 3)) {
+    return ['23 skidoo'];
+  }
+
+  if (match(1, 9)) {
+    return ['breaker breaker 1 9'];
+  }
+
+  if (match(2, 2)) {
+    return ['deuces wild'];
+  }
+
+  if (match(1, 2)) {
+    return ['1 2 buckle my shoe'];
+  }
+
+  if (match(5, 4)) {
+    return ['studio 54'];
+  }
+
+  if (match(7, 10)) {
+    return ['7 10 split'];
+  }
+
+  if (match(5, 5)) {
+    return ["can't drive 55"];
+  }
+
+  if (match(6, 6)) {
+    return ['get your kicks on route 66'];
   }
 
   if (match(7, 0) || match(0, 7)) {
@@ -240,7 +284,7 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
     setIsSystemTalking(true);
     setTimeout(() => {
       setIsSystemTalking(false);
-    }, 3000);
+    }, 4000);
 
     synth.speak(utterance);
   }, []);
