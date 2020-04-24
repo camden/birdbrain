@@ -9,7 +9,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import cx from 'classnames';
 import TextInput from 'components/shared/form/TextInput';
-import { curry } from 'ramda';
+import { curry, mathMod } from 'ramda';
 import useSound from 'hooks/use-sound';
 import Button from 'components/shared/button/Button';
 const ScoreSoundEffect = require('assets/sounds/chime_bell_ding.wav');
@@ -108,22 +108,28 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
       const leftIsWinning = leftScore > rightScore;
       const isTied = leftScore === rightScore;
 
-      const conclusion = isTied
+      let conclusion = isTied
         ? 'The game is tied.'
         : `${leftIsWinning ? leftName : rightName} is winning.`;
 
       const biggerScore = Math.max(leftScore, rightScore);
       const smallerScore = Math.min(leftScore, rightScore);
 
+      if (smallerScore === 0) {
+        if (Math.random() > 0.5) {
+          conclusion += 'Remember, seven nothing is a shut out!';
+        }
+      }
+
       const synth = window.speechSynthesis;
       const phrase = new SpeechSynthesisUtterance(
-        `The score is ${biggerScore} to ${smallerScore}. ${conclusion}`
+        `${biggerScore} to ${smallerScore}. ${conclusion}`
       );
 
       setIsSystemTalking(true);
       setTimeout(() => {
         setIsSystemTalking(false);
-      }, 1000);
+      }, 2500);
 
       synth.speak(phrase);
       return;
@@ -141,7 +147,7 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
     const pointKeywordTriggered = pointKeywords.some(utteredInSpeech);
 
     if (!pointKeywordTriggered) {
-      return;
+      // return;
     }
 
     if (utteredInSpeech(leftName)) {
