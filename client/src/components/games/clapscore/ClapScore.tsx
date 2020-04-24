@@ -18,6 +18,7 @@ import Button from 'components/shared/button/Button';
 import { pickElementAndRemoveFromArr, pickElement } from '@server/utils/rng';
 const ScoreSoundEffect = require('assets/sounds/chime_bell_ding.wav');
 const UndoSoundEffect = require('assets/sounds/chime_short_cancel.wav');
+const SwitchServeSoundEffect = require('assets/sounds/music_marimba_logo.wav');
 
 export interface ClapScoreProps {}
 
@@ -77,6 +78,7 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
   const [firstServer, setFirstServer] = useState<Team>(Team.LEFT);
   const playScoreSoundEffect = useSound(ScoreSoundEffect);
   const playUndoSound = useSound(UndoSoundEffect);
+  const playSwitchServeSound = useSound(SwitchServeSoundEffect);
 
   useEffect(() => {
     let poolOfNames = [...possiblePlayerNames];
@@ -101,7 +103,7 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
       setStatus(Status.LISTENING);
       setTimeout(() => {
         setStatus(Status.WAITING_FOR_INPUT);
-      }, 1000);
+      }, 2000);
     },
     [isSystemTalking]
   );
@@ -109,15 +111,26 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
   const handlePointScored = useCallback(
     (team: Team) => {
       playScoreSoundEffect();
+
+      let nextLeftScore = leftScore;
+      let nextRightScore = rightScore;
       if (team === Team.LEFT) {
-        setLeftScore((l) => l + 1);
+        nextLeftScore = leftScore + 1;
         setScoredLast(Team.LEFT);
       } else {
-        setRightScore((r) => r + 1);
+        nextRightScore = rightScore + 1;
         setScoredLast(Team.RIGHT);
       }
+
+      setLeftScore(nextLeftScore);
+      setRightScore(nextRightScore);
+
+      const serveChange = (nextLeftScore + nextRightScore) % 2 === 0;
+      if (serveChange) {
+        playSwitchServeSound();
+      }
     },
-    [playScoreSoundEffect]
+    [playScoreSoundEffect, playSwitchServeSound, leftScore, rightScore]
   );
 
   const handleUndo = () => {
@@ -125,12 +138,10 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
 
     if (scoredLast === Team.LEFT) {
       setLeftScore((l) => l - 1);
-      return;
     }
 
     if (scoredLast === Team.RIGHT) {
       setRightScore((r) => r - 1);
-      return;
     }
   };
 
