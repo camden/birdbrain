@@ -48,15 +48,23 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
   const [status, setStatus] = useState<Status>(Status.WAITING_FOR_INPUT);
   const [scoredLast, setScoredLast] = useState<Team | null>(null);
   const [lastPhraseUttered, setLastPhraseUttered] = useState('');
+  const [isSystemTalking, setIsSystemTalking] = useState(false);
   const playScoreSoundEffect = useSound(ScoreSoundEffect);
   const playUndoSound = useSound(UndoSoundEffect);
 
-  const onSpeechRealtime = useCallback((event: any, transcript: string) => {
-    setStatus(Status.LISTENING);
-    setTimeout(() => {
-      setStatus(Status.WAITING_FOR_INPUT);
-    }, 1000);
-  }, []);
+  const onSpeechRealtime = useCallback(
+    (event: any, transcript: string) => {
+      if (isSystemTalking) {
+        return;
+      }
+
+      setStatus(Status.LISTENING);
+      setTimeout(() => {
+        setStatus(Status.WAITING_FOR_INPUT);
+      }, 1000);
+    },
+    [isSystemTalking]
+  );
 
   const handlePointScored = useCallback(
     (team: Team) => {
@@ -87,9 +95,39 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
   };
 
   const onSpeech = (event: any, transcript: string) => {
-    setLastPhraseUttered(transcript);
+    if (isSystemTalking) {
+      return;
+    }
 
+    setLastPhraseUttered(transcript);
     const utteredInSpeech = uttered(transcript);
+
+    const checkKeywords = ['check', 'check score', 'the score'];
+    const checkKeywordsTriggered = checkKeywords.some(utteredInSpeech);
+    if (checkKeywordsTriggered) {
+      const leftIsWinning = leftScore > rightScore;
+      const isTied = leftScore === rightScore;
+
+      const conclusion = isTied
+        ? 'The game is tied.'
+        : `${leftIsWinning ? leftName : rightName} is winning.`;
+
+      const biggerScore = Math.max(leftScore, rightScore);
+      const smallerScore = Math.min(leftScore, rightScore);
+
+      const synth = window.speechSynthesis;
+      const phrase = new SpeechSynthesisUtterance(
+        `The score is ${biggerScore} to ${smallerScore}. ${conclusion}`
+      );
+
+      setIsSystemTalking(true);
+      setTimeout(() => {
+        setIsSystemTalking(false);
+      }, 1000);
+
+      synth.speak(phrase);
+      return;
+    }
 
     const undoKeywords = ['undo'];
     const undoKeywordsTriggered = undoKeywords.some(utteredInSpeech);
