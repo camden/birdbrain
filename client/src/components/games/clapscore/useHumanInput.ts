@@ -6,6 +6,7 @@ interface useHumanInputProps {
   onDoubleClap?: () => void;
   onSpeechRealtime?: (event: any, transcript: string) => void;
   onSpeech?: (event: any, transcript: any) => void;
+  key?: number;
 }
 
 const useHumanInput = (props: useHumanInputProps) => {
@@ -43,7 +44,7 @@ const useHumanInput = (props: useHumanInputProps) => {
     return () => {
       HI.off();
     };
-  }, [props]);
+  }, [props, props.key]);
 };
 
 export default useHumanInput;

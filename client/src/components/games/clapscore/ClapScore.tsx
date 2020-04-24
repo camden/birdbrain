@@ -111,7 +111,12 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
   const [scoredLast, setScoredLast] = useState<Team | null>(null);
   const [lastPhraseUttered, setLastPhraseUttered] = useState('');
   const [isSystemTalking, setIsSystemTalking] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [firstServer, setFirstServer] = useState<Team>(Team.LEFT);
+  const [
+    randomNumberForResettingAudio,
+    setRandomNumberForResettingAudio,
+  ] = useState<number>(0);
   const playScoreSoundEffect = useSound(ScoreSoundEffect);
   const playUndoSound = useSound(UndoSoundEffect);
   const playSwitchServeSound = useSound(SwitchServeSoundEffect);
@@ -128,6 +133,10 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
 
     setLeftName(name1);
     setRightName(name2);
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
   }, []);
 
   const getServer = (nextLeftScore?: number, nextRightScore?: number): Team => {
@@ -330,6 +339,7 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
   useHumanInput({
     onSpeechRealtime,
     onSpeech,
+    key: randomNumberForResettingAudio,
   });
 
   return (
@@ -348,6 +358,9 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
           className={cx(styles.statusIcon, {
             [styles.statusListening]: status === Status.LISTENING,
           })}
+          onClick={() => {
+            setRandomNumberForResettingAudio(pickRandomNumber(1, 10000));
+          }}
         />
         <FontAwesomeIcon
           icon={faTableTennis}
@@ -361,6 +374,7 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
         <div className={styles.scoreWrapper}>
           <h1 className={styles.score}>{leftScore}</h1>
           <TextInput
+            disabled={isLoading}
             className={styles.playerNameInput}
             value={leftName}
             onChange={(evt) => setLeftName(evt.target.value)}
@@ -369,6 +383,7 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
         <div className={styles.scoreWrapper}>
           <h1 className={styles.score}>{rightScore}</h1>
           <TextInput
+            disabled={isLoading}
             className={styles.playerNameInput}
             value={rightName}
             onChange={(evt) => setRightName(evt.target.value)}
