@@ -1,10 +1,13 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import useHumanInput from './useHumanInput';
 import styles from './ClapScore.module.css';
 import {
   faEar,
   IconDefinition,
   faClock,
+  faArrowLeft,
+  faArrowRight,
+  faTableTennis,
 } from '@fortawesome/pro-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import cx from 'classnames';
@@ -12,6 +15,7 @@ import TextInput from 'components/shared/form/TextInput';
 import { curry, mathMod } from 'ramda';
 import useSound from 'hooks/use-sound';
 import Button from 'components/shared/button/Button';
+import { pickElementAndRemoveFromArr, pickElement } from '@server/utils/rng';
 const ScoreSoundEffect = require('assets/sounds/chime_bell_ding.wav');
 const UndoSoundEffect = require('assets/sounds/chime_short_cancel.wav');
 
@@ -27,6 +31,14 @@ export enum Team {
   RIGHT,
 }
 
+const getOppositeTeam = (team: Team): Team => {
+  if (team === Team.LEFT) {
+    return Team.RIGHT;
+  } else {
+    return Team.LEFT;
+  }
+};
+
 const getIconForStatus = (status: Status): IconDefinition => {
   switch (status) {
     case Status.WAITING_FOR_INPUT:
@@ -40,6 +52,19 @@ const uttered = curry((phrase: string, keyword: string): boolean => {
   return phrase.toLowerCase().includes(keyword.toLowerCase());
 });
 
+const possiblePlayerNames = [
+  'Alpha',
+  'Bravo',
+  'Delta',
+  'Charlie',
+  'Hotshot',
+  'Rambo',
+  'King',
+  'Queen',
+  'Dumbo',
+  'Yeet',
+];
+
 const ClapScore: React.FC<ClapScoreProps> = () => {
   const [leftScore, setLeftScore] = useState(0);
   const [rightScore, setRightScore] = useState(0);
@@ -49,8 +74,23 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
   const [scoredLast, setScoredLast] = useState<Team | null>(null);
   const [lastPhraseUttered, setLastPhraseUttered] = useState('');
   const [isSystemTalking, setIsSystemTalking] = useState(false);
+  const [firstServer, setFirstServer] = useState<Team>(Team.LEFT);
   const playScoreSoundEffect = useSound(ScoreSoundEffect);
   const playUndoSound = useSound(UndoSoundEffect);
+
+  useEffect(() => {
+    let poolOfNames = [...possiblePlayerNames];
+    const [name1, arr] = pickElementAndRemoveFromArr(poolOfNames);
+    poolOfNames = arr;
+    const name2 = pickElement(poolOfNames)[0];
+    if (!name1 || !name2) {
+      console.error('Something went wrong');
+      return;
+    }
+
+    setLeftName(name1);
+    setRightName(name2);
+  }, []);
 
   const onSpeechRealtime = useCallback(
     (event: any, transcript: string) => {
@@ -102,6 +142,14 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
     setLastPhraseUttered(transcript);
     const utteredInSpeech = uttered(transcript);
 
+    const resetScoreTriggered = ['reset', 'start over', 'new game'].some(
+      utteredInSpeech
+    );
+    if (resetScoreTriggered) {
+      setLeftScore(0);
+      setRightScore(0);
+    }
+
     const checkKeywords = ['check', 'check score', 'the score'];
     const checkKeywordsTriggered = checkKeywords.some(utteredInSpeech);
     if (checkKeywordsTriggered) {
@@ -117,7 +165,7 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
 
       if (smallerScore === 0) {
         if (Math.random() > 0.5) {
-          conclusion += 'Remember, seven nothing is a shut out!';
+          conclusion += ' Remember, seven nothing is a shut out!';
         }
       }
 
@@ -129,7 +177,7 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
       setIsSystemTalking(true);
       setTimeout(() => {
         setIsSystemTalking(false);
-      }, 2500);
+      }, 3000);
 
       synth.speak(phrase);
       return;
@@ -145,17 +193,40 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
 
     const pointKeywords = ['point', '.', 'scored'];
     const pointKeywordTriggered = pointKeywords.some(utteredInSpeech);
+    const serverKeywordsTriggered = ['serving', 'serves', 'serve'].some(
+      utteredInSpeech
+    );
+    const setScoreKeywordsTriggered = ['set'].some(utteredInSpeech);
+    const capturedNumberRegex = transcript.match(/\d+/);
+    const capturedNumber =
+      capturedNumberRegex && parseInt(capturedNumberRegex[0]);
 
     if (!pointKeywordTriggered) {
       // return;
     }
 
     if (utteredInSpeech(leftName)) {
+      if (serverKeywordsTriggered) {
+        setFirstServer(Team.LEFT);
+        return;
+      }
+      if (setScoreKeywordsTriggered && !!capturedNumber) {
+        setLeftScore(capturedNumber);
+        return;
+      }
       handlePointScored(Team.LEFT);
       return;
     }
 
     if (utteredInSpeech(rightName)) {
+      if (serverKeywordsTriggered) {
+        setFirstServer(Team.RIGHT);
+        return;
+      }
+      if (setScoreKeywordsTriggered && !!capturedNumber) {
+        setRightScore(capturedNumber);
+        return;
+      }
       handlePointScored(Team.RIGHT);
       return;
     }
@@ -166,14 +237,35 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
     onSpeech,
   });
 
+  const serverIsSameAsFirstServer =
+    Math.floor((leftScore + rightScore) / 2) % 2 === 0;
+
+  const server: Team = serverIsSameAsFirstServer
+    ? firstServer
+    : getOppositeTeam(firstServer);
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.status}>
+        <FontAwesomeIcon
+          icon={faTableTennis}
+          size="10x"
+          className={cx(styles.statusIcon, {
+            [styles.isServing]: server === Team.LEFT,
+          })}
+        />
         <FontAwesomeIcon
           icon={getIconForStatus(status)}
           size="10x"
           className={cx(styles.statusIcon, {
             [styles.statusListening]: status === Status.LISTENING,
+          })}
+        />
+        <FontAwesomeIcon
+          icon={faTableTennis}
+          size="10x"
+          className={cx(styles.statusIcon, {
+            [styles.isServing]: server === Team.RIGHT,
           })}
         />
       </div>

@@ -2,14 +2,22 @@ import { useEffect, useCallback } from 'react';
 
 const useSound = (soundUrl: string) => {
   useEffect(() => {
+    console.log('rerunning');
     const sound = {
       src: soundUrl,
       id: soundUrl,
     };
 
+    if (!window.createjs) {
+      return;
+    }
+
     createjs.Sound.registerSound(sound);
     createjs.Sound.volume = 0.3;
-  }, [soundUrl]);
+    return () => {
+      createjs.Sound.removeSound(sound, '');
+    };
+  }, [soundUrl, window.createjs]);
 
   return useCallback(() => {
     createjs.Sound.play(soundUrl);

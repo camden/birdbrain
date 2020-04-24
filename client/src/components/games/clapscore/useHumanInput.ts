@@ -12,15 +12,20 @@ const useHumanInput = (props: useHumanInputProps) => {
   const HumanInputRef = useRef<any>(null);
 
   useEffect(() => {
-    if (HumanInputRef.current) {
-      HumanInputRef.current.off();
-    }
-
     const HI = new HumanInput(window, {
       autostartClapper: true,
       autostartSpeech: true,
     });
+
     HumanInputRef.current = HI;
+  });
+
+  useEffect(() => {
+    if (HumanInputRef.current) {
+      HumanInputRef.current.off();
+    }
+
+    const HI = HumanInputRef.current;
 
     HI.on('clap', () => props.onClap && props.onClap());
     HI.on('doubleclap', () => props.onDoubleClap && props.onDoubleClap());
