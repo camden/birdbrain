@@ -6,6 +6,7 @@ export enum GameType {
   MINIDOM = 'MINIDOM',
   PONG = 'PONG',
   LUDUM = 'LUDUM',
+  LUDUM_ORIGINAL = 'LUDUM_ORIGINAL',
 }
 
 export type GameID = string;

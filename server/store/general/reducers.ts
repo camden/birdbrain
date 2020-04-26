@@ -29,12 +29,12 @@ import { minidomReducer } from 'store/games/minidom/reducer';
 import { PongGameState } from 'store/games/pong/types';
 import { PongActionTypes } from 'store/games/pong/actions';
 import { pongReducer } from 'store/games/pong/reducer';
-import { LudumGameState, LudumPhase } from 'store/games/ludum-dare/types';
-import {
-  LudumActionTypes,
-  LudumBaseAction,
-} from 'store/games/ludum-dare/actions';
+import { LudumGameState } from 'store/games/ludum-dare/types';
+import { LudumActionTypes } from 'store/games/ludum-dare/actions';
 import ludumReducer from 'store/games/ludum-dare/reducer';
+import { LudumOriginalGameState } from 'store/games/ludum-dare-original/types';
+import { LudumOriginalActionTypes } from 'store/games/ludum-dare-original/actions';
+import ludumOriginalReducer from 'store/games/ludum-dare-original/reducer';
 
 const initialState: GeneralState = {
   entities: {
@@ -103,6 +103,14 @@ export const generalReducer = (
   if (action.type.startsWith('LD_')) {
     return customGameReducer<LudumActionTypes, LudumGameState>(
       ludumReducer,
+      state,
+      action
+    );
+  }
+
+  if (action.type.startsWith('LD_ORIGINAL')) {
+    return customGameReducer<LudumOriginalActionTypes, LudumOriginalGameState>(
+      ludumOriginalReducer,
       state,
       action
     );

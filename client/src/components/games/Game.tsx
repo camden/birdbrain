@@ -17,6 +17,8 @@ import PongMain from './pong/Main';
 import { PongGameState } from '@server/store/games/pong/types';
 import { LudumGameState } from '@server/store/games/ludum-dare/types';
 import LudumMain from './ludum-dare/Main';
+import { LudumOriginalGameState } from '@server/store/games/ludum-dare-original/types';
+import LudumOriginalMain from './ludum-dare-original/Main';
 
 export interface GameProps {
   room: Room;
@@ -40,6 +42,8 @@ const Game: React.FC<GameProps> = ({ room }) => {
       return <MinidomMain game={game as MinidomGameState} />;
     case GameType.PONG:
       return <PongMain game={game as PongGameState} />;
+    case GameType.LUDUM_ORIGINAL:
+      return <LudumOriginalMain game={game as LudumOriginalGameState} />;
     case GameType.LUDUM:
       return <LudumMain game={game as LudumGameState} />;
   }

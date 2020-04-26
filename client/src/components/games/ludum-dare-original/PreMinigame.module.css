@@ -1,0 +1,44 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.roundInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.roundLabel {
+  font-size: 32px;
+  font-weight: normal;
+  margin-bottom: -8px;
+}
+
+.roundNumber {
+  font-size: 80px;
+  font-weight: 900;
+}
+
+.nextGame {
+  font-weight: bold;
+  margin: 32px 0;
+}
+
+.allPlayers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.playerInfo {
+  margin-bottom: 16px;
+}
+
+.footer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}

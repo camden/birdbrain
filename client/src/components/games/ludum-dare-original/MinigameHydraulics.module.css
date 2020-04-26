@@ -1,0 +1,47 @@
+.instructions {
+  display: flex;
+  justify-content: center;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.firstTimeInstructions {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.pipeRowWrapper {
+  display: grid;
+  padding: 0 32px;
+  justify-items: center stretch;
+}
+
+.pipeWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.pipeImg {
+  width: 36px;
+  height: auto;
+}
+
+.pipeButton {
+  margin-bottom: 8px;
+}
+
+.cols111 {
+  grid-column-start: 1;
+  grid-column-end: 4;
+}
+
+.matchingHintWrapper {
+  margin: 8px 0;
+
+  display: flex;
+  justify-content: center;
+}
+
+.buttons {
+  margin-top: 8px;
+}

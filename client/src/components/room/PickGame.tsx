@@ -33,13 +33,18 @@ const PickGame: React.FC<PickGameProps> = (props) => {
           <h1 className={styles.title}>Pick a Game</h1>
         </section>
         <section className={styles.list_of_game_cards}>
-          {
+          {props.showDevGames && (
             <GameCard
               className={styles.game_card}
               gameType={GameType.LUDUM}
               onClick={() => props.onPickGame(GameType.LUDUM)}
             />
-          }
+          )}
+          <GameCard
+            className={styles.game_card}
+            gameType={GameType.LUDUM_ORIGINAL}
+            onClick={() => props.onPickGame(GameType.LUDUM_ORIGINAL)}
+          />
           <GameCard
             className={styles.game_card}
             gameType={GameType.THE_RESISTANCE}

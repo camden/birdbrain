@@ -1,0 +1,82 @@
+.wrapper {
+}
+
+.instructions {
+  text-align: center;
+  margin: 0;
+}
+
+.firstTimeInstructions {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.bubble {
+  background-color: white;
+  border: 2px solid black;
+  padding: 16px;
+  width: 100%;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.shapeImg {
+  width: auto;
+  height: 100%;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+.inputButton img {
+  width: 100%;
+  height: auto;
+}
+
+.currentShape {
+  width: 64px;
+  height: 64px;
+}
+
+.currentShape img {
+  height: 100%;
+  width: 100%;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.guessWrapper {
+  display: grid;
+  column-gap: 8px;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+.hintIcon {
+  margin-top: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+}
+
+.emptyGuessSpace {
+  height: 40px;
+  border-bottom: 2px solid black;
+
+  padding-bottom: 4px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 8px;
+  row-gap: 8px;
+}

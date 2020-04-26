@@ -1,0 +1,21 @@
+.wrapper {
+  padding: 16px 24px 24px;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+@media (min-width: 400px) {
+  .wrapper {
+    padding: 24px 32px 32px;
+  }
+}
+
+.wrapper h1 {
+  font-size: 36px;
+}
+
+.wrapper img {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}

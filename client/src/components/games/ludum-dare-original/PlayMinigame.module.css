@@ -1,0 +1,44 @@
+.wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.characterWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.character {
+  width: 64px;
+  height: 64px;
+}
+
+.timeLeftWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.timeLeft {
+  font-weight: bold;
+  font-size: 48px;
+}
+
+.timeLeftLabel {
+  margin-top: -6px;
+  font-weight: normal;
+  font-size: 12px;
+}
+
+.minigameWrapper {
+  flex: 1;
+}

@@ -11,6 +11,7 @@ import { FishbowlActionTypes } from 'store/games/fishbowl/actions';
 import { MinidomActionTypes } from 'store/games/minidom/actions';
 import { PongActionTypes } from 'store/games/pong/actions';
 import { LudumActionTypes } from 'store/games/ludum-dare/actions';
+import { LudumOriginalActionTypes } from 'store/games/ludum-dare-original/actions';
 
 export type RoomID = string;
 
@@ -113,6 +114,7 @@ export interface EndCurrentGameAction {
 
 export type GameActionTypes =
   | LudumActionTypes
+  | LudumOriginalActionTypes
   | PongActionTypes
   | MinidomActionTypes
   | FishbowlActionTypes

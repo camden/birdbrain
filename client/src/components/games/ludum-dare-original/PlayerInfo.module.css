@@ -1,0 +1,52 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.character {
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+}
+
+.character img {
+  width: 100%;
+}
+
+.heartsContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  column-gap: 5px;
+}
+
+.heartWrapper {
+  animation: heartAnimation 1s ease-in-out infinite alternate;
+}
+
+@keyframes heartAnimation {
+  0% {
+    transform: translateY(2px);
+  }
+
+  100% {
+    transform: translateY(-2px);
+  }
+}
+
+.heart {
+  width: 16px;
+  height: 16px;
+}
+
+.characterAndHealth {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.playerName {
+  font-weight: bold;
+  text-transform: uppercase;
+}

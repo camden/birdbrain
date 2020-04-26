@@ -1,0 +1,129 @@
+.wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.instructions {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.firstTimeInstructions {
+  display: block;
+  margin-bottom: 16px;
+}
+
+.card {
+  border-radius: 18px;
+  background-color: white;
+  width: 90%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+}
+
+.cardSecondary {
+  background-color: teal;
+}
+
+.cardPrimary {
+}
+
+.field {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.cardText {
+  margin-top: 40px;
+}
+
+.cardJudgment {
+  position: absolute;
+  font-weight: bold;
+  font-size: 72px;
+  z-index: 100;
+}
+
+.cardJudgment.cardJudgmentTrue {
+  color: limegreen;
+}
+
+.cardJudgment.cardJudgmentFalse {
+  color: red;
+  font-size: 56px;
+}
+
+.speechBubble {
+  margin-top: 8px;
+  margin-bottom: 16px;
+
+  width: 90%;
+  border-radius: 8px;
+  padding: 8px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.dialogueLine {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialogueLine:first-of-type {
+  margin-bottom: 8px;
+}
+
+.listOfToppings {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.listOfToppings img {
+  margin-left: 8px;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  column-gap: 8px;
+}
+
+.pizzaBox {
+  margin-bottom: 8px;
+
+  width: 100%;
+  flex: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scoreWrapper {
+  margin-bottom: 8px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  font-weight: bold;
+}
