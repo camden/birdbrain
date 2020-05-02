@@ -204,7 +204,7 @@ const ClapScore: React.FC<ClapScoreProps> = () => {
       return;
     }
 
-    if (pickRandomNumber(1, 1) === 1) {
+    if (pickRandomNumber(1, 5) === 1) {
       const catchphrase = pickElement(possiblePhrases)[0] as string;
       setTimeout(() => {
         say(catchphrase);
