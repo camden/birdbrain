@@ -2,7 +2,6 @@ import { useEffect, useCallback } from 'react';
 
 const useSound = (soundUrl: string) => {
   useEffect(() => {
-    console.log('rerunning');
     const sound = {
       src: soundUrl,
       id: soundUrl,

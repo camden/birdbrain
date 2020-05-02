@@ -14,7 +14,6 @@ const useHumanInput = (props: useHumanInputProps) => {
 
   useEffect(() => {
     const HI = new HumanInput(window, {
-      autostartClapper: true,
       autostartSpeech: true,
     });
 
@@ -22,29 +21,30 @@ const useHumanInput = (props: useHumanInputProps) => {
   });
 
   useEffect(() => {
-    if (HumanInputRef.current) {
-      HumanInputRef.current.off();
-    }
-
     const HI = HumanInputRef.current;
 
-    HI.on('clap', () => props.onClap && props.onClap());
-    HI.on('doubleclap', () => props.onDoubleClap && props.onDoubleClap());
-    HI.on(
-      'speech',
-      (event: any, transcript: any) =>
-        props.onSpeech && props.onSpeech(event, transcript)
-    );
-    HI.on(
-      'speech:rt',
-      (event: any, transcript: any) =>
-        props.onSpeechRealtime && props.onSpeechRealtime(event, transcript)
-    );
+    if (!!HI) {
+      console.log('clearing old events');
+      HI.off();
+    }
+
+    console.log('Adding new events...');
+
+    // HI.on(
+    //   'speech',
+    //   (event: any, transcript: any) =>
+    //     props.onSpeech && props.onSpeech(event, transcript)
+    // );
+    // HI.on(
+    //   'speech:rt',
+    //   (event: any, transcript: any) =>
+    //     props.onSpeechRealtime && props.onSpeechRealtime(event, transcript)
+    // );
 
     return () => {
       HI.off();
     };
-  }, [props, props.key]);
+  }, []);
 };
 
 export default useHumanInput;

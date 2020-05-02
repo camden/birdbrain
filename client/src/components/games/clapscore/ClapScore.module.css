@@ -52,10 +52,9 @@
   align-items: center;
 }
 
-.playerNameInput {
-  font-size: 26px;
+.playerName {
+  font-size: 48px;
   font-weight: bold;
-  width: 250px;
 }
 
 .lastPhrase {
