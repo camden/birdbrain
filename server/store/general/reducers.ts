@@ -169,7 +169,7 @@ export const generalReducer = (
   }
 
   switch (action.type) {
-    case PICK_GAME_TYPE_MESSAGE:
+    case PICK_GAME_TYPE_MESSAGE: {
       const roomId = action.meta.roomId;
 
       if (!roomId) {
@@ -180,6 +180,7 @@ export const generalReducer = (
         const room = draftState.entities.rooms.byId[roomId];
         room.selectedGameType = action.payload.gameType;
       });
+    }
     case START_GAME_MESSAGE: {
       const roomId = action.meta.roomId;
 
