@@ -7,6 +7,7 @@ export enum GameType {
   PONG = 'PONG',
   LUDUM = 'LUDUM',
   LUDUM_ORIGINAL = 'LUDUM_ORIGINAL',
+  SPEEDBOAT = 'SPEEDBOAT',
 }
 
 export type GameID = string;

@@ -72,6 +72,13 @@ const getGameMetadata = (gameType: GameType): GameMetadata => {
         time: '10 min',
         description: 'Play games to keep your virtual pet alive!',
       };
+    case GameType.SPEEDBOAT:
+      return {
+        title: `speedboat game`,
+        playerCount: '2-12',
+        time: '10 min',
+        description: 'vroom',
+      };
   }
 };
 

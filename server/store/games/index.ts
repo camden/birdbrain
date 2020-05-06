@@ -8,6 +8,7 @@ import { createNewGameOfMinidom } from './minidom';
 import { createNewGameOfPong } from './pong';
 import { createNewGameOfLudum } from './ludum-dare';
 import { createNewGameOfLudumOriginal } from './ludum-dare-original';
+import { createNewGameOfSpeedboat } from './speedboat';
 import { User } from 'store/general/types';
 
 export const generateGameId = (type: GameType): GameID => {
@@ -32,5 +33,7 @@ export const createNewGame = (type: GameType, usersInRoom: User[]): Game => {
       return createNewGameOfLudumOriginal(generateGameId(type), usersInRoom);
     case GameType.LUDUM:
       return createNewGameOfLudum(generateGameId(type), usersInRoom);
+    case GameType.SPEEDBOAT:
+      return createNewGameOfSpeedboat(generateGameId(type), usersInRoom);
   }
 };

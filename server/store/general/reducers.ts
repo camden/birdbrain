@@ -35,6 +35,10 @@ import ludumReducer from 'store/games/ludum-dare/reducer';
 import { LudumOriginalGameState } from 'store/games/ludum-dare-original/types';
 import { LudumOriginalActionTypes } from 'store/games/ludum-dare-original/actions';
 import ludumOriginalReducer from 'store/games/ludum-dare-original/reducer';
+import { SpeedboatGameState } from 'store/games/speedboat/types';
+import speedboatReducer, {
+  SpeedboatActionTypes,
+} from 'store/games/speedboat/reducer';
 
 const initialState: GeneralState = {
   entities: {
@@ -45,7 +49,7 @@ const initialState: GeneralState = {
           users: [],
           leaderUserID: null,
           game: null,
-          selectedGameType: GameType.LUDUM,
+          selectedGameType: GameType.SPEEDBOAT,
         },
       },
       allIds: ['DEBUG'],
@@ -100,6 +104,14 @@ export const generalReducer = (
   state = initialState,
   action: GeneralActionTypes
 ) => {
+  if (action.type.startsWith('SB_')) {
+    return customGameReducer<SpeedboatActionTypes, SpeedboatGameState>(
+      speedboatReducer,
+      state,
+      action
+    );
+  }
+
   if (action.type.startsWith('LD_')) {
     return customGameReducer<LudumActionTypes, LudumGameState>(
       ludumReducer,

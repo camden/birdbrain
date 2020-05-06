@@ -101,7 +101,7 @@ export interface LudumOriginalMinigameHydraulicsState {
  * Reflexes
  */
 
-export interface LudumOriginalMinigameReflexesState {}
+export type LudumOriginalMinigameReflexesState = {};
 
 /**
  * Pizza
