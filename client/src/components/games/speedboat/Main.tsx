@@ -4,6 +4,7 @@ import { speedboatDummyAction } from '@server/store/games/speedboat/actions';
 import { useDispatch } from 'react-redux';
 import Button from 'components/shared/button/Button';
 import { sendMessage } from 'store/websocket/actions';
+import DrawingCanvas from './DrawingCanvas';
 
 export interface SpeedboatMainProps {
   game: SpeedboatGameState;
@@ -14,7 +15,7 @@ const SpeedboatMain: React.FC<SpeedboatMainProps> = () => {
 
   return (
     <div>
-      speedboat...
+      <DrawingCanvas />
       <Button
         onClick={() => dispatch(sendMessage(speedboatDummyAction('cam')))}
       >
