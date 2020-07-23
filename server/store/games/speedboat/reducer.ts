@@ -1,4 +1,4 @@
-import { ActionMeta } from '@server/store/general/types';
+import { ActionMeta } from 'store/general/types';
 import produce from 'immer';
 import { ActionType, getType } from 'typesafe-actions';
 import * as speedboatActions from './actions';
