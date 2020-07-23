@@ -132,11 +132,11 @@ const Home: React.FC = () => {
         <p>
           Find us on Twitter at&nbsp;
           <a
-            href="https://twitter.com/BirdbrainGames"
+            href="https://twitter.com/birdbrain_games"
             target="_blank"
             rel="noopener noreferrer"
           >
-            @birdbrain_games
+            Birdbrain Games
           </a>
           !
         </p>
