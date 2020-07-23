@@ -130,19 +130,15 @@ const Home: React.FC = () => {
       </section>
       <section className={styles.footer}>
         <p>
-          Made with{' '}
-          <span className={styles.emoji} role="img" aria-label="heart">
-            💜
-          </span>{' '}
-          by{' '}
+          Find us on Twitter at&nbsp;
           <a
-            href="https://twitter.com/camdenbickel"
+            href="https://twitter.com/BirdbrainGames"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Camden Bickel
+            @birdbrain_games
           </a>
-          .
+          !
         </p>
       </section>
     </div>
