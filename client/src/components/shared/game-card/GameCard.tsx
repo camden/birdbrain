@@ -60,14 +60,14 @@ const getGameMetadata = (gameType: GameType): GameMetadata => {
       };
     case GameType.LUDUM_ORIGINAL:
       return {
-        title: `Win or Your Totobee WILL Die`,
+        title: `Puzzle Pet Panic [DIFFICULT]`,
         playerCount: '2-12',
         time: '10 min',
         description: 'Play games to keep your virtual pet alive!',
       };
     case GameType.LUDUM:
       return {
-        title: `[NEW] Win or Your Totobee WILL Die`,
+        title: `[NEW_VERSION] Win or Your Totobee WILL Die`,
         playerCount: '2-12',
         time: '10 min',
         description: 'Play games to keep your virtual pet alive!',
