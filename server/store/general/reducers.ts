@@ -112,7 +112,10 @@ export const generalReducer = (
     );
   }
 
-  if (action.type.startsWith('LD_')) {
+  if (
+    action.type.startsWith('LD_') &&
+    !action.type.startsWith('LD_ORIGINAL_')
+  ) {
     return customGameReducer<LudumActionTypes, LudumGameState>(
       ludumReducer,
       state,
@@ -120,7 +123,7 @@ export const generalReducer = (
     );
   }
 
-  if (action.type.startsWith('LD_ORIGINAL')) {
+  if (action.type.startsWith('LD_ORIGINAL_')) {
     return customGameReducer<LudumOriginalActionTypes, LudumOriginalGameState>(
       ludumOriginalReducer,
       state,
