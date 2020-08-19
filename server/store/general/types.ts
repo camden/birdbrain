@@ -13,6 +13,7 @@ import { PongActionTypes } from 'store/games/pong/actions';
 import { LudumActionTypes } from 'store/games/ludum-dare/actions';
 import { LudumOriginalActionTypes } from 'store/games/ludum-dare-original/actions';
 import { SpeedboatActionTypes } from 'store/games/speedboat/reducer';
+import { ScoreCounterActionTypes } from 'store/games/score-counter/reducer';
 
 export type RoomID = string;
 
@@ -114,6 +115,7 @@ export interface EndCurrentGameAction {
 }
 
 export type GameActionTypes =
+  | ScoreCounterActionTypes
   | SpeedboatActionTypes
   | LudumActionTypes
   | LudumOriginalActionTypes

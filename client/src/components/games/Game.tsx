@@ -21,6 +21,8 @@ import { LudumOriginalGameState } from '@server/store/games/ludum-dare-original/
 import LudumOriginalMain from './ludum-dare-original/Main';
 import SpeedboatMain from './speedboat/Main';
 import { SpeedboatGameState } from '@server/store/games/speedboat/types';
+import ScoreCounterMain from './score-counter/Main';
+import { ScoreCounterGameState } from '@server/store/games/score-counter/types';
 
 export interface GameProps {
   room: Room;
@@ -50,6 +52,8 @@ const Game: React.FC<GameProps> = ({ room }) => {
       return <LudumMain game={game as LudumGameState} />;
     case GameType.SPEEDBOAT:
       return <SpeedboatMain game={game as SpeedboatGameState} />;
+    case GameType.SCORE_COUNTER:
+      return <ScoreCounterMain game={game as ScoreCounterGameState} />;
   }
 
   return <div>game not found</div>;

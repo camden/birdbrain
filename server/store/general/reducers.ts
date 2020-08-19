@@ -39,6 +39,10 @@ import { SpeedboatGameState } from 'store/games/speedboat/types';
 import speedboatReducer, {
   SpeedboatActionTypes,
 } from 'store/games/speedboat/reducer';
+import scoreCounterReducer, {
+  ScoreCounterActionTypes,
+} from 'store/games/score-counter/reducer';
+import { ScoreCounterGameState } from 'store/games/score-counter/types';
 
 const initialState: GeneralState = {
   entities: {
@@ -49,7 +53,7 @@ const initialState: GeneralState = {
           users: [],
           leaderUserID: null,
           game: null,
-          selectedGameType: GameType.SPEEDBOAT,
+          selectedGameType: GameType.SCORE_COUNTER,
         },
       },
       allIds: ['DEBUG'],
@@ -104,6 +108,14 @@ export const generalReducer = (
   state = initialState,
   action: GeneralActionTypes
 ) => {
+  if (action.type.startsWith('SC_')) {
+    return customGameReducer<ScoreCounterActionTypes, ScoreCounterGameState>(
+      scoreCounterReducer,
+      state,
+      action
+    );
+  }
+
   if (action.type.startsWith('SB_')) {
     return customGameReducer<SpeedboatActionTypes, SpeedboatGameState>(
       speedboatReducer,

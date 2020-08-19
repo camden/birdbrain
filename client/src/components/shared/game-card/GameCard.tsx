@@ -74,10 +74,17 @@ const getGameMetadata = (gameType: GameType): GameMetadata => {
       };
     case GameType.SPEEDBOAT:
       return {
-        title: `speedboat game`,
+        title: `drawing game`,
         playerCount: '2-12',
         time: '10 min',
         description: 'vroom',
+      };
+    case GameType.SCORE_COUNTER:
+      return {
+        title: `Simple Score Counter`,
+        playerCount: '1+',
+        time: 'n/a',
+        description: 'A simple counter',
       };
   }
 };
