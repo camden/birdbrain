@@ -9,4 +9,5 @@ export interface ScoreCounterGameState extends Game {
 export interface ScoreCounterPlayer {
   userId: UserID;
   name: string;
+  currentCount: number;
 }

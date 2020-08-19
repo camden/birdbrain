@@ -1,0 +1,49 @@
+.wrapper {
+  padding: 10px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.button {
+  width: 100%;
+}
+
+.allButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.buttonColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.mainNumber {
+  font-size: 60px;
+  text-align: center;
+  width: 100%;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.otherScores {
+  margin-top: 16px;
+}
+
+.scoreRow {
+  font-size: 24px;
+}
+
+.playerName {
+  margin-right: 8px;
+}
+
+.playerScore {
+  margin-left: 8px;
+}

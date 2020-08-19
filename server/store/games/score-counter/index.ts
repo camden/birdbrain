@@ -6,6 +6,7 @@ const createPlayerFromUser = (user: User): ScoreCounterPlayer => {
   return {
     userId: user.id,
     name: user.name,
+    currentCount: 0,
   };
 };
 

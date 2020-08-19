@@ -25,10 +25,15 @@ const scoreCounterReducer = (
   action: ScoreCounterActionTypes
 ): ScoreCounterGameState => {
   switch (action.type) {
-    case getType(scoreCounterActions.scoreCounterDummyAction):
+    case getType(scoreCounterActions.scoreCounterAddAction):
       return produce(game, (draftState) => {
-        const player = getPlayer(game, action);
-        console.log('DUMMY ACTION', player);
+        const player = getPlayer(draftState, action);
+        player.currentCount += action.payload;
+      });
+    case getType(scoreCounterActions.scoreCounterSetAction):
+      return produce(game, (draftState) => {
+        const player = getPlayer(draftState, action);
+        player.currentCount = action.payload;
       });
   }
 };
