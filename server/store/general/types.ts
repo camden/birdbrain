@@ -14,6 +14,7 @@ import { LudumActionTypes } from 'store/games/ludum-dare/actions';
 import { LudumOriginalActionTypes } from 'store/games/ludum-dare-original/actions';
 import { SpeedboatActionTypes } from 'store/games/speedboat/reducer';
 import { ScoreCounterActionTypes } from 'store/games/score-counter/reducer';
+import { GroveActionTypes } from 'store/games/grovetenders/reducer';
 
 export type RoomID = string;
 
@@ -115,6 +116,7 @@ export interface EndCurrentGameAction {
 }
 
 export type GameActionTypes =
+  | GroveActionTypes
   | ScoreCounterActionTypes
   | SpeedboatActionTypes
   | LudumActionTypes

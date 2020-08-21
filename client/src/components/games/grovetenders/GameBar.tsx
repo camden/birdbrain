@@ -20,10 +20,10 @@ const GroveGameBar: React.FC<GameBarProps> = ({ game }) => {
             <LabelWithIcon icon={faUser} label={currentPlayer.name} />
           </section>
           <section>
-            <LabelWithIcon icon={faHeart} label={currentPlayer.health} />
+            <LabelWithIcon icon={faHeart} label={10} />
           </section>
           <section>
-            <LabelWithIcon icon={faStar} label={currentPlayer.score} />
+            <LabelWithIcon icon={faStar} label={10} />
           </section>
         </div>
       </div>
