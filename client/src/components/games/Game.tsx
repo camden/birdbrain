@@ -23,6 +23,8 @@ import SpeedboatMain from './speedboat/Main';
 import { SpeedboatGameState } from '@server/store/games/speedboat/types';
 import ScoreCounterMain from './score-counter/Main';
 import { ScoreCounterGameState } from '@server/store/games/score-counter/types';
+import GroveMain from './grovetenders/Main';
+import { GroveGameState } from '@server/store/games/grovetenders/types';
 
 export interface GameProps {
   room: Room;
@@ -54,6 +56,8 @@ const Game: React.FC<GameProps> = ({ room }) => {
       return <SpeedboatMain game={game as SpeedboatGameState} />;
     case GameType.SCORE_COUNTER:
       return <ScoreCounterMain game={game as ScoreCounterGameState} />;
+    case GameType.GROVETENDERS:
+      return <GroveMain game={game as GroveGameState} />;
   }
 
   return <div>game not found</div>;

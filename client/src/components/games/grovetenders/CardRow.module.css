@@ -1,0 +1,12 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  height: 96px;
+}
+
+.deckSize {
+  font-size: 48px;
+  font-weight: 900;
+}

@@ -86,6 +86,13 @@ const getGameMetadata = (gameType: GameType): GameMetadata => {
         time: 'n/a',
         description: 'A simple counter',
       };
+    case GameType.GROVETENDERS:
+      return {
+        title: `Grovetenders`,
+        playerCount: '1+',
+        time: 'n/a',
+        description: 'Keep the Grove alive',
+      };
   }
 };
 

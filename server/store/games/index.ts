@@ -10,6 +10,7 @@ import { createNewGameOfLudum } from './ludum-dare';
 import { createNewGameOfLudumOriginal } from './ludum-dare-original';
 import { createNewGameOfSpeedboat } from './speedboat';
 import { createNewGameOfScoreCounter } from './score-counter';
+import { createNewGameOfGrove } from './grovetenders';
 import { User } from 'store/general/types';
 
 export const generateGameId = (type: GameType): GameID => {
@@ -38,5 +39,7 @@ export const createNewGame = (type: GameType, usersInRoom: User[]): Game => {
       return createNewGameOfSpeedboat(generateGameId(type), usersInRoom);
     case GameType.SCORE_COUNTER:
       return createNewGameOfScoreCounter(generateGameId(type), usersInRoom);
+    case GameType.GROVETENDERS:
+      return createNewGameOfGrove(generateGameId(type), usersInRoom);
   }
 };

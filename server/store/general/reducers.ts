@@ -43,6 +43,10 @@ import scoreCounterReducer, {
   ScoreCounterActionTypes,
 } from 'store/games/score-counter/reducer';
 import { ScoreCounterGameState } from 'store/games/score-counter/types';
+import groveReducer, {
+  GroveActionTypes,
+} from 'store/games/grovetenders/reducer';
+import { GroveGameState } from 'store/games/grovetenders/types';
 
 const initialState: GeneralState = {
   entities: {
@@ -53,7 +57,7 @@ const initialState: GeneralState = {
           users: [],
           leaderUserID: null,
           game: null,
-          selectedGameType: GameType.SCORE_COUNTER,
+          selectedGameType: GameType.GROVETENDERS,
         },
       },
       allIds: ['DEBUG'],
@@ -108,6 +112,14 @@ export const generalReducer = (
   state = initialState,
   action: GeneralActionTypes
 ) => {
+  if (action.type.startsWith('GROVE_')) {
+    return customGameReducer<GroveActionTypes, GroveGameState>(
+      groveReducer,
+      state,
+      action
+    );
+  }
+
   if (action.type.startsWith('SC_')) {
     return customGameReducer<ScoreCounterActionTypes, ScoreCounterGameState>(
       scoreCounterReducer,
