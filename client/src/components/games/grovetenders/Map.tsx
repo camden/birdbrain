@@ -6,6 +6,7 @@ import {
 import styles from './Map.module.css';
 import { useCurrentPlayer } from 'utils/grovetenders-utils';
 import cx from 'classnames';
+import Button from 'components/shared/button/Button';
 
 export interface GroveMapProps {
   game: GroveGameState;
@@ -82,7 +83,7 @@ export interface PointProps {
 
 const Point: React.FC<PointProps> = ({ occupants }) => {
   return (
-    <div className={styles.point}>
+    <Button className={styles.point} secondary>
       <div className={styles.inner}>
         {occupants
           .filter((o) => o.type !== 'hidden')
@@ -98,7 +99,7 @@ const Point: React.FC<PointProps> = ({ occupants }) => {
             />
           ))}
       </div>
-    </div>
+    </Button>
   );
 };
 
