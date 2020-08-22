@@ -3,7 +3,7 @@ import { GroveGameState } from '@server/store/games/grovetenders/types';
 import GroveGameBar from './GameBar';
 import styles from './Main.module.css';
 import { useCurrentPlayer } from 'utils/grovetenders-utils';
-import GroveMap from './CanvasMap';
+import GroveMap from './ThreeMap';
 import GroveMainInput from './MainInput';
 
 export interface MainProps {

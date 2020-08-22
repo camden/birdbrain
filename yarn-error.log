@@ -1,8 +1,8 @@
 Arguments: 
-  /Users/camden/.nvm/versions/node/v12.14.1/bin/node /Users/camden/.yarn/bin/yarn.js add typesafe-actions @types/typesafe-actions
+  /Users/camden/.nvm/versions/node/v12.14.1/bin/node /Users/camden/.yarn/bin/yarn.js add @types/three @types/react-three-fiber
 
 PATH: 
-  /Library/Frameworks/Python.framework/Versions/3.8/bin:/Users/camden/.yarn/bin:/Users/camden/.config/yarn/global/node_modules/.bin:/Users/camden/.nvm/versions/node/v12.14.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/usr/local/share/dotnet:/opt/X11/bin:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Library/Frameworks/Python.framework/Versions/3.8/bin:/Users/camden/.yarn/bin:/Users/camden/.config/yarn/global/node_modules/.bin:/Users/camden/.nvm/versions/node/v12.14.1/bin:/Users/camden/.fzf/bin:/Users/camden/.local/bin:/Users/camden/.local/bin
+  /Users/camden/.pyenv/shims:/Library/Frameworks/Python.framework/Versions/3.8/bin:/Users/camden/.yarn/bin:/Users/camden/.config/yarn/global/node_modules/.bin:/Users/camden/.nvm/versions/node/v12.14.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/usr/local/share/dotnet:/opt/X11/bin:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/camden/.pyenv/shims:/Library/Frameworks/Python.framework/Versions/3.8/bin:/Users/camden/.yarn/bin:/Users/camden/.config/yarn/global/node_modules/.bin:/Users/camden/.nvm/versions/node/v12.14.1/bin:/Users/camden/.fzf/bin:/Users/camden/.local/bin:/Users/camden/.local/bin
 
 Yarn version: 
   1.21.1
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2ftypesafe-actions: Not found
+  Error: https://registry.yarnpkg.com/@types%2freact-three-fiber: Not found
       at Request.params.callback [as _callback] (/Users/camden/.yarn/lib/cli.js:66947:18)
       at Request.self.callback (/Users/camden/.yarn/lib/cli.js:140665:22)
       at Request.emit (events.js:223:5)
@@ -56,9 +56,12 @@ npm manifest:
       "express": "^4.17.1",
       "immer": "^6.0.3",
       "ramda": "^0.26.1",
+      "react-three-fiber": "^4.2.20",
       "redux": "^4.0.5",
       "reselect": "^4.0.0",
       "socket.io": "^2.3.0",
+      "three": "^0.119.1",
+      "typesafe-actions": "^5.1.0",
       "typescript": "^3.8.3",
       "uuid": "^3.4.0"
     },
@@ -122,6 +125,18 @@ Lockfile:
     integrity sha512-NE2DtOdufG7R5vnfQUTehdTfNycfUANEtCa9PssN9O/xmTzP4E08UI797ixaei6hBEVL9BI/PsdJS5x7mWoB9Q==
     dependencies:
       regenerator-runtime "^0.13.4"
+  
+  "@babel/runtime@^7.9.2":
+    version "7.11.2"
+    resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.11.2.tgz#f549c13c754cc40b87644b9fa9f09a6a95fe0736"
+    integrity sha512-TeWkU52so0mPtDcaCTxNBI/IHiz0pZgr8VEFqXFtZWpYD08ZB6FaSwVAS8MKRQAP3bYKiVjwysOJgMFY28o6Tw==
+    dependencies:
+      regenerator-runtime "^0.13.4"
+  
+  "@juggle/resize-observer@^3.1.3":
+    version "3.2.0"
+    resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.2.0.tgz#5e0b448d27fe3091bae6216456512c5904d05661"
+    integrity sha512-fsLxt0CHx2HCV9EL8lDoVkwHffsA0snUpddYjdLyXcG5E41xaamn9ZyQqOE9TUJdrRlH8/hjIf+UdOdDeKCUgg==
   
   "@sentry/apm@5.11.1":
     version "5.11.1"
@@ -803,7 +818,7 @@ Lockfile:
       get-stdin "^4.0.1"
       meow "^3.3.0"
   
-  debounce@^1.0.0:
+  debounce@^1.0.0, debounce@^1.2.0:
     version "1.2.0"
     resolved "https://registry.yarnpkg.com/debounce/-/debounce-1.2.0.tgz#44a540abc0ea9943018dc0eaa95cce87f65cd131"
     integrity sha512-mYtLl1xfZLi1m4RtQYlZgJUNQjl4ZxVnHzIR8nLLgi4q1YT8o/WM+MK/f8yfcc9s5Ir5zRaPZyZU6xs1Syoocg==
@@ -1241,6 +1256,11 @@ Lockfile:
       chardet "^0.7.0"
       iconv-lite "^0.4.24"
       tmp "^0.0.33"
+  
+  fast-deep-equal@^2.0.1:
+    version "2.0.1"
+    resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
+    integrity sha1-ewUhjd+WZ79/Nwv3/bLLFf3Qqkk=
   
   fast-deep-equal@^3.1.1:
     version "3.1.1"
@@ -1744,7 +1764,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
     integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
   
-  loose-envify@^1.4.0:
+  loose-envify@^1.1.0, loose-envify@^1.4.0:
     version "1.4.0"
     resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
     integrity sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==
@@ -2181,7 +2201,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
     integrity sha512-7PiHtLll5LdnKIMw100I+8xJXR5gW2QwWYkT6iJva0bXitZKa/XMrSbdmg3r2Xnaidz9Qumd0VPaMrZlF9V9sA==
   
-  prop-types@^15.7.2:
+  prop-types@^15.6.2, prop-types@^15.7.2:
     version "15.7.2"
     resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
     integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -2232,6 +2252,51 @@ Lockfile:
     version "16.13.1"
     resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
     integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+  
+  react-merge-refs@^1.0.0:
+    version "1.1.0"
+    resolved "https://registry.yarnpkg.com/react-merge-refs/-/react-merge-refs-1.1.0.tgz#73d88b892c6c68cbb7a66e0800faa374f4c38b06"
+    integrity sha512-alTKsjEL0dKH/ru1Iyn7vliS2QRcBp9zZPGoWxUOvRGWPUYgjo+V01is7p04It6KhgrzhJGnIj9GgX8W4bZoCQ==
+  
+  react-promise-suspense@^0.3.2:
+    version "0.3.3"
+    resolved "https://registry.yarnpkg.com/react-promise-suspense/-/react-promise-suspense-0.3.3.tgz#b085c7e0ac22b85fd3d605b1c4f181cda4310bc9"
+    integrity sha512-OdehKsCEWYoV6pMcwxbvJH99UrbXylmXJ1QpEL9OfHaUBzcAihyfSJV8jFq325M/wW9iKc/BoiLROXxMul+MxA==
+    dependencies:
+      fast-deep-equal "^2.0.1"
+  
+  react-reconciler@0.25.1:
+    version "0.25.1"
+    resolved "https://registry.yarnpkg.com/react-reconciler/-/react-reconciler-0.25.1.tgz#f9814d59d115e1210762287ce987801529363aaa"
+    integrity sha512-R5UwsIvRcSs3w8n9k3tBoTtUHdVhu9u84EG7E5M0Jk9F5i6DA1pQzPfUZd6opYWGy56MJOtV3VADzy6DRwYDjw==
+    dependencies:
+      loose-envify "^1.1.0"
+      object-assign "^4.1.1"
+      prop-types "^15.6.2"
+      scheduler "^0.19.1"
+  
+  react-three-fiber@^4.2.20:
+    version "4.2.20"
+    resolved "https://registry.yarnpkg.com/react-three-fiber/-/react-three-fiber-4.2.20.tgz#2689c005689f7c706cfb29bcf7f09958ff900b9a"
+    integrity sha512-M5TCdGNKvofe37VMXnhbabgRDiRm9rnfxOmMFuLa+H9FiiLT3wUMMgE9eBmLh3McKgYXURETWKkNDePeQ0J0JQ==
+    dependencies:
+      "@babel/runtime" "^7.9.2"
+      "@juggle/resize-observer" "^3.1.3"
+      react-merge-refs "^1.0.0"
+      react-promise-suspense "^0.3.2"
+      react-reconciler "0.25.1"
+      react-use-measure "^2.0.0"
+      resize-observer-polyfill "^1.5.1"
+      scheduler "0.19.1"
+      tiny-emitter "^2.1.0"
+      utility-types "^3.10.0"
+  
+  react-use-measure@^2.0.0:
+    version "2.0.1"
+    resolved "https://registry.yarnpkg.com/react-use-measure/-/react-use-measure-2.0.1.tgz#4f23f94c832cd4512da55acb300d1915dcbf3ae8"
+    integrity sha512-lFfHiqcXbJ2/6aUkZwt8g5YYM7EGqNVxJhMqMPqv1BVXRKp8D7jYLlmma0SvhRY4WYxxkZpCdbJvhDylb5gcEA==
+    dependencies:
+      debounce "^1.2.0"
   
   read-pkg-up@^1.0.1:
     version "1.0.1"
@@ -2337,6 +2402,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/reselect/-/reselect-4.0.0.tgz#f2529830e5d3d0e021408b246a206ef4ea4437f7"
     integrity sha512-qUgANli03jjAyGlnbYVAV5vvnOmJnODyABz51RdBN7M4WaVu8mecZWgyQNkG8Yqe3KRGRt0l4K4B3XVEULC4CA==
   
+  resize-observer-polyfill@^1.5.1:
+    version "1.5.1"
+    resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
+    integrity sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
+  
   resolve-from@^4.0.0:
     version "4.0.0"
     resolved "https://registry.yarnpkg.com/resolve-from/-/resolve-from-4.0.0.tgz#4abcd852ad32dd7baabfe9b40e00a36db5f392e6"
@@ -2408,6 +2478,14 @@ Lockfile:
     version "2.1.2"
     resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
     integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
+  
+  scheduler@0.19.1, scheduler@^0.19.1:
+    version "0.19.1"
+    resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.19.1.tgz#4f3e2ed2c1a7d65681f4c854fa8c5a1ccb40f196"
+    integrity sha512-n/zwRWRYSUj0/3g/otKDRPMh6qv2SYMWNq85IEa8iZyAv8od9zDYpGSnpBEjNgcMNq6Scbu5KfIPxNF72R/2EA==
+    dependencies:
+      loose-envify "^1.1.0"
+      object-assign "^4.1.1"
   
   "semver@2 || 3 || 4 || 5", semver@^5.5.0:
     version "5.7.1"
@@ -2759,10 +2837,20 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
     integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
   
+  three@^0.119.1:
+    version "0.119.1"
+    resolved "https://registry.yarnpkg.com/three/-/three-0.119.1.tgz#9d979a082c4cd9622af8e3498a8dfa026a619332"
+    integrity sha512-GHyh/RiUfQ5VTiWIVRRTANYoXc1PFB1y+jDVRTb649nif1uX1F06PT1TKU3k2+F/MN4UJ3PWvQB53fY2OqKqKw==
+  
   through@^2.3.6:
     version "2.3.8"
     resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
     integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
+  
+  tiny-emitter@^2.1.0:
+    version "2.1.0"
+    resolved "https://registry.yarnpkg.com/tiny-emitter/-/tiny-emitter-2.1.0.tgz#1d1a56edfc51c43e863cbb5382a72330e3555423"
+    integrity sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==
   
   tmp@^0.0.33:
     version "0.0.33"
@@ -2877,6 +2965,11 @@ Lockfile:
       media-typer "0.3.0"
       mime-types "~2.1.24"
   
+  typesafe-actions@^5.1.0:
+    version "5.1.0"
+    resolved "https://registry.yarnpkg.com/typesafe-actions/-/typesafe-actions-5.1.0.tgz#9afe8b1e6a323af1fd59e6a57b11b7dd6623d2f1"
+    integrity sha512-bna6Yi1pRznoo6Bz1cE6btB/Yy8Xywytyfrzu/wc+NFW3ZF0I+2iCGImhBsoYYCOWuICtRO4yHcnDlzgo1AdNg==
+  
   typescript@^3.8.3:
     version "3.8.3"
     resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.8.3.tgz#409eb8544ea0335711205869ec458ab109ee1061"
@@ -2893,6 +2986,11 @@ Lockfile:
     integrity sha512-KY9Frmirql91X2Qgjry0Wd4Y+YTdrdZheS8TFwvkbLWf/G5KNJDCh6pKL5OZctEW4+0Baa5idK2ZQuELRwPznQ==
     dependencies:
       punycode "^2.1.0"
+  
+  utility-types@^3.10.0:
+    version "3.10.0"
+    resolved "https://registry.yarnpkg.com/utility-types/-/utility-types-3.10.0.tgz#ea4148f9a741015f05ed74fd615e1d20e6bed82b"
+    integrity sha512-O11mqxmi7wMKCo6HKFt5AhO4BwY3VV68YU07tgxfz8zJTIxr4BpsezN49Ffwy9j3ZpwwJp4fkRwjRzq3uWE6Rg==
   
   utils-merge@1.0.1:
     version "1.0.1"
