@@ -34,11 +34,11 @@ const App: React.FC = () => {
             <TrackedRoute path="/room/:id">
               <Room />
             </TrackedRoute>
-            <TrackedRoute path="/pingpong">
-              <PingPong />
+            <TrackedRoute path="/pingpong-tracker">
+              {process.env.NODE_ENV === 'development' && <PingPong />}
             </TrackedRoute>
-            <TrackedRoute path="/clapscore">
-              {process.env.NODE_ENV === 'development' && <ClapScore />}
+            <TrackedRoute path="/pingpong">
+              <ClapScore />
             </TrackedRoute>
             <TrackedRoute path="/">
               <Home />
