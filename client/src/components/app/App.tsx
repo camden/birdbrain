@@ -35,7 +35,7 @@ const App: React.FC = () => {
               <Room />
             </TrackedRoute>
             <TrackedRoute path="/pingpong">
-              {process.env.NODE_ENV === 'development' && <PingPong />}
+              <PingPong />
             </TrackedRoute>
             <TrackedRoute path="/clapscore">
               {process.env.NODE_ENV === 'development' && <ClapScore />}
