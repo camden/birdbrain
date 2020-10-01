@@ -8,23 +8,30 @@ import { useCurrentPlayer } from 'utils/grovetenders-utils';
 import cx from 'classnames';
 import Button from 'components/shared/button/Button';
 import { Stage, Layer, Circle } from 'react-konva';
+import ReactNipple from 'react-nipple';
+import GameLoop from './GameLoop';
 
 export interface GroveMapProps {
   game: GroveGameState;
 }
 
-export interface MapOccupant {
-  player: GrovePlayer;
-  type: 'active' | 'hidden' | 'previous';
+export interface InputInfo {
+  isMoving: boolean;
+  angle: number;
+  distance: number;
 }
 
 const GroveMap: React.FC<GroveMapProps> = ({ game }) => {
   const currentPlayer = useCurrentPlayer(game);
   const [stageWidth, setStageWidth] = useState(100);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [inputInfo, setInputInfo] = useState<InputInfo>({
+    isMoving: false,
+    angle: 0,
+    distance: 0,
+  });
 
   const checkSize = () => {
-    console.log('hi');
     const width = containerRef.current?.offsetWidth;
     if (width) {
       setStageWidth(width);
@@ -40,59 +47,36 @@ const GroveMap: React.FC<GroveMapProps> = ({ game }) => {
     };
   }, []);
 
-  const circleRadius = 10;
-  const cols = 3;
-  const colWidth = stageWidth / cols;
-
   return (
-    <div ref={containerRef} className={styles.wrapper}>
-      <Stage width={stageWidth} height={100}>
-        <Layer>
-          <Circle
-            x={circleRadius + 0.5 * colWidth}
-            y={10}
-            radius={circleRadius}
-            fill="red"
-          />
-          <Circle
-            x={colWidth * 1.5 + circleRadius}
-            y={10}
-            radius={circleRadius}
-            fill="red"
-          />
-          <Circle
-            x={colWidth * 2 + circleRadius}
-            y={10}
-            radius={circleRadius}
-            fill="red"
-          />
-        </Layer>
-      </Stage>
-    </div>
-  );
-};
-
-export interface PointProps {
-  occupants: MapOccupant[];
-}
-
-const Point: React.FC<PointProps> = ({ occupants }) => {
-  return (
-    <Button className={styles.point} secondary>
-      <div className={styles.inner}>
-        {occupants.map((occupant) => (
-          <div
-            style={{
-              color: occupant.player.color,
-            }}
-            className={cx(styles.player, {
-              [styles.active]: occupant.type === 'active',
-              [styles.previous]: occupant.type === 'previous',
-            })}
-          />
-        ))}
+    <div>
+      <div ref={containerRef} className={styles.wrapper}>
+        IsMoving? {inputInfo.isMoving ? 'yes' : 'no'}
+        <GameLoop
+          game={game}
+          canvasWidth={100}
+          canvasHeight={100}
+          inputInfo={inputInfo}
+        />
       </div>
-    </Button>
+      <ReactNipple
+        className={styles.joystick}
+        options={{ mode: 'static', position: { top: '50%', left: '50%' } }}
+        onMove={(evt: any, data: any) => {
+          setInputInfo({
+            isMoving: true,
+            distance: data.distance,
+            angle: data.angle.degree,
+          });
+        }}
+        onEnd={() => {
+          setInputInfo({
+            isMoving: false,
+            distance: 0,
+            angle: 0,
+          });
+        }}
+      />
+    </div>
   );
 };
 

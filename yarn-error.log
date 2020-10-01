@@ -1,5 +1,5 @@
 Arguments: 
-  /Users/camden/.nvm/versions/node/v12.14.1/bin/node /Users/camden/.yarn/bin/yarn.js add @types/three @types/react-three-fiber
+  /Users/camden/.nvm/versions/node/v12.14.1/bin/node /Users/camden/.yarn/bin/yarn.js add @types/react-nipple
 
 PATH: 
   /Users/camden/.pyenv/shims:/Library/Frameworks/Python.framework/Versions/3.8/bin:/Users/camden/.yarn/bin:/Users/camden/.config/yarn/global/node_modules/.bin:/Users/camden/.nvm/versions/node/v12.14.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/usr/local/share/dotnet:/opt/X11/bin:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/camden/.pyenv/shims:/Library/Frameworks/Python.framework/Versions/3.8/bin:/Users/camden/.yarn/bin:/Users/camden/.config/yarn/global/node_modules/.bin:/Users/camden/.nvm/versions/node/v12.14.1/bin:/Users/camden/.fzf/bin:/Users/camden/.local/bin:/Users/camden/.local/bin
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2freact-three-fiber: Not found
+  Error: https://registry.yarnpkg.com/@types%2freact-nipple: Not found
       at Request.params.callback [as _callback] (/Users/camden/.yarn/lib/cli.js:66947:18)
       at Request.self.callback (/Users/camden/.yarn/lib/cli.js:140665:22)
       at Request.emit (events.js:223:5)
@@ -52,10 +52,12 @@ npm manifest:
       "@types/compression": "^1.7.0",
       "@types/express": "^4.17.2",
       "@types/socket.io": "^2.1.4",
+      "@types/three": "^0.103.2",
       "compression": "^1.7.4",
       "express": "^4.17.1",
       "immer": "^6.0.3",
       "ramda": "^0.26.1",
+      "react-nipple": "^1.0.2",
       "react-three-fiber": "^4.2.20",
       "redux": "^4.0.5",
       "reselect": "^4.0.0",
@@ -327,6 +329,13 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/@types/strip-json-comments/-/strip-json-comments-0.0.30.tgz#9aa30c04db212a9a0649d6ae6fd50accc40748a1"
     integrity sha512-7NQmHra/JILCd1QqpSzl8+mJRc8ZHz3uDm8YV1Ks9IhK0epEiTw8aIErbvH9PI+6XbqhyIQy3462nEsn7UVzjQ==
   
+  "@types/three@^0.103.2":
+    version "0.103.2"
+    resolved "https://registry.yarnpkg.com/@types/three/-/three-0.103.2.tgz#f7d49130001c551941a0ded757def810579aafc4"
+    integrity sha512-zhtf0Qs5wLJpIn1+VWCpzSgpKayj/GSWZ6woiuz09FW59KEDeLpnBkYz6lbblVpRmGdlnG8nd0unaASshOvcXw==
+    dependencies:
+      three "*"
+  
   "@types/uuid@^3.4.6":
     version "3.4.6"
     resolved "https://registry.yarnpkg.com/@types/uuid/-/uuid-3.4.6.tgz#d2c4c48eb85a757bf2927f75f939942d521e3016"
@@ -514,6 +523,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/async-limiter/-/async-limiter-1.0.1.tgz#dd379e94f0db8310b08291f9d64c3209766617fd"
     integrity sha512-csOlWGAcRFJaI6m+F2WKdnMKr4HhdhFVBk0H/QbJFMCr+uO2kwohwXQPxw/9OCxp05r5ghVBFSyioixx3gfkNQ==
   
+  autobind-decorator@^2.1.0:
+    version "2.4.0"
+    resolved "https://registry.yarnpkg.com/autobind-decorator/-/autobind-decorator-2.4.0.tgz#ea9e1c98708cf3b5b356f7cf9f10f265ff18239c"
+    integrity sha512-OGYhWUO72V6DafbF8PM8rm3EPbfuyMZcJhtm5/n26IDwO18pohE4eNazLoCGhPiXOCD0gEGmrbU3849QvM8bbw==
+  
   axobject-query@^2.0.2:
     version "2.1.2"
     resolved "https://registry.yarnpkg.com/axobject-query/-/axobject-query-2.1.2.tgz#2bdffc0371e643e5f03ba99065d5179b9ca79799"
@@ -639,6 +653,11 @@ Lockfile:
     version "0.7.0"
     resolved "https://registry.yarnpkg.com/chardet/-/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
     integrity sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
+  
+  classnames@^2.2.6:
+    version "2.2.6"
+    resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
+    integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
   
   cli-cursor@^3.1.0:
     version "3.1.0"
@@ -1759,6 +1778,11 @@ Lockfile:
       p-locate "^3.0.0"
       path-exists "^3.0.0"
   
+  lodash.isequal@^4.5.0:
+    version "4.5.0"
+    resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+    integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
+  
   lodash@^4.17.14, lodash@^4.17.15:
     version "4.17.15"
     resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
@@ -1905,6 +1929,11 @@ Lockfile:
     version "1.0.5"
     resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
     integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
+  
+  nipplejs@^0.7.1:
+    version "0.7.3"
+    resolved "https://registry.yarnpkg.com/nipplejs/-/nipplejs-0.7.3.tgz#8cff8a3c9452e7883e6e7fa16df67114e9b9317b"
+    integrity sha512-3b6N5vdhaIIhuj2qRVhA8SjfZgsoB+WhKtrcq4Xowkgp+PD/kgYmdlqhiAIv2n1OzXdqqYT0mSZF+9Dr2LfqkA==
   
   node-notifier@^5.4.0:
     version "5.4.3"
@@ -2257,6 +2286,16 @@ Lockfile:
     version "1.1.0"
     resolved "https://registry.yarnpkg.com/react-merge-refs/-/react-merge-refs-1.1.0.tgz#73d88b892c6c68cbb7a66e0800faa374f4c38b06"
     integrity sha512-alTKsjEL0dKH/ru1Iyn7vliS2QRcBp9zZPGoWxUOvRGWPUYgjo+V01is7p04It6KhgrzhJGnIj9GgX8W4bZoCQ==
+  
+  react-nipple@^1.0.2:
+    version "1.0.2"
+    resolved "https://registry.yarnpkg.com/react-nipple/-/react-nipple-1.0.2.tgz#23d98109e35eb4106f11055b8273fb6ee660bd7d"
+    integrity sha512-qiPHyy94kPI+mjEKl0s50KyefUMkF5ZPqcHBQJIzDWu0jfvc0YjQ0FnBuf0mkiuKWOPGDHayVasil73b2Da/FQ==
+    dependencies:
+      autobind-decorator "^2.1.0"
+      classnames "^2.2.6"
+      lodash.isequal "^4.5.0"
+      nipplejs "^0.7.1"
   
   react-promise-suspense@^0.3.2:
     version "0.3.3"
@@ -2837,7 +2876,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
     integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
   
-  three@^0.119.1:
+  three@*, three@^0.119.1:
     version "0.119.1"
     resolved "https://registry.yarnpkg.com/three/-/three-0.119.1.tgz#9d979a082c4cd9622af8e3498a8dfa026a619332"
     integrity sha512-GHyh/RiUfQ5VTiWIVRRTANYoXc1PFB1y+jDVRTb649nif1uX1F06PT1TKU3k2+F/MN4UJ3PWvQB53fY2OqKqKw==
